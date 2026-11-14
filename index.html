@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>ระบบบริหารจัดการบัญชีกองกลางและสนามยิงปืน | Executive Pro</title>
-    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -87,14 +87,29 @@
             -webkit-backdrop-filter: blur(20px);
         }
 
+        /* Executive Hero Gradient matching screenshot */
+        .executive-hero-banner {
+            background: radial-gradient(circle at 85% 15%, rgba(67, 56, 202, 0.42) 0%, transparent 45%),
+                        radial-gradient(circle at 15% 85%, rgba(217, 119, 6, 0.16) 0%, transparent 45%),
+                        linear-gradient(145deg, #16182c 0%, #1d1b42 50%, #121526 100%);
+        }
+
+        /* Gold Metallic Text Gradient matching screenshot */
+        .text-gold-gradient {
+            background: linear-gradient(180deg, #fde68a 0%, #fbbf24 55%, #d97706 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 18px rgba(251, 191, 36, 0.22);
+        }
+
         .hero-card {
             background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
-            box-shadow: 0 12px 32px -8px rgba(15, 23, 42, 0.07), 0 0 0 1px rgba(226, 232, 240, 0.8);
+            box-shadow: 0 12px 32px -8px rgba(15, 23, 42, 0.06), 0 0 0 1px rgba(226, 232, 240, 0.85);
             transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .hero-card:hover {
             transform: translateY(-4px);
-            box-shadow: 0 22px 45px -12px rgba(79, 70, 229, 0.16), 0 0 0 1px rgba(199, 210, 254, 0.9);
+            box-shadow: 0 22px 45px -12px rgba(79, 70, 229, 0.16), 0 0 0 1px rgba(199, 210, 254, 0.95);
         }
         .dark .hero-card {
             background: linear-gradient(145deg, #162033 0%, #0f172a 100%);
@@ -102,6 +117,20 @@
         }
         .dark .hero-card:hover {
             box-shadow: 0 22px 45px -12px rgba(99, 102, 241, 0.25), 0 0 0 1px rgba(99, 102, 241, 0.5);
+        }
+
+        .widget-card {
+            background: #ffffff;
+            box-shadow: 0 8px 24px -6px rgba(15, 23, 42, 0.05), 0 0 0 1px rgba(226, 232, 240, 0.8);
+            transition: all 0.25s ease;
+        }
+        .widget-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 30px -8px rgba(15, 23, 42, 0.09), 0 0 0 1px rgba(203, 213, 225, 0.9);
+        }
+        .dark .widget-card {
+            background: #111827;
+            box-shadow: 0 8px 24px -6px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(30, 41, 59, 0.8);
         }
 
         @keyframes popIn {
@@ -117,73 +146,73 @@
         .highlight-row { animation: highlightPulse 2.5s ease-out; }
     </style>
 </head>
-<body class="min-h-screen flex flex-col bg-[#f4f6f9] text-slate-800 dark:bg-navy-950 dark:text-slate-100 selection:bg-indigo-500 selection:text-white">
+<body class="min-h-screen flex flex-col bg-[#f3f5f9] text-slate-800 dark:bg-[#090d16] dark:text-slate-100 selection:bg-indigo-500 selection:text-white">
 
     <!-- Executive Navigation Bar -->
-    <nav class="glass-nav bg-slate-900/95 text-white sticky top-0 z-50 shadow-lg border-b border-slate-800/80">
+    <nav class="glass-nav bg-[#131b2e]/95 text-white sticky top-0 z-50 shadow-lg border-b border-slate-800/80">
         <div class="max-w-7xl mx-auto px-3 sm:px-6 h-16 flex items-center justify-between gap-2">
             <div class="flex items-center gap-2 sm:gap-3">
                 <button onclick="goHome()" class="w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center rounded-xl bg-white/10 hover:bg-white/20 transition text-xs sm:text-sm" title="หน้าแรก"><i class="fas fa-home"></i></button>
                 <button onclick="goBack()" class="w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center rounded-xl bg-white/10 hover:bg-white/20 transition text-xs sm:text-sm" title="ย้อนกลับ"><i class="fas fa-arrow-left"></i></button>
-                <div class="border-l border-white/15 pl-2.5 sm:pl-3 flex items-center gap-2">
-                    <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-slate-950 shadow-sm">
+                <div class="border-l border-white/15 pl-2.5 sm:pl-3 flex items-center gap-2.5">
+                    <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-amber-300 via-amber-400 to-amber-500 flex items-center justify-center text-slate-950 shadow-md shadow-amber-500/20">
                         <i class="fas fa-crown text-xs"></i>
                     </div>
                     <div>
-                        <span class="font-extrabold text-xs sm:text-sm tracking-wider block leading-none">EXECUTIVE PRO</span>
+                        <span class="font-extrabold text-xs sm:text-sm tracking-wider block leading-tight text-white">EXECUTIVE<br class="sm:hidden"> PRO</span>
                         <span class="text-[9px] text-slate-400 tracking-widest uppercase hidden sm:block mt-0.5">Financial Suite</span>
                     </div>
                 </div>
             </div>
 
             <div class="flex items-center gap-1.5 sm:gap-2.5">
-                <button onclick="toggleDarkMode()" class="w-9 h-9 flex items-center justify-center rounded-xl bg-white/10 hover:bg-white/20 transition text-amber-300" title="สลับโหมดมืด/สว่าง">
+                <button onclick="toggleDarkMode()" class="w-9 h-9 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition text-amber-300" title="สลับโหมดมืด/สว่าง">
                     <i id="themeIcon" class="fas fa-moon text-xs"></i>
                 </button>
-                <button onclick="refreshAllData(true)" id="refreshNavBtn" class="px-2.5 sm:px-3.5 py-2 rounded-xl bg-emerald-600/90 hover:bg-emerald-500 transition text-[11px] font-bold flex items-center gap-1.5 text-white shadow-sm" title="รีเฟรชข้อมูลล่าสุด">
+                <button onclick="refreshAllData(true)" id="refreshNavBtn" class="px-3.5 py-2 rounded-full bg-emerald-500 hover:bg-emerald-400 transition text-[11px] font-bold flex items-center gap-1.5 text-white shadow-md shadow-emerald-500/20" title="รีเฟรชข้อมูลล่าสุด">
                     <i class="fas fa-sync-alt" id="refreshNavIcon"></i><span>รีเฟรช</span>
                 </button>
-                <button onclick="clearAllSystemData()" class="px-2.5 py-2 rounded-xl bg-rose-500/15 hover:bg-rose-500/30 border border-rose-500/30 transition text-[11px] font-bold flex items-center gap-1 text-rose-300" title="ล้างข้อมูลทั้งหมด">
+                <button onclick="clearAllSystemData()" class="w-9 h-9 md:w-auto md:px-3 md:py-2 rounded-xl bg-rose-950/80 hover:bg-rose-900 border border-rose-500/30 transition text-[11px] font-bold flex items-center justify-center gap-1.5 text-rose-300" title="ล้างข้อมูลทั้งหมด">
                     <i class="fas fa-trash-alt"></i><span class="hidden md:inline">ล้างข้อมูล</span>
                 </button>
             </div>
         </div>
         <!-- Sub-status Bar -->
-        <div class="bg-slate-950/80 border-t border-white/5 px-3 sm:px-6 py-1 text-[10px] text-slate-400">
+        <div class="bg-[#0b101d] border-t border-white/5 px-3 sm:px-6 py-1.5 text-[10px] text-slate-400">
             <div class="max-w-7xl mx-auto flex justify-between items-center">
-                <span id="syncStatusUI" class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> ระบบคลาวด์พร้อมใช้งาน</span>
-                <span id="lastUpdatedUI" class="flex items-center gap-1 text-slate-300"><i class="far fa-clock text-amber-400"></i> กำลังตรวจสอบเวลา...</span>
+                <span id="syncStatusUI" class="flex items-center gap-1.5 font-medium text-slate-300"><span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> ระบบคลาวด์พร้อมใช้งาน</span>
+                <span id="lastUpdatedUI" class="flex items-center gap-1 text-slate-300 font-medium"><i class="far fa-clock text-amber-400"></i> กำลังตรวจสอบเวลา...</span>
             </div>
         </div>
     </nav>
 
-    <main class="flex-grow p-3 sm:p-5 md:p-6 max-w-7xl mx-auto w-full space-y-6">
+    <main class="flex-grow p-3.5 sm:p-5 md:p-6 max-w-7xl mx-auto w-full space-y-6">
 
         <!-- ==================== VIEW 1: LUXURY HOME DASHBOARD ==================== -->
-        <div id="view-home" class="space-y-7 py-2 sm:py-4">
+        <div id="view-home" class="space-y-5 py-1 sm:py-3">
             <!-- Hero Banner -->
-            <div class="relative z-30 rounded-[2rem] bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 text-white p-6 sm:p-10 shadow-2xl border border-indigo-500/20">
+            <div class="relative z-30 rounded-[2rem] executive-hero-banner text-white px-5 py-8 sm:p-10 shadow-2xl border border-indigo-400/15">
                 <div class="absolute inset-0 overflow-hidden rounded-[2rem] pointer-events-none">
-                    <div class="absolute -right-16 -top-16 w-72 h-72 bg-indigo-500/20 rounded-full blur-3xl"></div>
-                    <div class="absolute -left-16 -bottom-16 w-72 h-72 bg-amber-500/15 rounded-full blur-3xl"></div>
-                    <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wNSkiLz48L3N2Zz4=')] opacity-60"></div>
+                    <div class="absolute -right-12 -top-12 w-64 h-64 bg-indigo-500/20 rounded-full blur-3xl"></div>
+                    <div class="absolute -left-12 -bottom-12 w-64 h-64 bg-amber-500/15 rounded-full blur-3xl"></div>
+                    <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wNCkiLz48L3N2Zz4=')] opacity-75"></div>
                 </div>
 
                 <div class="relative z-10 max-w-3xl mx-auto text-center space-y-4">
-                    <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/15 px-4 py-1.5 rounded-full text-[11px] font-bold tracking-widest uppercase text-amber-300 shadow-sm">
-                        <i class="fas fa-gem text-[10px]"></i> Executive Financial Management
+                    <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/15 px-4 py-1.5 rounded-full text-[10px] sm:text-[11px] font-bold tracking-widest uppercase text-amber-300 shadow-sm">
+                        <i class="fas fa-gem text-[10px] text-amber-400"></i> EXECUTIVE FINANCIAL MANAGEMENT
                     </div>
-                    <h1 class="text-2xl sm:text-4xl md:text-[2.6rem] font-extrabold tracking-tight leading-tight">
-                        ระบบบริหารจัดการ<span class="bg-gradient-to-r from-amber-200 via-amber-400 to-yellow-200 bg-clip-text text-transparent">บัญชีกองกลาง</span><br class="hidden sm:inline" /> และรายการสรุปสนามยิงปืน
+                    <h1 class="text-[1.65rem] sm:text-4xl md:text-[2.6rem] font-extrabold tracking-tight leading-[1.25]">
+                        ระบบบริหารจัดการ<span class="text-gold-gradient">บัญชีกองกลาง</span><br class="hidden sm:inline" /> และรายการสรุปสนามยิงปืน
                     </h1>
-                    <p class="text-slate-300 text-xs sm:text-sm font-normal max-w-xl mx-auto leading-relaxed">
+                    <p class="text-slate-300/90 text-xs sm:text-sm font-normal max-w-xl mx-auto leading-relaxed px-2">
                         ยกระดับการตรวจสอบบัญชีการเงินด้วยระบบรายงานอัจฉริยะ คัดกรองรายปี/รายเดือน แชร์ภาพรายงาน และสรุปข้อความส่งไลน์ได้ในคลิกเดียว
                     </p>
 
                     <!-- Global Search Bar -->
                     <div class="max-w-lg mx-auto pt-2 relative">
                         <div class="relative group">
-                            <input type="text" id="globalSearchInput" oninput="handleGlobalSearch(this.value)" placeholder="ค้นหารายการ, หมายเหตุ, เดือน หรือยอดเงิน..." class="w-full bg-white/10 hover:bg-white/15 focus:bg-white dark:focus:bg-slate-900 text-white focus:text-slate-900 dark:focus:text-white placeholder-slate-300 focus:placeholder-slate-400 border border-white/20 focus:border-amber-400 rounded-2xl py-3.5 px-5 pl-12 text-xs sm:text-sm font-medium shadow-xl backdrop-blur-md outline-none transition-all">
+                            <input type="text" id="globalSearchInput" oninput="handleGlobalSearch(this.value)" placeholder="ค้นหารายการ, หมายเหตุ, เดือน หรือยอดเงิน..." class="w-full bg-white/10 hover:bg-white/15 focus:bg-white dark:focus:bg-slate-900 text-white focus:text-slate-900 dark:focus:text-white placeholder-slate-300/80 focus:placeholder-slate-400 border border-white/15 focus:border-amber-400 rounded-2xl py-3.5 px-5 pl-12 text-xs sm:text-sm font-medium shadow-xl backdrop-blur-md outline-none transition-all">
                             <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-amber-300 group-focus-within:text-indigo-500 text-sm transition"></i>
                         </div>
                         <div id="searchResultsDropdown" class="hidden absolute left-0 right-0 mt-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl max-h-60 overflow-y-auto z-50 p-2 divide-y divide-slate-100 dark:divide-slate-800 text-left text-xs text-slate-800 dark:text-slate-100"></div>
@@ -192,40 +221,45 @@
             </div>
 
             <!-- Live Overview Mini-Widgets -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-4xl mx-auto">
-                <div class="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border border-slate-200/80 dark:border-slate-800 rounded-2xl p-4 flex items-center justify-between shadow-sm">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-base"><i class="fas fa-landmark"></i></div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 max-w-4xl mx-auto">
+                <div onclick="showGeneralSummary()" class="widget-card cursor-pointer rounded-[1.35rem] p-4 flex items-center justify-between">
+                    <div class="flex items-center gap-3.5">
+                        <div class="w-11 h-11 rounded-2xl bg-indigo-50 dark:bg-indigo-950/70 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-base border border-indigo-100/70 dark:border-indigo-800/50">
+                            <i class="fas fa-landmark"></i>
+                        </div>
                         <div>
-                            <div class="text-[11px] font-semibold text-slate-500">คงเหลือสุทธิ (บัญชีกองกลาง)</div>
-                            <div id="homeGenNet" class="text-lg font-extrabold text-slate-900 dark:text-white">0.00 ฿</div>
+                            <div class="text-[11px] font-semibold text-slate-500 dark:text-slate-400">คงเหลือสุทธิ (บัญชีกองกลาง)</div>
+                            <div id="homeGenNet" class="text-xl font-black text-slate-900 dark:text-white tracking-tight mt-0.5">0.00 ฿</div>
                         </div>
                     </div>
-                    <span class="text-[10px] font-bold px-2.5 py-1 rounded-full bg-indigo-50 text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300">กองกลาง</span>
+                    <span class="text-[11px] font-bold px-3 py-1 rounded-full bg-indigo-50 text-indigo-600 dark:bg-indigo-950 dark:text-indigo-300">กองกลาง</span>
                 </div>
-                <div class="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border border-slate-200/80 dark:border-slate-800 rounded-2xl p-4 flex items-center justify-between shadow-sm">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-base"><i class="fas fa-crosshairs"></i></div>
+
+                <div onclick="showShootingRange()" class="widget-card cursor-pointer rounded-[1.35rem] p-4 flex items-center justify-between">
+                    <div class="flex items-center gap-3.5">
+                        <div class="w-11 h-11 rounded-2xl bg-emerald-50 dark:bg-emerald-950/70 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-base border border-emerald-100/70 dark:border-emerald-800/50">
+                            <i class="fas fa-crosshairs"></i>
+                        </div>
                         <div>
-                            <div class="text-[11px] font-semibold text-slate-500">คงเหลือสุทธิ (สนามยิงปืน)</div>
-                            <div id="homeShootNet" class="text-lg font-extrabold text-slate-900 dark:text-white">0.00 ฿</div>
+                            <div class="text-[11px] font-semibold text-slate-500 dark:text-slate-400">คงเหลือสุทธิ (สนามยิงปืน)</div>
+                            <div id="homeShootNet" class="text-xl font-black text-slate-900 dark:text-white tracking-tight mt-0.5">0.00 ฿</div>
                         </div>
                     </div>
-                    <span class="text-[10px] font-bold px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300">สนามยิงปืน</span>
+                    <span class="text-[11px] font-bold px-3 py-1 rounded-full bg-emerald-50 text-emerald-600 dark:bg-emerald-950 dark:text-emerald-300">สนามยิงปืน</span>
                 </div>
             </div>
 
             <!-- Main Navigation Cards (2 Modules) -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-4xl mx-auto">
                 <!-- Card 1: บัญชีกองกลาง -->
-                <button onclick="showGeneralSummary()" class="hero-card rounded-[2rem] p-7 text-left group relative overflow-hidden flex flex-col justify-between min-h-[220px]">
+                <button onclick="showGeneralSummary()" class="hero-card rounded-[2rem] p-6 sm:p-7 text-left group relative overflow-hidden flex flex-col justify-between min-h-[210px]">
                     <div class="absolute -right-10 -top-10 w-40 h-40 bg-gradient-to-br from-indigo-500/15 to-purple-500/10 rounded-full blur-2xl group-hover:scale-125 transition-transform duration-500"></div>
                     <div class="relative z-10">
                         <div class="flex items-center justify-between mb-5">
-                            <div class="w-14 h-14 bg-gradient-to-br from-slate-900 to-indigo-950 text-white rounded-2xl flex items-center justify-center text-2xl shadow-lg group-hover:scale-105 transition">
+                            <div class="w-14 h-14 bg-gradient-to-br from-[#161b33] to-[#232454] text-white rounded-2xl flex items-center justify-center text-2xl shadow-lg group-hover:scale-105 transition">
                                 <i class="fas fa-book-open text-amber-400"></i>
                             </div>
-                            <span class="px-3 py-1 rounded-full bg-indigo-50 dark:bg-indigo-950/70 text-indigo-600 dark:text-indigo-300 text-[11px] font-bold border border-indigo-100 dark:border-indigo-800/50">General Ledger</span>
+                            <span class="px-3.5 py-1 rounded-full bg-indigo-50 dark:bg-indigo-950/70 text-indigo-600 dark:text-indigo-300 text-[11px] font-bold border border-indigo-100 dark:border-indigo-800/50">General Ledger</span>
                         </div>
                         <h2 class="text-xl sm:text-2xl font-extrabold mb-1.5 text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition">บัญชีกองกลาง</h2>
                         <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-normal leading-relaxed">บันทึกรายรับ-รายจ่าย แยกเงินสดและโอนบัญชี พร้อมระบบคัดกรองรายปี/เดือน และแนบสลิปหลักฐาน</p>
@@ -237,14 +271,14 @@
                 </button>
 
                 <!-- Card 2: รายการสรุปสนามยิงปืน -->
-                <button onclick="showShootingRange()" class="hero-card rounded-[2rem] p-7 text-left group relative overflow-hidden flex flex-col justify-between min-h-[220px]">
+                <button onclick="showShootingRange()" class="hero-card rounded-[2rem] p-6 sm:p-7 text-left group relative overflow-hidden flex flex-col justify-between min-h-[210px]">
                     <div class="absolute -right-10 -top-10 w-40 h-40 bg-gradient-to-br from-emerald-500/15 to-teal-500/10 rounded-full blur-2xl group-hover:scale-125 transition-transform duration-500"></div>
                     <div class="relative z-10">
                         <div class="flex items-center justify-between mb-5">
-                            <div class="w-14 h-14 bg-gradient-to-br from-slate-900 to-emerald-950 text-white rounded-2xl flex items-center justify-center text-2xl shadow-lg group-hover:scale-105 transition">
+                            <div class="w-14 h-14 bg-gradient-to-br from-[#112423] to-[#0f3b35] text-white rounded-2xl flex items-center justify-center text-2xl shadow-lg group-hover:scale-105 transition">
                                 <i class="fas fa-crosshairs text-emerald-400"></i>
                             </div>
-                            <span class="px-3 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950/70 text-emerald-600 dark:text-emerald-300 text-[11px] font-bold border border-emerald-100 dark:border-emerald-800/50">Shooting Range</span>
+                            <span class="px-3.5 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950/70 text-emerald-600 dark:text-emerald-300 text-[11px] font-bold border border-emerald-100 dark:border-emerald-800/50">Shooting Range</span>
                         </div>
                         <h2 class="text-xl sm:text-2xl font-extrabold mb-1.5 text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition">รายการสรุปสนามยิงปืน</h2>
                         <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-normal leading-relaxed">สรุปยอดขายกระสุนและเป้าอัตโนมัติ แยกรายเดือน/รายปี แสดงผลแบบละเอียดหรือแบบสรุป พร้อมส่งรายงานไลน์</p>
@@ -275,11 +309,11 @@
                         <div id="genDashOut" class="text-xl font-extrabold text-rose-600 mt-0.5">0.00</div>
                     </div>
                 </div>
-                <div class="bg-gradient-to-r from-slate-900 to-indigo-950 text-white rounded-2xl p-4 flex items-center gap-3.5 shadow-md">
+                <div class="executive-hero-banner text-white rounded-2xl p-4 flex items-center gap-3.5 shadow-md">
                     <div class="w-11 h-11 rounded-2xl bg-white/10 flex items-center justify-center text-amber-400 text-base"><i class="fas fa-wallet"></i></div>
                     <div>
                         <span class="text-[11px] font-semibold text-indigo-200">ยอดคงเหลือสุทธิ</span>
-                        <div id="genDashNet" class="text-2xl font-black text-white mt-0.5">0.00</div>
+                        <div id="genDashNet" class="text-2xl font-black text-gold-gradient mt-0.5">0.00</div>
                     </div>
                 </div>
             </div>
@@ -486,11 +520,11 @@
                         <div id="shootDashOut" class="text-xl font-extrabold text-rose-600 mt-0.5">0.00</div>
                     </div>
                 </div>
-                <div class="bg-gradient-to-r from-slate-900 to-emerald-950 text-white rounded-2xl p-4 flex items-center gap-3.5 shadow-md">
+                <div class="bg-gradient-to-r from-[#112423] to-[#0f3b35] text-white rounded-2xl p-4 flex items-center gap-3.5 shadow-md">
                     <div class="w-11 h-11 rounded-2xl bg-white/10 flex items-center justify-center text-amber-400 text-base"><i class="fas fa-wallet"></i></div>
                     <div>
                         <span class="text-[11px] font-semibold text-emerald-200">ยอดเงินคงเหลือสุทธิ</span>
-                        <div id="shootDashNet" class="text-2xl font-black text-white mt-0.5">0.00</div>
+                        <div id="shootDashNet" class="text-2xl font-black text-gold-gradient mt-0.5">0.00</div>
                     </div>
                 </div>
             </div>
@@ -962,7 +996,7 @@
                 icon.className = 'fas fa-sun text-xs text-amber-300';
             }
         }
-        if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        if (localStorage.getItem('theme') === 'dark') {
             document.documentElement.classList.add('dark');
             document.getElementById('themeIcon').className = 'fas fa-sun text-xs text-amber-300';
         }
@@ -1151,9 +1185,9 @@
                     refreshCurrentView();
                     if(isUIAction) {
                         if(refreshIcon) refreshIcon.classList.remove('fa-spin');
-                        syncStatusUI.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> ซิงก์ข้อมูลล่าสุดสำเร็จ`;
+                        syncStatusUI.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-400"></span> ซิงก์ข้อมูลล่าสุดสำเร็จ`;
                         showSuccessModal("รีเฟรชข้อมูลสำเร็จ", "ดึงข้อมูลล่าสุดจากระบบคลาวด์เรียบร้อยแล้ว");
-                        setTimeout(() => { syncStatusUI.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> ระบบคลาวด์พร้อมใช้งาน`; }, 3000);
+                        setTimeout(() => { syncStatusUI.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> ระบบคลาวด์พร้อมใช้งาน`; }, 3000);
                     }
                     updateLastSyncTime();
                 }
@@ -1211,7 +1245,6 @@
 
         // --- Populate Year Filter Dropdowns Dynamically ---
         function populateFilterDropdowns() {
-            // General Years (Buddhist Era)
             const genYearsSet = new Set(['2568', '2569', (new Date().getFullYear() + 543).toString()]);
             appData.generalRecords.forEach(r => {
                 const ymd = parseLocalYMD(r.date);
@@ -1225,7 +1258,6 @@
             genYearSel.innerHTML = `<option value="ALL">ทุกปี พ.ศ.</option>` + Array.from(genYearsSet).sort().map(y => `<option value="${y}">ปี พ.ศ. ${y}</option>`).join('');
             if (Array.from(genYearsSet).includes(prevGenYear)) genYearSel.value = prevGenYear;
 
-            // Shooting Years (Buddhist Era)
             const shootYearsSet = new Set(['2568', '2569', (new Date().getFullYear() + 543).toString()]);
             appData.shootingRecords.forEach(r => {
                 if (r.year) shootYearsSet.add(r.year.toString());
@@ -1347,7 +1379,6 @@
             const filterMonth = document.getElementById('genFilterMonth').value;
             let sorted = [...appData.generalRecords].sort((a,b) => new Date(parseLocalYMD(a.date) || '2025-01-01') - new Date(parseLocalYMD(b.date) || '2025-01-01'));
 
-            // Calculate running balance across full history first so each row has accurate balance
             let runCash = 0, runAcc = 0;
             const enriched = sorted.map(r => {
                 const inC = parseFloat(r.inCash) || 0, inA = parseFloat(r.inAcc) || 0;
@@ -1388,7 +1419,6 @@
             document.getElementById('genDashNet').innerText = lastBalNet.toLocaleString();
 
             if (generalViewMode === 'summary') {
-                // Summary View Grouped by Month/Year
                 thead.innerHTML = `
                     <tr class="bg-slate-800 text-slate-100">
                         <th class="border-r border-slate-700/70 w-12 rounded-tl-xl">ลำดับ</th>
@@ -1448,7 +1478,6 @@
                 return;
             }
 
-            // Detailed View
             thead.innerHTML = `
                 <tr class="bg-slate-800 text-slate-100">
                     <th rowspan="2" class="border-r border-slate-700/70 w-10 rounded-tl-xl">ลำดับ</th>
@@ -1696,7 +1725,6 @@
             document.getElementById('shootDashNet').innerText = lastRunBal.toLocaleString();
 
             if (shootingViewMode === 'summary') {
-                // Summary View (Compact Overview by Month/Year)
                 thead.innerHTML = `
                     <tr class="bg-slate-800 text-slate-100">
                         <th class="border-r border-slate-700/70 w-28 rounded-tl-xl">เดือน / ปี</th>
@@ -1757,7 +1785,6 @@
                 return;
             }
 
-            // Detailed View
             thead.innerHTML = `
                 <tr class="bg-slate-800 text-slate-100">
                     <th rowspan="2" class="border-r border-slate-700/70 w-24 rounded-tl-xl">เดือน / ปี</th>
@@ -1914,7 +1941,7 @@
             const monthOpts = thFullMonths.map((m, idx) => `<option value="${idx}">${m}</option>`).join('');
             startSel.innerHTML = monthOpts;
             endSel.innerHTML = monthOpts;
-            startSel.value = "0"; // มกราคม
+            startSel.value = "0";
             endSel.value = new Date().getMonth().toString();
 
             generateLineSummaryText();
@@ -2048,12 +2075,11 @@
             generatedReportDataUrl = null;
             generatedReportBlob = null;
 
-            // Build a sleek, executive-grade snapshot card in the offscreen stage
             const stage = document.getElementById('offscreenReportStage');
             const isGen = (type === 'general');
             const titleText = isGen ? 'รายงานบัญชีกองกลาง (General Ledger)' : 'รายการสรุปสนามยิงปืน (Shooting Range)';
-            const themeGradient = isGen ? 'linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%)' : 'linear-gradient(135deg, #0f172a 0%, #064e3b 100%)';
-            const badgeColor = isGen ? '#818cf8' : '#34d399';
+            const themeGradient = isGen ? 'linear-gradient(135deg, #16182c 0%, #1d1b42 100%)' : 'linear-gradient(135deg, #112423 0%, #0f3b35 100%)';
+            const badgeColor = isGen ? '#fbbf24' : '#34d399';
 
             const inSum = document.getElementById(isGen ? 'genDashIn' : 'shootDashIn').innerText;
             const outSum = document.getElementById(isGen ? 'genDashOut' : 'shootDashOut').innerText;
@@ -2066,7 +2092,6 @@
                 ? document.getElementById('genFilterMonth').options[document.getElementById('genFilterMonth').selectedIndex].text
                 : document.getElementById('shootFilterMonth').options[document.getElementById('shootFilterMonth').selectedIndex].text;
 
-            // Clone clean table HTML without action/slip columns
             const tableClone = document.getElementById(isGen ? 'generalTableCapture' : 'shootingTableCapture').querySelector('table').cloneNode(true);
             tableClone.querySelectorAll('.no-print-capture').forEach(el => el.remove());
 
@@ -2093,7 +2118,7 @@
                             <div style="font-size: 11px; font-weight: 600; color: #64748b;">ยอดรายจ่ายรวม</div>
                             <div style="font-size: 20px; font-weight: 800; color: #e11d48; margin-top: 2px;">-${outSum} ฿</div>
                         </div>
-                        <div style="background: #0f172a; padding: 14px 18px; border-radius: 16px; color: #ffffff;">
+                        <div style="background: #16182c; padding: 14px 18px; border-radius: 16px; color: #ffffff;">
                             <div style="font-size: 11px; font-weight: 600; color: #cbd5e1;">ยอดคงเหลือสุทธิ</div>
                             <div style="font-size: 22px; font-weight: 900; color: #fbbf24; margin-top: 2px;">${netSum} ฿</div>
                         </div>
@@ -2148,7 +2173,6 @@
 
             const file = new File([generatedReportBlob], fileName, { type: 'image/png' });
 
-            // 1. Web Share API (Supported natively on iOS Safari, iPadOS, Android Chrome, macOS Safari, Windows Edge)
             if (navigator.canShare && navigator.canShare({ files: [file] })) {
                 try {
                     await navigator.share({
@@ -2162,7 +2186,6 @@
                 }
             }
 
-            // 2. Fallback for Desktop Browsers (Copy Image to Clipboard + Auto Download)
             try {
                 if (navigator.clipboard && window.ClipboardItem) {
                     await navigator.clipboard.write([new ClipboardItem({ 'image/png': generatedReportBlob })]);
@@ -2172,7 +2195,6 @@
                 }
             } catch (e) {}
 
-            // 3. Direct Download Fallback
             downloadGeneratedReportImage();
             showSuccessModal("บันทึกรูปภาพสำเร็จ", "ดาวน์โหลดไฟล์รูปภาพลงในเครื่องเรียบร้อยแล้ว");
         }
