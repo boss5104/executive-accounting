@@ -930,9 +930,25 @@
             goHome();
         }
 
+        window.parseLocalYMD = function(dateStr) {
+            if (!dateStr) return "";
+            const str = dateStr.toString().trim();
+            if (str.includes('T')) {
+                const d = new Date(str);
+                if (!isNaN(d.getTime())) {
+                    const y = d.getFullYear();
+                    const m = String(d.getMonth() + 1).padStart(2, '0');
+                    const day = String(d.getDate()).padStart(2, '0');
+                    return `${y}-${m}-${day}`;
+                }
+            }
+            return str.substring(0, 10);
+        }
+
         window.formatDateThaiShort = function(dateStr) {
-            if(!dateStr) return "-";
-            const parts = dateStr.toString().substring(0, 10).split('-');
+            const ymd = parseLocalYMD(dateStr);
+            if(!ymd) return "-";
+            const parts = ymd.split('-');
             if(parts.length < 3) return dateStr;
             const d = new Date(parts[0], parseInt(parts[1])-1, parts[2]);
             return `${d.getDate()} ${thMonths[d.getMonth()]} ${(parseInt(parts[0])+543).toString().slice(-2)}`;
@@ -980,11 +996,10 @@
                 const rec = appData.generalRecords.find(r => r.id == editId);
                 if(rec) {
                     document.getElementById('gEditId').value = rec.id;
-                    setThaiDateValue(rec.date.toString().substring(0, 10));
+                    setThaiDateValue(parseLocalYMD(rec.date));
                     document.getElementById('gDesc').value = rec.desc;
                     document.getElementById('gNote').value = rec.note || "";
                     document.getElementById('gFileBase64').value = rec.attachment || "";
-                    
                     if(rec.attachment) {
                         document.getElementById('gFilePreview').classList.remove('hidden');
                         document.getElementById('gFilePreview').innerHTML = `
@@ -1032,7 +1047,7 @@
             const tbody = document.getElementById('generalTbody'), tfoot = document.getElementById('generalTfoot');
             tbody.innerHTML = ""; tfoot.innerHTML = "";
 
-            let sorted = [...appData.generalRecords].sort((a,b) => new Date(a.date.toString().substring(0, 10) || '2025-01-01') - new Date(b.date.toString().substring(0, 10) || '2025-01-01'));
+            let sorted = [...appData.generalRecords].sort((a,b) => new Date(parseLocalYMD(a.date) || '2025-01-01') - new Date(parseLocalYMD(b.date) || '2025-01-01'));
 
             let runCash = 0, runAcc = 0; 
             let totInCash=0, totInAcc=0, totOutCash=0, totOutAcc=0;
@@ -1119,11 +1134,9 @@
                 if(m === 'cash') rec.outCash = amt; else rec.outAcc = amt;
             } else if(act === 'transfer') {
                 if(m === 'cash_to_acc') {
-                    // เอาเงินสดเข้าบัญชี: หักเงินสดออก (จ่ายสด) + เพิ่มเงินเข้าบัญชี (รับโอน)
                     rec.outCash = amt;
                     rec.inAcc = amt;
                 } else {
-                    // ถอนจากบัญชีเป็นเงินสด (acc_to_cash): หักเงินในบัญชีออก (จ่ายโอน) + เพิ่มเงินสด (รับสด)
                     rec.outAcc = amt;
                     rec.inCash = amt;
                 }
