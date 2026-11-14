@@ -1,9 +1,15 @@
+
+
+Gemini เป็น AI และอาจทำผิดพลาดได้
+
+ไอคอน HTML
+index_2_upgraded
 <!DOCTYPE html>
 <html lang="th" class="light">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ระบบบัญชีส่วนกลางและสนามยิงปืน (Executive Cloud Pro)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ระบบบริหารจัดการบัญชีกองกลางและสนามยิงปืน | Executive Pro</title>
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -11,207 +17,361 @@
     <script>
         tailwind.config = {
             darkMode: 'class',
-            theme: { extend: { fontFamily: { prompt: ['Prompt', 'sans-serif'] } } }
+            theme: {
+                extend: {
+                    fontFamily: { prompt: ['Prompt', 'sans-serif'] },
+                    colors: {
+                        navy: { 950: '#090d16', 900: '#0f172a', 850: '#162033', 800: '#1e293b' },
+                        gold: { 400: '#fbbf24', 500: '#f59e0b', 600: '#d97706' }
+                    }
+                }
+            }
         }
     </script>
     <style>
-        body { font-family: 'Prompt', sans-serif; transition: background-color 0.3s, color 0.3s; }
-        
-        /* Custom Elegant Visible Scrollbar */
-        ::-webkit-scrollbar { width: 8px; height: 8px; }
-        ::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 6px; }
-        ::-webkit-scrollbar-track { background: #e2e8f0; border-radius: 6px; }
-        .dark ::-webkit-scrollbar-thumb { background: #475569; }
-        .dark ::-webkit-scrollbar-track { background: #1e293b; }
-        
-        .table-responsive-wrapper { 
-            width: 100%; 
-            max-height: 68vh;
-            overflow: auto; 
-            border-radius: 0.85rem; 
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05); 
-            border: 1px solid #cbd5e1; 
+        body { font-family: 'Prompt', sans-serif; transition: background-color 0.3s ease, color 0.3s ease; -webkit-tap-highlight-color: transparent; }
+
+        /* Refined Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        .dark ::-webkit-scrollbar-thumb { background: #334155; }
+        .dark ::-webkit-scrollbar-thumb:hover { background: #475569; }
+
+        /* Luxury Soft Rounded Table Container */
+        .table-luxury-wrapper {
+            width: 100%;
+            max-height: 60vh;
+            overflow: auto;
+            border-radius: 1.25rem;
+            box-shadow: 0 10px 30px -10px rgba(15, 23, 42, 0.08);
+            border: 1px solid #e2e8f0;
             background: #ffffff;
-            margin-bottom: 0.5rem;
         }
-        .dark .table-responsive-wrapper { 
-            border-color: #334155; 
+        .dark .table-luxury-wrapper {
+            border-color: #1e293b;
             background: #0f172a;
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.4);
         }
-        
-        table th, table td { 
-            padding: 8px 12px; 
-            text-align: center; 
-            font-size: 12.5px; 
-            vertical-align: middle; 
+
+        /* Compact, Gentle & Official Table Cells */
+        table.luxury-table {
+            border-collapse: separate;
+            border-spacing: 0;
+            width: 100%;
+        }
+        table.luxury-table th {
+            padding: 9px 10px;
+            font-size: 11.5px;
+            font-weight: 600;
+            letter-spacing: 0.01em;
             white-space: nowrap;
+            vertical-align: middle;
         }
-        
-        .action-btn { 
-            cursor: pointer; 
-            display: inline-flex; 
-            align-items: center; 
-            justify-content: center; 
-            width: 30px; 
-            height: 30px; 
-            border-radius: 8px; 
-            transition: all 0.2s ease; 
-            border: 1px solid transparent; 
+        table.luxury-table td {
+            padding: 7px 10px;
+            font-size: 12px;
+            white-space: nowrap;
+            vertical-align: middle;
         }
-        .action-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 10px -1px rgba(0,0,0,0.15); }
-        .glass-nav { backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
-        
+
+        .action-btn {
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .action-btn:hover { transform: translateY(-1px) scale(1.05); }
+
+        .glass-nav {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        .hero-card {
+            background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+            box-shadow: 0 12px 32px -8px rgba(15, 23, 42, 0.07), 0 0 0 1px rgba(226, 232, 240, 0.8);
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .hero-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 22px 45px -12px rgba(79, 70, 229, 0.16), 0 0 0 1px rgba(199, 210, 254, 0.9);
+        }
+        .dark .hero-card {
+            background: linear-gradient(145deg, #162033 0%, #0f172a 100%);
+            box-shadow: 0 12px 32px -8px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(51, 65, 85, 0.6);
+        }
+        .dark .hero-card:hover {
+            box-shadow: 0 22px 45px -12px rgba(99, 102, 241, 0.25), 0 0 0 1px rgba(99, 102, 241, 0.5);
+        }
+
         @keyframes popIn {
-            0% { opacity: 0; transform: scale(0.95) translateY(10px); }
+            0% { opacity: 0; transform: scale(0.96) translateY(8px); }
             100% { opacity: 1; transform: scale(1) translateY(0); }
         }
         .modal-animate { animation: popIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-        
+
         @keyframes highlightPulse {
-            0% { background-color: rgba(251, 191, 36, 0.5); }
+            0% { background-color: rgba(251, 191, 36, 0.35); }
             100% { background-color: transparent; }
         }
-        .highlight-row { animation: highlightPulse 3s ease-out; }
+        .highlight-row { animation: highlightPulse 2.5s ease-out; }
     </style>
 </head>
-<body class="min-h-screen flex flex-col bg-slate-100 text-slate-800 dark:bg-slate-950 dark:text-slate-100">
+<body class="min-h-screen flex flex-col bg-[#f4f6f9] text-slate-800 dark:bg-navy-950 dark:text-slate-100 selection:bg-indigo-500 selection:text-white">
 
     <!-- Executive Navigation Bar -->
-    <nav class="glass-nav bg-slate-900/95 text-white sticky top-0 z-50 shadow-xl border-b border-slate-800">
-        <div class="max-w-7xl mx-auto px-4 md:px-6 h-16 md:h-18 flex items-center justify-between">
-            <div class="flex items-center gap-3">
-                <button onclick="goHome()" class="w-10 h-10 flex items-center justify-center rounded-xl bg-white/10 hover:bg-white/20 transition text-sm shadow-sm" title="หน้าแรก"><i class="fas fa-home"></i></button>
-                <button onclick="goBack()" class="w-10 h-10 flex items-center justify-center rounded-xl bg-white/10 hover:bg-white/20 transition text-sm shadow-sm" title="ย้อนกลับ"><i class="fas fa-arrow-left"></i></button>
-                <div class="border-l border-white/20 pl-3">
-                    <span class="font-extrabold text-sm md:text-base tracking-wider flex items-center gap-2"><i class="fas fa-shield-alt text-amber-400"></i> <span class="hidden sm:inline">EXECUTIVE PRO</span></span>
+    <nav class="glass-nav bg-slate-900/95 text-white sticky top-0 z-50 shadow-lg border-b border-slate-800/80">
+        <div class="max-w-7xl mx-auto px-3 sm:px-6 h-16 flex items-center justify-between gap-2">
+            <div class="flex items-center gap-2 sm:gap-3">
+                <button onclick="goHome()" class="w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center rounded-xl bg-white/10 hover:bg-white/20 transition text-xs sm:text-sm" title="หน้าแรก"><i class="fas fa-home"></i></button>
+                <button onclick="goBack()" class="w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center rounded-xl bg-white/10 hover:bg-white/20 transition text-xs sm:text-sm" title="ย้อนกลับ"><i class="fas fa-arrow-left"></i></button>
+                <div class="border-l border-white/15 pl-2.5 sm:pl-3 flex items-center gap-2">
+                    <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-slate-950 shadow-sm">
+                        <i class="fas fa-crown text-xs"></i>
+                    </div>
+                    <div>
+                        <span class="font-extrabold text-xs sm:text-sm tracking-wider block leading-none">EXECUTIVE PRO</span>
+                        <span class="text-[9px] text-slate-400 tracking-widest uppercase hidden sm:block mt-0.5">Financial Suite</span>
+                    </div>
                 </div>
             </div>
-            <div class="flex items-center gap-2 md:gap-3">
-                <button onclick="toggleDarkMode()" class="w-10 h-10 flex items-center justify-center rounded-xl bg-white/10 hover:bg-white/20 transition text-amber-300 shadow-sm" title="สลับโหมดมืด/สว่าง">
+
+            <div class="flex items-center gap-1.5 sm:gap-2.5">
+                <button onclick="toggleDarkMode()" class="w-9 h-9 flex items-center justify-center rounded-xl bg-white/10 hover:bg-white/20 transition text-amber-300" title="สลับโหมดมืด/สว่าง">
                     <i id="themeIcon" class="fas fa-moon text-xs"></i>
                 </button>
-                <div class="flex flex-col items-end gap-0.5">
-                    <div class="flex items-center gap-1.5">
-                        <button onclick="clearAllSystemData()" class="px-3 py-1.5 rounded-lg bg-red-500/20 hover:bg-red-500/40 border border-red-500/40 transition text-[11px] font-bold flex items-center gap-1.5 text-red-300 shadow-sm" title="ล้างข้อมูลทั้งหมด">
-                            <i class="fas fa-trash-alt"></i><span class="hidden lg:inline">ล้างข้อมูล</span>
-                        </button>
-                        <button onclick="syncWithCloud(true)" id="syncBtn" class="px-3.5 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 shadow transition text-[11px] font-bold flex items-center gap-1.5 text-white">
-                            <i class="fas fa-sync-alt" id="syncIcon"></i><span class="hidden sm:inline">ซิงก์ข้อมูล</span>
-                        </button>
-                    </div>
-                    <div class="flex items-center gap-2 text-[10px] text-slate-300 font-medium">
-                        <span id="syncStatusUI" class="flex items-center gap-1"><i class="fas fa-cloud text-[9px]"></i> พร้อมใช้งาน</span>
-                        <span class="text-slate-500">|</span>
-                        <span id="lastUpdatedUI" class="flex items-center gap-1 text-emerald-300"><i class="far fa-clock"></i> กำลังโหลด...</span>
-                    </div>
-                </div>
+                <button onclick="refreshAllData(true)" id="refreshNavBtn" class="px-2.5 sm:px-3.5 py-2 rounded-xl bg-emerald-600/90 hover:bg-emerald-500 transition text-[11px] font-bold flex items-center gap-1.5 text-white shadow-sm" title="รีเฟรชข้อมูลล่าสุด">
+                    <i class="fas fa-sync-alt" id="refreshNavIcon"></i><span>รีเฟรช</span>
+                </button>
+                <button onclick="clearAllSystemData()" class="px-2.5 py-2 rounded-xl bg-rose-500/15 hover:bg-rose-500/30 border border-rose-500/30 transition text-[11px] font-bold flex items-center gap-1 text-rose-300" title="ล้างข้อมูลทั้งหมด">
+                    <i class="fas fa-trash-alt"></i><span class="hidden md:inline">ล้างข้อมูล</span>
+                </button>
+            </div>
+        </div>
+        <!-- Sub-status Bar -->
+        <div class="bg-slate-950/80 border-t border-white/5 px-3 sm:px-6 py-1 text-[10px] text-slate-400">
+            <div class="max-w-7xl mx-auto flex justify-between items-center">
+                <span id="syncStatusUI" class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> ระบบคลาวด์พร้อมใช้งาน</span>
+                <span id="lastUpdatedUI" class="flex items-center gap-1 text-slate-300"><i class="far fa-clock text-amber-400"></i> กำลังตรวจสอบเวลา...</span>
             </div>
         </div>
     </nav>
 
-    <main class="flex-grow p-4 md:p-6 max-w-7xl mx-auto w-full space-y-6">
-        <!-- View 1: Home Dashboard with Global Search -->
-        <div id="view-home" class="space-y-8 py-4">
-            <div class="text-center space-y-3 max-w-2xl mx-auto">
-                <span class="bg-indigo-100 text-indigo-800 dark:bg-indigo-950 dark:text-indigo-300 text-[11px] font-extrabold px-4 py-1.5 rounded-full uppercase tracking-wider shadow-sm">Executive Financial System</span>
-                <h1 class="text-2xl md:text-4xl font-black tracking-tight leading-snug">ระบบจัดการบัญชีกองกลาง<br/><span class="text-indigo-600 dark:text-indigo-400">และบัญชีสนามยิงปืน</span></h1>
-                <p class="text-slate-500 dark:text-slate-400 text-xs md:text-sm font-medium">ประมวลผลฉับไว แม่นยำระดับมืออาชีพ พร้อมระบบแนบสลิป/เอกสารในตัว</p>
-                
-                <!-- Global Search Bar -->
-                <div class="max-w-lg mx-auto pt-2 relative">
-                    <div class="relative">
-                        <input type="text" id="globalSearchInput" oninput="handleGlobalSearch(this.value)" placeholder="🔍 ค้นหารายการ, หมายเหตุ, วันที่ หรือยอดเงิน..." class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-2xl py-3.5 px-4 pl-12 text-xs md:text-sm font-medium shadow-sm focus:border-indigo-500 outline-none transition">
-                        <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+    <main class="flex-grow p-3 sm:p-5 md:p-6 max-w-7xl mx-auto w-full space-y-6">
+
+        <!-- ==================== VIEW 1: LUXURY HOME DASHBOARD ==================== -->
+        <div id="view-home" class="space-y-7 py-2 sm:py-4">
+            <!-- Hero Banner -->
+            <div class="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 text-white p-6 sm:p-10 shadow-2xl border border-indigo-500/20">
+                <div class="absolute -right-16 -top-16 w-72 h-72 bg-indigo-500/20 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="absolute -left-16 -bottom-16 w-72 h-72 bg-amber-500/15 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wNSkiLz48L3N2Zz4=')] opacity-60"></div>
+
+                <div class="relative z-10 max-w-3xl mx-auto text-center space-y-4">
+                    <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/15 px-4 py-1.5 rounded-full text-[11px] font-bold tracking-widest uppercase text-amber-300 shadow-sm">
+                        <i class="fas fa-gem text-[10px]"></i> Executive Financial Management
                     </div>
-                    <div id="searchResultsDropdown" class="hidden absolute left-0 right-0 mt-1.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl max-h-56 overflow-y-auto z-50 p-2 divide-y divide-slate-100 dark:divide-slate-800 text-left text-xs"></div>
+                    <h1 class="text-2xl sm:text-4xl md:text-[2.6rem] font-extrabold tracking-tight leading-tight">
+                        ระบบบริหารจัดการ<span class="bg-gradient-to-r from-amber-200 via-amber-400 to-yellow-200 bg-clip-text text-transparent">บัญชีกองกลาง</span><br class="hidden sm:inline" /> และรายการสรุปสนามยิงปืน
+                    </h1>
+                    <p class="text-slate-300 text-xs sm:text-sm font-normal max-w-xl mx-auto leading-relaxed">
+                        ยกระดับการตรวจสอบบัญชีการเงินด้วยระบบรายงานอัจฉริยะ คัดกรองรายปี/รายเดือน แชร์ภาพรายงาน และสรุปข้อความส่งไลน์ได้ในคลิกเดียว
+                    </p>
+
+                    <!-- Global Search Bar -->
+                    <div class="max-w-lg mx-auto pt-2 relative">
+                        <div class="relative group">
+                            <input type="text" id="globalSearchInput" oninput="handleGlobalSearch(this.value)" placeholder="ค้นหารายการ, หมายเหตุ, เดือน หรือยอดเงิน..." class="w-full bg-white/10 hover:bg-white/15 focus:bg-white dark:focus:bg-slate-900 text-white focus:text-slate-900 dark:focus:text-white placeholder-slate-300 focus:placeholder-slate-400 border border-white/20 focus:border-amber-400 rounded-2xl py-3.5 px-5 pl-12 text-xs sm:text-sm font-medium shadow-xl backdrop-blur-md outline-none transition-all">
+                            <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-amber-300 group-focus-within:text-indigo-500 text-sm transition"></i>
+                        </div>
+                        <div id="searchResultsDropdown" class="hidden absolute left-0 right-0 mt-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl max-h-60 overflow-y-auto z-50 p-2 divide-y divide-slate-100 dark:divide-slate-800 text-left text-xs text-slate-800 dark:text-slate-100"></div>
+                    </div>
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-3xl mx-auto pt-2">
-                <button onclick="showGeneralSummary()" class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 text-left group relative overflow-hidden flex flex-col justify-between min-h-[190px] shadow-md hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
-                    <div class="absolute -right-8 -top-8 w-32 h-32 bg-indigo-50 dark:bg-indigo-950/30 rounded-full blur-2xl"></div>
-                    <div>
-                        <div class="w-12 h-12 bg-slate-900 text-white rounded-2xl flex items-center justify-center text-xl mb-4 shadow relative z-10"><i class="fas fa-book-open text-indigo-400"></i></div>
-                        <h2 class="text-lg md:text-xl font-bold mb-1 relative z-10 text-slate-800 dark:text-white">บัญชีกองกลาง (ส่วนกลาง)</h2>
-                        <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">บันทึกรายรับ-รายจ่าย แยกสด/โอน พร้อมแนบสลิป/PDF</p>
+            <!-- Live Overview Mini-Widgets -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-4xl mx-auto">
+                <div class="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border border-slate-200/80 dark:border-slate-800 rounded-2xl p-4 flex items-center justify-between shadow-sm">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-base"><i class="fas fa-landmark"></i></div>
+                        <div>
+                            <div class="text-[11px] font-semibold text-slate-500">คงเหลือสุทธิ (บัญชีกองกลาง)</div>
+                            <div id="homeGenNet" class="text-lg font-extrabold text-slate-900 dark:text-white">0.00 ฿</div>
+                        </div>
                     </div>
-                    <div class="mt-4 flex items-center text-indigo-600 dark:text-indigo-400 font-bold text-xs z-10">เปิดดูรายละเอียด <i class="fas fa-arrow-right ml-1.5 group-hover:translate-x-1.5 transition"></i></div>
+                    <span class="text-[10px] font-bold px-2.5 py-1 rounded-full bg-indigo-50 text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300">กองกลาง</span>
+                </div>
+                <div class="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border border-slate-200/80 dark:border-slate-800 rounded-2xl p-4 flex items-center justify-between shadow-sm">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-base"><i class="fas fa-crosshairs"></i></div>
+                        <div>
+                            <div class="text-[11px] font-semibold text-slate-500">คงเหลือสุทธิ (สนามยิงปืน)</div>
+                            <div id="homeShootNet" class="text-lg font-extrabold text-slate-900 dark:text-white">0.00 ฿</div>
+                        </div>
+                    </div>
+                    <span class="text-[10px] font-bold px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300">สนามยิงปืน</span>
+                </div>
+            </div>
+
+            <!-- Main Navigation Cards (2 Modules) -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+                <!-- Card 1: บัญชีกองกลาง -->
+                <button onclick="showGeneralSummary()" class="hero-card rounded-[2rem] p-7 text-left group relative overflow-hidden flex flex-col justify-between min-h-[220px]">
+                    <div class="absolute -right-10 -top-10 w-40 h-40 bg-gradient-to-br from-indigo-500/15 to-purple-500/10 rounded-full blur-2xl group-hover:scale-125 transition-transform duration-500"></div>
+                    <div class="relative z-10">
+                        <div class="flex items-center justify-between mb-5">
+                            <div class="w-14 h-14 bg-gradient-to-br from-slate-900 to-indigo-950 text-white rounded-2xl flex items-center justify-center text-2xl shadow-lg group-hover:scale-105 transition">
+                                <i class="fas fa-book-open text-amber-400"></i>
+                            </div>
+                            <span class="px-3 py-1 rounded-full bg-indigo-50 dark:bg-indigo-950/70 text-indigo-600 dark:text-indigo-300 text-[11px] font-bold border border-indigo-100 dark:border-indigo-800/50">General Ledger</span>
+                        </div>
+                        <h2 class="text-xl sm:text-2xl font-extrabold mb-1.5 text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition">บัญชีกองกลาง</h2>
+                        <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-normal leading-relaxed">บันทึกรายรับ-รายจ่าย แยกเงินสดและโอนบัญชี พร้อมระบบคัดกรองรายปี/เดือน และแนบสลิปหลักฐาน</p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-indigo-600 dark:text-indigo-400 font-bold text-xs relative z-10">
+                        <span>เข้าสู่ระบบบัญชีกองกลาง</span>
+                        <span class="w-8 h-8 rounded-full bg-indigo-50 dark:bg-indigo-950 flex items-center justify-center group-hover:bg-indigo-600 group-hover:text-white transition"><i class="fas fa-arrow-right"></i></span>
+                    </div>
                 </button>
-                <button onclick="showShootingRange()" class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 text-left group relative overflow-hidden flex flex-col justify-between min-h-[190px] shadow-md hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
-                    <div class="absolute -right-8 -top-8 w-32 h-32 bg-emerald-50 dark:bg-emerald-950/30 rounded-full blur-2xl"></div>
-                    <div>
-                        <div class="w-12 h-12 bg-slate-900 text-white rounded-2xl flex items-center justify-center text-xl mb-4 shadow relative z-10"><i class="fas fa-crosshairs text-emerald-400"></i></div>
-                        <h2 class="text-lg md:text-xl font-bold mb-1 relative z-10 text-slate-800 dark:text-white">บัญชีสนามยิงปืน</h2>
-                        <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">คำนวณอัตโนมัติ (กระสุน 1,000 / เป้า 15) พร้อมสลิป</p>
+
+                <!-- Card 2: รายการสรุปสนามยิงปืน -->
+                <button onclick="showShootingRange()" class="hero-card rounded-[2rem] p-7 text-left group relative overflow-hidden flex flex-col justify-between min-h-[220px]">
+                    <div class="absolute -right-10 -top-10 w-40 h-40 bg-gradient-to-br from-emerald-500/15 to-teal-500/10 rounded-full blur-2xl group-hover:scale-125 transition-transform duration-500"></div>
+                    <div class="relative z-10">
+                        <div class="flex items-center justify-between mb-5">
+                            <div class="w-14 h-14 bg-gradient-to-br from-slate-900 to-emerald-950 text-white rounded-2xl flex items-center justify-center text-2xl shadow-lg group-hover:scale-105 transition">
+                                <i class="fas fa-crosshairs text-emerald-400"></i>
+                            </div>
+                            <span class="px-3 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950/70 text-emerald-600 dark:text-emerald-300 text-[11px] font-bold border border-emerald-100 dark:border-emerald-800/50">Shooting Range</span>
+                        </div>
+                        <h2 class="text-xl sm:text-2xl font-extrabold mb-1.5 text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition">รายการสรุปสนามยิงปืน</h2>
+                        <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-normal leading-relaxed">สรุปยอดขายกระสุนและเป้าอัตโนมัติ แยกรายเดือน/รายปี แสดงผลแบบละเอียดหรือแบบสรุป พร้อมส่งรายงานไลน์</p>
                     </div>
-                    <div class="mt-4 flex items-center text-emerald-600 dark:text-emerald-400 font-bold text-xs z-10">เปิดดูรายละเอียด <i class="fas fa-arrow-right ml-1.5 group-hover:translate-x-1.5 transition"></i></div>
+                    <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-emerald-600 dark:text-emerald-400 font-bold text-xs relative z-10">
+                        <span>เข้าสู่รายการสรุปสนามยิงปืน</span>
+                        <span class="w-8 h-8 rounded-full bg-emerald-50 dark:bg-emerald-950 flex items-center justify-center group-hover:bg-emerald-600 group-hover:text-white transition"><i class="fas fa-arrow-right"></i></span>
+                    </div>
                 </button>
             </div>
         </div>
 
-        <!-- View 2: General Ledger Summary View -->
-        <div id="view-general-summary" class="hidden space-y-5">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-                <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 flex items-center gap-3 shadow-sm">
-                    <div class="w-11 h-11 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 flex items-center justify-center text-emerald-600 text-base"><i class="fas fa-arrow-down"></i></div>
+        <!-- ==================== VIEW 2: GENERAL LEDGER (บัญชีกองกลาง) ==================== -->
+        <div id="view-general-summary" class="hidden space-y-4">
+            <!-- KPI Summary Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div class="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-2xl p-4 flex items-center gap-3.5 shadow-sm">
+                    <div class="w-11 h-11 rounded-2xl bg-emerald-50 dark:bg-emerald-950/50 flex items-center justify-center text-emerald-600 text-base"><i class="fas fa-arrow-down"></i></div>
                     <div>
-                        <span class="text-[11px] font-bold text-slate-500 uppercase tracking-wider">รับรวมสะสม</span>
+                        <span class="text-[11px] font-semibold text-slate-500">รายรับรวม (ตามตัวกรอง)</span>
                         <div id="genDashIn" class="text-xl font-extrabold text-emerald-600 mt-0.5">0.00</div>
                     </div>
                 </div>
-                <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 flex items-center gap-3 shadow-sm">
-                    <div class="w-11 h-11 rounded-xl bg-rose-50 dark:bg-rose-950/40 flex items-center justify-center text-rose-600 text-base"><i class="fas fa-arrow-up"></i></div>
+                <div class="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-2xl p-4 flex items-center gap-3.5 shadow-sm">
+                    <div class="w-11 h-11 rounded-2xl bg-rose-50 dark:bg-rose-950/50 flex items-center justify-center text-rose-600 text-base"><i class="fas fa-arrow-up"></i></div>
                     <div>
-                        <span class="text-[11px] font-bold text-slate-500 uppercase tracking-wider">จ่ายรวมสะสม</span>
+                        <span class="text-[11px] font-semibold text-slate-500">รายจ่ายรวม (ตามตัวกรอง)</span>
                         <div id="genDashOut" class="text-xl font-extrabold text-rose-600 mt-0.5">0.00</div>
                     </div>
                 </div>
-                <div class="bg-slate-900 text-white rounded-2xl p-4 flex items-center gap-3 shadow-md">
-                    <div class="w-11 h-11 rounded-xl bg-white/10 flex items-center justify-center text-amber-400 text-base"><i class="fas fa-wallet"></i></div>
+                <div class="bg-gradient-to-r from-slate-900 to-indigo-950 text-white rounded-2xl p-4 flex items-center gap-3.5 shadow-md">
+                    <div class="w-11 h-11 rounded-2xl bg-white/10 flex items-center justify-center text-amber-400 text-base"><i class="fas fa-wallet"></i></div>
                     <div>
-                        <span class="text-[11px] font-bold text-indigo-200 uppercase tracking-wider">ยอดคงเหลือสุทธิปัจจุบัน</span>
+                        <span class="text-[11px] font-semibold text-indigo-200">ยอดคงเหลือสุทธิ</span>
                         <div id="genDashNet" class="text-2xl font-black text-white mt-0.5">0.00</div>
                     </div>
                 </div>
             </div>
 
-            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl shadow-sm overflow-hidden">
-                <div class="p-4 md:p-5 border-b border-slate-100 dark:border-slate-800 flex flex-col md:flex-row justify-between items-start md:items-center gap-3 bg-slate-50/70 dark:bg-slate-900/50">
-                    <h2 class="text-base md:text-lg font-bold flex items-center gap-2.5 text-slate-800 dark:text-white"><i class="fas fa-book text-indigo-600 text-sm"></i> บัญชีรายรับ-รายจ่าย (กองกลาง)</h2>
-                    <div class="flex flex-wrap gap-2 w-full md:w-auto">
-                        <button onclick="exportToCSV('general')" class="flex-1 md:flex-none bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 hover:bg-slate-50 text-slate-700 dark:text-slate-200 px-3.5 py-2 rounded-xl text-xs font-bold shadow-sm transition flex items-center justify-center gap-1.5"><i class="fas fa-file-excel text-emerald-600"></i> Export</button>
-                        <button onclick="shareToLine('generalTableCapture', 'General_Ledger', this)" class="flex-1 md:flex-none bg-[#00B900] hover:bg-[#009900] text-white px-3.5 py-2 rounded-xl text-xs font-bold shadow-sm transition flex items-center justify-center gap-1.5"><i class="fab fa-line"></i> แชร์</button>
-                        <button onclick="showGeneralInput()" class="flex-1 md:flex-none bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-xl text-xs font-bold shadow-sm transition flex items-center justify-center gap-1.5"><i class="fas fa-plus"></i> เพิ่มรายการ</button>
+            <!-- Main Table Card -->
+            <div class="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-[1.75rem] shadow-sm overflow-hidden">
+                <!-- Header & Action Buttons -->
+                <div class="p-4 sm:p-5 border-b border-slate-100 dark:border-slate-800 flex flex-col lg:flex-row justify-between items-start lg:items-center gap-3 bg-slate-50/50 dark:bg-slate-900/50">
+                    <div>
+                        <h2 class="text-base sm:text-lg font-extrabold flex items-center gap-2.5 text-slate-800 dark:text-white">
+                            <span class="w-8 h-8 rounded-xl bg-indigo-100 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-sm"><i class="fas fa-book"></i></span>
+                            บัญชีกองกลาง (รายรับ - รายจ่าย)
+                        </h2>
+                    </div>
+                    <div class="flex flex-wrap items-center gap-2 w-full lg:w-auto">
+                        <button onclick="refreshAllData(true)" class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 text-slate-700 dark:text-slate-200 px-3 py-2 rounded-xl text-xs font-bold shadow-sm transition flex items-center gap-1.5" title="รีเฟรชข้อมูล">
+                            <i class="fas fa-sync-alt text-indigo-500"></i><span class="hidden sm:inline">รีเฟรช</span>
+                        </button>
+                        <button onclick="openLineTextSummaryModal('general')" class="bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 hover:bg-emerald-100 text-emerald-700 dark:text-emerald-300 px-3 py-2 rounded-xl text-xs font-bold shadow-sm transition flex items-center gap-1.5">
+                            <i class="fas fa-comment-dots"></i> สรุปข้อความไลน์
+                        </button>
+                        <button onclick="openQuickShareModal('general')" class="bg-[#00B900] hover:bg-[#009e00] text-white px-3.5 py-2 rounded-xl text-xs font-bold shadow-sm transition flex items-center gap-1.5">
+                            <i class="fab fa-line text-sm"></i> แชร์ภาพ / ส่งออก
+                        </button>
+                        <button onclick="showGeneralInput()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-xl text-xs font-bold shadow-sm transition flex items-center gap-1.5 ml-auto lg:ml-0">
+                            <i class="fas fa-plus"></i> เพิ่มรายการ
+                        </button>
                     </div>
                 </div>
 
-                <div class="p-4">
-                    <div class="table-responsive-wrapper">
-                        <div id="generalTableCapture" class="bg-white dark:bg-slate-900 p-1 min-w-[1000px]">
-                            <table class="w-full text-center border-collapse text-xs">
-                                <thead class="bg-slate-800 text-slate-100 font-semibold sticky top-0 z-10">
-                                    <tr>
-                                        <th rowspan="2" class="border-r border-slate-700 w-10">ลำดับ</th>
-                                        <th rowspan="2" class="border-r border-slate-700 w-28">วันที่</th>
-                                        <th rowspan="2" class="border-r border-slate-700">รายการ</th>
-                                        <th colspan="2" class="border-r border-slate-700 bg-slate-700 text-emerald-300 font-bold border-b border-slate-600">รับ</th>
-                                        <th colspan="2" class="border-r border-slate-700 bg-slate-700 text-rose-300 font-bold border-b border-slate-600">จ่าย</th>
-                                        <th rowspan="2" class="border-r border-slate-700 w-24">คงเหลือ (สด)</th>
-                                        <th rowspan="2" class="border-r border-slate-700 w-24">คงเหลือ (บัญชี)</th>
-                                        <th rowspan="2" class="border-r border-slate-700 bg-indigo-950 text-amber-300 w-28 font-bold">รวมสุทธิ</th>
-                                        <th rowspan="2" class="border-r border-slate-700">หมายเหตุ / อ้างอิง</th>
-                                        <th rowspan="2" class="border-r border-slate-700 w-20">ไฟล์แนบ</th>
-                                        <th rowspan="2" class="no-print-capture w-16">จัดการ</th>
+                <!-- Filter Bar (Year, Month, Detail/Summary Mode) -->
+                <div class="px-4 sm:px-5 py-3 bg-slate-50/80 dark:bg-slate-800/40 border-b border-slate-100 dark:border-slate-800 flex flex-wrap items-center justify-between gap-3">
+                    <div class="flex flex-wrap items-center gap-2">
+                        <span class="text-[11px] font-bold text-slate-500 flex items-center gap-1"><i class="fas fa-filter text-indigo-500"></i> ตัวกรอง:</span>
+                        <select id="genFilterYear" onchange="renderGeneralTable()" class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-1.5 text-xs font-bold text-slate-700 dark:text-slate-200 outline-none focus:border-indigo-500">
+                            <option value="ALL">ทุกปี พ.ศ.</option>
+                        </select>
+                        <select id="genFilterMonth" onchange="renderGeneralTable()" class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-1.5 text-xs font-bold text-slate-700 dark:text-slate-200 outline-none focus:border-indigo-500">
+                            <option value="ALL">ทุกเดือน</option>
+                            <option value="01">มกราคม (ม.ค.)</option><option value="02">กุมภาพันธ์ (ก.พ.)</option>
+                            <option value="03">มีนาคม (มี.ค.)</option><option value="04">เมษายน (เม.ย.)</option>
+                            <option value="05">พฤษภาคม (พ.ค.)</option><option value="06">มิถุนายน (มิ.ย.)</option>
+                            <option value="07">กรกฎาคม (ก.ค.)</option><option value="08">สิงหาคม (ส.ค.)</option>
+                            <option value="09">กันยายน (ก.ย.)</option><option value="10">ตุลาคม (ต.ค.)</option>
+                            <option value="11">พฤศจิกายน (พ.ย.)</option><option value="12">ธันวาคม (ธ.ค.)</option>
+                        </select>
+                        <button onclick="resetGeneralFilters()" class="text-[11px] font-semibold text-slate-400 hover:text-indigo-600 px-2 py-1 transition">ล้างตัวกรอง</button>
+                    </div>
+
+                    <!-- View Mode Switcher: Detailed vs Summary -->
+                    <div class="inline-flex rounded-xl bg-slate-200/70 dark:bg-slate-800 p-1">
+                        <button type="button" id="genModeDetailBtn" onclick="setGeneralViewMode('detail')" class="px-3 py-1 rounded-lg text-[11px] font-bold bg-white dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 shadow-sm transition">
+                            <i class="fas fa-list-ul mr-1"></i> แบบละเอียด
+                        </button>
+                        <button type="button" id="genModeSummaryBtn" onclick="setGeneralViewMode('summary')" class="px-3 py-1 rounded-lg text-[11px] font-bold text-slate-600 dark:text-slate-400 hover:text-slate-900 transition">
+                            <i class="fas fa-chart-pie mr-1"></i> แบบสรุปรายเดือน
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Table Container -->
+                <div class="p-3 sm:p-4">
+                    <div class="table-luxury-wrapper">
+                        <div id="generalTableCapture" class="bg-white dark:bg-slate-900 min-w-[920px]">
+                            <table class="luxury-table text-center">
+                                <thead id="generalThead" class="sticky top-0 z-10">
+                                    <tr class="bg-slate-800 text-slate-100">
+                                        <th rowspan="2" class="border-r border-slate-700/70 w-10 rounded-tl-xl">ลำดับ</th>
+                                        <th rowspan="2" class="border-r border-slate-700/70 w-24">วันที่</th>
+                                        <th rowspan="2" class="border-r border-slate-700/70 text-left pl-4">รายการ</th>
+                                        <th colspan="2" class="border-r border-slate-700/70 bg-emerald-950/60 text-emerald-200 border-b border-slate-700/70">รายรับ (+)</th>
+                                        <th colspan="2" class="border-r border-slate-700/70 bg-rose-950/60 text-rose-200 border-b border-slate-700/70">รายจ่าย (-)</th>
+                                        <th rowspan="2" class="border-r border-slate-700/70 w-24 bg-slate-800/95">คงเหลือ (สด)</th>
+                                        <th rowspan="2" class="border-r border-slate-700/70 w-24 bg-slate-800/95">คงเหลือ (บัญชี)</th>
+                                        <th rowspan="2" class="border-r border-slate-700/70 bg-indigo-950 text-amber-300 w-28 font-bold">รวมสุทธิ</th>
+                                        <th rowspan="2" class="border-r border-slate-700/70">หมายเหตุ</th>
+                                        <th rowspan="2" class="border-r border-slate-700/70 w-16 no-print-capture">สลิป</th>
+                                        <th rowspan="2" class="no-print-capture w-16 rounded-tr-xl">จัดการ</th>
                                     </tr>
-                                    <tr class="bg-slate-700/90 text-[11px] text-slate-200">
-                                        <th class="border-r border-slate-600 w-20">สด</th>
-                                        <th class="border-r border-slate-600 w-20">โอน</th>
-                                        <th class="border-r border-slate-600 w-20">สด</th>
-                                        <th class="border-r border-slate-600 w-20">โอน</th>
+                                    <tr class="bg-slate-700/95 text-[11px] text-slate-200">
+                                        <th class="border-r border-slate-600/60 w-20 bg-emerald-900/30">เงินสด</th>
+                                        <th class="border-r border-slate-600/60 w-20 bg-emerald-900/30">โอนบัญชี</th>
+                                        <th class="border-r border-slate-600/60 w-20 bg-rose-900/30">เงินสด</th>
+                                        <th class="border-r border-slate-600/60 w-20 bg-rose-900/30">โอนบัญชี</th>
                                     </tr>
                                 </thead>
-                                <tbody id="generalTbody" class="divide-y divide-slate-200 dark:divide-slate-800"></tbody>
-                                <tfoot id="generalTfoot" class="bg-slate-50 dark:bg-slate-900/90 border-t-2 border-slate-300 dark:border-slate-700 font-bold"></tfoot>
+                                <tbody id="generalTbody" class="divide-y divide-slate-100 dark:divide-slate-800/80"></tbody>
+                                <tfoot id="generalTfoot" class="bg-slate-50 dark:bg-slate-800/60 border-t-2 border-slate-200 dark:border-slate-700 font-bold"></tfoot>
                             </table>
                         </div>
                     </div>
@@ -219,11 +379,11 @@
             </div>
         </div>
 
-        <!-- View 2.1: General Input Form -->
+        <!-- ==================== VIEW 2.1: GENERAL INPUT FORM ==================== -->
         <div id="view-general-input" class="hidden max-w-xl mx-auto py-2">
-            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 md:p-8 space-y-4 shadow-2xl">
+            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-[2rem] p-6 sm:p-8 space-y-4 shadow-2xl">
                 <div class="flex justify-between items-center border-b border-slate-100 dark:border-slate-800 pb-4">
-                    <h2 class="text-lg font-bold text-slate-800 dark:text-white" id="generalFormTitle"><i class="fas fa-file-invoice-dollar text-indigo-600 mr-2"></i> บันทึกรายการใหม่</h2>
+                    <h2 class="text-lg font-extrabold text-slate-800 dark:text-white" id="generalFormTitle"><i class="fas fa-file-invoice-dollar text-indigo-600 mr-2"></i> บันทึกรายการใหม่</h2>
                     <button onclick="showGeneralSummary()" class="w-8 h-8 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-600 dark:text-slate-300 rounded-full flex items-center justify-center transition"><i class="fas fa-times"></i></button>
                 </div>
                 <form id="generalForm" onsubmit="saveGeneralRecord(event)" class="space-y-4">
@@ -252,19 +412,10 @@
                                         <i class="fas fa-chevron-right text-xs"></i>
                                     </button>
                                 </div>
-
                                 <div class="grid grid-cols-7 text-center text-[11px] font-bold text-slate-500 dark:text-slate-400 mb-1.5">
-                                    <div class="text-rose-500">อา</div>
-                                    <div>จ</div>
-                                    <div>อ</div>
-                                    <div>พ</div>
-                                    <div>พฤ</div>
-                                    <div>ศ</div>
-                                    <div class="text-indigo-500">ส</div>
+                                    <div class="text-rose-500">อา</div><div>จ</div><div>อ</div><div>พ</div><div>พฤ</div><div>ศ</div><div class="text-indigo-500">ส</div>
                                 </div>
-
                                 <div id="calDaysGrid" class="grid grid-cols-7 gap-1 text-center text-xs font-semibold"></div>
-
                                 <div class="mt-3 pt-2 border-t border-slate-100 dark:border-slate-800 flex justify-between items-center">
                                     <button type="button" onclick="selectTodayThaiCal()" class="text-[11px] font-bold text-indigo-600 dark:text-indigo-400 hover:underline">วันนี้</button>
                                     <button type="button" onclick="closeThaiCalendar()" class="text-[11px] font-medium text-slate-400 hover:text-slate-600">ปิด</button>
@@ -273,7 +424,7 @@
                         </div>
 
                         <div>
-                            <label class="block text-xs font-bold mb-1.5 text-slate-700 dark:text-slate-300">ประเภทรายการ / การแทรก</label>
+                            <label class="block text-xs font-bold mb-1.5 text-slate-700 dark:text-slate-300">ประเภทรายการ</label>
                             <select id="gActionType" onchange="updateGeneralMethodOptions()" class="w-full border border-slate-300 dark:border-slate-700 rounded-2xl p-3 bg-slate-50 dark:bg-slate-950 focus:border-indigo-500 font-bold outline-none text-xs">
                                 <option value="in">รับเงินเข้า (+)</option>
                                 <option value="out">จ่ายออก (-)</option>
@@ -303,7 +454,6 @@
                         </div>
                     </div>
 
-                    <!-- Attachment Upload Section -->
                     <div class="p-4 bg-indigo-50/50 dark:bg-indigo-950/20 rounded-2xl border border-indigo-100 dark:border-indigo-900/40 space-y-2">
                         <label class="block text-xs font-bold text-indigo-900 dark:text-indigo-300"><i class="fas fa-paperclip mr-1"></i> แนบสลิปโอนเงิน / เอกสาร PDF (ถ้ามี)</label>
                         <input type="file" id="gFile" accept="image/*,.pdf" onchange="previewFile(this, 'gFileBase64', 'gFilePreview')" class="w-full text-xs file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:font-bold file:bg-indigo-600 file:text-white cursor-pointer">
@@ -315,71 +465,127 @@
                         <label class="block text-xs font-bold mb-1.5 text-slate-700 dark:text-slate-300">หมายเหตุเพิ่มเติม</label>
                         <input type="text" id="gNote" placeholder="รายละเอียดอื่นๆ หรืออ้างอิง..." class="w-full border border-slate-300 dark:border-slate-700 rounded-2xl p-3 bg-slate-50 dark:bg-slate-950 outline-none text-xs">
                     </div>
-                    <div class="pt-4">
-                        <button type="submit" class="w-full bg-slate-900 hover:bg-indigo-600 text-white font-bold py-3.5 rounded-2xl shadow-lg transition flex items-center justify-center gap-2 text-sm"><i class="fas fa-save"></i> บันทึกข้อมูลส่วนกลาง</button>
+                    <div class="pt-2">
+                        <button type="submit" class="w-full bg-slate-900 hover:bg-indigo-600 text-white font-bold py-3.5 rounded-2xl shadow-lg transition flex items-center justify-center gap-2 text-sm"><i class="fas fa-save"></i> บันทึกข้อมูลบัญชีกองกลาง</button>
                     </div>
                 </form>
             </div>
         </div>
 
-        <!-- View 3: Shooting Range App Dashboard -->
-        <div id="view-shooting-app" class="hidden space-y-5">
-             <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 flex items-center gap-3 shadow-sm">
-                    <div class="w-11 h-11 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 flex items-center justify-center text-emerald-600 text-base"><i class="fas fa-coins"></i></div>
+        <!-- ==================== VIEW 3: SHOOTING RANGE (รายการสรุปสนามยิงปืน) ==================== -->
+        <div id="view-shooting-app" class="hidden space-y-4">
+            <!-- KPI Summary Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div class="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-2xl p-4 flex items-center gap-3.5 shadow-sm">
+                    <div class="w-11 h-11 rounded-2xl bg-emerald-50 dark:bg-emerald-950/50 flex items-center justify-center text-emerald-600 text-base"><i class="fas fa-coins"></i></div>
                     <div>
-                        <span class="text-[11px] font-bold text-slate-500 uppercase tracking-wider">ยอดขายรวมสุทธิ (กระสุน+เป้า)</span>
+                        <span class="text-[11px] font-semibold text-slate-500">รายรับรวม (กระสุน+เป้า+ยกยอด)</span>
                         <div id="shootDashIn" class="text-xl font-extrabold text-emerald-600 mt-0.5">0.00</div>
                     </div>
                 </div>
-                <div class="bg-slate-900 text-white rounded-2xl p-4 flex items-center gap-3 shadow-md">
-                    <div class="w-11 h-11 rounded-xl bg-white/10 flex items-center justify-center text-amber-400 text-base"><i class="fas fa-wallet"></i></div>
+                <div class="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-2xl p-4 flex items-center gap-3.5 shadow-sm">
+                    <div class="w-11 h-11 rounded-2xl bg-rose-50 dark:bg-rose-950/50 flex items-center justify-center text-rose-600 text-base"><i class="fas fa-receipt"></i></div>
                     <div>
-                        <span class="text-[11px] font-bold text-emerald-200 uppercase tracking-wider">ยอดเงินคงเหลือสุทธิ</span>
+                        <span class="text-[11px] font-semibold text-slate-500">รายจ่ายรวม (ตามตัวกรอง)</span>
+                        <div id="shootDashOut" class="text-xl font-extrabold text-rose-600 mt-0.5">0.00</div>
+                    </div>
+                </div>
+                <div class="bg-gradient-to-r from-slate-900 to-emerald-950 text-white rounded-2xl p-4 flex items-center gap-3.5 shadow-md">
+                    <div class="w-11 h-11 rounded-2xl bg-white/10 flex items-center justify-center text-amber-400 text-base"><i class="fas fa-wallet"></i></div>
+                    <div>
+                        <span class="text-[11px] font-semibold text-emerald-200">ยอดเงินคงเหลือสุทธิ</span>
                         <div id="shootDashNet" class="text-2xl font-black text-white mt-0.5">0.00</div>
                     </div>
                 </div>
             </div>
 
-            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl shadow-sm overflow-hidden">
-                <div class="p-4 md:p-5 border-b border-slate-100 dark:border-slate-800 flex flex-col md:flex-row justify-between items-start md:items-center gap-3 bg-slate-50/70 dark:bg-slate-900/50">
-                    <h2 class="text-base md:text-lg font-bold flex items-center gap-2.5 text-slate-800 dark:text-white"><i class="fas fa-crosshairs text-emerald-600 text-sm"></i> บัญชีสนามยิงปืน (คำนวณอัตโนมัติ กระสุนนัดละ 1,000 | เป้าใบละ 15)</h2>
-                    <div class="flex flex-wrap gap-2 w-full md:w-auto">
-                        <button onclick="exportToCSV('shooting')" class="flex-1 md:flex-none bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 hover:bg-slate-50 text-slate-700 dark:text-slate-200 px-3.5 py-2 rounded-xl text-xs font-bold shadow-sm transition flex items-center justify-center gap-1.5"><i class="fas fa-file-excel text-emerald-600"></i> Export</button>
-                        <button onclick="shareToLine('shootingTableCapture', 'Shooting_Range', this)" class="flex-1 md:flex-none bg-[#00B900] hover:bg-[#009900] text-white px-3.5 py-2 rounded-xl text-xs font-bold shadow-sm transition flex items-center justify-center gap-1.5"><i class="fab fa-line"></i> แชร์</button>
-                        <button onclick="showShootingInput()" class="flex-1 md:flex-none bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-xl text-xs font-bold shadow-sm transition flex items-center justify-center gap-1.5"><i class="fas fa-plus"></i> เพิ่มข้อมูล</button>
+            <!-- Main Table Card -->
+            <div class="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-[1.75rem] shadow-sm overflow-hidden">
+                <!-- Header & Action Buttons -->
+                <div class="p-4 sm:p-5 border-b border-slate-100 dark:border-slate-800 flex flex-col lg:flex-row justify-between items-start lg:items-center gap-3 bg-slate-50/50 dark:bg-slate-900/50">
+                    <div>
+                        <h2 class="text-base sm:text-lg font-extrabold flex items-center gap-2.5 text-slate-800 dark:text-white">
+                            <span class="w-8 h-8 rounded-xl bg-emerald-100 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-sm"><i class="fas fa-crosshairs"></i></span>
+                            รายการสรุปสนามยิงปืน
+                        </h2>
+                    </div>
+                    <div class="flex flex-wrap items-center gap-2 w-full lg:w-auto">
+                        <button onclick="refreshAllData(true)" class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 text-slate-700 dark:text-slate-200 px-3 py-2 rounded-xl text-xs font-bold shadow-sm transition flex items-center gap-1.5" title="รีเฟรชข้อมูล">
+                            <i class="fas fa-sync-alt text-emerald-500"></i><span class="hidden sm:inline">รีเฟรช</span>
+                        </button>
+                        <button onclick="openLineTextSummaryModal('shooting')" class="bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 hover:bg-emerald-100 text-emerald-700 dark:text-emerald-300 px-3 py-2 rounded-xl text-xs font-bold shadow-sm transition flex items-center gap-1.5">
+                            <i class="fas fa-comment-dots"></i> สรุปข้อความไลน์
+                        </button>
+                        <button onclick="openQuickShareModal('shooting')" class="bg-[#00B900] hover:bg-[#009e00] text-white px-3.5 py-2 rounded-xl text-xs font-bold shadow-sm transition flex items-center gap-1.5">
+                            <i class="fab fa-line text-sm"></i> แชร์ภาพ / ส่งออก
+                        </button>
+                        <button onclick="showShootingInput()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-xl text-xs font-bold shadow-sm transition flex items-center gap-1.5 ml-auto lg:ml-0">
+                            <i class="fas fa-plus"></i> เพิ่มข้อมูล
+                        </button>
                     </div>
                 </div>
 
-                <div class="p-4">
-                    <div class="table-responsive-wrapper">
-                        <div id="shootingTableCapture" class="min-w-[1100px] p-1 bg-white dark:bg-slate-900">
-                            <table class="w-full text-center border-collapse text-xs">
-                                <thead class="bg-slate-800 text-slate-100 font-semibold sticky top-0 z-10">
-                                    <tr>
-                                        <th rowspan="2" class="border-r border-slate-700 w-20">เดือน</th>
-                                        <th rowspan="2" class="border-r border-slate-700">รายการ / ยกยอด / รายจ่าย</th>
-                                        <th colspan="5" class="bg-slate-700 border-r border-slate-600 border-b border-slate-600 font-bold text-amber-300">ยอดขายกระสุน (นัดละ 1,000)</th>
-                                        <th colspan="5" class="bg-slate-800 border-r border-slate-700 border-b border-slate-600 font-bold text-emerald-300">ยอดขายเป้า (ใบละ 15)</th>
-                                        <th rowspan="2" class="border-l border-slate-700 bg-indigo-950 w-28 text-amber-300 font-bold">คงเหลือสุทธิ</th>
-                                        <th rowspan="2" class="border-r border-slate-700 w-20">ไฟล์แนบ</th>
-                                        <th rowspan="2" class="no-print-capture w-16">จัดการ</th>
+                <!-- Filter Bar (Year, Month, Detail/Summary Mode) -->
+                <div class="px-4 sm:px-5 py-3 bg-slate-50/80 dark:bg-slate-800/40 border-b border-slate-100 dark:border-slate-800 flex flex-wrap items-center justify-between gap-3">
+                    <div class="flex flex-wrap items-center gap-2">
+                        <span class="text-[11px] font-bold text-slate-500 flex items-center gap-1"><i class="fas fa-filter text-emerald-500"></i> ตัวกรอง:</span>
+                        <select id="shootFilterYear" onchange="renderShootingTable()" class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-1.5 text-xs font-bold text-slate-700 dark:text-slate-200 outline-none focus:border-emerald-500">
+                            <option value="ALL">ทุกปี พ.ศ.</option>
+                        </select>
+                        <select id="shootFilterMonth" onchange="renderShootingTable()" class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-1.5 text-xs font-bold text-slate-700 dark:text-slate-200 outline-none focus:border-emerald-500">
+                            <option value="ALL">ทุกเดือน</option>
+                            <option value="ยกยอดมา">ยอดยกมา</option>
+                            <option value="ม.ค.">มกราคม (ม.ค.)</option><option value="ก.พ.">กุมภาพันธ์ (ก.พ.)</option>
+                            <option value="มี.ค.">มีนาคม (มี.ค.)</option><option value="เม.ย.">เมษายน (เม.ย.)</option>
+                            <option value="พ.ค.">พฤษภาคม (พ.ค.)</option><option value="มิ.ย.">มิถุนายน (มิ.ย.)</option>
+                            <option value="ก.ค.">กรกฎาคม (ก.ค.)</option><option value="ส.ค.">สิงหาคม (ส.ค.)</option>
+                            <option value="ก.ย.">กันยายน (ก.ย.)</option><option value="ต.ค.">ตุลาคม (ต.ค.)</option>
+                            <option value="พ.ย.">พฤศจิกายน (พ.ย.)</option><option value="ธ.ค.">ธันวาคม (ธ.ค.)</option>
+                        </select>
+                        <button onclick="resetShootingFilters()" class="text-[11px] font-semibold text-slate-400 hover:text-emerald-600 px-2 py-1 transition">ล้างตัวกรอง</button>
+                    </div>
+
+                    <!-- View Mode Switcher: Detailed vs Summary -->
+                    <div class="inline-flex rounded-xl bg-slate-200/70 dark:bg-slate-800 p-1">
+                        <button type="button" id="shootModeDetailBtn" onclick="setShootingViewMode('detail')" class="px-3 py-1 rounded-lg text-[11px] font-bold bg-white dark:bg-slate-900 text-emerald-600 dark:text-emerald-400 shadow-sm transition">
+                            <i class="fas fa-list-ul mr-1"></i> แบบละเอียด
+                        </button>
+                        <button type="button" id="shootModeSummaryBtn" onclick="setShootingViewMode('summary')" class="px-3 py-1 rounded-lg text-[11px] font-bold text-slate-600 dark:text-slate-400 hover:text-slate-900 transition">
+                            <i class="fas fa-chart-bar mr-1"></i> แบบสรุปภาพรวม
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Table Container -->
+                <div class="p-3 sm:p-4">
+                    <div class="table-luxury-wrapper">
+                        <div id="shootingTableCapture" class="min-w-[960px] bg-white dark:bg-slate-900">
+                            <table class="luxury-table text-center">
+                                <thead id="shootingThead" class="sticky top-0 z-10">
+                                    <tr class="bg-slate-800 text-slate-100">
+                                        <th rowspan="2" class="border-r border-slate-700/70 w-24 rounded-tl-xl">เดือน / ปี</th>
+                                        <th rowspan="2" class="border-r border-slate-700/70 text-left pl-4">รายการ / ยกยอด / รายจ่าย</th>
+                                        <th colspan="5" class="bg-indigo-950/70 border-r border-slate-700/70 border-b border-slate-700/70 text-indigo-200">ยอดขายกระสุน (1,000 บ./นัด)</th>
+                                        <th colspan="5" class="bg-emerald-950/70 border-r border-slate-700/70 border-b border-slate-700/70 text-emerald-200">ยอดขายเป้า (15 บ./ใบ)</th>
+                                        <th rowspan="2" class="border-l border-slate-700/70 bg-slate-900 w-28 text-amber-300 font-bold">คงเหลือสุทธิ</th>
+                                        <th rowspan="2" class="border-r border-slate-700/70 w-16 no-print-capture">สลิป</th>
+                                        <th rowspan="2" class="no-print-capture w-16 rounded-tr-xl">จัดการ</th>
                                     </tr>
-                                    <tr class="bg-slate-700/90 text-[11px] text-slate-200">
-                                        <th class="border-r border-slate-600 w-16">โอน (นัด)</th>
-                                        <th class="border-r border-slate-600 w-20">ยอดเงิน</th>
-                                        <th class="border-r border-slate-600 w-16">สด (นัด)</th>
-                                        <th class="border-r border-slate-600 w-20">ยอดเงิน</th>
-                                        <th class="border-r border-slate-600 bg-slate-600 text-white font-bold w-20">รวม</th>
-                                        <th class="border-r border-slate-600 w-16">โอน (ใบ)</th>
-                                        <th class="border-r border-slate-600 w-20">ยอดเงิน</th>
-                                        <th class="border-r border-slate-600 w-16">สด (ใบ)</th>
-                                        <th class="border-r border-slate-600 w-20">ยอดเงิน</th>
-                                        <th class="border-r border-slate-600 bg-slate-700 text-white font-bold w-20">รวม</th>
+                                    <tr class="bg-slate-700/95 text-[11px] text-slate-200">
+                                        <th class="border-r border-slate-600/60 w-14 bg-indigo-900/30">โอน</th>
+                                        <th class="border-r border-slate-600/60 w-20 bg-indigo-900/30">ยอดเงิน</th>
+                                        <th class="border-r border-slate-600/60 w-14 bg-indigo-900/30">สด</th>
+                                        <th class="border-r border-slate-600/60 w-20 bg-indigo-900/30">ยอดเงิน</th>
+                                        <th class="border-r border-slate-600/60 bg-indigo-950/60 text-indigo-200 font-bold w-20">รวม</th>
+                                        <th class="border-r border-slate-600/60 w-14 bg-emerald-900/30">โอน</th>
+                                        <th class="border-r border-slate-600/60 w-20 bg-emerald-900/30">ยอดเงิน</th>
+                                        <th class="border-r border-slate-600/60 w-14 bg-emerald-900/30">สด</th>
+                                        <th class="border-r border-slate-600/60 w-20 bg-emerald-900/30">ยอดเงิน</th>
+                                        <th class="border-r border-slate-600/60 bg-emerald-950/60 text-emerald-200 font-bold w-20">รวม</th>
                                     </tr>
                                 </thead>
-                                <tbody id="shootingTbody" class="font-medium divide-y divide-slate-200 dark:divide-slate-800"></tbody>
-                                <tfoot id="shootingTfoot" class="font-bold border-t-2 border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/90"></tfoot>
+                                <tbody id="shootingTbody" class="font-medium divide-y divide-slate-100 dark:divide-slate-800/80"></tbody>
+                                <tfoot id="shootingTfoot" class="font-bold border-t-2 border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/60"></tfoot>
                             </table>
                         </div>
                     </div>
@@ -387,11 +593,11 @@
             </div>
         </div>
 
-        <!-- View 3.1: Shooting Input Form -->
+        <!-- ==================== VIEW 3.1: SHOOTING INPUT FORM ==================== -->
         <div id="view-shooting-input" class="hidden max-w-xl mx-auto py-2">
-            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 md:p-8 space-y-5 shadow-2xl">
+            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-[2rem] p-6 sm:p-8 space-y-5 shadow-2xl">
                 <div class="flex justify-between items-center border-b border-slate-100 dark:border-slate-800 pb-4">
-                    <h2 class="text-lg font-bold text-slate-800 dark:text-white" id="shootingFormTitle"><i class="fas fa-crosshairs text-emerald-600 mr-2"></i> บันทึกข้อมูลสนามยิงปืน</h2>
+                    <h2 class="text-lg font-extrabold text-slate-800 dark:text-white" id="shootingFormTitle"><i class="fas fa-crosshairs text-emerald-600 mr-2"></i> บันทึกข้อมูลสนามยิงปืน</h2>
                     <button onclick="showShootingRange()" class="w-8 h-8 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-600 dark:text-slate-300 rounded-full flex items-center justify-center transition"><i class="fas fa-times"></i></button>
                 </div>
                 <form id="shootingForm" onsubmit="saveShootingRecord(event)" class="space-y-4">
@@ -481,7 +687,7 @@
                         <div id="sFilePreview" class="hidden mt-2 text-center"></div>
                     </div>
 
-                    <div class="pt-4">
+                    <div class="pt-2">
                         <button type="submit" class="w-full bg-slate-900 hover:bg-emerald-600 text-white font-bold py-3.5 rounded-2xl shadow-lg transition flex items-center justify-center gap-2 text-sm"><i class="fas fa-save"></i> บันทึกข้อมูลสนามยิงปืน</button>
                     </div>
                 </form>
@@ -489,8 +695,97 @@
         </div>
     </main>
 
+    <!-- ==================== MODAL 1: LINE TEXT SUMMARY REPORT ==================== -->
+    <div id="lineTextSummaryModal" class="hidden fixed inset-0 z-[135] bg-slate-950/75 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
+        <div class="bg-white dark:bg-slate-900 rounded-[2rem] max-w-lg w-full p-5 sm:p-6 space-y-4 shadow-2xl border border-slate-200 dark:border-slate-800 modal-animate">
+            <div class="flex justify-between items-center border-b border-slate-100 dark:border-slate-800 pb-3">
+                <h3 class="font-extrabold text-sm sm:text-base text-slate-800 dark:text-white flex items-center gap-2">
+                    <span class="w-8 h-8 rounded-xl bg-[#00B900]/15 text-[#00B900] flex items-center justify-center"><i class="fab fa-line text-lg"></i></span>
+                    สรุปรายงานข้อความทางไลน์
+                </h3>
+                <button onclick="closeLineTextSummaryModal()" class="w-8 h-8 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-600 dark:text-slate-300 rounded-full flex items-center justify-center transition"><i class="fas fa-times text-xs"></i></button>
+            </div>
+
+            <input type="hidden" id="lineSummaryAccountType">
+
+            <!-- Period Selectors -->
+            <div class="grid grid-cols-3 gap-2.5 bg-slate-50 dark:bg-slate-800/50 p-3.5 rounded-2xl border border-slate-200/80 dark:border-slate-700">
+                <div>
+                    <label class="block text-[10px] font-bold text-slate-500 mb-1">ประจำปี พ.ศ.</label>
+                    <select id="lineSumYear" onchange="generateLineSummaryText()" class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-2 text-xs font-bold outline-none"></select>
+                </div>
+                <div>
+                    <label class="block text-[10px] font-bold text-slate-500 mb-1">ตั้งแต่เดือน</label>
+                    <select id="lineSumStartMonth" onchange="generateLineSummaryText()" class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-2 text-xs font-bold outline-none"></select>
+                </div>
+                <div>
+                    <label class="block text-[10px] font-bold text-slate-500 mb-1">ถึงเดือน</label>
+                    <select id="lineSumEndMonth" onchange="generateLineSummaryText()" class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-2 text-xs font-bold outline-none"></select>
+                </div>
+            </div>
+
+            <!-- Generated Text Preview -->
+            <div class="space-y-1.5">
+                <div class="flex justify-between items-center">
+                    <label class="text-[11px] font-bold text-slate-500">ตัวอย่างข้อความพร้อมส่งไลน์:</label>
+                    <span class="text-[10px] text-emerald-600 font-semibold"><i class="fas fa-magic mr-1"></i>คำนวณอัตโนมัติ</span>
+                </div>
+                <textarea id="lineSummaryTextarea" rows="8" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl p-3.5 text-xs sm:text-sm font-medium text-slate-800 dark:text-slate-100 leading-relaxed outline-none focus:border-[#00B900]"></textarea>
+            </div>
+
+            <div class="grid grid-cols-2 gap-2.5 pt-1">
+                <button type="button" onclick="copyLineSummaryText()" class="bg-slate-900 hover:bg-slate-800 dark:bg-slate-800 dark:hover:bg-slate-700 text-white font-bold py-3 rounded-2xl shadow transition text-xs flex items-center justify-center gap-1.5">
+                    <i class="fas fa-copy"></i> คัดลอกข้อความ
+                </button>
+                <button type="button" onclick="shareLineTextDirect()" class="bg-[#00B900] hover:bg-[#009900] text-white font-bold py-3 rounded-2xl shadow transition text-xs flex items-center justify-center gap-1.5">
+                    <i class="fab fa-line text-base"></i> ส่งเข้า LINE ทันที
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== MODAL 2: QUICK IMAGE PREVIEW & UNIVERSAL SHARE / EXPORT ==================== -->
+    <div id="quickShareModal" class="hidden fixed inset-0 z-[135] bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-3 sm:p-4">
+        <div class="bg-white dark:bg-slate-900 rounded-[2rem] max-w-3xl w-full p-5 sm:p-6 space-y-4 shadow-2xl border border-slate-200 dark:border-slate-800 modal-animate">
+            <div class="flex justify-between items-center border-b border-slate-100 dark:border-slate-800 pb-3">
+                <h3 class="font-extrabold text-sm sm:text-base text-slate-800 dark:text-white flex items-center gap-2">
+                    <span class="w-8 h-8 rounded-xl bg-indigo-100 dark:bg-indigo-950 text-indigo-600 flex items-center justify-center"><i class="fas fa-image"></i></span>
+                    ตัวอย่างภาพรายงานแบบด่วน & ส่งออกข้อมูล
+                </h3>
+                <button onclick="closeQuickShareModal()" class="w-8 h-8 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-600 dark:text-slate-300 rounded-full flex items-center justify-center transition"><i class="fas fa-times text-xs"></i></button>
+            </div>
+
+            <input type="hidden" id="quickShareType">
+
+            <!-- Image Preview Stage -->
+            <div class="bg-slate-100 dark:bg-slate-950 rounded-2xl p-3 sm:p-4 border border-slate-200 dark:border-slate-800 max-h-[55vh] overflow-auto flex flex-col items-center justify-center">
+                <div id="quickShareLoading" class="py-10 text-center space-y-2">
+                    <i class="fas fa-circle-notch fa-spin text-2xl text-indigo-600"></i>
+                    <p class="text-xs font-bold text-slate-500">กำลังออกแบบภาพรายงานความละเอียดสูง...</p>
+                </div>
+                <img id="quickSharePreviewImg" class="hidden max-w-full rounded-xl shadow-lg border border-slate-200 dark:border-slate-700" alt="ตัวอย่างรายงาน">
+            </div>
+
+            <!-- Universal Action Buttons (Works on iOS, Android, iPad, PC/Mac) -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-1">
+                <button type="button" onclick="executeUniversalImageShare()" class="bg-[#00B900] hover:bg-[#009900] text-white font-bold py-3 px-4 rounded-2xl shadow-md transition text-xs flex items-center justify-center gap-2">
+                    <i class="fas fa-share-nodes text-sm"></i> แชร์รูปภาพ (มือถือ/iPad/LINE)
+                </button>
+                <button type="button" onclick="downloadGeneratedReportImage()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-2xl shadow-md transition text-xs flex items-center justify-center gap-2">
+                    <i class="fas fa-download text-sm"></i> บันทึกรูปภาพ (PNG)
+                </button>
+                <button type="button" onclick="exportCurrentAccountCSV()" class="bg-slate-800 hover:bg-slate-700 text-white font-bold py-3 px-4 rounded-2xl shadow-md transition text-xs flex items-center justify-center gap-2">
+                    <i class="fas fa-file-excel text-emerald-400 text-sm"></i> ส่งออกไฟล์ Excel (CSV)
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden Off-Screen Executive Report Card for Crisp Image Rendering -->
+    <div id="offscreenReportStage" style="position: fixed; left: -9999px; top: 0; z-index: -1;"></div>
+
     <!-- Modal: Numeric Prompt -->
-    <div id="numericPromptModal" class="hidden fixed inset-0 z-[120] bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div id="numericPromptModal" class="hidden fixed inset-0 z-[140] bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white dark:bg-slate-900 rounded-3xl max-w-sm w-full p-6 space-y-4 shadow-2xl border border-slate-100 dark:border-slate-800 modal-animate">
             <div class="flex justify-between items-center border-b border-slate-100 dark:border-slate-800 pb-3">
                 <h3 id="numericPromptTitle" class="font-bold text-sm text-slate-800 dark:text-white flex items-center gap-2"><i class="fas fa-calculator text-indigo-600"></i> กรอกตัวเลข</h3>
@@ -514,7 +809,7 @@
     </div>
 
     <!-- Modal: File Lightbox Preview -->
-    <div id="filePreviewModal" class="hidden fixed inset-0 z-[130] bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
+    <div id="filePreviewModal" class="hidden fixed inset-0 z-[140] bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
         <div class="bg-white dark:bg-slate-900 rounded-3xl max-w-2xl w-full p-6 space-y-4 shadow-2xl border border-slate-100 dark:border-slate-800 modal-animate text-center relative">
             <div class="flex justify-between items-center border-b border-slate-100 dark:border-slate-800 pb-3">
                 <h3 class="font-bold text-sm text-slate-800 dark:text-white flex items-center gap-2"><i class="fas fa-file-invoice text-indigo-600"></i> รายละเอียดไฟล์แนบ / สลิป</h3>
@@ -528,17 +823,16 @@
     </div>
 
     <!-- Modal: Success Notification -->
-    <div id="successModal" class="hidden fixed inset-0 z-[140] bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div id="successModal" class="hidden fixed inset-0 z-[150] bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white dark:bg-slate-900 rounded-3xl max-w-sm w-full p-6 text-center space-y-4 shadow-2xl border border-slate-100 dark:border-slate-800 relative modal-animate">
-            <div class="w-20 h-20 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-500 rounded-full flex items-center justify-center mx-auto text-3xl shadow-inner mb-1 relative">
-                <div class="absolute inset-0 rounded-full border-4 border-emerald-100 dark:border-emerald-900/50 animate-ping opacity-50"></div>
+            <div class="w-16 h-16 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-500 rounded-full flex items-center justify-center mx-auto text-2xl shadow-inner mb-1">
                 <i class="fas fa-check"></i>
             </div>
             <div class="space-y-1">
-                <h3 id="successModalTitle" class="font-bold text-xl text-slate-800 dark:text-white">บันทึกข้อมูลสำเร็จ</h3>
-                <p id="successModalMsg" class="text-xs text-slate-500 dark:text-slate-400 font-medium">ดำเนินการบันทึกรายการและซิงก์คลาวด์เรียบร้อยแล้ว</p>
+                <h3 id="successModalTitle" class="font-extrabold text-lg text-slate-800 dark:text-white">ดำเนินการสำเร็จ</h3>
+                <p id="successModalMsg" class="text-xs text-slate-500 dark:text-slate-400 font-medium">อัปเดตข้อมูลเรียบร้อยแล้ว</p>
             </div>
-            <button onclick="closeSuccessModal()" class="w-full bg-slate-900 hover:bg-slate-800 dark:bg-slate-800 dark:hover:bg-slate-700 text-white font-bold py-3 rounded-2xl shadow transition text-xs mt-2">ปิดหน้าต่าง</button>
+            <button onclick="closeSuccessModal()" class="w-full bg-slate-900 hover:bg-slate-800 dark:bg-slate-800 dark:hover:bg-slate-700 text-white font-bold py-3 rounded-2xl shadow transition text-xs mt-2">ตกลง</button>
         </div>
     </div>
 
@@ -558,7 +852,16 @@
             'ก.ย.': 8, 'ต.ค.': 9, 'พ.ย.': 10, 'ธ.ค.': 11
         };
 
+        let generalViewMode = 'detail'; // 'detail' | 'summary'
+        let shootingViewMode = 'detail'; // 'detail' | 'summary'
+        let generatedReportDataUrl = null;
+        let generatedReportBlob = null;
         let currentPromptTargetId = null;
+
+        let appData = {
+            generalRecords: [],
+            shootingRecords: []
+        };
 
         // --- Custom Thai Buddhist Calendar Logic ---
         let calViewYear = new Date().getFullYear();
@@ -568,7 +871,6 @@
             const mSelect = document.getElementById('calMonthSelect');
             const ySelect = document.getElementById('calYearSelect');
             mSelect.innerHTML = thFullMonths.map((m, idx) => `<option value="${idx}">${m}</option>`).join('');
-            
             const currentYear = new Date().getFullYear();
             let yearOptions = '';
             for (let y = currentYear - 10; y <= currentYear + 10; y++) {
@@ -610,76 +912,44 @@
                 popup.classList.add('hidden');
             }
         }
-
-        function closeThaiCalendar() {
-            document.getElementById('thaiCalendarPopup').classList.add('hidden');
-        }
-
+        function closeThaiCalendar() { document.getElementById('thaiCalendarPopup').classList.add('hidden'); }
         function changeCalMonth(delta) {
             calViewMonth += delta;
-            if (calViewMonth < 0) {
-                calViewMonth = 11;
-                calViewYear--;
-            } else if (calViewMonth > 11) {
-                calViewMonth = 0;
-                calViewYear++;
-            }
+            if (calViewMonth < 0) { calViewMonth = 11; calViewYear--; }
+            else if (calViewMonth > 11) { calViewMonth = 0; calViewYear++; }
             renderThaiCalendarGrid();
         }
-
         function updateCalFromDropdown() {
             calViewMonth = parseInt(document.getElementById('calMonthSelect').value);
             calViewYear = parseInt(document.getElementById('calYearSelect').value);
             renderThaiCalendarGrid();
         }
-
         function selectTodayThaiCal() {
             const now = new Date();
-            const iso = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
-            setThaiDateValue(iso);
+            setThaiDateValue(`${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`);
             closeThaiCalendar();
         }
-
         function renderThaiCalendarGrid() {
             document.getElementById('calMonthSelect').value = calViewMonth;
             document.getElementById('calYearSelect').value = calViewYear;
-
             const grid = document.getElementById('calDaysGrid');
             grid.innerHTML = '';
-
             const firstDay = new Date(calViewYear, calViewMonth, 1).getDay();
             const daysInMonth = new Date(calViewYear, calViewMonth + 1, 0).getDate();
             const selectedVal = document.getElementById('gDate').value;
 
-            for (let i = 0; i < firstDay; i++) {
-                grid.innerHTML += `<div></div>`;
-            }
-
+            for (let i = 0; i < firstDay; i++) grid.innerHTML += `<div></div>`;
             for (let day = 1; day <= daysInMonth; day++) {
                 const dateStr = `${calViewYear}-${String(calViewMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
                 const isSelected = (dateStr === selectedVal);
-                const btnClass = isSelected
-                    ? 'bg-indigo-600 text-white font-extrabold shadow-sm'
-                    : 'text-slate-700 dark:text-slate-200 hover:bg-indigo-50 dark:hover:bg-slate-800';
-
-                grid.innerHTML += `
-                    <button type="button" onclick="selectThaiCalDay('${dateStr}')" class="w-8 h-8 mx-auto rounded-lg flex items-center justify-center transition ${btnClass}">
-                        ${day}
-                    </button>
-                `;
+                const btnClass = isSelected ? 'bg-indigo-600 text-white font-extrabold shadow-sm' : 'text-slate-700 dark:text-slate-200 hover:bg-indigo-50 dark:hover:bg-slate-800';
+                grid.innerHTML += `<button type="button" onclick="selectThaiCalDay('${dateStr}')" class="w-8 h-8 mx-auto rounded-lg flex items-center justify-center transition ${btnClass}">${day}</button>`;
             }
         }
-
-        function selectThaiCalDay(dateStr) {
-            setThaiDateValue(dateStr);
-            closeThaiCalendar();
-        }
-
+        function selectThaiCalDay(dateStr) { setThaiDateValue(dateStr); closeThaiCalendar(); }
         document.addEventListener('click', function(e) {
             const wrapper = document.getElementById('thaiDatePickerWrapper');
-            if (wrapper && !wrapper.contains(e.target)) {
-                closeThaiCalendar();
-            }
+            if (wrapper && !wrapper.contains(e.target)) closeThaiCalendar();
         });
 
         // --- Theme & App Initialization ---
@@ -701,45 +971,43 @@
             document.getElementById('themeIcon').className = 'fas fa-sun text-xs text-amber-300';
         }
 
-        let appData = {
-            generalRecords: [],
-            shootingRecords: []
-        };
-
         function sanitizeData() {
             if (!Array.isArray(appData.generalRecords)) appData.generalRecords = [];
             if (!Array.isArray(appData.shootingRecords)) appData.shootingRecords = [];
-            
             appData.shootingRecords = appData.shootingRecords.filter(r => r && r.month);
             appData.shootingRecords.forEach(r => {
-                if (r.month && !monthOrderMap.hasOwnProperty(r.month) && !isNaN(r.month)) {
-                    r.month = 'ม.ค.';
-                }
+                if (r.month && !monthOrderMap.hasOwnProperty(r.month) && !isNaN(r.month)) r.month = 'ม.ค.';
                 if (!r.year) r.year = '2569';
             });
         }
 
-        window.updateLastSyncTime = function() {
+        window.getThaiFormattedNow = function() {
             const now = new Date();
-            const timeStr = now.toLocaleDateString('th-TH', { year:'2-digit', month:'short', day:'numeric' }) + ' ' + now.toLocaleTimeString('th-TH', { hour:'2-digit', minute:'2-digit' });
-            document.getElementById('lastUpdatedUI').innerHTML = `<i class="far fa-clock"></i> ${timeStr}`;
+            const d = now.getDate();
+            const m = thFullMonths[now.getMonth()];
+            const y = now.getFullYear() + 543;
+            const time = now.toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' });
+            return `${d} ${m} ${y} เวลา ${time} น.`;
         }
 
-        window.showSuccessModal = function(title = "บันทึกข้อมูลสำเร็จ", msg = "บันทึกรายการลงระบบและซิงก์คลาวด์เรียบร้อยแล้ว") {
+        window.updateLastSyncTime = function() {
+            const now = new Date();
+            const timeStr = `${now.getDate()} ${thMonths[now.getMonth()]} ${(now.getFullYear()+543).toString().slice(-2)} ${now.toLocaleTimeString('th-TH', { hour:'2-digit', minute:'2-digit' })}`;
+            document.getElementById('lastUpdatedUI').innerHTML = `<i class="far fa-clock text-amber-400"></i> อัปเดต: ${timeStr}`;
+        }
+
+        window.showSuccessModal = function(title = "ดำเนินการสำเร็จ", msg = "บันทึกข้อมูลและซิงก์คลาวด์เรียบร้อยแล้ว") {
             document.getElementById('successModalTitle').innerText = title;
             document.getElementById('successModalMsg').innerText = msg;
             document.getElementById('successModal').classList.remove('hidden');
         }
-        window.closeSuccessModal = function() {
-            document.getElementById('successModal').classList.add('hidden');
-        }
+        window.closeSuccessModal = function() { document.getElementById('successModal').classList.add('hidden'); }
 
         // --- Numeric Prompt Modal ---
         window.openNumericPrompt = function(inputId, titleText) {
             currentPromptTargetId = inputId;
             document.getElementById('numericPromptTitle').innerHTML = `<i class="fas fa-calculator text-indigo-600"></i> ${titleText}`;
-            const currentVal = document.getElementById(inputId).value || "0";
-            document.getElementById('numericPromptInput').value = currentVal;
+            document.getElementById('numericPromptInput').value = document.getElementById(inputId).value || "0";
             document.getElementById('numericPromptModal').classList.remove('hidden');
             setTimeout(() => document.getElementById('numericPromptInput').focus(), 100);
         }
@@ -749,8 +1017,7 @@
         }
         window.closeNumericPrompt = function(isConfirm) {
             if (isConfirm && currentPromptTargetId) {
-                const val = document.getElementById('numericPromptInput').value;
-                document.getElementById(currentPromptTargetId).value = val;
+                document.getElementById(currentPromptTargetId).value = document.getElementById('numericPromptInput').value;
                 if(typeof calculateShootingPreviews === 'function') calculateShootingPreviews();
             }
             document.getElementById('numericPromptModal').classList.add('hidden');
@@ -776,23 +1043,15 @@
                 reader.readAsDataURL(file);
             }
         }
-
         window.openAttachmentModal = function(base64Data) {
             const modalContent = document.getElementById('filePreviewContent');
-            if (!base64Data) {
-                modalContent.innerHTML = `<p class="text-slate-400 text-xs">ไม่มีไฟล์แนบสำหรับรายการนี้</p>`;
-            } else if (base64Data.startsWith('data:image/')) {
-                modalContent.innerHTML = `<img src="${base64Data}" class="max-h-[65vh] object-contain rounded-2xl shadow-lg border">`;
-            } else if (base64Data.startsWith('data:application/pdf') || base64Data.includes('pdf')) {
-                modalContent.innerHTML = `<iframe src="${base64Data}" class="w-full h-[65vh] rounded-2xl border"></iframe>`;
-            } else {
-                modalContent.innerHTML = `<a href="${base64Data}" download="document" class="px-6 py-3 bg-indigo-600 text-white font-bold rounded-xl text-xs"><i class="fas fa-download mr-1"></i> ดาวน์โหลดไฟล์แนบ</a>`;
-            }
+            if (!base64Data) modalContent.innerHTML = `<p class="text-slate-400 text-xs">ไม่มีไฟล์แนบสำหรับรายการนี้</p>`;
+            else if (base64Data.startsWith('data:image/')) modalContent.innerHTML = `<img src="${base64Data}" class="max-h-[65vh] object-contain rounded-2xl shadow-lg border">`;
+            else if (base64Data.startsWith('data:application/pdf') || base64Data.includes('pdf')) modalContent.innerHTML = `<iframe src="${base64Data}" class="w-full h-[65vh] rounded-2xl border"></iframe>`;
+            else modalContent.innerHTML = `<a href="${base64Data}" download="document" class="px-6 py-3 bg-indigo-600 text-white font-bold rounded-xl text-xs"><i class="fas fa-download mr-1"></i> ดาวน์โหลดไฟล์แนบ</a>`;
             document.getElementById('filePreviewModal').classList.remove('hidden');
         }
-        window.closeFilePreviewModal = function() {
-            document.getElementById('filePreviewModal').classList.add('hidden');
-        }
+        window.closeFilePreviewModal = function() { document.getElementById('filePreviewModal').classList.add('hidden'); }
 
         // --- Navigation ---
         window.hideAllViews = function() {
@@ -812,6 +1071,7 @@
             document.getElementById('globalSearchInput').value = "";
             const dropdown = document.getElementById('searchResultsDropdown');
             if(dropdown) dropdown.classList.add('hidden');
+            updateHomeSummaryCards();
             navigateTo('view-home');
         }
         window.goBack = function() {
@@ -823,6 +1083,8 @@
         }
         window.refreshCurrentView = function() {
             sanitizeData();
+            populateFilterDropdowns();
+            updateHomeSummaryCards();
             const cur = navigationHistory[navigationHistory.length-1];
             if(cur === 'view-general-summary') renderGeneralTable();
             if(cur === 'view-shooting-app') renderShootingTable();
@@ -832,32 +1094,25 @@
         // --- Global Search ---
         window.handleGlobalSearch = function(query) {
             const dropdown = document.getElementById('searchResultsDropdown');
-            if(!query || query.trim() === '') {
-                dropdown.classList.add('hidden');
-                return;
-            }
+            if(!query || query.trim() === '') { dropdown.classList.add('hidden'); return; }
             const q = query.toLowerCase();
             let results = [];
-            
             appData.generalRecords.forEach(r => {
                 if((r.desc && r.desc.toLowerCase().includes(q)) || (r.note && r.note.toLowerCase().includes(q)) || (r.date && r.date.includes(q))) {
-                    results.push({type: 'general', title: r.desc, subtitle: `กองกลาง | วันที่: ${formatDateThaiShort(r.date)}`, id: r.id});
+                    results.push({type: 'general', title: r.desc, subtitle: `บัญชีกองกลาง | วันที่: ${formatDateThaiShort(r.date)}`, id: r.id});
                 }
             });
-            
             appData.shootingRecords.forEach(r => {
                 if((r.expDesc && r.expDesc.toLowerCase().includes(q)) || (r.month && r.month.toLowerCase().includes(q)) || (r.year && r.year.toString().includes(q))) {
-                    results.push({type: 'shooting', title: r.expDesc || `ประจำเดือน ${r.month} ${r.year}`, subtitle: `สนามยิงปืน | เดือน: ${r.month} ${r.year}`, id: r.id});
+                    results.push({type: 'shooting', title: r.expDesc || `ประจำเดือน ${r.month} ${r.year}`, subtitle: `รายการสรุปสนามยิงปืน | ${r.month} ${r.year}`, id: r.id});
                 }
             });
-            
             if(results.length > 0) {
                 dropdown.innerHTML = results.map(item => `
                     <div onclick="jumpToRecord('${item.type}', '${item.id}')" class="p-2.5 hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer rounded-xl transition">
                         <div class="font-bold text-slate-800 dark:text-slate-200">${item.title}</div>
                         <div class="text-[11px] text-slate-500">${item.subtitle}</div>
-                    </div>
-                `).join('');
+                    </div>`).join('');
                 dropdown.classList.remove('hidden');
             } else {
                 dropdown.innerHTML = `<div class="p-3 text-center text-xs text-slate-400 font-medium">ไม่พบข้อมูลที่ค้นหา</div>`;
@@ -868,27 +1123,28 @@
         window.jumpToRecord = function(type, id) {
             document.getElementById('searchResultsDropdown').classList.add('hidden');
             document.getElementById('globalSearchInput').value = '';
-            if(type === 'general') { showGeneralSummary(); } else { showShootingRange(); }
+            if(type === 'general') { resetGeneralFilters(); setGeneralViewMode('detail'); showGeneralSummary(); }
+            else { resetShootingFilters(); setShootingViewMode('detail'); showShootingRange(); }
             setTimeout(() => {
                 const row = document.getElementById(`row-${id}`);
                 if(row) {
                     row.scrollIntoView({behavior: 'smooth', block: 'center'});
                     row.classList.add('highlight-row');
-                    setTimeout(() => row.classList.remove('highlight-row'), 3000);
+                    setTimeout(() => row.classList.remove('highlight-row'), 2500);
                 }
             }, 150);
         };
 
-        // --- Cloud Sync ---
+        // --- Cloud Sync & Refresh ---
         async function syncWithCloud(isUIAction = false) {
-            const syncIcon = document.getElementById('syncIcon');
+            const refreshIcon = document.getElementById('refreshNavIcon');
             const syncStatusUI = document.getElementById('syncStatusUI');
-            if(isUIAction) {
-                syncIcon.classList.add('fa-spin');
-                syncStatusUI.innerHTML = `<i class="fas fa-spinner fa-spin text-[9px]"></i> ซิงก์...`;
+            if(isUIAction && refreshIcon) {
+                refreshIcon.classList.add('fa-spin');
+                syncStatusUI.innerHTML = `<i class="fas fa-spinner fa-spin text-amber-400"></i> กำลังซิงก์ข้อมูลล่าสุด...`;
             }
             try {
-                let res = await fetch(SHEETS_API_URL);
+                let res = await fetch(SHEETS_API_URL + '?t=' + Date.now());
                 if(res.ok) {
                     let json = await res.json();
                     if (json && (json.generalRecords || json.shootingRecords)) {
@@ -898,18 +1154,23 @@
                     sanitizeData();
                     refreshCurrentView();
                     if(isUIAction) {
-                        syncIcon.classList.remove('fa-spin');
-                        syncStatusUI.innerHTML = `<i class="fas fa-check text-[9px] text-emerald-400"></i> ล่าสุด`;
-                        setTimeout(() => { syncStatusUI.innerHTML = `<i class="fas fa-cloud text-[9px]"></i> พร้อมใช้งาน`; }, 3000);
+                        if(refreshIcon) refreshIcon.classList.remove('fa-spin');
+                        syncStatusUI.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> ซิงก์ข้อมูลล่าสุดสำเร็จ`;
+                        showSuccessModal("รีเฟรชข้อมูลสำเร็จ", "ดึงข้อมูลล่าสุดจากระบบคลาวด์เรียบร้อยแล้ว");
+                        setTimeout(() => { syncStatusUI.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> ระบบคลาวด์พร้อมใช้งาน`; }, 3000);
                     }
                     updateLastSyncTime();
                 }
             } catch(e) {
                 if(isUIAction) {
-                    syncIcon.classList.remove('fa-spin');
-                    syncStatusUI.innerHTML = `<i class="fas fa-exclamation-triangle text-[9px] text-amber-400"></i> ออฟไลน์`;
+                    if(refreshIcon) refreshIcon.classList.remove('fa-spin');
+                    syncStatusUI.innerHTML = `<i class="fas fa-exclamation-triangle text-amber-400"></i> โหมดออฟไลน์`;
                 }
             }
+        }
+
+        window.refreshAllData = function(showAlert = true) {
+            syncWithCloud(showAlert);
         }
 
         async function saveToCloud() {
@@ -917,6 +1178,7 @@
                 sanitizeData();
                 await fetch(SHEETS_API_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(appData) });
                 updateLastSyncTime();
+                updateHomeSummaryCards();
             } catch(e) { console.error(e); }
         }
 
@@ -936,10 +1198,7 @@
             if (str.includes('T')) {
                 const d = new Date(str);
                 if (!isNaN(d.getTime())) {
-                    const y = d.getFullYear();
-                    const m = String(d.getMonth() + 1).padStart(2, '0');
-                    const day = String(d.getDate()).padStart(2, '0');
-                    return `${y}-${m}-${day}`;
+                    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
                 }
             }
             return str.substring(0, 10);
@@ -954,7 +1213,73 @@
             return `${d.getDate()} ${thMonths[d.getMonth()]} ${(parseInt(parts[0])+543).toString().slice(-2)}`;
         }
 
-        // --- General Ledger Functions ---
+        // --- Populate Year Filter Dropdowns Dynamically ---
+        function populateFilterDropdowns() {
+            // General Years (Buddhist Era)
+            const genYearsSet = new Set(['2568', '2569', (new Date().getFullYear() + 543).toString()]);
+            appData.generalRecords.forEach(r => {
+                const ymd = parseLocalYMD(r.date);
+                if (ymd && ymd.length >= 4) {
+                    const beYear = (parseInt(ymd.substring(0, 4)) + 543).toString();
+                    if (!isNaN(beYear)) genYearsSet.add(beYear);
+                }
+            });
+            const genYearSel = document.getElementById('genFilterYear');
+            const prevGenYear = genYearSel.value;
+            genYearSel.innerHTML = `<option value="ALL">ทุกปี พ.ศ.</option>` + Array.from(genYearsSet).sort().map(y => `<option value="${y}">ปี พ.ศ. ${y}</option>`).join('');
+            if (Array.from(genYearsSet).includes(prevGenYear)) genYearSel.value = prevGenYear;
+
+            // Shooting Years (Buddhist Era)
+            const shootYearsSet = new Set(['2568', '2569', (new Date().getFullYear() + 543).toString()]);
+            appData.shootingRecords.forEach(r => {
+                if (r.year) shootYearsSet.add(r.year.toString());
+            });
+            const shootYearSel = document.getElementById('shootFilterYear');
+            const prevShootYear = shootYearSel.value;
+            shootYearSel.innerHTML = `<option value="ALL">ทุกปี พ.ศ.</option>` + Array.from(shootYearsSet).sort().map(y => `<option value="${y}">ปี พ.ศ. ${y}</option>`).join('');
+            if (Array.from(shootYearsSet).includes(prevShootYear)) shootYearSel.value = prevShootYear;
+        }
+
+        function updateHomeSummaryCards() {
+            let gNet = 0;
+            appData.generalRecords.forEach(r => {
+                gNet += ((parseFloat(r.inCash)||0) - (parseFloat(r.outCash)||0)) + ((parseFloat(r.inAcc)||0) - (parseFloat(r.outAcc)||0));
+            });
+            document.getElementById('homeGenNet').innerText = gNet.toLocaleString('th-TH', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ฿';
+
+            let sNet = 0;
+            appData.shootingRecords.forEach(r => {
+                const totB = ((parseFloat(r.bTrQ)||0) + (parseFloat(r.bBCQ)||0)) * 1000;
+                const totT = ((parseFloat(r.tTrQ)||0) + (parseFloat(r.tBCQ)||0)) * 15;
+                const expAmt = parseFloat(r.expAmt) || 0;
+                const adjType = r.adjType || (r.month === 'ยกยอดมา' ? 'income_carry' : 'expense');
+                if (expAmt > 0) sNet += (adjType === 'income_carry' ? expAmt : -expAmt);
+                sNet += (totB + totT);
+            });
+            document.getElementById('homeShootNet').innerText = sNet.toLocaleString('th-TH', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ฿';
+        }
+
+        // ==================== GENERAL LEDGER LOGIC ====================
+        window.setGeneralViewMode = function(mode) {
+            generalViewMode = mode;
+            const detailBtn = document.getElementById('genModeDetailBtn');
+            const sumBtn = document.getElementById('genModeSummaryBtn');
+            if (mode === 'detail') {
+                detailBtn.className = "px-3 py-1 rounded-lg text-[11px] font-bold bg-white dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 shadow-sm transition";
+                sumBtn.className = "px-3 py-1 rounded-lg text-[11px] font-bold text-slate-600 dark:text-slate-400 hover:text-slate-900 transition";
+            } else {
+                sumBtn.className = "px-3 py-1 rounded-lg text-[11px] font-bold bg-white dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 shadow-sm transition";
+                detailBtn.className = "px-3 py-1 rounded-lg text-[11px] font-bold text-slate-600 dark:text-slate-400 hover:text-slate-900 transition";
+            }
+            renderGeneralTable();
+        }
+
+        window.resetGeneralFilters = function() {
+            document.getElementById('genFilterYear').value = 'ALL';
+            document.getElementById('genFilterMonth').value = 'ALL';
+            renderGeneralTable();
+        }
+
         window.updateGeneralMethodOptions = function() {
             const act = document.getElementById('gActionType').value;
             const label = document.getElementById('gMethodLabel');
@@ -963,26 +1288,16 @@
 
             if (act === 'transfer') {
                 label.innerHTML = '<i class="fas fa-exchange-alt text-indigo-600 mr-1"></i> รูปแบบการย้ายเงิน';
-                select.innerHTML = `
-                    <option value="acc_to_cash">ถอนจากบัญชี ➔ เป็นเงินสด (กดเงินสด)</option>
-                    <option value="cash_to_acc">ฝากเงินสด ➔ เข้าบัญชี (นำฝาก)</option>
-                `;
-                if (currentVal === 'acc_to_cash' || currentVal === 'cash_to_acc') {
-                    select.value = currentVal;
-                }
+                select.innerHTML = `<option value="acc_to_cash">ถอนจากบัญชี ➔ เป็นเงินสด (กดเงินสด)</option><option value="cash_to_acc">ฝากเงินสด ➔ เข้าบัญชี (นำฝาก)</option>`;
+                if (currentVal === 'acc_to_cash' || currentVal === 'cash_to_acc') select.value = currentVal;
             } else {
                 label.innerText = 'ช่องทางชำระ / รับเงิน';
-                select.innerHTML = `
-                    <option value="cash">เงินสด</option>
-                    <option value="acc">โอนผ่านบัญชี</option>
-                `;
-                if (currentVal === 'cash' || currentVal === 'acc') {
-                    select.value = currentVal;
-                }
+                select.innerHTML = `<option value="cash">เงินสด</option><option value="acc">โอนผ่านบัญชี</option>`;
+                if (currentVal === 'cash' || currentVal === 'acc') select.value = currentVal;
             }
         }
 
-        window.showGeneralSummary = function() { renderGeneralTable(); navigateTo('view-general-summary'); }
+        window.showGeneralSummary = function() { populateFilterDropdowns(); renderGeneralTable(); navigateTo('view-general-summary'); }
         window.showGeneralInput = function(editId = null) {
             document.getElementById('generalForm').reset();
             document.getElementById('gEditId').value = "";
@@ -1008,100 +1323,197 @@
                                 <button type="button" onclick="openAttachmentModal('${rec.attachment}')" class="text-[11px] underline text-slate-500 hover:text-indigo-600">ดูไฟล์เดิม</button>
                             </div>`;
                     }
-
-                    const inC = parseFloat(rec.inCash) || 0;
-                    const inA = parseFloat(rec.inAcc) || 0;
-                    const outC = parseFloat(rec.outCash) || 0;
-                    const outA = parseFloat(rec.outAcc) || 0;
-
+                    const inC = parseFloat(rec.inCash) || 0, inA = parseFloat(rec.inAcc) || 0;
+                    const outC = parseFloat(rec.outCash) || 0, outA = parseFloat(rec.outAcc) || 0;
                     if (inC > 0 && outA > 0) {
-                        document.getElementById('gActionType').value = 'transfer';
-                        updateGeneralMethodOptions();
-                        document.getElementById('gMethod').value = 'acc_to_cash';
-                        document.getElementById('gAmount').value = inC;
+                        document.getElementById('gActionType').value = 'transfer'; updateGeneralMethodOptions();
+                        document.getElementById('gMethod').value = 'acc_to_cash'; document.getElementById('gAmount').value = inC;
                     } else if (inA > 0 && outC > 0) {
-                        document.getElementById('gActionType').value = 'transfer';
-                        updateGeneralMethodOptions();
-                        document.getElementById('gMethod').value = 'cash_to_acc';
-                        document.getElementById('gAmount').value = inA;
+                        document.getElementById('gActionType').value = 'transfer'; updateGeneralMethodOptions();
+                        document.getElementById('gMethod').value = 'cash_to_acc'; document.getElementById('gAmount').value = inA;
                     } else if (inC > 0 || inA > 0) {
-                        document.getElementById('gActionType').value = (rec.desc && rec.desc.includes('ยกยอด')) ? 'carry' : 'in';
-                        updateGeneralMethodOptions();
-                        document.getElementById('gMethod').value = inC > 0 ? 'cash' : 'acc';
-                        document.getElementById('gAmount').value = inC > 0 ? inC : inA;
+                        document.getElementById('gActionType').value = (rec.desc && rec.desc.includes('ยกยอด')) ? 'carry' : 'in'; updateGeneralMethodOptions();
+                        document.getElementById('gMethod').value = inC > 0 ? 'cash' : 'acc'; document.getElementById('gAmount').value = inC > 0 ? inC : inA;
                     } else if (outC > 0 || outA > 0) {
-                        document.getElementById('gActionType').value = 'out';
-                        updateGeneralMethodOptions();
-                        document.getElementById('gMethod').value = outC > 0 ? 'cash' : 'acc';
-                        document.getElementById('gAmount').value = outC > 0 ? outC : outA;
+                        document.getElementById('gActionType').value = 'out'; updateGeneralMethodOptions();
+                        document.getElementById('gMethod').value = outC > 0 ? 'cash' : 'acc'; document.getElementById('gAmount').value = outC > 0 ? outC : outA;
                     }
                 }
-                document.getElementById('generalFormTitle').innerHTML = `<i class="fas fa-edit text-indigo-600 mr-2"></i> แก้ไขรายการกองกลาง`;
+                document.getElementById('generalFormTitle').innerHTML = `<i class="fas fa-edit text-indigo-600 mr-2"></i> แก้ไขรายการบัญชีกองกลาง`;
             } else {
                 document.getElementById('generalFormTitle').innerHTML = `<i class="fas fa-file-invoice-dollar text-indigo-600 mr-2"></i> บันทึกรายการใหม่`;
             }
             navigateTo('view-general-input');
         }
 
-        window.renderGeneralTable = function() {
-            const tbody = document.getElementById('generalTbody'), tfoot = document.getElementById('generalTfoot');
-            tbody.innerHTML = ""; tfoot.innerHTML = "";
-
+        function getFilteredGeneralData() {
+            const filterYear = document.getElementById('genFilterYear').value;
+            const filterMonth = document.getElementById('genFilterMonth').value;
             let sorted = [...appData.generalRecords].sort((a,b) => new Date(parseLocalYMD(a.date) || '2025-01-01') - new Date(parseLocalYMD(b.date) || '2025-01-01'));
 
-            let runCash = 0, runAcc = 0; 
-            let totInCash=0, totInAcc=0, totOutCash=0, totOutAcc=0;
-            let idx = 1;
+            // Calculate running balance across full history first so each row has accurate balance
+            let runCash = 0, runAcc = 0;
+            const enriched = sorted.map(r => {
+                const inC = parseFloat(r.inCash) || 0, inA = parseFloat(r.inAcc) || 0;
+                const outC = parseFloat(r.outCash) || 0, outA = parseFloat(r.outAcc) || 0;
+                runCash += (inC - outC);
+                runAcc += (inA - outA);
+                const ymd = parseLocalYMD(r.date);
+                const beYear = ymd ? (parseInt(ymd.substring(0, 4)) + 543).toString() : '';
+                const monthNum = ymd ? ymd.substring(5, 7) : '';
+                return { ...r, inC, inA, outC, outA, runCash, runAcc, totalNet: runCash + runAcc, beYear, monthNum };
+            });
 
-            sorted.forEach(r => {
-                const inC = parseFloat(r.inCash) || 0, inA = parseFloat(r.inAcc) || 0, outC = parseFloat(r.outCash) || 0, outA = parseFloat(r.outAcc) || 0;
-                runCash += (inC - outC); runAcc += (inA - outA); const totalNet = runCash + runAcc;
-                totInCash += inC; totInAcc += inA; totOutCash += outC; totOutAcc += outA;
+            return enriched.filter(item => {
+                if (filterYear !== 'ALL' && item.beYear !== filterYear) return false;
+                if (filterMonth !== 'ALL' && item.monthNum !== filterMonth) return false;
+                return true;
+            });
+        }
 
-                let attachBtn = r.attachment ? `<button onclick="openAttachmentModal('${r.attachment}')" class="px-2.5 py-1 rounded-lg bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 font-bold hover:bg-indigo-100 transition text-[11px]" title="ดูไฟล์แนบ"><i class="fas fa-paperclip mr-1"></i> ดูไฟล์</button>` : `<span class="text-slate-300">-</span>`;
+        window.renderGeneralTable = function() {
+            const thead = document.getElementById('generalThead');
+            const tbody = document.getElementById('generalTbody');
+            const tfoot = document.getElementById('generalTfoot');
+            tbody.innerHTML = ""; tfoot.innerHTML = "";
+
+            const filtered = getFilteredGeneralData();
+            let totInCash = 0, totInAcc = 0, totOutCash = 0, totOutAcc = 0;
+            filtered.forEach(r => {
+                totInCash += r.inC; totInAcc += r.inA; totOutCash += r.outC; totOutAcc += r.outA;
+            });
+
+            const lastBalCash = filtered.length > 0 ? filtered[filtered.length - 1].runCash : 0;
+            const lastBalAcc = filtered.length > 0 ? filtered[filtered.length - 1].runAcc : 0;
+            const lastBalNet = filtered.length > 0 ? filtered[filtered.length - 1].totalNet : 0;
+
+            document.getElementById('genDashIn').innerText = (totInCash + totInAcc).toLocaleString();
+            document.getElementById('genDashOut').innerText = (totOutCash + totOutAcc).toLocaleString();
+            document.getElementById('genDashNet').innerText = lastBalNet.toLocaleString();
+
+            if (generalViewMode === 'summary') {
+                // Summary View Grouped by Month/Year
+                thead.innerHTML = `
+                    <tr class="bg-slate-800 text-slate-100">
+                        <th class="border-r border-slate-700/70 w-12 rounded-tl-xl">ลำดับ</th>
+                        <th class="border-r border-slate-700/70 text-left pl-4">เดือน / ปี พ.ศ.</th>
+                        <th class="border-r border-slate-700/70 w-20">จำนวนรายการ</th>
+                        <th class="border-r border-slate-700/70 bg-emerald-950/60 text-emerald-200">รายรับ (สด)</th>
+                        <th class="border-r border-slate-700/70 bg-emerald-950/60 text-emerald-200">รายรับ (โอน)</th>
+                        <th class="border-r border-slate-700/70 bg-rose-950/60 text-rose-200">รายจ่าย (สด)</th>
+                        <th class="border-r border-slate-700/70 bg-rose-950/60 text-rose-200">รายจ่าย (โอน)</th>
+                        <th class="border-r border-slate-700/70 bg-indigo-950 text-amber-300 font-bold rounded-tr-xl">คงเหลือปลายงวด</th>
+                    </tr>`;
+
+                const groups = {};
+                filtered.forEach(r => {
+                    const key = `${r.beYear}-${r.monthNum}`;
+                    if (!groups[key]) {
+                        const mIdx = parseInt(r.monthNum) - 1;
+                        const label = (mIdx >= 0 && mIdx < 12) ? `${thFullMonths[mIdx]} ${r.beYear}` : 'ไม่ระบุวันที่';
+                        groups[key] = { label, count: 0, inC: 0, inA: 0, outC: 0, outA: 0, endNet: 0 };
+                    }
+                    groups[key].count++;
+                    groups[key].inC += r.inC;
+                    groups[key].inA += r.inA;
+                    groups[key].outC += r.outC;
+                    groups[key].outA += r.outA;
+                    groups[key].endNet = r.totalNet;
+                });
+
+                const groupList = Object.values(groups);
+                if (groupList.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="8" class="text-center py-8 font-bold text-slate-400">ไม่พบข้อมูลตามเงื่อนไขที่เลือก</td></tr>`;
+                } else {
+                    groupList.forEach((g, i) => {
+                        tbody.innerHTML += `
+                            <tr class="hover:bg-indigo-50/30 dark:hover:bg-slate-800/40 transition">
+                                <td class="border-r border-slate-100 dark:border-slate-800 font-bold text-slate-400">${i + 1}</td>
+                                <td class="border-r border-slate-100 dark:border-slate-800 text-left pl-4 font-bold text-slate-800 dark:text-slate-100">${g.label}</td>
+                                <td class="border-r border-slate-100 dark:border-slate-800 text-slate-500">${g.count} รายการ</td>
+                                <td class="border-r border-slate-100 dark:border-slate-800 text-emerald-600 font-bold">${g.inC ? g.inC.toLocaleString() : '-'}</td>
+                                <td class="border-r border-slate-100 dark:border-slate-800 text-emerald-600 font-bold">${g.inA ? g.inA.toLocaleString() : '-'}</td>
+                                <td class="border-r border-slate-100 dark:border-slate-800 text-rose-500 font-bold">${g.outC ? g.outC.toLocaleString() : '-'}</td>
+                                <td class="border-r border-slate-100 dark:border-slate-800 text-rose-500 font-bold">${g.outA ? g.outA.toLocaleString() : '-'}</td>
+                                <td class="font-extrabold text-indigo-700 dark:text-amber-400 bg-indigo-50/20 dark:bg-slate-800/30">${g.endNet.toLocaleString()}</td>
+                            </tr>`;
+                    });
+                }
+
+                tfoot.innerHTML = `
+                    <tr>
+                        <td colspan="3" class="py-3 px-4 text-right uppercase font-extrabold text-slate-700 dark:text-slate-200 border-r border-slate-200 dark:border-slate-700">รวมสรุปทั้งหมด</td>
+                        <td class="text-emerald-600 font-bold border-r border-slate-200 dark:border-slate-700">+${totInCash.toLocaleString()}</td>
+                        <td class="text-emerald-600 font-bold border-r border-slate-200 dark:border-slate-700">+${totInAcc.toLocaleString()}</td>
+                        <td class="text-rose-600 font-bold border-r border-slate-200 dark:border-slate-700">-${totOutCash.toLocaleString()}</td>
+                        <td class="text-rose-600 font-bold border-r border-slate-200 dark:border-slate-700">-${totOutAcc.toLocaleString()}</td>
+                        <td class="text-indigo-700 dark:text-amber-400 font-black bg-indigo-50/40 dark:bg-slate-800/50">${lastBalNet.toLocaleString()}</td>
+                    </tr>`;
+                return;
+            }
+
+            // Detailed View
+            thead.innerHTML = `
+                <tr class="bg-slate-800 text-slate-100">
+                    <th rowspan="2" class="border-r border-slate-700/70 w-10 rounded-tl-xl">ลำดับ</th>
+                    <th rowspan="2" class="border-r border-slate-700/70 w-24">วันที่</th>
+                    <th rowspan="2" class="border-r border-slate-700/70 text-left pl-4">รายการ</th>
+                    <th colspan="2" class="border-r border-slate-700/70 bg-emerald-950/60 text-emerald-200 border-b border-slate-700/70">รายรับ (+)</th>
+                    <th colspan="2" class="border-r border-slate-700/70 bg-rose-950/60 text-rose-200 border-b border-slate-700/70">รายจ่าย (-)</th>
+                    <th rowspan="2" class="border-r border-slate-700/70 w-24 bg-slate-800/95">คงเหลือ (สด)</th>
+                    <th rowspan="2" class="border-r border-slate-700/70 w-24 bg-slate-800/95">คงเหลือ (บัญชี)</th>
+                    <th rowspan="2" class="border-r border-slate-700/70 bg-indigo-950 text-amber-300 w-28 font-bold">รวมสุทธิ</th>
+                    <th rowspan="2" class="border-r border-slate-700/70">หมายเหตุ</th>
+                    <th rowspan="2" class="border-r border-slate-700/70 w-16 no-print-capture">สลิป</th>
+                    <th rowspan="2" class="no-print-capture w-16 rounded-tr-xl">จัดการ</th>
+                </tr>
+                <tr class="bg-slate-700/95 text-[11px] text-slate-200">
+                    <th class="border-r border-slate-600/60 w-20 bg-emerald-900/30">เงินสด</th>
+                    <th class="border-r border-slate-600/60 w-20 bg-emerald-900/30">โอนบัญชี</th>
+                    <th class="border-r border-slate-600/60 w-20 bg-rose-900/30">เงินสด</th>
+                    <th class="border-r border-slate-600/60 w-20 bg-rose-900/30">โอนบัญชี</th>
+                </tr>`;
+
+            filtered.forEach((r, idx) => {
+                let attachBtn = r.attachment ? `<button onclick="openAttachmentModal('${r.attachment}')" class="px-2 py-1 rounded-lg bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-300 font-bold hover:bg-indigo-100 transition text-[11px]" title="ดูสลิป"><i class="fas fa-paperclip"></i></button>` : `<span class="text-slate-300">-</span>`;
 
                 let tr = document.createElement('tr');
                 tr.id = `row-${r.id}`;
-                tr.className = `transition hover:bg-slate-50 dark:hover:bg-slate-800/40`;
+                tr.className = `transition hover:bg-indigo-50/30 dark:hover:bg-slate-800/40`;
                 tr.innerHTML = `
-                    <td class="text-center py-2 px-2 border-r border-slate-200 dark:border-slate-800 font-bold text-slate-400">${idx++}</td>
-                    <td class="text-center py-2 px-2 border-r border-slate-200 dark:border-slate-800 font-medium">${formatDateThaiShort(r.date)}</td>
-                    <td class="text-center py-2 px-3 font-bold border-r border-slate-200 dark:border-slate-800">${r.desc}</td>
-                    <td class="text-center py-2 px-2 text-emerald-600 border-r border-slate-200 dark:border-slate-800 font-bold">${inC ? inC.toLocaleString() : '-'}</td>
-                    <td class="text-center py-2 px-2 text-emerald-600 border-r border-slate-200 dark:border-slate-800 font-bold">${inA ? inA.toLocaleString() : '-'}</td>
-                    <td class="text-center py-2 px-2 text-rose-500 border-r border-slate-200 dark:border-slate-800 font-bold">${outC ? outC.toLocaleString() : '-'}</td>
-                    <td class="text-center py-2 px-2 text-rose-500 border-r border-slate-200 dark:border-slate-800 font-bold">${outA ? outA.toLocaleString() : '-'}</td>
-                    <td class="text-center py-2 px-2 border-r border-slate-200 dark:border-slate-800 font-bold text-slate-700 dark:text-slate-300">${runCash.toLocaleString()}</td>
-                    <td class="text-center py-2 px-2 border-r border-slate-200 dark:border-slate-800 font-bold text-slate-700 dark:text-slate-300">${runAcc.toLocaleString()}</td>
-                    <td class="text-center py-2 px-3 font-extrabold text-indigo-700 dark:text-amber-400 border-r border-slate-200 dark:border-slate-800 bg-indigo-50/20 dark:bg-slate-900/30">${totalNet.toLocaleString()}</td>
-                    <td class="text-center py-2 px-3 text-slate-500 border-r border-slate-200 dark:border-slate-800 max-w-[150px] truncate" title="${r.note || ''}">${r.note || '-'}</td>
-                    <td class="text-center py-2 px-2 border-r border-slate-200 dark:border-slate-800">${attachBtn}</td>
-                    <td class="text-center py-2 px-1 no-print-capture space-x-1">
+                    <td class="border-r border-slate-100 dark:border-slate-800 font-bold text-slate-400">${idx + 1}</td>
+                    <td class="border-r border-slate-100 dark:border-slate-800 font-medium text-slate-600 dark:text-slate-300">${formatDateThaiShort(r.date)}</td>
+                    <td class="text-left pl-4 font-bold border-r border-slate-100 dark:border-slate-800 text-slate-800 dark:text-slate-100">${r.desc}</td>
+                    <td class="text-emerald-600 border-r border-slate-100 dark:border-slate-800 font-bold bg-emerald-50/15 dark:bg-transparent">${r.inC ? r.inC.toLocaleString() : '-'}</td>
+                    <td class="text-emerald-600 border-r border-slate-100 dark:border-slate-800 font-bold bg-emerald-50/15 dark:bg-transparent">${r.inA ? r.inA.toLocaleString() : '-'}</td>
+                    <td class="text-rose-500 border-r border-slate-100 dark:border-slate-800 font-bold bg-rose-50/15 dark:bg-transparent">${r.outC ? r.outC.toLocaleString() : '-'}</td>
+                    <td class="text-rose-500 border-r border-slate-100 dark:border-slate-800 font-bold bg-rose-50/15 dark:bg-transparent">${r.outA ? r.outA.toLocaleString() : '-'}</td>
+                    <td class="border-r border-slate-100 dark:border-slate-800 font-semibold text-slate-700 dark:text-slate-300">${r.runCash.toLocaleString()}</td>
+                    <td class="border-r border-slate-100 dark:border-slate-800 font-semibold text-slate-700 dark:text-slate-300">${r.runAcc.toLocaleString()}</td>
+                    <td class="font-extrabold text-indigo-700 dark:text-amber-400 border-r border-slate-100 dark:border-slate-800 bg-indigo-50/25 dark:bg-slate-800/30">${r.totalNet.toLocaleString()}</td>
+                    <td class="text-slate-500 border-r border-slate-100 dark:border-slate-800 max-w-[140px] truncate" title="${r.note || ''}">${r.note || '-'}</td>
+                    <td class="border-r border-slate-100 dark:border-slate-800 no-print-capture">${attachBtn}</td>
+                    <td class="no-print-capture space-x-0.5">
                         <button onclick="showGeneralInput('${r.id}')" class="text-indigo-600 action-btn hover:bg-indigo-50 dark:hover:bg-slate-800" title="แก้ไข"><i class="fas fa-edit"></i></button>
                         <button onclick="deleteGeneralRecord('${r.id}')" class="text-rose-500 action-btn hover:bg-rose-50 dark:hover:bg-slate-800" title="ลบ"><i class="fas fa-trash"></i></button>
                     </td>`;
                 tbody.appendChild(tr);
             });
 
-            if(sorted.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="13" class="text-center py-8 font-bold text-slate-400">ยังไม่มีข้อมูลในระบบ</td></tr>`;
+            if(filtered.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="13" class="text-center py-8 font-bold text-slate-400">ไม่พบข้อมูลตามเงื่อนไขที่เลือก</td></tr>`;
             }
-
-            document.getElementById('genDashIn').innerText = (totInCash + totInAcc).toLocaleString();
-            document.getElementById('genDashOut').innerText = (totOutCash + totOutAcc).toLocaleString();
-            document.getElementById('genDashNet').innerText = (runCash + runAcc).toLocaleString();
 
             tfoot.innerHTML = `
                 <tr>
-                    <td class="border-r border-slate-200 dark:border-slate-800"></td>
-                    <td class="py-3 px-2 text-center uppercase font-black text-slate-700 dark:text-slate-200" colspan="2">รวมสะสมสุทธิ</td>
-                    <td class="text-center py-3 px-2 text-emerald-600 font-bold">+${totInCash.toLocaleString()}</td>
-                    <td class="text-center py-3 px-2 text-emerald-600 font-bold">+${totInAcc.toLocaleString()}</td>
-                    <td class="text-center py-3 px-2 text-rose-600 font-bold">-${totOutCash.toLocaleString()}</td>
-                    <td class="text-center py-3 px-2 text-rose-600 font-bold">-${totOutAcc.toLocaleString()}</td>
-                    <td class="text-center py-3 px-2 font-bold text-slate-800 dark:text-white">${runCash.toLocaleString()}</td>
-                    <td class="text-center py-3 px-2 font-bold text-slate-800 dark:text-white">${runAcc.toLocaleString()}</td>
-                    <td class="text-center py-3 px-3 text-indigo-700 dark:text-amber-400 font-black bg-indigo-50/40 dark:bg-slate-900/50">${(runCash + runAcc).toLocaleString()}</td>
+                    <td colspan="3" class="py-3 px-4 text-right uppercase font-extrabold text-slate-700 dark:text-slate-200 border-r border-slate-200 dark:border-slate-700">รวมยอดตามตัวกรอง</td>
+                    <td class="text-emerald-600 font-bold border-r border-slate-200 dark:border-slate-700">+${totInCash.toLocaleString()}</td>
+                    <td class="text-emerald-600 font-bold border-r border-slate-200 dark:border-slate-700">+${totInAcc.toLocaleString()}</td>
+                    <td class="text-rose-600 font-bold border-r border-slate-200 dark:border-slate-700">-${totOutCash.toLocaleString()}</td>
+                    <td class="text-rose-600 font-bold border-r border-slate-200 dark:border-slate-700">-${totOutAcc.toLocaleString()}</td>
+                    <td class="font-bold text-slate-800 dark:text-white border-r border-slate-200 dark:border-slate-700">${lastBalCash.toLocaleString()}</td>
+                    <td class="font-bold text-slate-800 dark:text-white border-r border-slate-200 dark:border-slate-700">${lastBalAcc.toLocaleString()}</td>
+                    <td class="text-indigo-700 dark:text-amber-400 font-black bg-indigo-50/40 dark:bg-slate-800/50 border-r border-slate-200 dark:border-slate-700">${lastBalNet.toLocaleString()}</td>
                     <td colspan="3"></td>
                 </tr>`;
         }
@@ -1113,11 +1525,7 @@
             const amt = parseFloat(document.getElementById('gAmount').value) || 0;
             const m = document.getElementById('gMethod').value;
             const attach = document.getElementById('gFileBase64').value || "";
-            
-            if (amt <= 0) {
-                alert("กรุณาระบุจำนวนเงินที่มากกว่า 0 บาท");
-                return;
-            }
+            if (amt <= 0) { alert("กรุณาระบุจำนวนเงินที่มากกว่า 0 บาท"); return; }
 
             let rec = {
                 id: editId || Date.now().toString(),
@@ -1128,57 +1536,62 @@
                 attachment: attach
             };
 
-            if(act === 'in' || act === 'carry') {
-                if(m === 'cash') rec.inCash = amt; else rec.inAcc = amt;
-            } else if(act === 'out') {
-                if(m === 'cash') rec.outCash = amt; else rec.outAcc = amt;
-            } else if(act === 'transfer') {
-                if(m === 'cash_to_acc') {
-                    rec.outCash = amt;
-                    rec.inAcc = amt;
-                } else {
-                    rec.outAcc = amt;
-                    rec.inCash = amt;
-                }
+            if(act === 'in' || act === 'carry') { if(m === 'cash') rec.inCash = amt; else rec.inAcc = amt; }
+            else if(act === 'out') { if(m === 'cash') rec.outCash = amt; else rec.outAcc = amt; }
+            else if(act === 'transfer') {
+                if(m === 'cash_to_acc') { rec.outCash = amt; rec.inAcc = amt; }
+                else { rec.outAcc = amt; rec.inCash = amt; }
             }
 
             if(editId) {
                 const idx = appData.generalRecords.findIndex(r => r.id == editId);
-                if(idx > -1) { 
-                    if(!rec.attachment) rec.attachment = appData.generalRecords[idx].attachment || "";
-                    appData.generalRecords[idx] = rec; 
-                }
+                if(idx > -1) { if(!rec.attachment) rec.attachment = appData.generalRecords[idx].attachment || ""; appData.generalRecords[idx] = rec; }
             } else { appData.generalRecords.push(rec); }
 
             await saveToCloud();
-            showSuccessModal(editId ? "แก้ไขข้อมูลสำเร็จ" : "บันทึกข้อมูลสำเร็จ", editId ? "อัปเดตข้อมูลรายการกองกลางเรียบร้อยแล้ว" : "เพิ่มรายการกองกลางใหม่เรียบร้อยแล้ว"); 
+            showSuccessModal(editId ? "แก้ไขข้อมูลสำเร็จ" : "บันทึกข้อมูลสำเร็จ", "อัปเดตข้อมูลบัญชีกองกลางเรียบร้อยแล้ว");
             showGeneralSummary();
         }
 
         window.deleteGeneralRecord = function(id) {
             if(confirm('ยืนยันการลบรายการบัญชีนี้อย่างถาวร?')) {
                 appData.generalRecords = appData.generalRecords.filter(r => r.id != id);
-                saveToCloud(); 
-                renderGeneralTable();
+                saveToCloud(); renderGeneralTable();
                 showSuccessModal("ลบข้อมูลสำเร็จ", "รายการถูกลบออกจากระบบเรียบร้อยแล้ว");
             }
         }
 
-        // --- Shooting Range Functions ---
+        // ==================== SHOOTING RANGE LOGIC ====================
+        window.setShootingViewMode = function(mode) {
+            shootingViewMode = mode;
+            const detailBtn = document.getElementById('shootModeDetailBtn');
+            const sumBtn = document.getElementById('shootModeSummaryBtn');
+            if (mode === 'detail') {
+                detailBtn.className = "px-3 py-1 rounded-lg text-[11px] font-bold bg-white dark:bg-slate-900 text-emerald-600 dark:text-emerald-400 shadow-sm transition";
+                sumBtn.className = "px-3 py-1 rounded-lg text-[11px] font-bold text-slate-600 dark:text-slate-400 hover:text-slate-900 transition";
+            } else {
+                sumBtn.className = "px-3 py-1 rounded-lg text-[11px] font-bold bg-white dark:bg-slate-900 text-emerald-600 dark:text-emerald-400 shadow-sm transition";
+                detailBtn.className = "px-3 py-1 rounded-lg text-[11px] font-bold text-slate-600 dark:text-slate-400 hover:text-slate-900 transition";
+            }
+            renderShootingTable();
+        }
+
+        window.resetShootingFilters = function() {
+            document.getElementById('shootFilterYear').value = 'ALL';
+            document.getElementById('shootFilterMonth').value = 'ALL';
+            renderShootingTable();
+        }
+
         window.calculateShootingPreviews = function() {
             const bTr = parseFloat(document.getElementById('sBulTrQty').value) || 0;
             const bCash = parseFloat(document.getElementById('sBulCashQty').value) || 0;
             const tTr = parseFloat(document.getElementById('sTarTrQty').value) || 0;
             const tCash = parseFloat(document.getElementById('sTarCashQty').value) || 0;
-
-            const bTot = (bTr + bCash) * 1000;
-            const tTot = (tTr + tCash) * 15;
-
-            document.getElementById('bulletTotalPreview').innerText = bTot.toLocaleString() + " ฿";
-            document.getElementById('targetTotalPreview').innerText = tTot.toLocaleString() + " ฿";
+            document.getElementById('bulletTotalPreview').innerText = ((bTr + bCash) * 1000).toLocaleString() + " ฿";
+            document.getElementById('targetTotalPreview').innerText = ((tTr + tCash) * 15).toLocaleString() + " ฿";
         }
 
-        window.showShootingRange = function() { renderShootingTable(); navigateTo('view-shooting-app'); }
+        window.showShootingRange = function() { populateFilterDropdowns(); renderShootingTable(); navigateTo('view-shooting-app'); }
         window.showShootingInput = function(editId = null) {
             document.getElementById('shootingForm').reset();
             document.getElementById('sEditId').value = "";
@@ -1220,26 +1633,20 @@
             navigateTo('view-shooting-input');
         }
 
-        window.renderShootingTable = function() {
-            sanitizeData();
-            const tbody = document.getElementById('shootingTbody'), tfoot = document.getElementById('shootingTfoot');
-            tbody.innerHTML = ""; tfoot.innerHTML = "";
+        function getFilteredShootingData() {
+            const filterYear = document.getElementById('shootFilterYear').value;
+            const filterMonth = document.getElementById('shootFilterMonth').value;
 
-            let sortedShooting = [...appData.shootingRecords].sort((a, b) => {
-                let yearA = parseInt(a.year) || 2569;
-                let yearB = parseInt(b.year) || 2569;
+            let sorted = [...appData.shootingRecords].sort((a, b) => {
+                let yearA = parseInt(a.year) || 2569, yearB = parseInt(b.year) || 2569;
                 if (yearA !== yearB) return yearA - yearB;
-
                 let mOrderA = monthOrderMap[a.month] !== undefined ? monthOrderMap[a.month] : 99;
                 let mOrderB = monthOrderMap[b.month] !== undefined ? monthOrderMap[b.month] : 99;
                 return mOrderA - mOrderB;
             });
 
             let runBal = 0;
-            let sumBTrQ=0, sumBTrA=0, sumBCQ=0, sumBC_A=0, sumTotB=0;
-            let sumTTrQ=0, sumTTrA=0, sumTCQ=0, sumTC_A=0, sumTotT=0;
-
-            sortedShooting.forEach(r => {
+            const enriched = sorted.map(r => {
                 const bTrQ = parseFloat(r.bTrQ) || 0, bBCQ = parseFloat(r.bBCQ) || 0;
                 const bTrA = bTrQ * 1000, bBCA = bBCQ * 1000, totB = bTrA + bBCA;
                 const tTrQ = parseFloat(r.tTrQ) || 0, tBCQ = parseFloat(r.tBCQ) || 0;
@@ -1247,64 +1654,182 @@
                 const expAmt = parseFloat(r.expAmt) || 0;
                 const adjType = r.adjType || (r.month === 'ยกยอดมา' ? 'income_carry' : 'expense');
 
+                let specialIn = 0, specialOut = 0;
                 if (expAmt > 0) {
-                    if (adjType === 'income_carry') {
-                        runBal += expAmt;
-                    } else {
-                        runBal -= expAmt;
-                    }
+                    if (adjType === 'income_carry') { runBal += expAmt; specialIn = expAmt; }
+                    else { runBal -= expAmt; specialOut = expAmt; }
                 }
                 runBal += (totB + totT);
 
-                if(expAmt === 0 && r.month !== 'ยกยอดมา') {
-                    sumBTrQ += bTrQ; sumBTrA += bTrA; sumBCQ += bBCQ; sumBC_A += bBCA; sumTotB += totB;
-                    sumTTrQ += tTrQ; sumTTrA += tTrA; sumTCQ += tBCQ; sumTC_A += tBCA; sumTotT += totT;
+                return { ...r, bTrQ, bBCQ, bTrA, bBCA, totB, tTrQ, tBCQ, tTrA, tBCA, totT, expAmt, adjType, specialIn, specialOut, runBal };
+            });
+
+            return enriched.filter(item => {
+                if (filterYear !== 'ALL' && (item.year || '2569').toString() !== filterYear) return false;
+                if (filterMonth !== 'ALL' && item.month !== filterMonth) return false;
+                return true;
+            });
+        }
+
+        window.renderShootingTable = function() {
+            sanitizeData();
+            const thead = document.getElementById('shootingThead');
+            const tbody = document.getElementById('shootingTbody');
+            const tfoot = document.getElementById('shootingTfoot');
+            tbody.innerHTML = ""; tfoot.innerHTML = "";
+
+            const filtered = getFilteredShootingData();
+
+            let sumBTrQ=0, sumBTrA=0, sumBCQ=0, sumBC_A=0, sumTotB=0;
+            let sumTTrQ=0, sumTTrA=0, sumTCQ=0, sumTC_A=0, sumTotT=0;
+            let sumSpecialIn=0, sumSpecialOut=0;
+
+            filtered.forEach(r => {
+                sumBTrQ += r.bTrQ; sumBTrA += r.bTrA; sumBCQ += r.bBCQ; sumBC_A += r.bBCA; sumTotB += r.totB;
+                sumTTrQ += r.tTrQ; sumTTrA += r.tTrA; sumTCQ += r.tBCQ; sumTC_A += r.tBCA; sumTotT += r.totT;
+                sumSpecialIn += r.specialIn;
+                sumSpecialOut += r.specialOut;
+            });
+
+            const totalIncomeFiltered = sumTotB + sumTotT + sumSpecialIn;
+            const totalExpenseFiltered = sumSpecialOut;
+            const lastRunBal = filtered.length > 0 ? filtered[filtered.length - 1].runBal : 0;
+
+            document.getElementById('shootDashIn').innerText = totalIncomeFiltered.toLocaleString();
+            document.getElementById('shootDashOut').innerText = totalExpenseFiltered.toLocaleString();
+            document.getElementById('shootDashNet').innerText = lastRunBal.toLocaleString();
+
+            if (shootingViewMode === 'summary') {
+                // Summary View (Compact Overview by Month/Year)
+                thead.innerHTML = `
+                    <tr class="bg-slate-800 text-slate-100">
+                        <th class="border-r border-slate-700/70 w-28 rounded-tl-xl">เดือน / ปี</th>
+                        <th class="border-r border-slate-700/70 text-left pl-4">สรุปรายการประจำงวด</th>
+                        <th class="border-r border-slate-700/70 bg-indigo-950/70 text-indigo-200">ยอดขายกระสุน (รวม)</th>
+                        <th class="border-r border-slate-700/70 bg-emerald-950/70 text-emerald-200">ยอดขายเป้า (รวม)</th>
+                        <th class="border-r border-slate-700/70 bg-emerald-900/40 text-emerald-200">รายรับพิเศษ/ยกยอด</th>
+                        <th class="border-r border-slate-700/70 bg-rose-950/70 text-rose-200">รายจ่าย (-)</th>
+                        <th class="bg-slate-900 text-amber-300 font-bold rounded-tr-xl">คงเหลือสุทธิ</th>
+                    </tr>`;
+
+                const groups = {};
+                filtered.forEach(r => {
+                    const key = `${r.year || '2569'}-${r.month}`;
+                    if (!groups[key]) {
+                        groups[key] = {
+                            label: `${r.month} ${r.year || '2569'}`,
+                            notes: [],
+                            totB: 0, totT: 0, specIn: 0, specOut: 0, endBal: 0
+                        };
+                    }
+                    if (r.expDesc) groups[key].notes.push(r.expDesc);
+                    groups[key].totB += r.totB;
+                    groups[key].totT += r.totT;
+                    groups[key].specIn += r.specialIn;
+                    groups[key].specOut += r.specialOut;
+                    groups[key].endBal = r.runBal;
+                });
+
+                const groupList = Object.values(groups);
+                if (groupList.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="7" class="text-center py-8 font-bold text-slate-400">ไม่พบข้อมูลตามเงื่อนไขที่เลือก</td></tr>`;
+                } else {
+                    groupList.forEach(g => {
+                        const desc = g.notes.length > 0 ? g.notes.join(', ') : 'ยอดขายกระสุนและเป้าประจำเดือน';
+                        tbody.innerHTML += `
+                            <tr class="hover:bg-emerald-50/30 dark:hover:bg-slate-800/40 transition">
+                                <td class="border-r border-slate-100 dark:border-slate-800 font-bold text-slate-800 dark:text-slate-100">${g.label}</td>
+                                <td class="border-r border-slate-100 dark:border-slate-800 text-left pl-4 text-slate-600 dark:text-slate-300">${desc}</td>
+                                <td class="border-r border-slate-100 dark:border-slate-800 font-bold text-indigo-600 dark:text-indigo-400">${g.totB ? g.totB.toLocaleString() : '-'}</td>
+                                <td class="border-r border-slate-100 dark:border-slate-800 font-bold text-emerald-600 dark:text-emerald-400">${g.totT ? g.totT.toLocaleString() : '-'}</td>
+                                <td class="border-r border-slate-100 dark:border-slate-800 font-bold text-emerald-700 dark:text-emerald-300">${g.specIn ? '+' + g.specIn.toLocaleString() : '-'}</td>
+                                <td class="border-r border-slate-100 dark:border-slate-800 font-bold text-rose-500">${g.specOut ? '-' + g.specOut.toLocaleString() : '-'}</td>
+                                <td class="font-extrabold text-amber-600 dark:text-amber-400 bg-amber-50/30 dark:bg-slate-800/30">${g.endBal.toLocaleString()}</td>
+                            </tr>`;
+                    });
                 }
 
-                let attachBtn = r.attachment ? `<button onclick="openAttachmentModal('${r.attachment}')" class="px-2.5 py-1 rounded-lg bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 font-bold hover:bg-emerald-100 transition text-[11px]" title="ดูไฟล์แนบ"><i class="fas fa-paperclip mr-1"></i> ดูไฟล์</button>` : `<span class="text-slate-300">-</span>`;
+                tfoot.innerHTML = `
+                    <tr>
+                        <td colspan="2" class="py-3 px-4 text-right uppercase font-extrabold text-slate-700 dark:text-slate-200 border-r border-slate-200 dark:border-slate-700">รวมสรุปภาพรวม</td>
+                        <td class="text-indigo-600 dark:text-indigo-400 font-black border-r border-slate-200 dark:border-slate-700">${sumTotB.toLocaleString()}</td>
+                        <td class="text-emerald-600 dark:text-emerald-400 font-black border-r border-slate-200 dark:border-slate-700">${sumTotT.toLocaleString()}</td>
+                        <td class="text-emerald-700 dark:text-emerald-300 font-black border-r border-slate-200 dark:border-slate-700">+${sumSpecialIn.toLocaleString()}</td>
+                        <td class="text-rose-600 font-black border-r border-slate-200 dark:border-slate-700">-${sumSpecialOut.toLocaleString()}</td>
+                        <td class="text-amber-600 dark:text-amber-400 font-black bg-amber-50/50 dark:bg-slate-800/50">${lastRunBal.toLocaleString()}</td>
+                    </tr>`;
+                return;
+            }
+
+            // Detailed View
+            thead.innerHTML = `
+                <tr class="bg-slate-800 text-slate-100">
+                    <th rowspan="2" class="border-r border-slate-700/70 w-24 rounded-tl-xl">เดือน / ปี</th>
+                    <th rowspan="2" class="border-r border-slate-700/70 text-left pl-4">รายการ / ยกยอด / รายจ่าย</th>
+                    <th colspan="5" class="bg-indigo-950/70 border-r border-slate-700/70 border-b border-slate-700/70 text-indigo-200">ยอดขายกระสุน (1,000 บ./นัด)</th>
+                    <th colspan="5" class="bg-emerald-950/70 border-r border-slate-700/70 border-b border-slate-700/70 text-emerald-200">ยอดขายเป้า (15 บ./ใบ)</th>
+                    <th rowspan="2" class="border-l border-slate-700/70 bg-slate-900 w-28 text-amber-300 font-bold">คงเหลือสุทธิ</th>
+                    <th rowspan="2" class="border-r border-slate-700/70 w-16 no-print-capture">สลิป</th>
+                    <th rowspan="2" class="no-print-capture w-16 rounded-tr-xl">จัดการ</th>
+                </tr>
+                <tr class="bg-slate-700/95 text-[11px] text-slate-200">
+                    <th class="border-r border-slate-600/60 w-14 bg-indigo-900/30">โอน</th>
+                    <th class="border-r border-slate-600/60 w-20 bg-indigo-900/30">ยอดเงิน</th>
+                    <th class="border-r border-slate-600/60 w-14 bg-indigo-900/30">สด</th>
+                    <th class="border-r border-slate-600/60 w-20 bg-indigo-900/30">ยอดเงิน</th>
+                    <th class="border-r border-slate-600/60 bg-indigo-950/60 text-indigo-200 font-bold w-20">รวม</th>
+                    <th class="border-r border-slate-600/60 w-14 bg-emerald-900/30">โอน</th>
+                    <th class="border-r border-slate-600/60 w-20 bg-emerald-900/30">ยอดเงิน</th>
+                    <th class="border-r border-slate-600/60 w-14 bg-emerald-900/30">สด</th>
+                    <th class="border-r border-slate-600/60 w-20 bg-emerald-900/30">ยอดเงิน</th>
+                    <th class="border-r border-slate-600/60 bg-emerald-950/60 text-emerald-200 font-bold w-20">รวม</th>
+                </tr>`;
+
+            filtered.forEach(r => {
+                let attachBtn = r.attachment ? `<button onclick="openAttachmentModal('${r.attachment}')" class="px-2 py-1 rounded-lg bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-300 font-bold hover:bg-emerald-100 transition text-[11px]" title="ดูสลิป"><i class="fas fa-paperclip"></i></button>` : `<span class="text-slate-300">-</span>`;
 
                 let tr = document.createElement('tr');
                 tr.id = `row-${r.id}`;
 
-                if(expAmt > 0 || r.month === 'ยกยอดมา') {
-                    let isIncome = (adjType === 'income_carry');
-                    tr.className = `transition ${isIncome ? 'bg-emerald-50/40 dark:bg-emerald-950/20' : 'bg-rose-50/40 dark:bg-rose-950/25'} hover:bg-slate-100 dark:hover:bg-slate-800/40`;
+                if(r.expAmt > 0 || r.month === 'ยกยอดมา') {
+                    let isIncome = (r.adjType === 'income_carry');
+                    tr.className = `transition ${isIncome ? 'bg-emerald-50/35 dark:bg-emerald-950/20' : 'bg-rose-50/35 dark:bg-rose-950/20'} hover:bg-slate-100/70 dark:hover:bg-slate-800/40`;
                     let descText = r.expDesc || (isIncome ? 'ยอดยกมา / รายรับอื่นๆ' : 'รายจ่ายประจำเดือน');
-                    let displayAmtText = (isIncome ? '+' : '-') + expAmt.toLocaleString() + ' บาท';
+                    let displayAmtText = (isIncome ? '+' : '-') + r.expAmt.toLocaleString() + ' บาท';
                     let tagText = isIncome ? 'รายรับ/ยกยอด' : 'รายจ่าย';
-                    let tagColor = isIncome ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-200' : 'bg-rose-100 text-rose-800 dark:bg-rose-900 dark:text-rose-200';
+                    let tagColor = isIncome ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/70 dark:text-emerald-200' : 'bg-rose-100 text-rose-800 dark:bg-rose-900/70 dark:text-rose-200';
                     let valColor = isIncome ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400';
 
                     tr.innerHTML = `
-                        <td class="text-center font-bold border-r border-slate-200 dark:border-slate-800 py-2">${r.month} ${r.year || '2569'}</td>
-                        <td class="text-center px-3 font-bold ${valColor} border-r border-slate-200 dark:border-slate-800 py-2">${descText}</td>
-                        <td colspan="10" class="text-right font-black ${valColor} px-4 border-r border-slate-200 dark:border-slate-800 py-2">
-                            ${displayAmtText} <span class="${tagColor} px-2 py-0.5 rounded text-[10px] ml-1 font-bold">${tagText}</span>
+                        <td class="font-bold border-r border-slate-100 dark:border-slate-800">${r.month} ${r.year || '2569'}</td>
+                        <td class="text-left pl-4 font-bold ${valColor} border-r border-slate-100 dark:border-slate-800">${descText}</td>
+                        <td colspan="10" class="text-right font-extrabold ${valColor} px-4 border-r border-slate-100 dark:border-slate-800">
+                            ${displayAmtText} <span class="${tagColor} px-2 py-0.5 rounded-md text-[10px] ml-1.5 font-bold">${tagText}</span>
                         </td>
-                        <td class="text-center font-extrabold text-amber-600 dark:text-amber-400 bg-amber-50/30 dark:bg-slate-900/40 border-l border-slate-200 dark:border-slate-800 py-2 px-3">${runBal.toLocaleString()}</td>
-                        <td class="text-center border-r border-slate-200 dark:border-slate-800 py-2">${attachBtn}</td>
-                        <td class="text-center no-print-capture border-l border-slate-200 dark:border-slate-800 py-2 space-x-1">
+                        <td class="font-extrabold text-amber-600 dark:text-amber-400 bg-amber-50/30 dark:bg-slate-800/30 border-l border-slate-100 dark:border-slate-800">${r.runBal.toLocaleString()}</td>
+                        <td class="border-r border-slate-100 dark:border-slate-800 no-print-capture">${attachBtn}</td>
+                        <td class="no-print-capture space-x-0.5">
                             <button onclick="showShootingInput('${r.id}')" class="text-emerald-600 action-btn hover:bg-emerald-50 dark:hover:bg-slate-800" title="แก้ไข"><i class="fas fa-edit"></i></button>
                             <button onclick="deleteShootingRecord('${r.id}')" class="text-rose-500 action-btn hover:bg-rose-50 dark:hover:bg-slate-800" title="ลบ"><i class="fas fa-trash"></i></button>
                         </td>`;
                 } else {
-                    tr.className = `transition hover:bg-slate-50 dark:hover:bg-slate-800/40`;
+                    tr.className = `transition hover:bg-emerald-50/25 dark:hover:bg-slate-800/40`;
                     tr.innerHTML = `
-                        <td class="text-center font-bold border-r border-slate-200 dark:border-slate-800 py-2">${r.month} ${r.year || '2569'}</td>
-                        <td class="text-center text-slate-400 border-r border-slate-200 dark:border-slate-800 py-2">-</td>
-                        <td class="text-center border-r border-slate-200 dark:border-slate-800 font-medium text-slate-600 dark:text-slate-300 py-2">${bTrQ ? bTrQ.toLocaleString() : '-'}</td>
-                        <td class="text-center border-r border-slate-200 dark:border-slate-800 font-bold py-2">${bTrA ? bTrA.toLocaleString() : '-'}</td>
-                        <td class="text-center border-r border-slate-200 dark:border-slate-800 font-medium text-slate-600 dark:text-slate-300 py-2">${bBCQ ? bBCQ.toLocaleString() : '-'}</td>
-                        <td class="text-center border-r border-slate-200 dark:border-slate-800 font-bold py-2">${bBCA ? bBCA.toLocaleString() : '-'}</td>
-                        <td class="text-center font-bold text-indigo-700 dark:text-indigo-400 bg-indigo-50/20 dark:bg-indigo-900/20 border-r border-slate-200 dark:border-slate-800 py-2">${totB ? totB.toLocaleString() : '-'}</td>
-                        <td class="text-center border-r border-slate-200 dark:border-slate-800 font-medium text-slate-600 dark:text-slate-300 py-2">${tTrQ ? tTrQ.toLocaleString() : '-'}</td>
-                        <td class="text-center border-r border-slate-200 dark:border-slate-800 font-bold py-2">${tTrA ? tTrA.toLocaleString() : '-'}</td>
-                        <td class="text-center border-r border-slate-200 dark:border-slate-800 font-medium text-slate-600 dark:text-slate-300 py-2">${tBCQ ? tBCQ.toLocaleString() : '-'}</td>
-                        <td class="text-center border-r border-slate-200 dark:border-slate-800 font-bold py-2">${tBCA ? tBCA.toLocaleString() : '-'}</td>
-                        <td class="text-center font-bold text-emerald-700 dark:text-emerald-400 bg-emerald-50/20 dark:bg-emerald-900/20 border-r border-slate-200 dark:border-slate-800 py-2">${totT ? totT.toLocaleString() : '-'}</td>
-                        <td class="text-center font-extrabold text-amber-600 dark:text-amber-400 bg-amber-50/30 dark:bg-slate-900/40 border-l border-slate-200 dark:border-slate-800 py-2 px-3">${runBal.toLocaleString()}</td>
-                        <td class="text-center border-r border-slate-200 dark:border-slate-800 py-2">${attachBtn}</td>
-                        <td class="text-center no-print-capture border-l border-slate-200 dark:border-slate-800 py-2 space-x-1">
+                        <td class="font-bold border-r border-slate-100 dark:border-slate-800">${r.month} ${r.year || '2569'}</td>
+                        <td class="text-left pl-4 text-slate-400 border-r border-slate-100 dark:border-slate-800">${r.expDesc || 'ยอดจำหน่ายประจำเดือน'}</td>
+                        <td class="border-r border-slate-100 dark:border-slate-800 text-slate-600 dark:text-slate-300">${r.bTrQ ? r.bTrQ.toLocaleString() : '-'}</td>
+                        <td class="border-r border-slate-100 dark:border-slate-800 font-semibold">${r.bTrA ? r.bTrA.toLocaleString() : '-'}</td>
+                        <td class="border-r border-slate-100 dark:border-slate-800 text-slate-600 dark:text-slate-300">${r.bBCQ ? r.bBCQ.toLocaleString() : '-'}</td>
+                        <td class="border-r border-slate-100 dark:border-slate-800 font-semibold">${r.bBCA ? r.bBCA.toLocaleString() : '-'}</td>
+                        <td class="font-bold text-indigo-600 dark:text-indigo-400 bg-indigo-50/20 dark:bg-indigo-900/15 border-r border-slate-100 dark:border-slate-800">${r.totB ? r.totB.toLocaleString() : '-'}</td>
+                        <td class="border-r border-slate-100 dark:border-slate-800 text-slate-600 dark:text-slate-300">${r.tTrQ ? r.tTrQ.toLocaleString() : '-'}</td>
+                        <td class="border-r border-slate-100 dark:border-slate-800 font-semibold">${r.tTrA ? r.tTrA.toLocaleString() : '-'}</td>
+                        <td class="border-r border-slate-100 dark:border-slate-800 text-slate-600 dark:text-slate-300">${r.tBCQ ? r.tBCQ.toLocaleString() : '-'}</td>
+                        <td class="border-r border-slate-100 dark:border-slate-800 font-semibold">${r.tBCA ? r.tBCA.toLocaleString() : '-'}</td>
+                        <td class="font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-50/20 dark:bg-emerald-900/15 border-r border-slate-100 dark:border-slate-800">${r.totT ? r.totT.toLocaleString() : '-'}</td>
+                        <td class="font-extrabold text-amber-600 dark:text-amber-400 bg-amber-50/30 dark:bg-slate-800/30 border-l border-slate-100 dark:border-slate-800">${r.runBal.toLocaleString()}</td>
+                        <td class="border-r border-slate-100 dark:border-slate-800 no-print-capture">${attachBtn}</td>
+                        <td class="no-print-capture space-x-0.5">
                             <button onclick="showShootingInput('${r.id}')" class="text-emerald-600 action-btn hover:bg-emerald-50 dark:hover:bg-slate-800" title="แก้ไข"><i class="fas fa-edit"></i></button>
                             <button onclick="deleteShootingRecord('${r.id}')" class="text-rose-500 action-btn hover:bg-rose-50 dark:hover:bg-slate-800" title="ลบ"><i class="fas fa-trash"></i></button>
                         </td>`;
@@ -1312,29 +1837,25 @@
                 tbody.appendChild(tr);
             });
 
-            if(sortedShooting.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="15" class="text-center py-8 font-bold text-slate-400">ยังไม่มีข้อมูลสนามยิงปืน</td></tr>`;
+            if(filtered.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="15" class="text-center py-8 font-bold text-slate-400">ไม่พบข้อมูลตามเงื่อนไขที่เลือก</td></tr>`;
             }
-
-            document.getElementById('shootDashIn').innerText = (sumTotB + sumTotT).toLocaleString();
-            document.getElementById('shootDashNet').innerText = runBal.toLocaleString();
 
             tfoot.innerHTML = `
                 <tr>
-                    <td class="border-r border-slate-300 dark:border-slate-700"></td>
-                    <td class="text-center py-3 font-bold border-r border-slate-300 dark:border-slate-700 uppercase text-slate-700 dark:text-slate-200">ยอดรวมสะสม</td>
-                    <td class="text-center border-r border-slate-300 dark:border-slate-700 font-medium">${sumBTrQ.toLocaleString()}</td>
-                    <td class="text-center border-r border-slate-300 dark:border-slate-700 font-bold text-indigo-600 dark:text-indigo-400">${sumBTrA.toLocaleString()}</td>
-                    <td class="text-center border-r border-slate-300 dark:border-slate-700 font-medium">${sumBCQ.toLocaleString()}</td>
-                    <td class="text-center border-r border-slate-300 dark:border-slate-700 font-bold text-indigo-600 dark:text-indigo-400">${sumBC_A.toLocaleString()}</td>
-                    <td class="text-center border-r border-slate-300 dark:border-slate-700 bg-indigo-50/40 dark:bg-indigo-900/30 text-indigo-800 dark:text-indigo-300 font-black">${sumTotB.toLocaleString()}</td>
-                    <td class="text-center border-r border-slate-300 dark:border-slate-700 font-medium">${sumTTrQ.toLocaleString()}</td>
-                    <td class="text-center border-r border-slate-300 dark:border-slate-700 font-bold text-emerald-600 dark:text-emerald-400">${sumTTrA.toLocaleString()}</td>
-                    <td class="text-center border-r border-slate-300 dark:border-slate-700 font-medium">${sumTCQ.toLocaleString()}</td>
-                    <td class="text-center border-r border-slate-300 dark:border-slate-700 font-bold text-emerald-600 dark:text-emerald-400">${sumTC_A.toLocaleString()}</td>
-                    <td class="text-center border-r border-slate-300 dark:border-slate-700 bg-emerald-50/40 dark:bg-emerald-900/30 text-emerald-800 dark:text-emerald-300 font-black">${sumTotT.toLocaleString()}</td>
-                    <td class="text-center font-black text-amber-600 dark:text-amber-400 bg-amber-50/50 dark:bg-slate-900/60 px-3 border-l border-slate-300 dark:border-slate-700">${runBal.toLocaleString()}</td>
-                    <td colspan="2" class="no-print-capture border-l border-slate-300 dark:border-slate-700"></td>
+                    <td colspan="2" class="text-right py-3 px-4 font-extrabold border-r border-slate-200 dark:border-slate-700 uppercase text-slate-700 dark:text-slate-200">รวมสะสมตามตัวกรอง</td>
+                    <td class="border-r border-slate-200 dark:border-slate-700 font-medium">${sumBTrQ.toLocaleString()}</td>
+                    <td class="border-r border-slate-200 dark:border-slate-700 font-bold text-indigo-600 dark:text-indigo-400">${sumBTrA.toLocaleString()}</td>
+                    <td class="border-r border-slate-200 dark:border-slate-700 font-medium">${sumBCQ.toLocaleString()}</td>
+                    <td class="border-r border-slate-200 dark:border-slate-700 font-bold text-indigo-600 dark:text-indigo-400">${sumBC_A.toLocaleString()}</td>
+                    <td class="border-r border-slate-200 dark:border-slate-700 bg-indigo-50/40 dark:bg-indigo-900/25 text-indigo-700 dark:text-indigo-300 font-black">${sumTotB.toLocaleString()}</td>
+                    <td class="border-r border-slate-200 dark:border-slate-700 font-medium">${sumTTrQ.toLocaleString()}</td>
+                    <td class="border-r border-slate-200 dark:border-slate-700 font-bold text-emerald-600 dark:text-emerald-400">${sumTTrA.toLocaleString()}</td>
+                    <td class="border-r border-slate-200 dark:border-slate-700 font-medium">${sumTCQ.toLocaleString()}</td>
+                    <td class="border-r border-slate-200 dark:border-slate-700 font-bold text-emerald-600 dark:text-emerald-400">${sumTC_A.toLocaleString()}</td>
+                    <td class="border-r border-slate-200 dark:border-slate-700 bg-emerald-50/40 dark:bg-emerald-900/25 text-emerald-700 dark:text-emerald-300 font-black">${sumTotT.toLocaleString()}</td>
+                    <td class="font-black text-amber-600 dark:text-amber-400 bg-amber-50/50 dark:bg-slate-800/50 border-l border-slate-200 dark:border-slate-700">${lastRunBal.toLocaleString()}</td>
+                    <td colspan="2" class="no-print-capture"></td>
                 </tr>`;
         }
 
@@ -1342,7 +1863,6 @@
             e.preventDefault();
             const editId = document.getElementById('sEditId').value;
             const attach = document.getElementById('sFileBase64').value || "";
-
             const rec = {
                 id: editId || Date.now().toString(),
                 month: document.getElementById('sMonth').value,
@@ -1359,82 +1879,347 @@
 
             if(editId) {
                 const idx = appData.shootingRecords.findIndex(r => r.id == editId);
-                if(idx > -1) { 
-                    if(!rec.attachment) rec.attachment = appData.shootingRecords[idx].attachment || "";
-                    appData.shootingRecords[idx] = rec; 
-                }
-            } else {
-                appData.shootingRecords.push(rec);
-            }
+                if(idx > -1) { if(!rec.attachment) rec.attachment = appData.shootingRecords[idx].attachment || ""; appData.shootingRecords[idx] = rec; }
+            } else { appData.shootingRecords.push(rec); }
 
             sanitizeData();
-            await saveToCloud(); 
-            showSuccessModal(editId ? "แก้ไขข้อมูลสำเร็จ" : "บันทึกข้อมูลสำเร็จ", editId ? "อัปเดตข้อมูลสนามยิงปืนเรียบร้อยแล้ว" : "เพิ่มข้อมูลสนามยิงปืนใหม่เรียบร้อยแล้ว"); 
+            await saveToCloud();
+            showSuccessModal(editId ? "แก้ไขข้อมูลสำเร็จ" : "บันทึกข้อมูลสำเร็จ", "อัปเดตรายการสรุปสนามยิงปืนเรียบร้อยแล้ว");
             showShootingRange();
         }
 
         window.deleteShootingRecord = function(id) {
             if(confirm('ยืนยันการลบรายการบัญชีสนามยิงปืนอย่างถาวร?')) {
                 appData.shootingRecords = appData.shootingRecords.filter(r => r.id != id);
-                saveToCloud(); 
-                renderShootingTable();
+                saveToCloud(); renderShootingTable();
                 showSuccessModal("ลบข้อมูลสำเร็จ", "รายการถูกลบออกจากระบบเรียบร้อยแล้ว");
             }
         }
 
-        // --- Export & Share Functions ---
-        window.exportToCSV = function(type) {
-            let csvContent = "\uFEFF";
-            if (type === 'general') {
-                csvContent += "ลำดับ,วันที่,รายการ,รับ(สด),รับ(โอน),จ่าย(สด),จ่าย(โอน),หมายเหตุ\n";
-                appData.generalRecords.forEach((r, i) => {
-                    csvContent += `${i+1},"${formatDateThaiShort(r.date)}","${(r.desc||'').replace(/"/g,'""')}",${r.inCash||0},${r.inAcc||0},${r.outCash||0},${r.outAcc||0},"${(r.note||'').replace(/"/g,'""')}"\n`;
+        // ==================== LINE TEXT SUMMARY REPORT MODAL ====================
+        window.openLineTextSummaryModal = function(accountType) {
+            document.getElementById('lineSummaryAccountType').value = accountType;
+            const yearSel = document.getElementById('lineSumYear');
+            const startSel = document.getElementById('lineSumStartMonth');
+            const endSel = document.getElementById('lineSumEndMonth');
+
+            const yearsSet = new Set(['2568', '2569', (new Date().getFullYear() + 543).toString()]);
+            if (accountType === 'general') {
+                appData.generalRecords.forEach(r => {
+                    const ymd = parseLocalYMD(r.date);
+                    if (ymd) yearsSet.add((parseInt(ymd.substring(0, 4)) + 543).toString());
                 });
             } else {
-                csvContent += "เดือน,ปี,รายการพิเศษ,ประเภท,จำนวนเงินพิเศษ,กระสุนโอน(นัด),กระสุนสด(นัด),เป้าโอน(ใบ),เป้าสด(ใบ)\n";
-                appData.shootingRecords.forEach(r => {
-                    csvContent += `"${r.month}","${r.year}","${(r.expDesc||'').replace(/"/g,'""')}","${r.adjType||''}",${r.expAmt||0},${r.bTrQ||0},${r.bBCQ||0},${r.tTrQ||0},${r.tBCQ||0}\n`;
+                appData.shootingRecords.forEach(r => { if (r.year) yearsSet.add(r.year.toString()); });
+            }
+            yearSel.innerHTML = Array.from(yearsSet).sort().map(y => `<option value="${y}">${y}</option>`).join('');
+            yearSel.value = (new Date().getFullYear() + 543).toString();
+
+            const monthOpts = thFullMonths.map((m, idx) => `<option value="${idx}">${m}</option>`).join('');
+            startSel.innerHTML = monthOpts;
+            endSel.innerHTML = monthOpts;
+            startSel.value = "0"; // มกราคม
+            endSel.value = new Date().getMonth().toString();
+
+            generateLineSummaryText();
+            document.getElementById('lineTextSummaryModal').classList.remove('hidden');
+        }
+
+        window.closeLineTextSummaryModal = function() {
+            document.getElementById('lineTextSummaryModal').classList.add('hidden');
+        }
+
+        window.generateLineSummaryText = function() {
+            const type = document.getElementById('lineSummaryAccountType').value;
+            const targetYear = document.getElementById('lineSumYear').value;
+            let startIdx = parseInt(document.getElementById('lineSumStartMonth').value);
+            let endIdx = parseInt(document.getElementById('lineSumEndMonth').value);
+            if (startIdx > endIdx) { const tmp = startIdx; startIdx = endIdx; endIdx = tmp; }
+
+            let accountTitle = "";
+            let totalIn = 0;
+            let totalOut = 0;
+            let netBalance = 0;
+
+            if (type === 'general') {
+                accountTitle = "บัญชีกองกลาง";
+                let sorted = [...appData.generalRecords].sort((a,b) => new Date(parseLocalYMD(a.date) || '2025-01-01') - new Date(parseLocalYMD(b.date) || '2025-01-01'));
+                let runNet = 0;
+                sorted.forEach(r => {
+                    const inVal = (parseFloat(r.inCash)||0) + (parseFloat(r.inAcc)||0);
+                    const outVal = (parseFloat(r.outCash)||0) + (parseFloat(r.outAcc)||0);
+                    runNet += (inVal - outVal);
+
+                    const ymd = parseLocalYMD(r.date);
+                    if (ymd) {
+                        const beY = (parseInt(ymd.substring(0, 4)) + 543).toString();
+                        const mIdx = parseInt(ymd.substring(5, 7)) - 1;
+                        if (beY === targetYear && mIdx >= startIdx && mIdx <= endIdx) {
+                            totalIn += inVal;
+                            totalOut += outVal;
+                            netBalance = runNet;
+                        }
+                    }
+                });
+                if (netBalance === 0 && totalIn === 0 && totalOut === 0) netBalance = runNet;
+            } else {
+                accountTitle = "รายการสรุปสนามยิงปืน";
+                let sorted = [...appData.shootingRecords].sort((a, b) => {
+                    let yearA = parseInt(a.year) || 2569, yearB = parseInt(b.year) || 2569;
+                    if (yearA !== yearB) return yearA - yearB;
+                    return (monthOrderMap[a.month] ?? 99) - (monthOrderMap[b.month] ?? 99);
+                });
+                let runBal = 0;
+                sorted.forEach(r => {
+                    const totB = ((parseFloat(r.bTrQ)||0) + (parseFloat(r.bBCQ)||0)) * 1000;
+                    const totT = ((parseFloat(r.tTrQ)||0) + (parseFloat(r.tBCQ)||0)) * 15;
+                    const expAmt = parseFloat(r.expAmt) || 0;
+                    const adjType = r.adjType || (r.month === 'ยกยอดมา' ? 'income_carry' : 'expense');
+
+                    let rowIn = totB + totT;
+                    let rowOut = 0;
+                    if (expAmt > 0) {
+                        if (adjType === 'income_carry') rowIn += expAmt;
+                        else rowOut += expAmt;
+                    }
+                    runBal += (rowIn - rowOut);
+
+                    const rYear = (r.year || '2569').toString();
+                    const mIdx = monthOrderMap[r.month];
+                    const inMonthRange = (r.month === 'ยกยอดมา' && startIdx === 0) || (mIdx !== undefined && mIdx >= startIdx && mIdx <= endIdx);
+                    if (rYear === targetYear && inMonthRange) {
+                        totalIn += rowIn;
+                        totalOut += rowOut;
+                        netBalance = runBal;
+                    }
+                });
+                if (netBalance === 0 && totalIn === 0 && totalOut === 0) netBalance = runBal;
+            }
+
+            const startMonthName = thFullMonths[startIdx];
+            const endMonthName = thFullMonths[endIdx];
+            const updatedNow = getThaiFormattedNow();
+
+            const summaryText =
+`📊 สรุปรายงานทางการเงิน
+ข้อมูลบัญชี : ${accountTitle}
+ประจำปี : พ.ศ. ${targetYear}
+ระหว่างเดือน : ${startMonthName} ถึง ${endMonthName}
+ยอดรายรับ : ${totalIn.toLocaleString('th-TH', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} บาท
+ยอดรายจ่าย : ${totalOut.toLocaleString('th-TH', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} บาท
+ยอดคงเหลือ : ${netBalance.toLocaleString('th-TH', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} บาท
+อัปเดตเมื่อวันที่ : ${updatedNow}`;
+
+            document.getElementById('lineSummaryTextarea').value = summaryText;
+        }
+
+        window.copyLineSummaryText = async function() {
+            const text = document.getElementById('lineSummaryTextarea').value;
+            try {
+                await navigator.clipboard.writeText(text);
+                showSuccessModal("คัดลอกข้อความสำเร็จ", "นำข้อความไปวางส่งในแอปพลิเคชัน LINE ได้ทันที");
+            } catch (err) {
+                const ta = document.getElementById('lineSummaryTextarea');
+                ta.select();
+                document.execCommand('copy');
+                showSuccessModal("คัดลอกข้อความสำเร็จ", "นำข้อความไปวางส่งในแอปพลิเคชัน LINE ได้ทันที");
+            }
+        }
+
+        window.shareLineTextDirect = async function() {
+            const text = document.getElementById('lineSummaryTextarea').value;
+            if (navigator.share) {
+                try {
+                    await navigator.share({ title: 'สรุปรายงานบัญชี', text: text });
+                    return;
+                } catch (e) {}
+            }
+            const lineUrl = `https://line.me/R/msg/text/?${encodeURIComponent(text)}`;
+            window.open(lineUrl, '_blank');
+        }
+
+        // ==================== QUICK IMAGE PREVIEW & UNIVERSAL SHARE / EXPORT ====================
+        window.openQuickShareModal = async function(type) {
+            document.getElementById('quickShareType').value = type;
+            const modal = document.getElementById('quickShareModal');
+            const loading = document.getElementById('quickShareLoading');
+            const previewImg = document.getElementById('quickSharePreviewImg');
+
+            loading.classList.remove('hidden');
+            previewImg.classList.add('hidden');
+            modal.classList.remove('hidden');
+
+            generatedReportDataUrl = null;
+            generatedReportBlob = null;
+
+            // Build a sleek, executive-grade snapshot card in the offscreen stage
+            const stage = document.getElementById('offscreenReportStage');
+            const isGen = (type === 'general');
+            const titleText = isGen ? 'รายงานบัญชีกองกลาง (General Ledger)' : 'รายการสรุปสนามยิงปืน (Shooting Range)';
+            const themeGradient = isGen ? 'linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%)' : 'linear-gradient(135deg, #0f172a 0%, #064e3b 100%)';
+            const badgeColor = isGen ? '#818cf8' : '#34d399';
+
+            const inSum = document.getElementById(isGen ? 'genDashIn' : 'shootDashIn').innerText;
+            const outSum = document.getElementById(isGen ? 'genDashOut' : 'shootDashOut').innerText;
+            const netSum = document.getElementById(isGen ? 'genDashNet' : 'shootDashNet').innerText;
+
+            const yearFilterText = isGen
+                ? document.getElementById('genFilterYear').options[document.getElementById('genFilterYear').selectedIndex].text
+                : document.getElementById('shootFilterYear').options[document.getElementById('shootFilterYear').selectedIndex].text;
+            const monthFilterText = isGen
+                ? document.getElementById('genFilterMonth').options[document.getElementById('genFilterMonth').selectedIndex].text
+                : document.getElementById('shootFilterMonth').options[document.getElementById('shootFilterMonth').selectedIndex].text;
+
+            // Clone clean table HTML without action/slip columns
+            const tableClone = document.getElementById(isGen ? 'generalTableCapture' : 'shootingTableCapture').querySelector('table').cloneNode(true);
+            tableClone.querySelectorAll('.no-print-capture').forEach(el => el.remove());
+
+            stage.innerHTML = `
+                <div id="executiveSnapshotCard" style="width: 1020px; background: #ffffff; font-family: 'Prompt', sans-serif; border-radius: 24px; overflow: hidden; border: 1px solid #e2e8f0; color: #1e293b;">
+                    <div style="background: ${themeGradient}; padding: 28px 32px; color: #ffffff; display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <div style="font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: ${badgeColor}; margin-bottom: 4px;">EXECUTIVE FINANCIAL REPORT</div>
+                            <div style="font-size: 24px; font-weight: 800; letter-spacing: -0.01em;">${titleText}</div>
+                            <div style="font-size: 12px; color: #cbd5e1; margin-top: 4px;">ขอบเขตข้อมูล: ${yearFilterText} | ${monthFilterText}</div>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="font-size: 11px; color: #94a3b8;">อัปเดตข้อมูลเมื่อวันที่</div>
+                            <div style="font-size: 13px; font-weight: 700; color: #fbbf24; margin-top: 2px;">${getThaiFormattedNow()}</div>
+                        </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; padding: 20px 32px; background: #f8fafc; border-bottom: 1px solid #e2e8f0;">
+                        <div style="background: #ffffff; padding: 14px 18px; border-radius: 16px; border: 1px solid #e2e8f0;">
+                            <div style="font-size: 11px; font-weight: 600; color: #64748b;">ยอดรายรับรวม</div>
+                            <div style="font-size: 20px; font-weight: 800; color: #059669; margin-top: 2px;">+${inSum} ฿</div>
+                        </div>
+                        <div style="background: #ffffff; padding: 14px 18px; border-radius: 16px; border: 1px solid #e2e8f0;">
+                            <div style="font-size: 11px; font-weight: 600; color: #64748b;">ยอดรายจ่ายรวม</div>
+                            <div style="font-size: 20px; font-weight: 800; color: #e11d48; margin-top: 2px;">-${outSum} ฿</div>
+                        </div>
+                        <div style="background: #0f172a; padding: 14px 18px; border-radius: 16px; color: #ffffff;">
+                            <div style="font-size: 11px; font-weight: 600; color: #cbd5e1;">ยอดคงเหลือสุทธิ</div>
+                            <div style="font-size: 22px; font-weight: 900; color: #fbbf24; margin-top: 2px;">${netSum} ฿</div>
+                        </div>
+                    </div>
+
+                    <div style="padding: 24px 32px;">
+                        <div style="border-radius: 16px; overflow: hidden; border: 1px solid #cbd5e1;">
+                            ${tableClone.outerHTML}
+                        </div>
+                    </div>
+
+                    <div style="padding: 14px 32px; background: #f1f5f9; border-top: 1px solid #e2e8f0; display: flex; justify-content: space-between; font-size: 11px; color: #64748b; font-weight: 600;">
+                        <span>ระบบบริหารจัดการบัญชีกองกลางและสนามยิงปืน (Executive Pro)</span>
+                        <span>เอกสารสรุปยอดทางการเงินอัตโนมัติ</span>
+                    </div>
+                </div>
+            `;
+
+            try {
+                await new Promise(r => setTimeout(r, 150));
+                const cardEl = document.getElementById('executiveSnapshotCard');
+                const canvas = await html2canvas(cardEl, { scale: 2, useCORS: true, backgroundColor: '#ffffff' });
+                generatedReportDataUrl = canvas.toDataURL('image/png');
+                await new Promise(resolve => {
+                    canvas.toBlob(blob => {
+                        generatedReportBlob = blob;
+                        resolve();
+                    }, 'image/png');
+                });
+
+                previewImg.src = generatedReportDataUrl;
+                loading.classList.add('hidden');
+                previewImg.classList.remove('hidden');
+            } catch (err) {
+                console.error(err);
+                loading.innerHTML = `<p class="text-xs text-rose-500 font-bold">เกิดข้อผิดพลาดในการสร้างภาพ กรุณาลองใหม่อีกครั้ง</p>`;
+            }
+        }
+
+        window.closeQuickShareModal = function() {
+            document.getElementById('quickShareModal').classList.add('hidden');
+        }
+
+        window.executeUniversalImageShare = async function() {
+            const type = document.getElementById('quickShareType').value;
+            const fileName = type === 'general' ? 'บัญชีกองกลาง_รายงาน.png' : 'รายการสรุปสนามยิงปืน.png';
+
+            if (!generatedReportBlob) {
+                alert('กรุณารอสักครู่ ภาพกำลังประมวลผล...');
+                return;
+            }
+
+            const file = new File([generatedReportBlob], fileName, { type: 'image/png' });
+
+            // 1. Web Share API (Supported natively on iOS Safari, iPadOS, Android Chrome, macOS Safari, Windows Edge)
+            if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                try {
+                    await navigator.share({
+                        files: [file],
+                        title: fileName,
+                        text: type === 'general' ? 'รายงานบัญชีกองกลาง' : 'รายการสรุปสนามยิงปืน'
+                    });
+                    return;
+                } catch (err) {
+                    if (err.name === 'AbortError') return;
+                }
+            }
+
+            // 2. Fallback for Desktop Browsers (Copy Image to Clipboard + Auto Download)
+            try {
+                if (navigator.clipboard && window.ClipboardItem) {
+                    await navigator.clipboard.write([new ClipboardItem({ 'image/png': generatedReportBlob })]);
+                    downloadGeneratedReportImage();
+                    showSuccessModal("คัดลอกและดาวน์โหลดภาพแล้ว", "คัดลอกรูปภาพลงคลิปบอร์ดแล้ว สามารถกดวาง (Ctrl+V / Cmd+V) ใน LINE PC ได้ทันที");
+                    return;
+                }
+            } catch (e) {}
+
+            // 3. Direct Download Fallback
+            downloadGeneratedReportImage();
+            showSuccessModal("บันทึกรูปภาพสำเร็จ", "ดาวน์โหลดไฟล์รูปภาพลงในเครื่องเรียบร้อยแล้ว");
+        }
+
+        window.downloadGeneratedReportImage = function() {
+            if (!generatedReportDataUrl) return;
+            const type = document.getElementById('quickShareType').value;
+            const prefix = type === 'general' ? 'General_Ledger' : 'Shooting_Range';
+            const a = document.createElement('a');
+            a.href = generatedReportDataUrl;
+            a.download = `${prefix}_${new Date().toISOString().slice(0,10)}.png`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+
+        window.exportCurrentAccountCSV = function() {
+            const type = document.getElementById('quickShareType').value;
+            let csvContent = "\uFEFF";
+            if (type === 'general') {
+                const rows = getFilteredGeneralData();
+                csvContent += "ลำดับ,วันที่,รายการ,รับ(สด),รับ(โอน),จ่าย(สด),จ่าย(โอน),คงเหลือ(สด),คงเหลือ(บัญชี),รวมสุทธิ,หมายเหตุ\n";
+                rows.forEach((r, i) => {
+                    csvContent += `${i+1},"${formatDateThaiShort(r.date)}","${(r.desc||'').replace(/"/g,'""')}",${r.inC},${r.inA},${r.outC},${r.outA},${r.runCash},${r.runAcc},${r.totalNet},"${(r.note||'').replace(/"/g,'""')}"\n`;
+                });
+            } else {
+                const rows = getFilteredShootingData();
+                csvContent += "เดือน,ปี,รายการพิเศษ,ประเภท,จำนวนเงินพิเศษ,กระสุนโอน(นัด),กระสุนสด(นัด),ยอดกระสุนรวม,เป้าโอน(ใบ),เป้าสด(ใบ),ยอดเป้ารวม,คงเหลือสุทธิ\n";
+                rows.forEach(r => {
+                    csvContent += `"${r.month}","${r.year}","${(r.expDesc||'').replace(/"/g,'""')}","${r.adjType||''}",${r.expAmt},${r.bTrQ},${r.bBCQ},${r.totB},${r.tTrQ},${r.tBCQ},${r.totT},${r.runBal}\n`;
                 });
             }
             const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
             const link = document.createElement("a");
             link.href = URL.createObjectURL(blob);
             link.download = `${type}_report_${new Date().toISOString().slice(0,10)}.csv`;
+            document.body.appendChild(link);
             link.click();
-        };
+            document.body.removeChild(link);
+            showSuccessModal("ส่งออกไฟล์ Excel (CSV) สำเร็จ", "ดาวน์โหลดไฟล์ตารางข้อมูลเรียบร้อยแล้ว");
+        }
 
-        window.shareToLine = async function(elementId, fileName, btn) {
-            const el = document.getElementById(elementId);
-            if (!el) return;
-            const origHTML = btn.innerHTML;
-            btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> กำลังสร้างภาพ...`;
-            btn.disabled = true;
-
-            const hiddenCols = el.querySelectorAll('.no-print-capture');
-            hiddenCols.forEach(c => c.style.display = 'none');
-
-            try {
-                const canvas = await html2canvas(el, { scale: 2, useCORS: true });
-                canvas.toBlob(async (blob) => {
-                    const file = new File([blob], `${fileName}.png`, { type: 'image/png' });
-                    if (navigator.canShare && navigator.canShare({ files: [file] })) {
-                        await navigator.share({ files: [file], title: fileName });
-                    } else {
-                        const a = document.createElement('a');
-                        a.href = canvas.toDataURL('image/png');
-                        a.download = `${fileName}_${new Date().toISOString().slice(0,10)}.png`;
-                        a.click();
-                    }
-                });
-            } catch (err) {
-                console.error(err);
-            } finally {
-                hiddenCols.forEach(c => c.style.display = '');
-                btn.innerHTML = origHTML;
-                btn.disabled = false;
-            }
-        };
-
+        // --- App Boot ---
         window.onload = () => {
             initThaiCalendarDropdowns();
             setThaiDateValue(null);
