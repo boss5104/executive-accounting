@@ -296,7 +296,10 @@
                         </div>
                         <div>
                             <label class="block text-xs font-bold mb-1.5 text-slate-700 dark:text-slate-300">จำนวนเงิน (บาท)</label>
-                            <input type="number" step="0.01" id="gAmount" required onclick="openNumericPrompt('gAmount', 'กรอกจำนวนเงิน (บาท)')" placeholder="0.00" class="w-full border border-slate-300 dark:border-slate-700 rounded-xl p-3 font-black text-base text-indigo-600 dark:text-indigo-400 bg-white dark:bg-slate-950 outline-none cursor-pointer" readonly>
+                            <div class="relative flex items-center">
+                                <input type="number" step="0.01" id="gAmount" required placeholder="0.00" class="w-full border border-slate-300 dark:border-slate-700 rounded-xl p-3 pr-10 font-black text-base text-indigo-600 dark:text-indigo-400 bg-white dark:bg-slate-950 focus:border-indigo-500 outline-none">
+                                <button type="button" onclick="openNumericPrompt('gAmount', 'กรอกจำนวนเงิน (บาท)')" class="absolute right-2.5 w-7 h-7 rounded-lg bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-100 flex items-center justify-center transition" title="เปิดแป้นบวกเลข"><i class="fas fa-calculator text-xs"></i></button>
+                            </div>
                         </div>
                     </div>
 
@@ -424,7 +427,10 @@
                             </div>
                             <div>
                                 <label class="block text-[11px] font-bold mb-1 text-slate-700 dark:text-slate-300">จำนวนเงิน (บาท)</label>
-                                <input type="number" step="0.01" id="sExpAmt" onclick="openNumericPrompt('sExpAmt', 'กรอกจำนวนเงินรายการพิเศษ (บาท)')" placeholder="0.00" class="w-full border border-slate-300 dark:border-slate-700 rounded-xl p-2.5 font-bold text-sm text-indigo-600 dark:text-indigo-400 bg-white dark:bg-slate-950 outline-none cursor-pointer" readonly>
+                                <div class="relative flex items-center">
+                                    <input type="number" step="0.01" id="sExpAmt" placeholder="0.00" class="w-full border border-slate-300 dark:border-slate-700 rounded-xl p-2.5 pr-9 font-bold text-sm text-indigo-600 dark:text-indigo-400 bg-white dark:bg-slate-950 focus:border-indigo-500 outline-none">
+                                    <button type="button" onclick="openNumericPrompt('sExpAmt', 'กรอกจำนวนเงินรายการพิเศษ (บาท)')" class="absolute right-2 w-6 h-6 rounded-lg bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-100 flex items-center justify-center transition" title="เปิดแป้นบวกเลข"><i class="fas fa-calculator text-[11px]"></i></button>
+                                </div>
                             </div>
                         </div>
                         <div>
@@ -442,11 +448,11 @@
                             <div class="grid grid-cols-2 gap-3">
                                 <div>
                                     <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">โอน (จำนวนนัด)</label>
-                                    <input type="number" id="sBulTrQty" value="0" oninput="calculateShootingPreviews()" onclick="openNumericPrompt('sBulTrQty', 'จำนวนนัดโอนกระสุน')" class="w-full border border-slate-300 dark:border-slate-700 rounded-xl p-2.5 text-center bg-white dark:bg-slate-950 font-bold text-indigo-600 outline-none text-xs cursor-pointer" readonly>
+                                    <input type="number" id="sBulTrQty" value="0" oninput="calculateShootingPreviews()" onfocus="this.select()" class="w-full border border-slate-300 dark:border-slate-700 rounded-xl p-2.5 text-center bg-white dark:bg-slate-950 font-bold text-indigo-600 focus:border-indigo-500 outline-none text-xs">
                                 </div>
                                 <div>
                                     <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">เงินสด (จำนวนนัด)</label>
-                                    <input type="number" id="sBulCashQty" value="0" oninput="calculateShootingPreviews()" onclick="openNumericPrompt('sBulCashQty', 'จำนวนนัดเงินสดกระสุน')" class="w-full border border-slate-300 dark:border-slate-700 rounded-xl p-2.5 text-center bg-white dark:bg-slate-950 font-bold text-indigo-600 outline-none text-xs cursor-pointer" readonly>
+                                    <input type="number" id="sBulCashQty" value="0" oninput="calculateShootingPreviews()" onfocus="this.select()" class="w-full border border-slate-300 dark:border-slate-700 rounded-xl p-2.5 text-center bg-white dark:bg-slate-950 font-bold text-indigo-600 focus:border-indigo-500 outline-none text-xs">
                                 </div>
                             </div>
                         </div>
@@ -458,11 +464,11 @@
                             <div class="grid grid-cols-2 gap-3">
                                 <div>
                                     <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">โอน (จำนวนใบ)</label>
-                                    <input type="number" id="sTarTrQty" value="0" oninput="calculateShootingPreviews()" onclick="openNumericPrompt('sTarTrQty', 'จำนวนใบโอนเป้า')" class="w-full border border-slate-300 dark:border-slate-700 rounded-xl p-2.5 text-center bg-white dark:bg-slate-950 font-bold text-emerald-600 outline-none text-xs cursor-pointer" readonly>
+                                    <input type="number" id="sTarTrQty" value="0" oninput="calculateShootingPreviews()" onfocus="this.select()" class="w-full border border-slate-300 dark:border-slate-700 rounded-xl p-2.5 text-center bg-white dark:bg-slate-950 font-bold text-emerald-600 focus:border-emerald-500 outline-none text-xs">
                                 </div>
                                 <div>
                                     <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">เงินสด (จำนวนใบ)</label>
-                                    <input type="number" id="sTarCashQty" value="0" oninput="calculateShootingPreviews()" onclick="openNumericPrompt('sTarCashQty', 'จำนวนใบเงินสดเป้า')" class="w-full border border-slate-300 dark:border-slate-700 rounded-xl p-2.5 text-center bg-white dark:bg-slate-950 font-bold text-emerald-600 outline-none text-xs cursor-pointer" readonly>
+                                    <input type="number" id="sTarCashQty" value="0" oninput="calculateShootingPreviews()" onfocus="this.select()" class="w-full border border-slate-300 dark:border-slate-700 rounded-xl p-2.5 text-center bg-white dark:bg-slate-950 font-bold text-emerald-600 focus:border-emerald-500 outline-none text-xs">
                                 </div>
                             </div>
                         </div>
@@ -978,9 +984,14 @@
                     document.getElementById('gDesc').value = rec.desc;
                     document.getElementById('gNote').value = rec.note || "";
                     document.getElementById('gFileBase64').value = rec.attachment || "";
+                    
                     if(rec.attachment) {
                         document.getElementById('gFilePreview').classList.remove('hidden');
-                        document.getElementById('gFilePreview').innerHTML = `<span class="text-xs font-bold text-indigo-600"><i class="fas fa-check-circle mr-1"></i> มีไฟล์แนบเดิมในระบบแล้ว</span>`;
+                        document.getElementById('gFilePreview').innerHTML = `
+                            <div class="flex items-center justify-center gap-2">
+                                <span class="text-xs font-bold text-indigo-600"><i class="fas fa-check-circle mr-1"></i> มีไฟล์แนบเดิมในระบบแล้ว</span>
+                                <button type="button" onclick="openAttachmentModal('${rec.attachment}')" class="text-[11px] underline text-slate-500 hover:text-indigo-600">ดูไฟล์เดิม</button>
+                            </div>`;
                     }
 
                     const inC = parseFloat(rec.inCash) || 0;
@@ -998,26 +1009,16 @@
                         updateGeneralMethodOptions();
                         document.getElementById('gMethod').value = 'cash_to_acc';
                         document.getElementById('gAmount').value = inA;
-                    } else if (inC > 0) {
-                        document.getElementById('gActionType').value = 'in';
+                    } else if (inC > 0 || inA > 0) {
+                        document.getElementById('gActionType').value = (rec.desc && rec.desc.includes('ยกยอด')) ? 'carry' : 'in';
                         updateGeneralMethodOptions();
-                        document.getElementById('gMethod').value = 'cash';
-                        document.getElementById('gAmount').value = inC;
-                    } else if (inA > 0) {
-                        document.getElementById('gActionType').value = 'in';
-                        updateGeneralMethodOptions();
-                        document.getElementById('gMethod').value = 'acc';
-                        document.getElementById('gAmount').value = inA;
-                    } else if (outC > 0) {
+                        document.getElementById('gMethod').value = inC > 0 ? 'cash' : 'acc';
+                        document.getElementById('gAmount').value = inC > 0 ? inC : inA;
+                    } else if (outC > 0 || outA > 0) {
                         document.getElementById('gActionType').value = 'out';
                         updateGeneralMethodOptions();
-                        document.getElementById('gMethod').value = 'cash';
-                        document.getElementById('gAmount').value = outC;
-                    } else if (outA > 0) {
-                        document.getElementById('gActionType').value = 'out';
-                        updateGeneralMethodOptions();
-                        document.getElementById('gMethod').value = 'acc';
-                        document.getElementById('gAmount').value = outA;
+                        document.getElementById('gMethod').value = outC > 0 ? 'cash' : 'acc';
+                        document.getElementById('gAmount').value = outC > 0 ? outC : outA;
                     }
                 }
                 document.getElementById('generalFormTitle').innerHTML = `<i class="fas fa-edit text-indigo-600 mr-2"></i> แก้ไขรายการกองกลาง`;
@@ -1183,15 +1184,19 @@
                     document.getElementById('sYear').value = rec.year || "2569";
                     document.getElementById('sAdjType').value = rec.adjType || (rec.month === 'ยกยอดมา' ? 'income_carry' : 'expense');
                     document.getElementById('sExpDesc').value = rec.expDesc || "";
-                    document.getElementById('sExpAmt').value = rec.expAmt || "";
-                    document.getElementById('sBulTrQty').value = rec.bTrQ || 0;
-                    document.getElementById('sBulCashQty').value = rec.bBCQ || 0;
-                    document.getElementById('sTarTrQty').value = rec.tTrQ || 0;
-                    document.getElementById('sTarCashQty').value = rec.tBCQ || 0;
+                    document.getElementById('sExpAmt').value = (rec.expAmt !== undefined && rec.expAmt !== null && rec.expAmt !== "") ? rec.expAmt : "";
+                    document.getElementById('sBulTrQty').value = rec.bTrQ ?? 0;
+                    document.getElementById('sBulCashQty').value = rec.bBCQ ?? 0;
+                    document.getElementById('sTarTrQty').value = rec.tTrQ ?? 0;
+                    document.getElementById('sTarCashQty').value = rec.tBCQ ?? 0;
                     document.getElementById('sFileBase64').value = rec.attachment || "";
                     if(rec.attachment) {
                         document.getElementById('sFilePreview').classList.remove('hidden');
-                        document.getElementById('sFilePreview').innerHTML = `<span class="text-xs font-bold text-emerald-600"><i class="fas fa-check-circle mr-1"></i> มีไฟล์แนบเดิมในระบบแล้ว</span>`;
+                        document.getElementById('sFilePreview').innerHTML = `
+                            <div class="flex items-center justify-center gap-2">
+                                <span class="text-xs font-bold text-emerald-600"><i class="fas fa-check-circle mr-1"></i> มีไฟล์แนบเดิมในระบบแล้ว</span>
+                                <button type="button" onclick="openAttachmentModal('${rec.attachment}')" class="text-[11px] underline text-slate-500 hover:text-emerald-600">ดูไฟล์เดิม</button>
+                            </div>`;
                     }
                     calculateShootingPreviews();
                 }
