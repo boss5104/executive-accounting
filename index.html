@@ -62,10 +62,10 @@
         .glass-nav { backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
         
         @keyframes popIn {
-            0% { opacity: 0; transform: scale(0.9) translateY(15px); }
+            0% { opacity: 0; transform: scale(0.95) translateY(10px); }
             100% { opacity: 1; transform: scale(1) translateY(0); }
         }
-        .modal-animate { animation: popIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .modal-animate { animation: popIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
         
         @keyframes highlightPulse {
             0% { background-color: rgba(251, 191, 36, 0.5); }
@@ -188,9 +188,6 @@
                 <div class="p-4">
                     <div class="table-responsive-wrapper">
                         <div id="generalTableCapture" class="bg-white dark:bg-slate-900 p-1 min-w-[1000px]">
-                            <div class="text-center mb-4 hidden-on-screen print-only">
-                                <h3 class="font-bold text-lg text-slate-900 uppercase">รายงานบัญชีรายรับ-รายจ่าย (กองกลาง)</h3>
-                            </div>
                             <table class="w-full text-center border-collapse text-xs">
                                 <thead class="bg-slate-800 text-slate-100 font-semibold sticky top-0 z-10">
                                     <tr>
@@ -226,16 +223,59 @@
         <div id="view-general-input" class="hidden max-w-xl mx-auto py-2">
             <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 md:p-8 space-y-4 shadow-2xl">
                 <div class="flex justify-between items-center border-b border-slate-100 dark:border-slate-800 pb-4">
-                    <h2 class="text-lg font-bold text-slate-800 dark:text-white" id="generalFormTitle"><i class="fas fa-file-invoice-dollar text-indigo-600 mr-2"></i> บันทึกรายการบัญชี</h2>
+                    <h2 class="text-lg font-bold text-slate-800 dark:text-white" id="generalFormTitle"><i class="fas fa-file-invoice-dollar text-indigo-600 mr-2"></i> บันทึกรายการใหม่</h2>
                     <button onclick="showGeneralSummary()" class="w-8 h-8 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-600 dark:text-slate-300 rounded-full flex items-center justify-center transition"><i class="fas fa-times"></i></button>
                 </div>
                 <form id="generalForm" onsubmit="saveGeneralRecord(event)" class="space-y-4">
                     <input type="hidden" id="gEditId">
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-xs font-bold mb-1.5 text-slate-700 dark:text-slate-300">วันที่ทำรายการ (รูปแบบไทย)</label>
-                            <input type="date" id="gDate" required class="w-full border border-slate-300 dark:border-slate-700 rounded-2xl p-3 bg-slate-50 dark:bg-slate-950 focus:border-indigo-500 outline-none text-xs font-medium">
+                        <!-- Custom Thai Buddhist Date Picker -->
+                        <div class="relative" id="thaiDatePickerWrapper">
+                            <label class="block text-xs font-bold mb-1.5 text-slate-700 dark:text-slate-300">วันที่ทำรายการ (พ.ศ.)</label>
+                            <input type="hidden" id="gDate" required>
+                            <button type="button" onclick="toggleThaiCalendar(event)" class="w-full border border-slate-300 dark:border-slate-700 rounded-2xl p-3 bg-slate-50 dark:bg-slate-950 hover:border-indigo-500 focus:border-indigo-500 outline-none text-xs font-bold flex items-center justify-between text-slate-800 dark:text-slate-100 transition">
+                                <span id="gDateDisplayText" class="truncate">เลือกวันที่...</span>
+                                <i class="far fa-calendar-alt text-indigo-600 dark:text-indigo-400 text-sm ml-2"></i>
+                            </button>
+
+                            <!-- Thai Calendar Popup (Style matching Image 2) -->
+                            <div id="thaiCalendarPopup" class="hidden absolute left-0 mt-2 w-72 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl shadow-2xl p-4 z-50 modal-animate select-none">
+                                <!-- Calendar Header: Month (Thai) & Year (B.E.) -->
+                                <div class="flex items-center justify-between mb-3 pb-2 border-b border-slate-100 dark:border-slate-800">
+                                    <button type="button" onclick="changeCalMonth(-1)" class="w-7 h-7 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-300 transition">
+                                        <i class="fas fa-chevron-left text-xs"></i>
+                                    </button>
+                                    <div class="flex items-center gap-1.5">
+                                        <select id="calMonthSelect" onchange="updateCalFromDropdown()" class="bg-transparent font-extrabold text-sm text-slate-800 dark:text-white outline-none cursor-pointer hover:text-indigo-600"></select>
+                                        <select id="calYearSelect" onchange="updateCalFromDropdown()" class="bg-transparent font-extrabold text-sm text-indigo-600 dark:text-indigo-400 outline-none cursor-pointer"></select>
+                                    </div>
+                                    <button type="button" onclick="changeCalMonth(1)" class="w-7 h-7 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-300 transition">
+                                        <i class="fas fa-chevron-right text-xs"></i>
+                                    </button>
+                                </div>
+
+                                <!-- Thai Weekday Headers -->
+                                <div class="grid grid-cols-7 text-center text-[11px] font-bold text-slate-500 dark:text-slate-400 mb-1.5">
+                                    <div class="text-rose-500">อา</div>
+                                    <div>จ</div>
+                                    <div>อ</div>
+                                    <div>พ</div>
+                                    <div>พฤ</div>
+                                    <div>ศ</div>
+                                    <div class="text-indigo-500">ส</div>
+                                </div>
+
+                                <!-- Calendar Days Grid -->
+                                <div id="calDaysGrid" class="grid grid-cols-7 gap-1 text-center text-xs font-semibold"></div>
+
+                                <!-- Quick Today Button -->
+                                <div class="mt-3 pt-2 border-t border-slate-100 dark:border-slate-800 flex justify-between items-center">
+                                    <button type="button" onclick="selectTodayThaiCal()" class="text-[11px] font-bold text-indigo-600 dark:text-indigo-400 hover:underline">วันนี้</button>
+                                    <button type="button" onclick="closeThaiCalendar()" class="text-[11px] font-medium text-slate-400 hover:text-slate-600">ปิด</button>
+                                </div>
+                            </div>
                         </div>
+
                         <div>
                             <label class="block text-xs font-bold mb-1.5 text-slate-700 dark:text-slate-300">ประเภทรายการ / การแทรก</label>
                             <select id="gActionType" class="w-full border border-slate-300 dark:border-slate-700 rounded-2xl p-3 bg-slate-50 dark:bg-slate-950 focus:border-indigo-500 font-bold outline-none text-xs">
@@ -315,9 +355,6 @@
                 <div class="p-4">
                     <div class="table-responsive-wrapper">
                         <div id="shootingTableCapture" class="min-w-[1100px] p-1 bg-white dark:bg-slate-900">
-                            <div class="text-center mb-4 hidden-on-screen print-only">
-                                <h3 class="font-bold text-lg uppercase">รายงานบัญชีสนามยิงปืน</h3>
-                            </div>
                             <table class="w-full text-center border-collapse text-xs">
                                 <thead class="bg-slate-800 text-slate-100 font-semibold sticky top-0 z-10">
                                     <tr>
@@ -379,7 +416,6 @@
                         </div>
                     </div>
 
-                    <!-- ส่วนแทรก: ยกยอดมา / รายรับอื่นๆ / รายจ่าย -->
                     <div class="p-4 border border-indigo-100 dark:border-indigo-900/40 bg-indigo-50/40 dark:bg-indigo-950/20 rounded-2xl space-y-3">
                         <h3 class="font-bold text-indigo-900 dark:text-indigo-300 text-xs border-b border-indigo-100 dark:border-indigo-900/40 pb-2"><i class="fas fa-sliders-h mr-1"></i> ส่วนที่ 1: รายการพิเศษ (ยกยอดมา / รายรับอื่นๆ หรือ รายจ่าย)</h3>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -402,7 +438,6 @@
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <!-- ส่วนกระสุน (นัดละ 1,000) -->
                         <div class="p-4 border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 rounded-2xl space-y-3">
                             <h3 class="font-bold text-xs border-b border-slate-200 dark:border-slate-700 pb-2 mb-2 flex justify-between items-center">
                                 <span><i class="fas fa-box mr-1.5 text-indigo-500"></i> กระสุน (นัดละ 1,000)</span>
@@ -419,7 +454,6 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- ส่วนเป้า (ใบละ 15) -->
                         <div class="p-4 border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 rounded-2xl space-y-3">
                             <h3 class="font-bold text-xs border-b border-slate-200 dark:border-slate-700 pb-2 mb-2 flex justify-between items-center">
                                 <span><i class="fas fa-bullseye mr-1.5 text-emerald-500"></i> เป้า (ใบละ 15)</span>
@@ -438,7 +472,6 @@
                         </div>
                     </div>
 
-                    <!-- Attachment Upload Section -->
                     <div class="p-4 bg-emerald-50/50 dark:bg-emerald-950/20 rounded-2xl border border-emerald-100 dark:border-emerald-900/40 space-y-2">
                         <label class="block text-xs font-bold text-emerald-900 dark:text-emerald-300"><i class="fas fa-paperclip mr-1"></i> แนบสลิปโอนเงิน / เอกสารหลักฐาน (ถ้ามี)</label>
                         <input type="file" id="sFile" accept="image/*,.pdf" onchange="previewFile(this, 'sFileBase64', 'sFilePreview')" class="w-full text-xs file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:font-bold file:bg-emerald-600 file:text-white cursor-pointer">
@@ -454,7 +487,7 @@
         </div>
     </main>
 
-    <!-- Modal: Numeric Prompt (Luxury Numpad Popup) -->
+    <!-- Modal: Numeric Prompt -->
     <div id="numericPromptModal" class="hidden fixed inset-0 z-[120] bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white dark:bg-slate-900 rounded-3xl max-w-sm w-full p-6 space-y-4 shadow-2xl border border-slate-100 dark:border-slate-800 modal-animate">
             <div class="flex justify-between items-center border-b border-slate-100 dark:border-slate-800 pb-3">
@@ -485,9 +518,7 @@
                 <h3 class="font-bold text-sm text-slate-800 dark:text-white flex items-center gap-2"><i class="fas fa-file-invoice text-indigo-600"></i> รายละเอียดไฟล์แนบ / สลิป</h3>
                 <button onclick="closeFilePreviewModal()" class="w-7 h-7 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-600 dark:text-slate-300 rounded-full flex items-center justify-center transition"><i class="fas fa-times text-xs"></i></button>
             </div>
-            <div id="filePreviewContent" class="py-4 flex justify-center items-center max-h-[70vh] overflow-auto">
-                <!-- Content injected dynamically -->
-            </div>
+            <div id="filePreviewContent" class="py-4 flex justify-center items-center max-h-[70vh] overflow-auto"></div>
             <div class="pt-2">
                 <button onclick="closeFilePreviewModal()" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3 rounded-2xl shadow transition text-xs">ปิดหน้าต่าง</button>
             </div>
@@ -509,12 +540,15 @@
         </div>
     </div>
 
-    <!-- สคริปต์การทำงาน -->
     <script>
         const SHEETS_API_URL = "https://script.google.com/macros/s/AKfycbxndb4hG8WyAqHrGVmmWvGIclEIbSoEvf495kMJuRem-hXf0gQ1U80npPBpcAlO9mGMkw/exec";
 
         let navigationHistory = ['view-home'];
         const thMonths = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+        const thFullMonths = [
+            'มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน',
+            'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'
+        ];
         const monthOrderMap = {
             'ยกยอดมา': -1,
             'ม.ค.': 0, 'ก.พ.': 1, 'มี.ค.': 2, 'เม.ย.': 3,
@@ -524,6 +558,129 @@
 
         let currentPromptTargetId = null;
 
+        // --- Custom Thai Buddhist Calendar Logic ---
+        let calViewYear = new Date().getFullYear();
+        let calViewMonth = new Date().getMonth();
+
+        function initThaiCalendarDropdowns() {
+            const mSelect = document.getElementById('calMonthSelect');
+            const ySelect = document.getElementById('calYearSelect');
+            mSelect.innerHTML = thFullMonths.map((m, idx) => `<option value="${idx}">${m}</option>`).join('');
+            
+            const currentYear = new Date().getFullYear();
+            let yearOptions = '';
+            for (let y = currentYear - 10; y <= currentYear + 10; y++) {
+                yearOptions += `<option value="${y}">พ.ศ. ${y + 543}</option>`;
+            }
+            ySelect.innerHTML = yearOptions;
+        }
+
+        function setThaiDateValue(isoDateStr) {
+            if (!isoDateStr) {
+                const now = new Date();
+                isoDateStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+            }
+            document.getElementById('gDate').value = isoDateStr;
+            const parts = isoDateStr.split('-');
+            const y = parseInt(parts[0]);
+            const m = parseInt(parts[1]) - 1;
+            const d = parseInt(parts[2]);
+
+            calViewYear = y;
+            calViewMonth = m;
+            document.getElementById('gDateDisplayText').innerText = `${d} ${thFullMonths[m]} ${y + 543}`;
+            renderThaiCalendarGrid();
+        }
+
+        function toggleThaiCalendar(e) {
+            if (e) e.stopPropagation();
+            const popup = document.getElementById('thaiCalendarPopup');
+            if (popup.classList.contains('hidden')) {
+                const val = document.getElementById('gDate').value;
+                if (val) {
+                    const p = val.split('-');
+                    calViewYear = parseInt(p[0]);
+                    calViewMonth = parseInt(p[1]) - 1;
+                }
+                renderThaiCalendarGrid();
+                popup.classList.remove('hidden');
+            } else {
+                popup.classList.add('hidden');
+            }
+        }
+
+        function closeThaiCalendar() {
+            document.getElementById('thaiCalendarPopup').classList.add('hidden');
+        }
+
+        function changeCalMonth(delta) {
+            calViewMonth += delta;
+            if (calViewMonth < 0) {
+                calViewMonth = 11;
+                calViewYear--;
+            } else if (calViewMonth > 11) {
+                calViewMonth = 0;
+                calViewYear++;
+            }
+            renderThaiCalendarGrid();
+        }
+
+        function updateCalFromDropdown() {
+            calViewMonth = parseInt(document.getElementById('calMonthSelect').value);
+            calViewYear = parseInt(document.getElementById('calYearSelect').value);
+            renderThaiCalendarGrid();
+        }
+
+        function selectTodayThaiCal() {
+            const now = new Date();
+            const iso = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+            setThaiDateValue(iso);
+            closeThaiCalendar();
+        }
+
+        function renderThaiCalendarGrid() {
+            document.getElementById('calMonthSelect').value = calViewMonth;
+            document.getElementById('calYearSelect').value = calViewYear;
+
+            const grid = document.getElementById('calDaysGrid');
+            grid.innerHTML = '';
+
+            const firstDay = new Date(calViewYear, calViewMonth, 1).getDay();
+            const daysInMonth = new Date(calViewYear, calViewMonth + 1, 0).getDate();
+            const selectedVal = document.getElementById('gDate').value;
+
+            for (let i = 0; i < firstDay; i++) {
+                grid.innerHTML += `<div></div>`;
+            }
+
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dateStr = `${calViewYear}-${String(calViewMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                const isSelected = (dateStr === selectedVal);
+                const btnClass = isSelected
+                    ? 'bg-indigo-600 text-white font-extrabold shadow-sm'
+                    : 'text-slate-700 dark:text-slate-200 hover:bg-indigo-50 dark:hover:bg-slate-800';
+
+                grid.innerHTML += `
+                    <button type="button" onclick="selectThaiCalDay('${dateStr}')" class="w-8 h-8 mx-auto rounded-lg flex items-center justify-center transition ${btnClass}">
+                        ${day}
+                    </button>
+                `;
+            }
+        }
+
+        function selectThaiCalDay(dateStr) {
+            setThaiDateValue(dateStr);
+            closeThaiCalendar();
+        }
+
+        document.addEventListener('click', function(e) {
+            const wrapper = document.getElementById('thaiDatePickerWrapper');
+            if (wrapper && !wrapper.contains(e.target)) {
+                closeThaiCalendar();
+            }
+        });
+
+        // --- Theme & App Initialization ---
         function toggleDarkMode() {
             const html = document.documentElement;
             const icon = document.getElementById('themeIcon');
@@ -635,6 +792,7 @@
             document.getElementById('filePreviewModal').classList.add('hidden');
         }
 
+        // --- Navigation ---
         window.hideAllViews = function() {
             ['view-home', 'view-general-summary', 'view-general-input', 'view-shooting-app', 'view-shooting-input'].forEach(v => {
                 document.getElementById(v).classList.add('hidden');
@@ -669,7 +827,7 @@
             updateLastSyncTime();
         }
 
-        // Global Search Logic
+        // --- Global Search ---
         window.handleGlobalSearch = function(query) {
             const dropdown = document.getElementById('searchResultsDropdown');
             if(!query || query.trim() === '') {
@@ -719,6 +877,7 @@
             }, 150);
         };
 
+        // --- Cloud Sync ---
         async function syncWithCloud(isUIAction = false) {
             const syncIcon = document.getElementById('syncIcon');
             const syncStatusUI = document.getElementById('syncStatusUI');
@@ -782,7 +941,7 @@
         window.showGeneralInput = function(editId = null) {
             document.getElementById('generalForm').reset();
             document.getElementById('gEditId').value = "";
-            document.getElementById('gDate').valueAsDate = new Date();
+            setThaiDateValue(null); // ตั้งค่าเริ่มต้นเป็นวันที่ปัจจุบัน (พ.ศ.)
             document.getElementById('gFileBase64').value = "";
             document.getElementById('gFilePreview').classList.add('hidden');
             document.getElementById('gFilePreview').innerHTML = "";
@@ -791,7 +950,7 @@
                 const rec = appData.generalRecords.find(r => r.id == editId);
                 if(rec) {
                     document.getElementById('gEditId').value = rec.id;
-                    document.getElementById('gDate').value = rec.date.toString().substring(0, 10);
+                    setThaiDateValue(rec.date.toString().substring(0, 10));
                     document.getElementById('gDesc').value = rec.desc;
                     document.getElementById('gNote').value = rec.note || "";
                     document.getElementById('gFileBase64').value = rec.attachment || "";
@@ -847,7 +1006,7 @@
                     <td class="text-center py-2 px-1 no-print-capture space-x-1">
                         <button onclick="showGeneralInput('${r.id}')" class="text-indigo-600 action-btn hover:bg-indigo-50 dark:hover:bg-slate-800" title="แก้ไข"><i class="fas fa-edit"></i></button>
                         <button onclick="deleteGeneralRecord('${r.id}')" class="text-rose-500 action-btn hover:bg-rose-50 dark:hover:bg-slate-800" title="ลบ"><i class="fas fa-trash"></i></button>
-                    `;
+                    </td>`;
                 tbody.appendChild(tr);
             });
 
@@ -1131,7 +1290,65 @@
             }
         }
 
-        window.onload = () => { syncWithCloud(false); updateLastSyncTime(); };
+        // --- Export & Share Functions ---
+        window.exportToCSV = function(type) {
+            let csvContent = "\uFEFF";
+            if (type === 'general') {
+                csvContent += "ลำดับ,วันที่,รายการ,รับ(สด),รับ(โอน),จ่าย(สด),จ่าย(โอน),หมายเหตุ\n";
+                appData.generalRecords.forEach((r, i) => {
+                    csvContent += `${i+1},"${formatDateThaiShort(r.date)}","${(r.desc||'').replace(/"/g,'""')}",${r.inCash||0},${r.inAcc||0},${r.outCash||0},${r.outAcc||0},"${(r.note||'').replace(/"/g,'""')}"\n`;
+                });
+            } else {
+                csvContent += "เดือน,ปี,รายการพิเศษ,ประเภท,จำนวนเงินพิเศษ,กระสุนโอน(นัด),กระสุนสด(นัด),เป้าโอน(ใบ),เป้าสด(ใบ)\n";
+                appData.shootingRecords.forEach(r => {
+                    csvContent += `"${r.month}","${r.year}","${(r.expDesc||'').replace(/"/g,'""')}","${r.adjType||''}",${r.expAmt||0},${r.bTrQ||0},${r.bBCQ||0},${r.tTrQ||0},${r.tBCQ||0}\n`;
+                });
+            }
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = `${type}_report_${new Date().toISOString().slice(0,10)}.csv`;
+            link.click();
+        };
+
+        window.shareToLine = async function(elementId, fileName, btn) {
+            const el = document.getElementById(elementId);
+            if (!el) return;
+            const origHTML = btn.innerHTML;
+            btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> กำลังสร้างภาพ...`;
+            btn.disabled = true;
+
+            const hiddenCols = el.querySelectorAll('.no-print-capture');
+            hiddenCols.forEach(c => c.style.display = 'none');
+
+            try {
+                const canvas = await html2canvas(el, { scale: 2, useCORS: true });
+                canvas.toBlob(async (blob) => {
+                    const file = new File([blob], `${fileName}.png`, { type: 'image/png' });
+                    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                        await navigator.share({ files: [file], title: fileName });
+                    } else {
+                        const a = document.createElement('a');
+                        a.href = canvas.toDataURL('image/png');
+                        a.download = `${fileName}_${new Date().toISOString().slice(0,10)}.png`;
+                        a.click();
+                    }
+                });
+            } catch (err) {
+                console.error(err);
+            } finally {
+                hiddenCols.forEach(c => c.style.display = '');
+                btn.innerHTML = origHTML;
+                btn.disabled = false;
+            }
+        };
+
+        window.onload = () => {
+            initThaiCalendarDropdowns();
+            setThaiDateValue(null);
+            syncWithCloud(false);
+            updateLastSyncTime();
+        };
         document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') { syncWithCloud(false); updateLastSyncTime(); }
         });
