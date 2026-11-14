@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="th" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ระบบบัญชีส่วนกลางและสนามยิงปืน (Executive Cloud Pro)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: { extend: { fontFamily: { prompt: ['Prompt', 'sans-serif'] } } }
+        }
+    </script>
+    <style>
+        body { font-family: 'Prompt', sans-serif; transition: background-color 0.3s, color 0.3s; }
+        
+        /* Custom Elegant Visible Scrollbar */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 6px; }
+        ::-webkit-scrollbar-track { background: #e2e8f0; border-radius: 6px; }
+        .dark ::-webkit-scrollbar-thumb { background: #475569; }
+        .dark ::-webkit-scrollbar-track { background: #1e293b; }
+        
+        .table-responsive-wrapper { 
+            width: 100%; 
+            max-height: 68vh;
+            overflow: auto; 
+            border-radius: 0.85rem; 
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05); 
+            border: 1px solid #cbd5e1; 
+            background: #ffffff;
+            margin-bottom: 0.5rem;
+        }
+        .dark .table-responsive-wrapper { 
+            border-color: #334155; 
+            background: #0f172a;
+        }
+        
+        table th, table td { 
+            padding: 8px 12px; 
+            text-align: center; 
+            font-size: 12.5px; 
+            vertical-align: middle; 
+            white-space: nowrap;
+        }
+        
+        .action-btn { 
+            cursor: pointer; 
+            display: inline-flex; 
+            align-items: center; 
+            justify-content: center; 
+            width: 30px; 
+            height: 30px; 
+            border-radius: 8px; 
+            transition: all 0.2s ease; 
+            border: 1px solid transparent; 
+        }
+        .action-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 10px -1px rgba(0,0,0,0.15); }
+        .glass-nav { backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
+        
+        @keyframes popIn {
+            0% { opacity: 0; transform: scale(0.9) translateY(15px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        .modal-animate { animation: popIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        
+        @keyframes highlightPulse {
+            0% { background-color: rgba(251, 191, 36, 0.5); }
+            100% { background-color: transparent; }
+        }
+        .highlight-row { animation: highlightPulse 3s ease-out; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col bg-slate-100 text-slate-800 dark:bg-slate-950 dark:text-slate-100">
+
+    <!-- Executive Navigation Bar -->
+    <nav class="glass-nav bg-slate-900/95 text-white sticky top-0 z-50 shadow-xl border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 md:px-6 h-16 md:h-18 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <button onclick="goHome()" class="w-10 h-10 flex items-center justify-center rounded-xl bg-white/10 hover:bg-white/20 transition text-sm shadow-sm" title="หน้าแรก"><i class="fas fa-home"></i></button>
+                <button onclick="goBack()" class="w-10 h-10 flex items-center justify-center rounded-xl bg-white/10 hover:bg-white/20 transition text-sm shadow-sm" title="ย้อนกลับ"><i class="fas fa-arrow-left"></i></button>
+                <div class="border-l border-white/20 pl-3">
+                    <span class="font-extrabold text-sm md:text-base tracking-wider flex items-center gap-2"><i class="fas fa-shield-alt text-amber-400"></i> <span class="hidden sm:inline">EXECUTIVE PRO</span></span>
+                </div>
+            </div>
+            <div class="flex items-center gap-2 md:gap-3">
+                <button onclick="toggleDarkMode()" class="w-10 h-10 flex items-center justify-center rounded-xl bg-white/10 hover:bg-white/20 transition text-amber-300 shadow-sm" title="สลับโหมดมืด/สว่าง">
+                    <i id="themeIcon" class="fas fa-moon text-xs"></i>
+                </button>
+                <div class="flex flex-col items-end gap-0.5">
+                    <div class="flex items-center gap-1.5">
+                        <button onclick="clearAllSystemData()" class="px-3 py-1.5 rounded-lg bg-red-500/20 hover:bg-red-500/40 border border-red-500/40 transition text-[11px] font-bold flex items-center gap-1.5 text-red-300 shadow-sm" title="ล้างข้อมูลทั้งหมด">
+                            <i class="fas fa-trash-alt"></i><span class="hidden lg:inline">ล้างข้อมูล</span>
+                        </button>
+                        <button onclick="syncWithCloud(true)" id="syncBtn" class="px-3.5 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 shadow transition text-[11px] font-bold flex items-center gap-1.5 text-white">
+                            <i class="fas fa-sync-alt" id="syncIcon"></i><span class="hidden sm:inline">ซิงก์ข้อมูล</span>
+                        </button>
+                    </div>
+                    <div class="flex items-center gap-2 text-[10px] text-slate-300 font-medium">
+                        <span id="syncStatusUI" class="flex items-center gap-1"><i class="fas fa-cloud text-[9px]"></i> พร้อมใช้งาน</span>
+                        <span class="text-slate-500">|</span>
+                        <span id="lastUpdatedUI" class="flex items-center gap-1 text-emerald-300"><i class="far fa-clock"></i> กำลังโหลด...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-grow p-4 md:p-6 max-w-7xl mx-auto w-full space-y-6">
+        <!-- View 1: Home Dashboard with Global Search -->
+        <div id="view-home" class="space-y-8 py-4">
+            <div class="text-center space-y-3 max-w-2xl mx-auto">
+                <span class="bg-indigo-100 text-indigo-800 dark:bg-indigo-950 dark:text-indigo-300 text-[11px] font-extrabold px-4 py-1.5 rounded-full uppercase tracking-wider shadow-sm">Executive Financial System</span>
+                <h1 class="text-2xl md:text-4xl font-black tracking-tight leading-snug">ระบบจัดการบัญชีกองกลาง<br/><span class="text-indigo-600 dark:text-indigo-400">และบัญชีสนามยิงปืน</span></h1>
+                <p class="text-slate-500 dark:text-slate-400 text-xs md:text-sm font-medium">ประมวลผลฉับไว แม่นยำระดับมืออาชีพ พร้อมระบบแนบสลิป/เอกสารในตัว</p>
+                
+                <!-- Global Search Bar -->
+                <div class="max-w-lg mx-auto pt-2 relative">
+                    <div class="relative">
+                        <input type="text" id="globalSearchInput" oninput="handleGlobalSearch(this.value)" placeholder="🔍 ค้นหารายการ, หมายเหตุ, วันที่ หรือยอดเงิน..." class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-2xl py-3.5 px-4 pl-12 text-xs md:text-sm font-medium shadow-sm focus:border-indigo-500 outline-none transition">
+                        <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                    </div>
+                    <div id="searchResultsDropdown" class="hidden absolute left-0 right-0 mt-1.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl max-h-56 overflow-y-auto z-50 p-2 divide-y divide-slate-100 dark:divide-slate-800 text-left text-xs"></div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-3xl mx-auto pt-2">
+                <button onclick="showGeneralSummary()" class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 text-left group relative overflow-hidden flex flex-col justify-between min-h-[190px] shadow-md hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
+                    <div class="absolute -right-8 -top-8 w-32 h-32 bg-indigo-50 dark:bg-indigo-950/30 rounded-full blur-2xl"></div>
+                    <div>
+                        <div class="w-12 h-12 bg-slate-900 text-white rounded-2xl flex items-center justify-center text-xl mb-4 shadow relative z-10"><i class="fas fa-book-open text-indigo-400"></i></div>
+                        <h2 class="text-lg md:text-xl font-bold mb-1 relative z-10 text-slate-800 dark:text-white">บัญชีกองกลาง (ส่วนกลาง)</h2>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">บันทึกรายรับ-รายจ่าย แยกสด/โอน พร้อมแนบสลิป/PDF</p>
+                    </div>
+                    <div class="mt-4 flex items-center text-indigo-600 dark:text-indigo-400 font-bold text-xs z-10">เปิดดูรายละเอียด <i class="fas fa-arrow-right ml-1.5 group-hover:translate-x-1.5 transition"></i></div>
+                </button>
+                <button onclick="showShootingRange()" class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 text-left group relative overflow-hidden flex flex-col justify-between min-h-[190px] shadow-md hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
+                    <div class="absolute -right-8 -top-8 w-32 h-32 bg-emerald-50 dark:bg-emerald-950/30 rounded-full blur-2xl"></div>
+                    <div>
+                        <div class="w-12 h-12 bg-slate-900 text-white rounded-2xl flex items-center justify-center text-xl mb-4 shadow relative z-10"><i class="fas fa-crosshairs text-emerald-400"></i></div>
+                        <h2 class="text-lg md:text-xl font-bold mb-1 relative z-10 text-slate-800 dark:text-white">บัญชีสนามยิงปืน</h2>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">คำนวณอัตโนมัติ (กระสุน 1,000 / เป้า 15) พร้อมสลิป</p>
+                    </div>
+                    <div class="mt-4 flex items-center text-emerald-600 dark:text-emerald-400 font-bold text-xs z-10">เปิดดูรายละเอียด <i class="fas fa-arrow-right ml-1.5 group-hover:translate-x-1.5 transition"></i></div>
+                </button>
+            </div>
+        </div>
+
+        <!-- View 2: General Ledger Summary View -->
+        <div id="view-general-summary" class="hidden space-y-5">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 flex items-center gap-3 shadow-sm">
+                    <div class="w-11 h-11 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 flex items-center justify-center text-emerald-600 text-base"><i class="fas fa-arrow-down"></i></div>
+                    <div>
+                        <span class="text-[11px] font-bold text-slate-500 uppercase tracking-wider">รับรวมสะสม</span>
+                        <div id="genDashIn" class="text-xl font-extrabold text-emerald-600 mt-0.5">0.00</div>
+                    </div>
+                </div>
+                <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 flex items-center gap-3 shadow-sm">
+                    <div class="w-11 h-11 rounded-xl bg-rose-50 dark:bg-rose-950/40 flex items-center justify-center text-rose-600 text-base"><i class="fas fa-arrow-up"></i></div>
+                    <div>
+                        <span class="text-[11px] font-bold text-slate-500 uppercase tracking-wider">จ่ายรวมสะสม</span>
+                        <div id="genDashOut" class="text-xl font-extrabold text-rose-600 mt-0.5">0.00</div>
+                    </div>
+                </div>
+                <div class="bg-slate-900 text-white rounded-2xl p-4 flex items-center gap-3 shadow-md">
+                    <div class="w-11 h-11 rounded-xl bg-white/10 flex items-center justify-center text-amber-400 text-base"><i class="fas fa-wallet"></i></div>
+                    <div>
+                        <span class="text-[11px] font-bold text-indigo-200 uppercase tracking-wider">ยอดคงเหลือสุทธิปัจจุบัน</span>
+                        <div id="genDashNet" class="text-2xl font-black text-white mt-0.5">0.00</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl shadow-sm overflow-hidden">
+                <div class="p-4 md:p-5 border-b border-slate-100 dark:border-slate-800 flex flex-col md:flex-row justify-between items-start md:items-center gap-3 bg-slate-50/70 dark:bg-slate-900/50">
+                    <h2 class="text-base md:text-lg font-bold flex items-center gap-2.5 text-slate-800 dark:text-white"><i class="fas fa-book text-indigo-600 text-sm"></i> บัญชีรายรับ-รายจ่าย (กองกลาง)</h2>
+                    <div class="flex flex-wrap gap-2 w-full md:w-auto">
+                        <button onclick="exportToCSV('general')" class="flex-1 md:flex-none bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 hover:bg-slate-50 text-slate-700 dark:text-slate-200 px-3.5 py-2 rounded-xl text-xs font-bold shadow-sm transition flex items-center justify-center gap-1.5"><i class="fas fa-file-excel text-emerald-600"></i> Export</button>
+                        <button onclick="shareToLine('generalTableCapture', 'General_Ledger', this)" class="flex-1 md:flex-none bg-[#00B900] hover:bg-[#009900] text-white px-3.5 py-2 rounded-xl text-xs font-bold shadow-sm transition flex items-center justify-center gap-1.5"><i class="fab fa-line"></i> แชร์</button>
+                        <button onclick="showGeneralInput()" class="flex-1 md:flex-none bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-xl text-xs font-bold shadow-sm transition flex items-center justify-center gap-1.5"><i class="fas fa-plus"></i> เพิ่มรายการ</button>
+                    </div>
+                </div>
+
+                <div class="p-4">
+                    <div class="table-responsive-wrapper">
+                        <div id="generalTableCapture" class="bg-white dark:bg-slate-900 p-1 min-w-[1000px]">
+                            <div class="text-center mb-4 hidden-on-screen print-only">
+                                <h3 class="font-bold text-lg text-slate-900 uppercase">รายงานบัญชีรายรับ-รายจ่าย (กองกลาง)</h3>
+                            </div>
+                            <table class="w-full text-center border-collapse text-xs">
+                                <thead class="bg-slate-800 text-slate-100 font-semibold sticky top-0 z-10">
+                                    <tr>
+                                        <th rowspan="2" class="border-r border-slate-700 w-10">ลำดับ</th>
+                                        <th rowspan="2" class="border-r border-slate-700 w-28">วันที่</th>
+                                        <th rowspan="2" class="border-r border-slate-700">รายการ</th>
+                                        <th colspan="2" class="border-r border-slate-700 bg-slate-700 text-emerald-300 font-bold border-b border-slate-600">รับ</th>
+                                        <th colspan="2" class="border-r border-slate-700 bg-slate-700 text-rose-300 font-bold border-b border-slate-600">จ่าย</th>
+                                        <th rowspan="2" class="border-r border-slate-700 w-24">คงเหลือ (สด)</th>
+                                        <th rowspan="2" class="border-r border-slate-700 w-24">คงเหลือ (บัญชี)</th>
+                                        <th rowspan="2" class="border-r border-slate-700 bg-indigo-950 text-amber-300 w-28 font-bold">รวมสุทธิ</th>
+                                        <th rowspan="2" class="border-r border-slate-700">หมายเหตุ / อ้างอิง</th>
+                                        <th rowspan="2" class="border-r border-slate-700 w-20">ไฟล์แนบ</th>
+                                        <th rowspan="2" class="no-print-capture w-16">จัดการ</th>
+                                    </tr>
+                                    <tr class="bg-slate-700/90 text-[11px] text-slate-200">
+                                        <th class="border-r border-slate-600 w-20">สด</th>
+                                        <th class="border-r border-slate-600 w-20">โอน</th>
+                                        <th class="border-r border-slate-600 w-20">สด</th>
+                                        <th class="border-r border-slate-600 w-20">โอน</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="generalTbody" class="divide-y divide-slate-200 dark:divide-slate-800"></tbody>
+                                <tfoot id="generalTfoot" class="bg-slate-50 dark:bg-slate-900/90 border-t-2 border-slate-300 dark:border-slate-700 font-bold"></tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- View 2.1: General Input Form -->
+        <div id="view-general-input" class="hidden max-w-xl mx-auto py-2">
+            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 md:p-8 space-y-4 shadow-2xl">
+                <div class="flex justify-between items-center border-b border-slate-100 dark:border-slate-800 pb-4">
+                    <h2 class="text-lg font-bold text-slate-800 dark:text-white" id="generalFormTitle"><i class="fas fa-file-invoice-dollar text-indigo-600 mr-2"></i> บันทึกรายการบัญชี</h2>
+                    <button onclick="showGeneralSummary()" class="w-8 h-8 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-600 dark:text-slate-300 rounded-full flex items-center justify-center transition"><i class="fas fa-times"></i></button>
+                </div>
+                <form id="generalForm" onsubmit="saveGeneralRecord(event)" class="space-y-4">
+                    <input type="hidden" id="gEditId">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold mb-1.5 text-slate-700 dark:text-slate-300">วันที่ทำรายการ (รูปแบบไทย)</label>
+                            <input type="date" id="gDate" required class="w-full border border-slate-300 dark:border-slate-700 rounded-2xl p-3 bg-slate-50 dark:bg-slate-950 focus:border-indigo-500 outline-none text-xs font-medium">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold mb-1.5 text-slate-700 dark:text-slate-300">ประเภทรายการ / การแทรก</label>
+                            <select id="gActionType" class="w-full border border-slate-300 dark:border-slate-700 rounded-2xl p-3 bg-slate-50 dark:bg-slate-950 focus:border-indigo-500 font-bold outline-none text-xs">
+                                <option value="in">รับเงินเข้า (+)</option>
+                                <option value="out">จ่ายออก (-)</option>
+                                <option value="transfer">สลับ/ย้ายเงิน / กดเงิน</option>
+                                <option value="carry">ยกยอดเงินมา (ตั้งต้น)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold mb-1.5 text-slate-700 dark:text-slate-300">รายละเอียดรายการ</label>
+                        <input type="text" id="gDesc" required placeholder="เช่น ยอดยกมา, ค่ากระจก, เบี้ยเลี้ยง..." class="w-full border border-slate-300 dark:border-slate-700 rounded-2xl p-3 bg-slate-50 dark:bg-slate-950 focus:border-indigo-500 outline-none text-xs">
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 bg-slate-50 dark:bg-slate-900/50 rounded-2xl border border-slate-200 dark:border-slate-800">
+                        <div>
+                            <label class="block text-xs font-bold mb-1.5 text-slate-700 dark:text-slate-300">ช่องทางชำระ / รับเงิน</label>
+                            <select id="gMethod" class="w-full border border-slate-300 dark:border-slate-700 rounded-xl p-3 bg-white dark:bg-slate-950 font-bold outline-none text-xs">
+                                <option value="cash">เงินสด</option>
+                                <option value="acc">โอนผ่านบัญชี</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold mb-1.5 text-slate-700 dark:text-slate-300">จำนวนเงิน (บาท)</label>
+                            <input type="number" step="0.01" id="gAmount" required onclick="openNumericPrompt('gAmount', 'กรอกจำนวนเงิน (บาท)')" placeholder="0.00" class="w-full border border-slate-300 dark:border-slate-700 rounded-xl p-3 font-black text-base text-indigo-600 dark:text-indigo-400 bg-white dark:bg-slate-950 outline-none cursor-pointer" readonly>
+                        </div>
+                    </div>
+
+                    <!-- Attachment Upload Section -->
+                    <div class="p-4 bg-indigo-50/50 dark:bg-indigo-950/20 rounded-2xl border border-indigo-100 dark:border-indigo-900/40 space-y-2">
+                        <label class="block text-xs font-bold text-indigo-900 dark:text-indigo-300"><i class="fas fa-paperclip mr-1"></i> แนบสลิปโอนเงิน / เอกสาร PDF (ถ้ามี)</label>
+                        <input type="file" id="gFile" accept="image/*,.pdf" onchange="previewFile(this, 'gFileBase64', 'gFilePreview')" class="w-full text-xs file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:font-bold file:bg-indigo-600 file:text-white cursor-pointer">
+                        <input type="hidden" id="gFileBase64">
+                        <div id="gFilePreview" class="hidden mt-2 text-center"></div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold mb-1.5 text-slate-700 dark:text-slate-300">หมายเหตุเพิ่มเติม</label>
+                        <input type="text" id="gNote" placeholder="รายละเอียดอื่นๆ หรืออ้างอิง..." class="w-full border border-slate-300 dark:border-slate-700 rounded-2xl p-3 bg-slate-50 dark:bg-slate-950 outline-none text-xs">
+                    </div>
+                    <div class="pt-4">
+                        <button type="submit" class="w-full bg-slate-900 hover:bg-indigo-600 text-white font-bold py-3.5 rounded-2xl shadow-lg transition flex items-center justify-center gap-2 text-sm"><i class="fas fa-save"></i> บันทึกข้อมูลส่วนกลาง</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- View 3: Shooting Range App Dashboard -->
+        <div id="view-shooting-app" class="hidden space-y-5">
+             <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 flex items-center gap-3 shadow-sm">
+                    <div class="w-11 h-11 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 flex items-center justify-center text-emerald-600 text-base"><i class="fas fa-coins"></i></div>
+                    <div>
+                        <span class="text-[11px] font-bold text-slate-500 uppercase tracking-wider">ยอดขายรวมสุทธิ (กระสุน+เป้า)</span>
+                        <div id="shootDashIn" class="text-xl font-extrabold text-emerald-600 mt-0.5">0.00</div>
+                    </div>
+                </div>
+                <div class="bg-slate-900 text-white rounded-2xl p-4 flex items-center gap-3 shadow-md">
+                    <div class="w-11 h-11 rounded-xl bg-white/10 flex items-center justify-center text-amber-400 text-base"><i class="fas fa-wallet"></i></div>
+                    <div>
+                        <span class="text-[11px] font-bold text-emerald-200 uppercase tracking-wider">ยอดเงินคงเหลือสุทธิ</span>
+                        <div id="shootDashNet" class="text-2xl font-black text-white mt-0.5">0.00</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl shadow-sm overflow-hidden">
+                <div class="p-4 md:p-5 border-b border-slate-100 dark:border-slate-800 flex flex-col md:flex-row justify-between items-start md:items-center gap-3 bg-slate-50/70 dark:bg-slate-900/50">
+                    <h2 class="text-base md:text-lg font-bold flex items-center gap-2.5 text-slate-800 dark:text-white"><i class="fas fa-crosshairs text-emerald-600 text-sm"></i> บัญชีสนามยิงปืน (คำนวณอัตโนมัติ กระสุนนัดละ 1,000 | เป้าใบละ 15)</h2>
+                    <div class="flex flex-wrap gap-2 w-full md:w-auto">
+                        <button onclick="exportToCSV('shooting')" class="flex-1 md:flex-none bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 hover:bg-slate-50 text-slate-700 dark:text-slate-200 px-3.5 py-2 rounded-xl text-xs font-bold shadow-sm transition flex items-center justify-center gap-1.5"><i class="fas fa-file-excel text-emerald-600"></i> Export</button>
+                        <button onclick="shareToLine('shootingTableCapture', 'Shooting_Range', this)" class="flex-1 md:flex-none bg-[#00B900] hover:bg-[#009900] text-white px-3.5 py-2 rounded-xl text-xs font-bold shadow-sm transition flex items-center justify-center gap-1.5"><i class="fab fa-line"></i> แชร์</button>
+                        <button onclick="showShootingInput()" class="flex-1 md:flex-none bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-xl text-xs font-bold shadow-sm transition flex items-center justify-center gap-1.5"><i class="fas fa-plus"></i> เพิ่มข้อมูล</button>
+                    </div>
+                </div>
+
+                <div class="p-4">
+                    <div class="table-responsive-wrapper">
+                        <div id="shootingTableCapture" class="min-w-[1100px] p-1 bg-white dark:bg-slate-900">
+                            <div class="text-center mb-4 hidden-on-screen print-only">
+                                <h3 class="font-bold text-lg uppercase">รายงานบัญชีสนามยิงปืน</h3>
+                            </div>
+                            <table class="w-full text-center border-collapse text-xs">
+                                <thead class="bg-slate-800 text-slate-100 font-semibold sticky top-0 z-10">
+                                    <tr>
+                                        <th rowspan="2" class="border-r border-slate-700 w-20">เดือน</th>
+                                        <th rowspan="2" class="border-r border-slate-700">รายการ / ยกยอด / รายจ่าย</th>
+                                        <th colspan="5" class="bg-slate-700 border-r border-slate-600 border-b border-slate-600 font-bold text-amber-300">ยอดขายกระสุน (นัดละ 1,000)</th>
+                                        <th colspan="5" class="bg-slate-800 border-r border-slate-700 border-b border-slate-600 font-bold text-emerald-300">ยอดขายเป้า (ใบละ 15)</th>
+                                        <th rowspan="2" class="border-l border-slate-700 bg-indigo-950 w-28 text-amber-300 font-bold">คงเหลือสุทธิ</th>
+                                        <th rowspan="2" class="border-r border-slate-700 w-20">ไฟล์แนบ</th>
+                                        <th rowspan="2" class="no-print-capture w-16">จัดการ</th>
+                                    </tr>
+                                    <tr class="bg-slate-700/90 text-[11px] text-slate-200">
+                                        <th class="border-r border-slate-600 w-16">โอน (นัด)</th>
+                                        <th class="border-r border-slate-600 w-20">ยอดเงิน</th>
+                                        <th class="border-r border-slate-600 w-16">สด (นัด)</th>
+                                        <th class="border-r border-slate-600 w-20">ยอดเงิน</th>
+                                        <th class="border-r border-slate-600 bg-slate-600 text-white font-bold w-20">รวม</th>
+                                        <th class="border-r border-slate-600 w-16">โอน (ใบ)</th>
+                                        <th class="border-r border-slate-600 w-20">ยอดเงิน</th>
+                                        <th class="border-r border-slate-600 w-16">สด (ใบ)</th>
+                                        <th class="border-r border-slate-600 w-20">ยอดเงิน</th>
+                                        <th class="border-r border-slate-600 bg-slate-700 text-white font-bold w-20">รวม</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="shootingTbody" class="font-medium divide-y divide-slate-200 dark:divide-slate-800"></tbody>
+                                <tfoot id="shootingTfoot" class="font-bold border-t-2 border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/90"></tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- View 3.1: Shooting Input Form -->
+        <div id="view-shooting-input" class="hidden max-w-xl mx-auto py-2">
+            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 md:p-8 space-y-5 shadow-2xl">
+                <div class="flex justify-between items-center border-b border-slate-100 dark:border-slate-800 pb-4">
+                    <h2 class="text-lg font-bold text-slate-800 dark:text-white" id="shootingFormTitle"><i class="fas fa-crosshairs text-emerald-600 mr-2"></i> บันทึกข้อมูลสนามยิงปืน</h2>
+                    <button onclick="showShootingRange()" class="w-8 h-8 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-600 dark:text-slate-300 rounded-full flex items-center justify-center transition"><i class="fas fa-times"></i></button>
+                </div>
+                <form id="shootingForm" onsubmit="saveShootingRecord(event)" class="space-y-4">
+                    <input type="hidden" id="sEditId">
+                    <div class="grid grid-cols-2 gap-4 p-4 bg-slate-50 dark:bg-slate-900/50 rounded-2xl border border-slate-200 dark:border-slate-800">
+                        <div>
+                            <label class="block text-xs font-bold mb-1.5 text-slate-700 dark:text-slate-300">ประจำเดือน</label>
+                            <select id="sMonth" required class="w-full border border-slate-300 dark:border-slate-700 rounded-xl p-3 bg-white dark:bg-slate-950 font-bold outline-none text-xs">
+                                <option value="ยกยอดมา">ยอดยกมา / ตั้งต้น</option>
+                                <option value="ม.ค.">มกราคม (ม.ค.)</option><option value="ก.พ.">กุมภาพันธ์ (ก.พ.)</option>
+                                <option value="มี.ค.">มีนาคม (มี.ค.)</option><option value="เม.ย.">เมษายน (เม.ย.)</option>
+                                <option value="พ.ค.">พฤษภาคม (พ.ค.)</option><option value="มิ.ย.">มิถุนายน (มิ.ย.)</option>
+                                <option value="ก.ค.">กรกฎาคม (ก.ค.)</option><option value="ส.ค.">สิงหาคม (ส.ค.)</option>
+                                <option value="ก.ย.">กันยายน (ก.ย.)</option><option value="ต.ค.">ตุลาคม (ต.ค.)</option>
+                                <option value="พ.ย.">พฤศจิกายน (พ.ย.)</option><option value="ธ.ค.">ธันวาคม (ธ.ค.)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold mb-1.5 text-slate-700 dark:text-slate-300">ปี พ.ศ.</label>
+                            <input type="number" id="sYear" required value="2569" class="w-full border border-slate-300 dark:border-slate-700 rounded-xl p-3 bg-white dark:bg-slate-950 font-bold outline-none text-xs">
+                        </div>
+                    </div>
+
+                    <!-- ส่วนแทรก: ยกยอดมา / รายรับอื่นๆ / รายจ่าย -->
+                    <div class="p-4 border border-indigo-100 dark:border-indigo-900/40 bg-indigo-50/40 dark:bg-indigo-950/20 rounded-2xl space-y-3">
+                        <h3 class="font-bold text-indigo-900 dark:text-indigo-300 text-xs border-b border-indigo-100 dark:border-indigo-900/40 pb-2"><i class="fas fa-sliders-h mr-1"></i> ส่วนที่ 1: รายการพิเศษ (ยกยอดมา / รายรับอื่นๆ หรือ รายจ่าย)</h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-[11px] font-bold mb-1 text-slate-700 dark:text-slate-300">ประเภทรายการพิเศษ</label>
+                                <select id="sAdjType" class="w-full border border-slate-300 dark:border-slate-700 rounded-xl p-2.5 bg-white dark:bg-slate-950 font-bold outline-none text-xs">
+                                    <option value="income_carry">ยกยอดมา / รายรับอื่นๆ (+ บวกเพิ่ม)</option>
+                                    <option value="expense">รายจ่ายประจำเดือน (- หักออก)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-bold mb-1 text-slate-700 dark:text-slate-300">จำนวนเงิน (บาท)</label>
+                                <input type="number" step="0.01" id="sExpAmt" onclick="openNumericPrompt('sExpAmt', 'กรอกจำนวนเงินรายการพิเศษ (บาท)')" placeholder="0.00" class="w-full border border-slate-300 dark:border-slate-700 rounded-xl p-2.5 font-bold text-sm text-indigo-600 dark:text-indigo-400 bg-white dark:bg-slate-950 outline-none cursor-pointer" readonly>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold mb-1 text-slate-700 dark:text-slate-300">รายละเอียดรายการพิเศษ</label>
+                            <input type="text" id="sExpDesc" placeholder="เช่น ยอดเงินปี 2568, ค่าซ่อมบำรุง..." class="w-full border border-slate-300 dark:border-slate-700 rounded-xl p-2.5 bg-white dark:bg-slate-950 outline-none text-xs">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <!-- ส่วนกระสุน (นัดละ 1,000) -->
+                        <div class="p-4 border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 rounded-2xl space-y-3">
+                            <h3 class="font-bold text-xs border-b border-slate-200 dark:border-slate-700 pb-2 mb-2 flex justify-between items-center">
+                                <span><i class="fas fa-box mr-1.5 text-indigo-500"></i> กระสุน (นัดละ 1,000)</span>
+                                <span id="bulletTotalPreview" class="text-[11px] font-black text-indigo-600">0.00 ฿</span>
+                            </h3>
+                            <div class="grid grid-cols-2 gap-3">
+                                <div>
+                                    <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">โอน (จำนวนนัด)</label>
+                                    <input type="number" id="sBulTrQty" value="0" oninput="calculateShootingPreviews()" onclick="openNumericPrompt('sBulTrQty', 'จำนวนนัดโอนกระสุน')" class="w-full border border-slate-300 dark:border-slate-700 rounded-xl p-2.5 text-center bg-white dark:bg-slate-950 font-bold text-indigo-600 outline-none text-xs cursor-pointer" readonly>
+                                </div>
+                                <div>
+                                    <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">เงินสด (จำนวนนัด)</label>
+                                    <input type="number" id="sBulCashQty" value="0" oninput="calculateShootingPreviews()" onclick="openNumericPrompt('sBulCashQty', 'จำนวนนัดเงินสดกระสุน')" class="w-full border border-slate-300 dark:border-slate-700 rounded-xl p-2.5 text-center bg-white dark:bg-slate-950 font-bold text-indigo-600 outline-none text-xs cursor-pointer" readonly>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- ส่วนเป้า (ใบละ 15) -->
+                        <div class="p-4 border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 rounded-2xl space-y-3">
+                            <h3 class="font-bold text-xs border-b border-slate-200 dark:border-slate-700 pb-2 mb-2 flex justify-between items-center">
+                                <span><i class="fas fa-bullseye mr-1.5 text-emerald-500"></i> เป้า (ใบละ 15)</span>
+                                <span id="targetTotalPreview" class="text-[11px] font-black text-emerald-600">0.00 ฿</span>
+                            </h3>
+                            <div class="grid grid-cols-2 gap-3">
+                                <div>
+                                    <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">โอน (จำนวนใบ)</label>
+                                    <input type="number" id="sTarTrQty" value="0" oninput="calculateShootingPreviews()" onclick="openNumericPrompt('sTarTrQty', 'จำนวนใบโอนเป้า')" class="w-full border border-slate-300 dark:border-slate-700 rounded-xl p-2.5 text-center bg-white dark:bg-slate-950 font-bold text-emerald-600 outline-none text-xs cursor-pointer" readonly>
+                                </div>
+                                <div>
+                                    <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">เงินสด (จำนวนใบ)</label>
+                                    <input type="number" id="sTarCashQty" value="0" oninput="calculateShootingPreviews()" onclick="openNumericPrompt('sTarCashQty', 'จำนวนใบเงินสดเป้า')" class="w-full border border-slate-300 dark:border-slate-700 rounded-xl p-2.5 text-center bg-white dark:bg-slate-950 font-bold text-emerald-600 outline-none text-xs cursor-pointer" readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Attachment Upload Section -->
+                    <div class="p-4 bg-emerald-50/50 dark:bg-emerald-950/20 rounded-2xl border border-emerald-100 dark:border-emerald-900/40 space-y-2">
+                        <label class="block text-xs font-bold text-emerald-900 dark:text-emerald-300"><i class="fas fa-paperclip mr-1"></i> แนบสลิปโอนเงิน / เอกสารหลักฐาน (ถ้ามี)</label>
+                        <input type="file" id="sFile" accept="image/*,.pdf" onchange="previewFile(this, 'sFileBase64', 'sFilePreview')" class="w-full text-xs file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:font-bold file:bg-emerald-600 file:text-white cursor-pointer">
+                        <input type="hidden" id="sFileBase64">
+                        <div id="sFilePreview" class="hidden mt-2 text-center"></div>
+                    </div>
+
+                    <div class="pt-4">
+                        <button type="submit" class="w-full bg-slate-900 hover:bg-emerald-600 text-white font-bold py-3.5 rounded-2xl shadow-lg transition flex items-center justify-center gap-2 text-sm"><i class="fas fa-save"></i> บันทึกข้อมูลสนามยิงปืน</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal: Numeric Prompt (Luxury Numpad Popup) -->
+    <div id="numericPromptModal" class="hidden fixed inset-0 z-[120] bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-slate-900 rounded-3xl max-w-sm w-full p-6 space-y-4 shadow-2xl border border-slate-100 dark:border-slate-800 modal-animate">
+            <div class="flex justify-between items-center border-b border-slate-100 dark:border-slate-800 pb-3">
+                <h3 id="numericPromptTitle" class="font-bold text-sm text-slate-800 dark:text-white flex items-center gap-2"><i class="fas fa-calculator text-indigo-600"></i> กรอกตัวเลข</h3>
+                <button onclick="closeNumericPrompt(false)" class="w-7 h-7 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-600 dark:text-slate-300 rounded-full flex items-center justify-center transition"><i class="fas fa-times text-xs"></i></button>
+            </div>
+            <div>
+                <input type="number" step="any" id="numericPromptInput" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-2xl p-4 text-center text-xl font-black text-indigo-600 dark:text-indigo-400 outline-none focus:border-indigo-500" placeholder="0">
+            </div>
+            <div class="grid grid-cols-3 gap-2 pt-1">
+                <button type="button" onclick="addPromptVal(100)" class="py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 font-bold text-xs">+100</button>
+                <button type="button" onclick="addPromptVal(500)" class="py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 font-bold text-xs">+500</button>
+                <button type="button" onclick="addPromptVal(1000)" class="py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 font-bold text-xs">+1,000</button>
+                <button type="button" onclick="addPromptVal(5000)" class="py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 font-bold text-xs">+5,000</button>
+                <button type="button" onclick="addPromptVal(10000)" class="py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 font-bold text-xs">+10,000</button>
+                <button type="button" onclick="document.getElementById('numericPromptInput').value = '0'" class="py-2.5 rounded-xl bg-rose-50 text-rose-600 dark:bg-rose-950/30 font-bold text-xs">ล้างค่า</button>
+            </div>
+            <div class="pt-2">
+                <button type="button" onclick="closeNumericPrompt(true)" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-2xl shadow-lg transition text-xs">ยืนยันตัวเลข</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: File Lightbox Preview -->
+    <div id="filePreviewModal" class="hidden fixed inset-0 z-[130] bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-slate-900 rounded-3xl max-w-2xl w-full p-6 space-y-4 shadow-2xl border border-slate-100 dark:border-slate-800 modal-animate text-center relative">
+            <div class="flex justify-between items-center border-b border-slate-100 dark:border-slate-800 pb-3">
+                <h3 class="font-bold text-sm text-slate-800 dark:text-white flex items-center gap-2"><i class="fas fa-file-invoice text-indigo-600"></i> รายละเอียดไฟล์แนบ / สลิป</h3>
+                <button onclick="closeFilePreviewModal()" class="w-7 h-7 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-600 dark:text-slate-300 rounded-full flex items-center justify-center transition"><i class="fas fa-times text-xs"></i></button>
+            </div>
+            <div id="filePreviewContent" class="py-4 flex justify-center items-center max-h-[70vh] overflow-auto">
+                <!-- Content injected dynamically -->
+            </div>
+            <div class="pt-2">
+                <button onclick="closeFilePreviewModal()" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3 rounded-2xl shadow transition text-xs">ปิดหน้าต่าง</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Success Notification -->
+    <div id="successModal" class="hidden fixed inset-0 z-[140] bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-slate-900 rounded-3xl max-w-sm w-full p-6 text-center space-y-4 shadow-2xl border border-slate-100 dark:border-slate-800 relative modal-animate">
+            <div class="w-20 h-20 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-500 rounded-full flex items-center justify-center mx-auto text-3xl shadow-inner mb-1 relative">
+                <div class="absolute inset-0 rounded-full border-4 border-emerald-100 dark:border-emerald-900/50 animate-ping opacity-50"></div>
+                <i class="fas fa-check"></i>
+            </div>
+            <div class="space-y-1">
+                <h3 id="successModalTitle" class="font-bold text-xl text-slate-800 dark:text-white">บันทึกข้อมูลสำเร็จ</h3>
+                <p id="successModalMsg" class="text-xs text-slate-500 dark:text-slate-400 font-medium">ดำเนินการบันทึกรายการและซิงก์คลาวด์เรียบร้อยแล้ว</p>
+            </div>
+            <button onclick="closeSuccessModal()" class="w-full bg-slate-900 hover:bg-slate-800 dark:bg-slate-800 dark:hover:bg-slate-700 text-white font-bold py-3 rounded-2xl shadow transition text-xs mt-2">ปิดหน้าต่าง</button>
+        </div>
+    </div>
+
+    <!-- สคริปต์การทำงาน -->
+    <script>
+        const SHEETS_API_URL = "https://script.google.com/macros/s/AKfycbxndb4hG8WyAqHrGVmmWvGIclEIbSoEvf495kMJuRem-hXf0gQ1U80npPBpcAlO9mGMkw/exec";
+
+        let navigationHistory = ['view-home'];
+        const thMonths = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+        const monthOrderMap = {
+            'ยกยอดมา': -1,
+            'ม.ค.': 0, 'ก.พ.': 1, 'มี.ค.': 2, 'เม.ย.': 3,
+            'พ.ค.': 4, 'มิ.ย.': 5, 'ก.ค.': 6, 'ส.ค.': 7,
+            'ก.ย.': 8, 'ต.ค.': 9, 'พ.ย.': 10, 'ธ.ค.': 11
+        };
+
+        let currentPromptTargetId = null;
+
+        function toggleDarkMode() {
+            const html = document.documentElement;
+            const icon = document.getElementById('themeIcon');
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+                icon.className = 'fas fa-moon text-xs';
+            } else {
+                html.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+                icon.className = 'fas fa-sun text-xs text-amber-300';
+            }
+        }
+        if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+            document.getElementById('themeIcon').className = 'fas fa-sun text-xs text-amber-300';
+        }
+
+        let appData = {
+            generalRecords: [],
+            shootingRecords: []
+        };
+
+        function sanitizeData() {
+            if (!Array.isArray(appData.generalRecords)) appData.generalRecords = [];
+            if (!Array.isArray(appData.shootingRecords)) appData.shootingRecords = [];
+            
+            appData.shootingRecords = appData.shootingRecords.filter(r => r && r.month);
+            appData.shootingRecords.forEach(r => {
+                if (r.month && !monthOrderMap.hasOwnProperty(r.month) && !isNaN(r.month)) {
+                    r.month = 'ม.ค.';
+                }
+                if (!r.year) r.year = '2569';
+            });
+        }
+
+        window.updateLastSyncTime = function() {
+            const now = new Date();
+            const timeStr = now.toLocaleDateString('th-TH', { year:'2-digit', month:'short', day:'numeric' }) + ' ' + now.toLocaleTimeString('th-TH', { hour:'2-digit', minute:'2-digit' });
+            document.getElementById('lastUpdatedUI').innerHTML = `<i class="far fa-clock"></i> ${timeStr}`;
+        }
+
+        window.showSuccessModal = function(title = "บันทึกข้อมูลสำเร็จ", msg = "บันทึกรายการลงระบบและซิงก์คลาวด์เรียบร้อยแล้ว") {
+            document.getElementById('successModalTitle').innerText = title;
+            document.getElementById('successModalMsg').innerText = msg;
+            document.getElementById('successModal').classList.remove('hidden');
+        }
+        window.closeSuccessModal = function() {
+            document.getElementById('successModal').classList.add('hidden');
+        }
+
+        // --- Numeric Prompt Modal ---
+        window.openNumericPrompt = function(inputId, titleText) {
+            currentPromptTargetId = inputId;
+            document.getElementById('numericPromptTitle').innerHTML = `<i class="fas fa-calculator text-indigo-600"></i> ${titleText}`;
+            const currentVal = document.getElementById(inputId).value || "0";
+            document.getElementById('numericPromptInput').value = currentVal;
+            document.getElementById('numericPromptModal').classList.remove('hidden');
+            setTimeout(() => document.getElementById('numericPromptInput').focus(), 100);
+        }
+        window.addPromptVal = function(num) {
+            const input = document.getElementById('numericPromptInput');
+            input.value = (parseFloat(input.value) || 0) + num;
+        }
+        window.closeNumericPrompt = function(isConfirm) {
+            if (isConfirm && currentPromptTargetId) {
+                const val = document.getElementById('numericPromptInput').value;
+                document.getElementById(currentPromptTargetId).value = val;
+                if(typeof calculateShootingPreviews === 'function') calculateShootingPreviews();
+            }
+            document.getElementById('numericPromptModal').classList.add('hidden');
+            currentPromptTargetId = null;
+        }
+
+        // --- File Preview Handling ---
+        window.previewFile = function(input, hiddenInputId, previewContainerId) {
+            if (input.files && input.files[0]) {
+                const file = input.files[0];
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const base64 = e.target.result;
+                    document.getElementById(hiddenInputId).value = base64;
+                    const container = document.getElementById(previewContainerId);
+                    container.classList.remove('hidden');
+                    if (file.type.startsWith('image/')) {
+                        container.innerHTML = `<img src="${base64}" class="h-24 object-cover rounded-xl border inline-block shadow-sm">`;
+                    } else {
+                        container.innerHTML = `<div class="p-3 bg-indigo-100 text-indigo-800 rounded-xl font-bold text-xs"><i class="fas fa-file-pdf text-red-500 mr-1.5"></i> แนบไฟล์ PDF สำเร็จ (${file.name})</div>`;
+                    }
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        window.openAttachmentModal = function(base64Data) {
+            const modalContent = document.getElementById('filePreviewContent');
+            if (!base64Data) {
+                modalContent.innerHTML = `<p class="text-slate-400 text-xs">ไม่มีไฟล์แนบสำหรับรายการนี้</p>`;
+            } else if (base64Data.startsWith('data:image/')) {
+                modalContent.innerHTML = `<img src="${base64Data}" class="max-h-[65vh] object-contain rounded-2xl shadow-lg border">`;
+            } else if (base64Data.startsWith('data:application/pdf') || base64Data.includes('pdf')) {
+                modalContent.innerHTML = `<iframe src="${base64Data}" class="w-full h-[65vh] rounded-2xl border"></iframe>`;
+            } else {
+                modalContent.innerHTML = `<a href="${base64Data}" download="document" class="px-6 py-3 bg-indigo-600 text-white font-bold rounded-xl text-xs"><i class="fas fa-download mr-1"></i> ดาวน์โหลดไฟล์แนบ</a>`;
+            }
+            document.getElementById('filePreviewModal').classList.remove('hidden');
+        }
+        window.closeFilePreviewModal = function() {
+            document.getElementById('filePreviewModal').classList.add('hidden');
+        }
+
+        window.hideAllViews = function() {
+            ['view-home', 'view-general-summary', 'view-general-input', 'view-shooting-app', 'view-shooting-input'].forEach(v => {
+                document.getElementById(v).classList.add('hidden');
+            });
+        }
+        window.navigateTo = function(id) {
+            hideAllViews();
+            document.getElementById(id).classList.remove('hidden');
+            if(navigationHistory[navigationHistory.length-1] !== id) navigationHistory.push(id);
+            window.scrollTo({top:0, behavior:'smooth'});
+            updateLastSyncTime();
+        }
+        window.goHome = function() {
+            navigationHistory = ['view-home'];
+            document.getElementById('globalSearchInput').value = "";
+            const dropdown = document.getElementById('searchResultsDropdown');
+            if(dropdown) dropdown.classList.add('hidden');
+            navigateTo('view-home');
+        }
+        window.goBack = function() {
+            if(navigationHistory.length > 1) {
+                navigationHistory.pop();
+                navigateTo(navigationHistory[navigationHistory.length-1]);
+                refreshCurrentView();
+            }
+        }
+        window.refreshCurrentView = function() {
+            sanitizeData();
+            const cur = navigationHistory[navigationHistory.length-1];
+            if(cur === 'view-general-summary') renderGeneralTable();
+            if(cur === 'view-shooting-app') renderShootingTable();
+            updateLastSyncTime();
+        }
+
+        // Global Search Logic
+        window.handleGlobalSearch = function(query) {
+            const dropdown = document.getElementById('searchResultsDropdown');
+            if(!query || query.trim() === '') {
+                dropdown.classList.add('hidden');
+                return;
+            }
+            const q = query.toLowerCase();
+            let results = [];
+            
+            appData.generalRecords.forEach(r => {
+                if((r.desc && r.desc.toLowerCase().includes(q)) || (r.note && r.note.toLowerCase().includes(q)) || (r.date && r.date.includes(q))) {
+                    results.push({type: 'general', title: r.desc, subtitle: `กองกลาง | วันที่: ${formatDateThaiShort(r.date)}`, id: r.id});
+                }
+            });
+            
+            appData.shootingRecords.forEach(r => {
+                if((r.expDesc && r.expDesc.toLowerCase().includes(q)) || (r.month && r.month.toLowerCase().includes(q)) || (r.year && r.year.toString().includes(q))) {
+                    results.push({type: 'shooting', title: r.expDesc || `ประจำเดือน ${r.month} ${r.year}`, subtitle: `สนามยิงปืน | เดือน: ${r.month} ${r.year}`, id: r.id});
+                }
+            });
+            
+            if(results.length > 0) {
+                dropdown.innerHTML = results.map(item => `
+                    <div onclick="jumpToRecord('${item.type}', '${item.id}')" class="p-2.5 hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer rounded-xl transition">
+                        <div class="font-bold text-slate-800 dark:text-slate-200">${item.title}</div>
+                        <div class="text-[11px] text-slate-500">${item.subtitle}</div>
+                    </div>
+                `).join('');
+                dropdown.classList.remove('hidden');
+            } else {
+                dropdown.innerHTML = `<div class="p-3 text-center text-xs text-slate-400 font-medium">ไม่พบข้อมูลที่ค้นหา</div>`;
+                dropdown.classList.remove('hidden');
+            }
+        };
+
+        window.jumpToRecord = function(type, id) {
+            document.getElementById('searchResultsDropdown').classList.add('hidden');
+            document.getElementById('globalSearchInput').value = '';
+            if(type === 'general') { showGeneralSummary(); } else { showShootingRange(); }
+            setTimeout(() => {
+                const row = document.getElementById(`row-${id}`);
+                if(row) {
+                    row.scrollIntoView({behavior: 'smooth', block: 'center'});
+                    row.classList.add('highlight-row');
+                    setTimeout(() => row.classList.remove('highlight-row'), 3000);
+                }
+            }, 150);
+        };
+
+        async function syncWithCloud(isUIAction = false) {
+            const syncIcon = document.getElementById('syncIcon');
+            const syncStatusUI = document.getElementById('syncStatusUI');
+            if(isUIAction) {
+                syncIcon.classList.add('fa-spin');
+                syncStatusUI.innerHTML = `<i class="fas fa-spinner fa-spin text-[9px]"></i> ซิงก์...`;
+            }
+            try {
+                let res = await fetch(SHEETS_API_URL);
+                if(res.ok) {
+                    let json = await res.json();
+                    if (json && (json.generalRecords || json.shootingRecords)) {
+                        appData.generalRecords = json.generalRecords || [];
+                        appData.shootingRecords = json.shootingRecords || [];
+                    }
+                    sanitizeData();
+                    refreshCurrentView();
+                    if(isUIAction) {
+                        syncIcon.classList.remove('fa-spin');
+                        syncStatusUI.innerHTML = `<i class="fas fa-check text-[9px] text-emerald-400"></i> ล่าสุด`;
+                        setTimeout(() => { syncStatusUI.innerHTML = `<i class="fas fa-cloud text-[9px]"></i> พร้อมใช้งาน`; }, 3000);
+                    }
+                    updateLastSyncTime();
+                }
+            } catch(e) {
+                if(isUIAction) {
+                    syncIcon.classList.remove('fa-spin');
+                    syncStatusUI.innerHTML = `<i class="fas fa-exclamation-triangle text-[9px] text-amber-400"></i> ออฟไลน์`;
+                }
+            }
+        }
+
+        async function saveToCloud() {
+            try {
+                sanitizeData();
+                await fetch(SHEETS_API_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(appData) });
+                updateLastSyncTime();
+            } catch(e) { console.error(e); }
+        }
+
+        window.clearAllSystemData = async function() {
+            if(!confirm('⚠️ คำเตือน: คุณต้องการล้างข้อมูลทั้งหมดในระบบใช่หรือไม่?')) return;
+            appData.generalRecords = [];
+            appData.shootingRecords = [];
+            await saveToCloud();
+            showSuccessModal("ล้างข้อมูลสำเร็จ", "ระบบเริ่มต้นใหม่ที่ 0.00 บาทแล้ว");
+            refreshCurrentView();
+            goHome();
+        }
+
+        window.formatDateThaiShort = function(dateStr) {
+            if(!dateStr) return "-";
+            const parts = dateStr.toString().substring(0, 10).split('-');
+            if(parts.length < 3) return dateStr;
+            const d = new Date(parts[0], parseInt(parts[1])-1, parts[2]);
+            return `${d.getDate()} ${thMonths[d.getMonth()]} ${(parseInt(parts[0])+543).toString().slice(-2)}`;
+        }
+
+        // --- General Ledger Functions ---
+        window.showGeneralSummary = function() { renderGeneralTable(); navigateTo('view-general-summary'); }
+        window.showGeneralInput = function(editId = null) {
+            document.getElementById('generalForm').reset();
+            document.getElementById('gEditId').value = "";
+            document.getElementById('gDate').valueAsDate = new Date();
+            document.getElementById('gFileBase64').value = "";
+            document.getElementById('gFilePreview').classList.add('hidden');
+            document.getElementById('gFilePreview').innerHTML = "";
+
+            if(editId) {
+                const rec = appData.generalRecords.find(r => r.id == editId);
+                if(rec) {
+                    document.getElementById('gEditId').value = rec.id;
+                    document.getElementById('gDate').value = rec.date.toString().substring(0, 10);
+                    document.getElementById('gDesc').value = rec.desc;
+                    document.getElementById('gNote').value = rec.note || "";
+                    document.getElementById('gFileBase64').value = rec.attachment || "";
+                    if(rec.attachment) {
+                        document.getElementById('gFilePreview').classList.remove('hidden');
+                        document.getElementById('gFilePreview').innerHTML = `<span class="text-xs font-bold text-indigo-600"><i class="fas fa-check-circle mr-1"></i> มีไฟล์แนบเดิมในระบบแล้ว</span>`;
+                    }
+                    if(parseFloat(rec.inCash) > 0) { document.getElementById('gActionType').value = 'in'; document.getElementById('gMethod').value = 'cash'; document.getElementById('gAmount').value = rec.inCash; }
+                    else if(parseFloat(rec.inAcc) > 0) { document.getElementById('gActionType').value = 'in'; document.getElementById('gMethod').value = 'acc'; document.getElementById('gAmount').value = rec.inAcc; }
+                    else if(parseFloat(rec.outCash) > 0) { document.getElementById('gActionType').value = 'out'; document.getElementById('gMethod').value = 'cash'; document.getElementById('gAmount').value = rec.outCash; }
+                    else if(parseFloat(rec.outAcc) > 0) { document.getElementById('gActionType').value = 'out'; document.getElementById('gMethod').value = 'acc'; document.getElementById('gAmount').value = rec.outAcc; }
+                }
+                document.getElementById('generalFormTitle').innerHTML = `<i class="fas fa-edit text-indigo-600 mr-2"></i> แก้ไขรายการกองกลาง`;
+            } else {
+                document.getElementById('generalFormTitle').innerHTML = `<i class="fas fa-file-invoice-dollar text-indigo-600 mr-2"></i> บันทึกรายการใหม่`;
+            }
+            navigateTo('view-general-input');
+        }
+
+        window.renderGeneralTable = function() {
+            const tbody = document.getElementById('generalTbody'), tfoot = document.getElementById('generalTfoot');
+            tbody.innerHTML = ""; tfoot.innerHTML = "";
+
+            let sorted = [...appData.generalRecords].sort((a,b) => new Date(a.date.toString().substring(0, 10) || '2025-01-01') - new Date(b.date.toString().substring(0, 10) || '2025-01-01'));
+
+            let runCash = 0, runAcc = 0; 
+            let totInCash=0, totInAcc=0, totOutCash=0, totOutAcc=0;
+            let idx = 1;
+
+            sorted.forEach(r => {
+                const inC = parseFloat(r.inCash) || 0, inA = parseFloat(r.inAcc) || 0, outC = parseFloat(r.outCash) || 0, outA = parseFloat(r.outAcc) || 0;
+                runCash += (inC - outC); runAcc += (inA - outA); const totalNet = runCash + runAcc;
+                totInCash += inC; totInAcc += inA; totOutCash += outC; totOutAcc += outA;
+
+                let attachBtn = r.attachment ? `<button onclick="openAttachmentModal('${r.attachment}')" class="px-2.5 py-1 rounded-lg bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 font-bold hover:bg-indigo-100 transition text-[11px]" title="ดูไฟล์แนบ"><i class="fas fa-paperclip mr-1"></i> ดูไฟล์</button>` : `<span class="text-slate-300">-</span>`;
+
+                let tr = document.createElement('tr');
+                tr.id = `row-${r.id}`;
+                tr.className = `transition hover:bg-slate-50 dark:hover:bg-slate-800/40`;
+                tr.innerHTML = `
+                    <td class="text-center py-2 px-2 border-r border-slate-200 dark:border-slate-800 font-bold text-slate-400">${idx++}</td>
+                    <td class="text-center py-2 px-2 border-r border-slate-200 dark:border-slate-800 font-medium">${formatDateThaiShort(r.date)}</td>
+                    <td class="text-center py-2 px-3 font-bold border-r border-slate-200 dark:border-slate-800">${r.desc}</td>
+                    <td class="text-center py-2 px-2 text-emerald-600 border-r border-slate-200 dark:border-slate-800 font-bold">${inC ? inC.toLocaleString() : '-'}</td>
+                    <td class="text-center py-2 px-2 text-emerald-600 border-r border-slate-200 dark:border-slate-800 font-bold">${inA ? inA.toLocaleString() : '-'}</td>
+                    <td class="text-center py-2 px-2 text-rose-500 border-r border-slate-200 dark:border-slate-800 font-bold">${outC ? outC.toLocaleString() : '-'}</td>
+                    <td class="text-center py-2 px-2 text-rose-500 border-r border-slate-200 dark:border-slate-800 font-bold">${outA ? outA.toLocaleString() : '-'}</td>
+                    <td class="text-center py-2 px-2 border-r border-slate-200 dark:border-slate-800 font-bold text-slate-700 dark:text-slate-300">${runCash.toLocaleString()}</td>
+                    <td class="text-center py-2 px-2 border-r border-slate-200 dark:border-slate-800 font-bold text-slate-700 dark:text-slate-300">${runAcc.toLocaleString()}</td>
+                    <td class="text-center py-2 px-3 font-extrabold text-indigo-700 dark:text-amber-400 border-r border-slate-200 dark:border-slate-800 bg-indigo-50/20 dark:bg-slate-900/30">${totalNet.toLocaleString()}</td>
+                    <td class="text-center py-2 px-3 text-slate-500 border-r border-slate-200 dark:border-slate-800 max-w-[150px] truncate" title="${r.note || ''}">${r.note || '-'}</td>
+                    <td class="text-center py-2 px-2 border-r border-slate-200 dark:border-slate-800">${attachBtn}</td>
+                    <td class="text-center py-2 px-1 no-print-capture space-x-1">
+                        <button onclick="showGeneralInput('${r.id}')" class="text-indigo-600 action-btn hover:bg-indigo-50 dark:hover:bg-slate-800" title="แก้ไข"><i class="fas fa-edit"></i></button>
+                        <button onclick="deleteGeneralRecord('${r.id}')" class="text-rose-500 action-btn hover:bg-rose-50 dark:hover:bg-slate-800" title="ลบ"><i class="fas fa-trash"></i></button>
+                    `;
+                tbody.appendChild(tr);
+            });
+
+            if(sorted.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="13" class="text-center py-8 font-bold text-slate-400">ยังไม่มีข้อมูลในระบบ</td></tr>`;
+            }
+
+            document.getElementById('genDashIn').innerText = (totInCash + totInAcc).toLocaleString();
+            document.getElementById('genDashOut').innerText = (totOutCash + totOutAcc).toLocaleString();
+            document.getElementById('genDashNet').innerText = (runCash + runAcc).toLocaleString();
+
+            tfoot.innerHTML = `
+                <tr>
+                    <td class="border-r border-slate-200 dark:border-slate-800"></td>
+                    <td class="py-3 px-2 text-center uppercase font-black text-slate-700 dark:text-slate-200" colspan="2">รวมสะสมสุทธิ</td>
+                    <td class="text-center py-3 px-2 text-emerald-600 font-bold">+${totInCash.toLocaleString()}</td>
+                    <td class="text-center py-3 px-2 text-emerald-600 font-bold">+${totInAcc.toLocaleString()}</td>
+                    <td class="text-center py-3 px-2 text-rose-600 font-bold">-${totOutCash.toLocaleString()}</td>
+                    <td class="text-center py-3 px-2 text-rose-600 font-bold">-${totOutAcc.toLocaleString()}</td>
+                    <td class="text-center py-3 px-2 font-bold text-slate-800 dark:text-white">${runCash.toLocaleString()}</td>
+                    <td class="text-center py-3 px-2 font-bold text-slate-800 dark:text-white">${runAcc.toLocaleString()}</td>
+                    <td class="text-center py-3 px-3 text-indigo-700 dark:text-amber-400 font-black bg-indigo-50/40 dark:bg-slate-900/50">${(runCash + runAcc).toLocaleString()}</td>
+                    <td colspan="3"></td>
+                </tr>`;
+        }
+
+        window.saveGeneralRecord = async function(e) {
+            e.preventDefault();
+            const editId = document.getElementById('gEditId').value;
+            const act = document.getElementById('gActionType').value;
+            const amt = parseFloat(document.getElementById('gAmount').value) || 0;
+            const m = document.getElementById('gMethod').value;
+            const attach = document.getElementById('gFileBase64').value || "";
+            
+            let rec = {
+                id: editId || Date.now().toString(),
+                date: document.getElementById('gDate').value,
+                desc: document.getElementById('gDesc').value,
+                inCash: 0, inAcc: 0, outCash: 0, outAcc: 0,
+                note: document.getElementById('gNote').value || "",
+                attachment: attach
+            };
+
+            if(act === 'in' || act === 'carry') { if(m === 'cash') rec.inCash = amt; else rec.inAcc = amt; }
+            else if(act === 'out') { if(m === 'cash') rec.outCash = amt; else rec.outAcc = amt; }
+            else if(act === 'transfer') { rec.inCash = amt; rec.outAcc = amt; }
+
+            if(editId) {
+                const idx = appData.generalRecords.findIndex(r => r.id == editId);
+                if(idx > -1) { 
+                    if(!rec.attachment) rec.attachment = appData.generalRecords[idx].attachment || "";
+                    appData.generalRecords[idx] = rec; 
+                }
+            } else { appData.generalRecords.push(rec); }
+
+            await saveToCloud();
+            showSuccessModal(editId ? "แก้ไขข้อมูลสำเร็จ" : "บันทึกข้อมูลสำเร็จ", editId ? "อัปเดตข้อมูลรายการกองกลางเรียบร้อยแล้ว" : "เพิ่มรายการกองกลางใหม่เรียบร้อยแล้ว"); 
+            showGeneralSummary();
+        }
+
+        window.deleteGeneralRecord = function(id) {
+            if(confirm('ยืนยันการลบรายการบัญชีนี้อย่างถาวร?')) {
+                appData.generalRecords = appData.generalRecords.filter(r => r.id != id);
+                saveToCloud(); 
+                renderGeneralTable();
+                showSuccessModal("ลบข้อมูลสำเร็จ", "รายการถูกลบออกจากระบบเรียบร้อยแล้ว");
+            }
+        }
+
+        // --- Shooting Range Functions ---
+        window.calculateShootingPreviews = function() {
+            const bTr = parseFloat(document.getElementById('sBulTrQty').value) || 0;
+            const bCash = parseFloat(document.getElementById('sBulCashQty').value) || 0;
+            const tTr = parseFloat(document.getElementById('sTarTrQty').value) || 0;
+            const tCash = parseFloat(document.getElementById('sTarCashQty').value) || 0;
+
+            const bTot = (bTr + bCash) * 1000;
+            const tTot = (tTr + tCash) * 15;
+
+            document.getElementById('bulletTotalPreview').innerText = bTot.toLocaleString() + " ฿";
+            document.getElementById('targetTotalPreview').innerText = tTot.toLocaleString() + " ฿";
+        }
+
+        window.showShootingRange = function() { renderShootingTable(); navigateTo('view-shooting-app'); }
+        window.showShootingInput = function(editId = null) {
+            document.getElementById('shootingForm').reset();
+            document.getElementById('sEditId').value = "";
+            document.getElementById('sExpAmt').value = "";
+            document.getElementById('sExpDesc').value = "";
+            document.getElementById('sFileBase64').value = "";
+            document.getElementById('sFilePreview').classList.add('hidden');
+            document.getElementById('sFilePreview').innerHTML = "";
+            calculateShootingPreviews();
+
+            if(editId) {
+                const rec = appData.shootingRecords.find(r => r.id == editId);
+                if(rec) {
+                    document.getElementById('sEditId').value = rec.id;
+                    document.getElementById('sMonth').value = rec.month;
+                    document.getElementById('sYear').value = rec.year || "2569";
+                    document.getElementById('sAdjType').value = rec.adjType || (rec.month === 'ยกยอดมา' ? 'income_carry' : 'expense');
+                    document.getElementById('sExpDesc').value = rec.expDesc || "";
+                    document.getElementById('sExpAmt').value = rec.expAmt || "";
+                    document.getElementById('sBulTrQty').value = rec.bTrQ || 0;
+                    document.getElementById('sBulCashQty').value = rec.bBCQ || 0;
+                    document.getElementById('sTarTrQty').value = rec.tTrQ || 0;
+                    document.getElementById('sTarCashQty').value = rec.tBCQ || 0;
+                    document.getElementById('sFileBase64').value = rec.attachment || "";
+                    if(rec.attachment) {
+                        document.getElementById('sFilePreview').classList.remove('hidden');
+                        document.getElementById('sFilePreview').innerHTML = `<span class="text-xs font-bold text-emerald-600"><i class="fas fa-check-circle mr-1"></i> มีไฟล์แนบเดิมในระบบแล้ว</span>`;
+                    }
+                    calculateShootingPreviews();
+                }
+                document.getElementById('shootingFormTitle').innerHTML = `<i class="fas fa-edit text-emerald-600 mr-2"></i> แก้ไขข้อมูลสนามยิงปืน`;
+            } else {
+                document.getElementById('shootingFormTitle').innerHTML = `<i class="fas fa-crosshairs text-emerald-600 mr-2"></i> บันทึกข้อมูลสนามยิงปืนใหม่`;
+            }
+            navigateTo('view-shooting-input');
+        }
+
+        window.renderShootingTable = function() {
+            sanitizeData();
+            const tbody = document.getElementById('shootingTbody'), tfoot = document.getElementById('shootingTfoot');
+            tbody.innerHTML = ""; tfoot.innerHTML = "";
+
+            let sortedShooting = [...appData.shootingRecords].sort((a, b) => {
+                let yearA = parseInt(a.year) || 2569;
+                let yearB = parseInt(b.year) || 2569;
+                if (yearA !== yearB) return yearA - yearB;
+
+                let mOrderA = monthOrderMap[a.month] !== undefined ? monthOrderMap[a.month] : 99;
+                let mOrderB = monthOrderMap[b.month] !== undefined ? monthOrderMap[b.month] : 99;
+                return mOrderA - mOrderB;
+            });
+
+            let runBal = 0;
+            let sumBTrQ=0, sumBTrA=0, sumBCQ=0, sumBC_A=0, sumTotB=0;
+            let sumTTrQ=0, sumTTrA=0, sumTCQ=0, sumTC_A=0, sumTotT=0;
+
+            sortedShooting.forEach(r => {
+                const bTrQ = parseFloat(r.bTrQ) || 0, bBCQ = parseFloat(r.bBCQ) || 0;
+                const bTrA = bTrQ * 1000, bBCA = bBCQ * 1000, totB = bTrA + bBCA;
+                const tTrQ = parseFloat(r.tTrQ) || 0, tBCQ = parseFloat(r.tBCQ) || 0;
+                const tTrA = tTrQ * 15, tBCA = tBCQ * 15, totT = tTrA + tBCA;
+                const expAmt = parseFloat(r.expAmt) || 0;
+                const adjType = r.adjType || (r.month === 'ยกยอดมา' ? 'income_carry' : 'expense');
+
+                if (expAmt > 0) {
+                    if (adjType === 'income_carry') {
+                        runBal += expAmt;
+                    } else {
+                        runBal -= expAmt;
+                    }
+                }
+                runBal += (totB + totT);
+
+                if(expAmt === 0 && r.month !== 'ยกยอดมา') {
+                    sumBTrQ += bTrQ; sumBTrA += bTrA; sumBCQ += bBCQ; sumBC_A += bBCA; sumTotB += totB;
+                    sumTTrQ += tTrQ; sumTTrA += tTrA; sumTCQ += tBCQ; sumTC_A += tBCA; sumTotT += totT;
+                }
+
+                let attachBtn = r.attachment ? `<button onclick="openAttachmentModal('${r.attachment}')" class="px-2.5 py-1 rounded-lg bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 font-bold hover:bg-emerald-100 transition text-[11px]" title="ดูไฟล์แนบ"><i class="fas fa-paperclip mr-1"></i> ดูไฟล์</button>` : `<span class="text-slate-300">-</span>`;
+
+                let tr = document.createElement('tr');
+                tr.id = `row-${r.id}`;
+
+                if(expAmt > 0 || r.month === 'ยกยอดมา') {
+                    let isIncome = (adjType === 'income_carry');
+                    tr.className = `transition ${isIncome ? 'bg-emerald-50/40 dark:bg-emerald-950/20' : 'bg-rose-50/40 dark:bg-rose-950/25'} hover:bg-slate-100 dark:hover:bg-slate-800/40`;
+                    let descText = r.expDesc || (isIncome ? 'ยอดยกมา / รายรับอื่นๆ' : 'รายจ่ายประจำเดือน');
+                    let displayAmtText = (isIncome ? '+' : '-') + expAmt.toLocaleString() + ' บาท';
+                    let tagText = isIncome ? 'รายรับ/ยกยอด' : 'รายจ่าย';
+                    let tagColor = isIncome ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-200' : 'bg-rose-100 text-rose-800 dark:bg-rose-900 dark:text-rose-200';
+                    let valColor = isIncome ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400';
+
+                    tr.innerHTML = `
+                        <td class="text-center font-bold border-r border-slate-200 dark:border-slate-800 py-2">${r.month} ${r.year || '2569'}</td>
+                        <td class="text-center px-3 font-bold ${valColor} border-r border-slate-200 dark:border-slate-800 py-2">${descText}</td>
+                        <td colspan="10" class="text-right font-black ${valColor} px-4 border-r border-slate-200 dark:border-slate-800 py-2">
+                            ${displayAmtText} <span class="${tagColor} px-2 py-0.5 rounded text-[10px] ml-1 font-bold">${tagText}</span>
+                        </td>
+                        <td class="text-center font-extrabold text-amber-600 dark:text-amber-400 bg-amber-50/30 dark:bg-slate-900/40 border-l border-slate-200 dark:border-slate-800 py-2 px-3">${runBal.toLocaleString()}</td>
+                        <td class="text-center border-r border-slate-200 dark:border-slate-800 py-2">${attachBtn}</td>
+                        <td class="text-center no-print-capture border-l border-slate-200 dark:border-slate-800 py-2 space-x-1">
+                            <button onclick="showShootingInput('${r.id}')" class="text-emerald-600 action-btn hover:bg-emerald-50 dark:hover:bg-slate-800" title="แก้ไข"><i class="fas fa-edit"></i></button>
+                            <button onclick="deleteShootingRecord('${r.id}')" class="text-rose-500 action-btn hover:bg-rose-50 dark:hover:bg-slate-800" title="ลบ"><i class="fas fa-trash"></i></button>
+                        </td>`;
+                } else {
+                    tr.className = `transition hover:bg-slate-50 dark:hover:bg-slate-800/40`;
+                    tr.innerHTML = `
+                        <td class="text-center font-bold border-r border-slate-200 dark:border-slate-800 py-2">${r.month} ${r.year || '2569'}</td>
+                        <td class="text-center text-slate-400 border-r border-slate-200 dark:border-slate-800 py-2">-</td>
+                        <td class="text-center border-r border-slate-200 dark:border-slate-800 font-medium text-slate-600 dark:text-slate-300 py-2">${bTrQ ? bTrQ.toLocaleString() : '-'}</td>
+                        <td class="text-center border-r border-slate-200 dark:border-slate-800 font-bold py-2">${bTrA ? bTrA.toLocaleString() : '-'}</td>
+                        <td class="text-center border-r border-slate-200 dark:border-slate-800 font-medium text-slate-600 dark:text-slate-300 py-2">${bBCQ ? bBCQ.toLocaleString() : '-'}</td>
+                        <td class="text-center border-r border-slate-200 dark:border-slate-800 font-bold py-2">${bBCA ? bBCA.toLocaleString() : '-'}</td>
+                        <td class="text-center font-bold text-indigo-700 dark:text-indigo-400 bg-indigo-50/20 dark:bg-indigo-900/20 border-r border-slate-200 dark:border-slate-800 py-2">${totB ? totB.toLocaleString() : '-'}</td>
+                        <td class="text-center border-r border-slate-200 dark:border-slate-800 font-medium text-slate-600 dark:text-slate-300 py-2">${tTrQ ? tTrQ.toLocaleString() : '-'}</td>
+                        <td class="text-center border-r border-slate-200 dark:border-slate-800 font-bold py-2">${tTrA ? tTrA.toLocaleString() : '-'}</td>
+                        <td class="text-center border-r border-slate-200 dark:border-slate-800 font-medium text-slate-600 dark:text-slate-300 py-2">${tBCQ ? tBCQ.toLocaleString() : '-'}</td>
+                        <td class="text-center border-r border-slate-200 dark:border-slate-800 font-bold py-2">${tBCA ? tBCA.toLocaleString() : '-'}</td>
+                        <td class="text-center font-bold text-emerald-700 dark:text-emerald-400 bg-emerald-50/20 dark:bg-emerald-900/20 border-r border-slate-200 dark:border-slate-800 py-2">${totT ? totT.toLocaleString() : '-'}</td>
+                        <td class="text-center font-extrabold text-amber-600 dark:text-amber-400 bg-amber-50/30 dark:bg-slate-900/40 border-l border-slate-200 dark:border-slate-800 py-2 px-3">${runBal.toLocaleString()}</td>
+                        <td class="text-center border-r border-slate-200 dark:border-slate-800 py-2">${attachBtn}</td>
+                        <td class="text-center no-print-capture border-l border-slate-200 dark:border-slate-800 py-2 space-x-1">
+                            <button onclick="showShootingInput('${r.id}')" class="text-emerald-600 action-btn hover:bg-emerald-50 dark:hover:bg-slate-800" title="แก้ไข"><i class="fas fa-edit"></i></button>
+                            <button onclick="deleteShootingRecord('${r.id}')" class="text-rose-500 action-btn hover:bg-rose-50 dark:hover:bg-slate-800" title="ลบ"><i class="fas fa-trash"></i></button>
+                        </td>`;
+                }
+                tbody.appendChild(tr);
+            });
+
+            if(sortedShooting.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="15" class="text-center py-8 font-bold text-slate-400">ยังไม่มีข้อมูลสนามยิงปืน</td></tr>`;
+            }
+
+            document.getElementById('shootDashIn').innerText = (sumTotB + sumTotT).toLocaleString();
+            document.getElementById('shootDashNet').innerText = runBal.toLocaleString();
+
+            tfoot.innerHTML = `
+                <tr>
+                    <td class="border-r border-slate-300 dark:border-slate-700"></td>
+                    <td class="text-center py-3 font-bold border-r border-slate-300 dark:border-slate-700 uppercase text-slate-700 dark:text-slate-200">ยอดรวมสะสม</td>
+                    <td class="text-center border-r border-slate-300 dark:border-slate-700 font-medium">${sumBTrQ.toLocaleString()}</td>
+                    <td class="text-center border-r border-slate-300 dark:border-slate-700 font-bold text-indigo-600 dark:text-indigo-400">${sumBTrA.toLocaleString()}</td>
+                    <td class="text-center border-r border-slate-300 dark:border-slate-700 font-medium">${sumBCQ.toLocaleString()}</td>
+                    <td class="text-center border-r border-slate-300 dark:border-slate-700 font-bold text-indigo-600 dark:text-indigo-400">${sumBC_A.toLocaleString()}</td>
+                    <td class="text-center border-r border-slate-300 dark:border-slate-700 bg-indigo-50/40 dark:bg-indigo-900/30 text-indigo-800 dark:text-indigo-300 font-black">${sumTotB.toLocaleString()}</td>
+                    <td class="text-center border-r border-slate-300 dark:border-slate-700 font-medium">${sumTTrQ.toLocaleString()}</td>
+                    <td class="text-center border-r border-slate-300 dark:border-slate-700 font-bold text-emerald-600 dark:text-emerald-400">${sumTTrA.toLocaleString()}</td>
+                    <td class="text-center border-r border-slate-300 dark:border-slate-700 font-medium">${sumTCQ.toLocaleString()}</td>
+                    <td class="text-center border-r border-slate-300 dark:border-slate-700 font-bold text-emerald-600 dark:text-emerald-400">${sumTC_A.toLocaleString()}</td>
+                    <td class="text-center border-r border-slate-300 dark:border-slate-700 bg-emerald-50/40 dark:bg-emerald-900/30 text-emerald-800 dark:text-emerald-300 font-black">${sumTotT.toLocaleString()}</td>
+                    <td class="text-center font-black text-amber-600 dark:text-amber-400 bg-amber-50/50 dark:bg-slate-900/60 px-3 border-l border-slate-300 dark:border-slate-700">${runBal.toLocaleString()}</td>
+                    <td colspan="2" class="no-print-capture border-l border-slate-300 dark:border-slate-700"></td>
+                </tr>`;
+        }
+
+        window.saveShootingRecord = async function(e) {
+            e.preventDefault();
+            const editId = document.getElementById('sEditId').value;
+            const attach = document.getElementById('sFileBase64').value || "";
+
+            const rec = {
+                id: editId || Date.now().toString(),
+                month: document.getElementById('sMonth').value,
+                year: document.getElementById('sYear').value,
+                adjType: document.getElementById('sAdjType').value,
+                expDesc: document.getElementById('sExpDesc').value || "",
+                expAmt: parseFloat(document.getElementById('sExpAmt').value) || 0,
+                bTrQ: parseFloat(document.getElementById('sBulTrQty').value) || 0,
+                bBCQ: parseFloat(document.getElementById('sBulCashQty').value) || 0,
+                tTrQ: parseFloat(document.getElementById('sTarTrQty').value) || 0,
+                tBCQ: parseFloat(document.getElementById('sTarCashQty').value) || 0,
+                attachment: attach
+            };
+
+            if(editId) {
+                const idx = appData.shootingRecords.findIndex(r => r.id == editId);
+                if(idx > -1) { 
+                    if(!rec.attachment) rec.attachment = appData.shootingRecords[idx].attachment || "";
+                    appData.shootingRecords[idx] = rec; 
+                }
+            } else {
+                appData.shootingRecords.push(rec);
+            }
+
+            sanitizeData();
+            await saveToCloud(); 
+            showSuccessModal(editId ? "แก้ไขข้อมูลสำเร็จ" : "บันทึกข้อมูลสำเร็จ", editId ? "อัปเดตข้อมูลสนามยิงปืนเรียบร้อยแล้ว" : "เพิ่มข้อมูลสนามยิงปืนใหม่เรียบร้อยแล้ว"); 
+            showShootingRange();
+        }
+
+        window.deleteShootingRecord = function(id) {
+            if(confirm('ยืนยันการลบรายการบัญชีสนามยิงปืนอย่างถาวร?')) {
+                appData.shootingRecords = appData.shootingRecords.filter(r => r.id != id);
+                saveToCloud(); 
+                renderShootingTable();
+                showSuccessModal("ลบข้อมูลสำเร็จ", "รายการถูกลบออกจากระบบเรียบร้อยแล้ว");
+            }
+        }
+
+        window.onload = () => { syncWithCloud(false); updateLastSyncTime(); };
+        document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState === 'visible') { syncWithCloud(false); updateLastSyncTime(); }
+        });
+        setInterval(updateLastSyncTime, 60000);
+    </script>
+</body>
+</html>
