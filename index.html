@@ -238,9 +238,8 @@
                                 <i class="far fa-calendar-alt text-indigo-600 dark:text-indigo-400 text-sm ml-2"></i>
                             </button>
 
-                            <!-- Thai Calendar Popup (Style matching Image 2) -->
+                            <!-- Thai Calendar Popup -->
                             <div id="thaiCalendarPopup" class="hidden absolute left-0 mt-2 w-72 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl shadow-2xl p-4 z-50 modal-animate select-none">
-                                <!-- Calendar Header: Month (Thai) & Year (B.E.) -->
                                 <div class="flex items-center justify-between mb-3 pb-2 border-b border-slate-100 dark:border-slate-800">
                                     <button type="button" onclick="changeCalMonth(-1)" class="w-7 h-7 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-300 transition">
                                         <i class="fas fa-chevron-left text-xs"></i>
@@ -254,7 +253,6 @@
                                     </button>
                                 </div>
 
-                                <!-- Thai Weekday Headers -->
                                 <div class="grid grid-cols-7 text-center text-[11px] font-bold text-slate-500 dark:text-slate-400 mb-1.5">
                                     <div class="text-rose-500">อา</div>
                                     <div>จ</div>
@@ -265,10 +263,8 @@
                                     <div class="text-indigo-500">ส</div>
                                 </div>
 
-                                <!-- Calendar Days Grid -->
                                 <div id="calDaysGrid" class="grid grid-cols-7 gap-1 text-center text-xs font-semibold"></div>
 
-                                <!-- Quick Today Button -->
                                 <div class="mt-3 pt-2 border-t border-slate-100 dark:border-slate-800 flex justify-between items-center">
                                     <button type="button" onclick="selectTodayThaiCal()" class="text-[11px] font-bold text-indigo-600 dark:text-indigo-400 hover:underline">วันนี้</button>
                                     <button type="button" onclick="closeThaiCalendar()" class="text-[11px] font-medium text-slate-400 hover:text-slate-600">ปิด</button>
@@ -278,7 +274,7 @@
 
                         <div>
                             <label class="block text-xs font-bold mb-1.5 text-slate-700 dark:text-slate-300">ประเภทรายการ / การแทรก</label>
-                            <select id="gActionType" class="w-full border border-slate-300 dark:border-slate-700 rounded-2xl p-3 bg-slate-50 dark:bg-slate-950 focus:border-indigo-500 font-bold outline-none text-xs">
+                            <select id="gActionType" onchange="updateGeneralMethodOptions()" class="w-full border border-slate-300 dark:border-slate-700 rounded-2xl p-3 bg-slate-50 dark:bg-slate-950 focus:border-indigo-500 font-bold outline-none text-xs">
                                 <option value="in">รับเงินเข้า (+)</option>
                                 <option value="out">จ่ายออก (-)</option>
                                 <option value="transfer">สลับ/ย้ายเงิน / กดเงิน</option>
@@ -288,11 +284,11 @@
                     </div>
                     <div>
                         <label class="block text-xs font-bold mb-1.5 text-slate-700 dark:text-slate-300">รายละเอียดรายการ</label>
-                        <input type="text" id="gDesc" required placeholder="เช่น ยอดยกมา, ค่ากระจก, เบี้ยเลี้ยง..." class="w-full border border-slate-300 dark:border-slate-700 rounded-2xl p-3 bg-slate-50 dark:bg-slate-950 focus:border-indigo-500 outline-none text-xs">
+                        <input type="text" id="gDesc" required placeholder="เช่น ยอดยกมา, กดเงินสดใช้จ่าย, นำเงินสดเข้าบัญชี..." class="w-full border border-slate-300 dark:border-slate-700 rounded-2xl p-3 bg-slate-50 dark:bg-slate-950 focus:border-indigo-500 outline-none text-xs">
                     </div>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 bg-slate-50 dark:bg-slate-900/50 rounded-2xl border border-slate-200 dark:border-slate-800">
                         <div>
-                            <label class="block text-xs font-bold mb-1.5 text-slate-700 dark:text-slate-300">ช่องทางชำระ / รับเงิน</label>
+                            <label id="gMethodLabel" class="block text-xs font-bold mb-1.5 text-slate-700 dark:text-slate-300">ช่องทางชำระ / รับเงิน</label>
                             <select id="gMethod" class="w-full border border-slate-300 dark:border-slate-700 rounded-xl p-3 bg-white dark:bg-slate-950 font-bold outline-none text-xs">
                                 <option value="cash">เงินสด</option>
                                 <option value="acc">โอนผ่านบัญชี</option>
@@ -937,14 +933,42 @@
         }
 
         // --- General Ledger Functions ---
+        window.updateGeneralMethodOptions = function() {
+            const act = document.getElementById('gActionType').value;
+            const label = document.getElementById('gMethodLabel');
+            const select = document.getElementById('gMethod');
+            const currentVal = select.value;
+
+            if (act === 'transfer') {
+                label.innerHTML = '<i class="fas fa-exchange-alt text-indigo-600 mr-1"></i> รูปแบบการย้ายเงิน';
+                select.innerHTML = `
+                    <option value="acc_to_cash">ถอนจากบัญชี ➔ เป็นเงินสด (กดเงินสด)</option>
+                    <option value="cash_to_acc">ฝากเงินสด ➔ เข้าบัญชี (นำฝาก)</option>
+                `;
+                if (currentVal === 'acc_to_cash' || currentVal === 'cash_to_acc') {
+                    select.value = currentVal;
+                }
+            } else {
+                label.innerText = 'ช่องทางชำระ / รับเงิน';
+                select.innerHTML = `
+                    <option value="cash">เงินสด</option>
+                    <option value="acc">โอนผ่านบัญชี</option>
+                `;
+                if (currentVal === 'cash' || currentVal === 'acc') {
+                    select.value = currentVal;
+                }
+            }
+        }
+
         window.showGeneralSummary = function() { renderGeneralTable(); navigateTo('view-general-summary'); }
         window.showGeneralInput = function(editId = null) {
             document.getElementById('generalForm').reset();
             document.getElementById('gEditId').value = "";
-            setThaiDateValue(null); // ตั้งค่าเริ่มต้นเป็นวันที่ปัจจุบัน (พ.ศ.)
+            setThaiDateValue(null);
             document.getElementById('gFileBase64').value = "";
             document.getElementById('gFilePreview').classList.add('hidden');
             document.getElementById('gFilePreview').innerHTML = "";
+            updateGeneralMethodOptions();
 
             if(editId) {
                 const rec = appData.generalRecords.find(r => r.id == editId);
@@ -958,10 +982,43 @@
                         document.getElementById('gFilePreview').classList.remove('hidden');
                         document.getElementById('gFilePreview').innerHTML = `<span class="text-xs font-bold text-indigo-600"><i class="fas fa-check-circle mr-1"></i> มีไฟล์แนบเดิมในระบบแล้ว</span>`;
                     }
-                    if(parseFloat(rec.inCash) > 0) { document.getElementById('gActionType').value = 'in'; document.getElementById('gMethod').value = 'cash'; document.getElementById('gAmount').value = rec.inCash; }
-                    else if(parseFloat(rec.inAcc) > 0) { document.getElementById('gActionType').value = 'in'; document.getElementById('gMethod').value = 'acc'; document.getElementById('gAmount').value = rec.inAcc; }
-                    else if(parseFloat(rec.outCash) > 0) { document.getElementById('gActionType').value = 'out'; document.getElementById('gMethod').value = 'cash'; document.getElementById('gAmount').value = rec.outCash; }
-                    else if(parseFloat(rec.outAcc) > 0) { document.getElementById('gActionType').value = 'out'; document.getElementById('gMethod').value = 'acc'; document.getElementById('gAmount').value = rec.outAcc; }
+
+                    const inC = parseFloat(rec.inCash) || 0;
+                    const inA = parseFloat(rec.inAcc) || 0;
+                    const outC = parseFloat(rec.outCash) || 0;
+                    const outA = parseFloat(rec.outAcc) || 0;
+
+                    if (inC > 0 && outA > 0) {
+                        document.getElementById('gActionType').value = 'transfer';
+                        updateGeneralMethodOptions();
+                        document.getElementById('gMethod').value = 'acc_to_cash';
+                        document.getElementById('gAmount').value = inC;
+                    } else if (inA > 0 && outC > 0) {
+                        document.getElementById('gActionType').value = 'transfer';
+                        updateGeneralMethodOptions();
+                        document.getElementById('gMethod').value = 'cash_to_acc';
+                        document.getElementById('gAmount').value = inA;
+                    } else if (inC > 0) {
+                        document.getElementById('gActionType').value = 'in';
+                        updateGeneralMethodOptions();
+                        document.getElementById('gMethod').value = 'cash';
+                        document.getElementById('gAmount').value = inC;
+                    } else if (inA > 0) {
+                        document.getElementById('gActionType').value = 'in';
+                        updateGeneralMethodOptions();
+                        document.getElementById('gMethod').value = 'acc';
+                        document.getElementById('gAmount').value = inA;
+                    } else if (outC > 0) {
+                        document.getElementById('gActionType').value = 'out';
+                        updateGeneralMethodOptions();
+                        document.getElementById('gMethod').value = 'cash';
+                        document.getElementById('gAmount').value = outC;
+                    } else if (outA > 0) {
+                        document.getElementById('gActionType').value = 'out';
+                        updateGeneralMethodOptions();
+                        document.getElementById('gMethod').value = 'acc';
+                        document.getElementById('gAmount').value = outA;
+                    }
                 }
                 document.getElementById('generalFormTitle').innerHTML = `<i class="fas fa-edit text-indigo-600 mr-2"></i> แก้ไขรายการกองกลาง`;
             } else {
@@ -1041,6 +1098,11 @@
             const m = document.getElementById('gMethod').value;
             const attach = document.getElementById('gFileBase64').value || "";
             
+            if (amt <= 0) {
+                alert("กรุณาระบุจำนวนเงินที่มากกว่า 0 บาท");
+                return;
+            }
+
             let rec = {
                 id: editId || Date.now().toString(),
                 date: document.getElementById('gDate').value,
@@ -1050,9 +1112,21 @@
                 attachment: attach
             };
 
-            if(act === 'in' || act === 'carry') { if(m === 'cash') rec.inCash = amt; else rec.inAcc = amt; }
-            else if(act === 'out') { if(m === 'cash') rec.outCash = amt; else rec.outAcc = amt; }
-            else if(act === 'transfer') { rec.inCash = amt; rec.outAcc = amt; }
+            if(act === 'in' || act === 'carry') {
+                if(m === 'cash') rec.inCash = amt; else rec.inAcc = amt;
+            } else if(act === 'out') {
+                if(m === 'cash') rec.outCash = amt; else rec.outAcc = amt;
+            } else if(act === 'transfer') {
+                if(m === 'cash_to_acc') {
+                    // เอาเงินสดเข้าบัญชี: หักเงินสดออก (จ่ายสด) + เพิ่มเงินเข้าบัญชี (รับโอน)
+                    rec.outCash = amt;
+                    rec.inAcc = amt;
+                } else {
+                    // ถอนจากบัญชีเป็นเงินสด (acc_to_cash): หักเงินในบัญชีออก (จ่ายโอน) + เพิ่มเงินสด (รับสด)
+                    rec.outAcc = amt;
+                    rec.inCash = amt;
+                }
+            }
 
             if(editId) {
                 const idx = appData.generalRecords.findIndex(r => r.id == editId);
