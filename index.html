@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>ระบบบริหารจัดการบัญชีกองกลางและสนามยิงปืน | Executive Pro</title>
+    <meta name="app-version" content="4.0.0">
+    <meta name="theme-color" content="#131b2e">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -554,6 +559,194 @@
         }
 
         .cap table.ledger-table th, .cap table.ledger-table tfoot td { position: static !important; }
+
+        /* =====================================================================
+           Executive Pro v4 — ชั้นดีไซน์ใหม่ (เพิ่มต่อจากของเดิม ไม่ทับโครงสร้างเดิม)
+           ===================================================================== */
+        :root {
+            --v4-ink: #0f172a; --v4-muted: #64748b; --v4-line: #e2e8f0;
+            --v4-brand: #4f46e5; --v4-brand2: #7c3aed; --v4-gold: #f59e0b; --v4-ok: #10b981; --v4-bad: #f43f5e;
+            --v4-ease: cubic-bezier(.22, 1, .36, 1);
+        }
+        body { padding-bottom: 42px; background-image:
+            radial-gradient(900px 420px at 10% -10%, rgba(99,102,241,.10), transparent 60%),
+            radial-gradient(700px 380px at 95% 0%, rgba(245,158,11,.08), transparent 60%); background-attachment: fixed; }
+        .dark body, html.dark body { background-image:
+            radial-gradient(900px 420px at 10% -10%, rgba(99,102,241,.14), transparent 60%),
+            radial-gradient(700px 380px at 95% 0%, rgba(245,158,11,.07), transparent 60%); }
+
+        /* ปุ่ม: ริปเปิลเวลากด + ยกตัวเล็กน้อยเมื่อ hover */
+        button { position: relative; overflow: hidden; }
+        button:not(:disabled):active { transform: translateY(1px) scale(.985); }
+        .v4-ripple { position: absolute; border-radius: 9999px; background: currentColor; opacity: .18; transform: scale(0);
+            pointer-events: none; animation: v4ripple .6s var(--v4-ease) forwards; }
+        @keyframes v4ripple { to { transform: scale(1); opacity: 0; } }
+
+        /* การ์ด: ยกตัว + เส้นขอบเรืองแสง */
+        .hero-card, .widget-card, .kpi-card, .panel-card { transition: transform .35s var(--v4-ease), box-shadow .35s var(--v4-ease); }
+        .kpi-card:hover, .panel-card:hover { transform: translateY(-2px); }
+        .hero-card:hover { transform: translateY(-4px); }
+        @media (prefers-reduced-motion: reduce) { .hero-card:hover, .kpi-card:hover, .panel-card:hover { transform: none; } }
+
+        /* เปลี่ยนหน้าแบบนุ่ม */
+        .v4-view-in { animation: v4viewin .45s var(--v4-ease); }
+        @keyframes v4viewin { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+        /* แถบความคืบหน้าด้านบน */
+        #v4TopBar { position: fixed; top: 0; left: 0; height: 3px; width: 0; z-index: 400; pointer-events: none; opacity: 0;
+            background: linear-gradient(90deg, #6366f1, #a855f7, #f59e0b); box-shadow: 0 0 10px rgba(168,85,247,.6);
+            transition: width .4s var(--v4-ease), opacity .3s; }
+        #v4TopBar.on { opacity: 1; }
+
+        /* แถบสถานะด้านล่าง */
+        #v4StatusBar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 45; height: 34px; display: flex; align-items: center;
+            justify-content: space-between; gap: 10px; padding: 0 12px; font-size: 11px; font-weight: 600; color: #cbd5e1;
+            background: rgba(11,16,29,.92); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(255,255,255,.07); }
+        #v4StatusBar .grp { display: flex; align-items: center; gap: 12px; min-width: 0; }
+        #v4StatusBar .chip { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+        #v4StatusBar .dot { width: 8px; height: 8px; border-radius: 9999px; background: #34d399; box-shadow: 0 0 0 0 rgba(52,211,153,.6); }
+        #v4StatusBar .dot.ok { animation: v4pulse 2.2s infinite; }
+        #v4StatusBar .dot.busy { background: #fbbf24; animation: v4pulse2 1s infinite; }
+        #v4StatusBar .dot.bad { background: #fb7185; }
+        #v4StatusBar button { color: #e2e8f0; background: rgba(255,255,255,.08); border-radius: 9999px; padding: 3px 10px; font-weight: 700; }
+        #v4StatusBar button:hover { background: rgba(255,255,255,.16); }
+        @keyframes v4pulse { 0% { box-shadow: 0 0 0 0 rgba(52,211,153,.55); } 70% { box-shadow: 0 0 0 7px rgba(52,211,153,0); } 100% { box-shadow: 0 0 0 0 rgba(52,211,153,0); } }
+        @keyframes v4pulse2 { 0%,100% { opacity: 1; } 50% { opacity: .35; } }
+        @media (max-width: 640px) { #v4StatusBar .hide-sm { display: none; } }
+
+        /* ป๊อปอัพผลการดำเนินการ (กลางจอ) */
+        #v4PopupHost { position: fixed; inset: 0; z-index: 260; display: none; align-items: center; justify-content: center; padding: 16px; pointer-events: none; }
+        #v4PopupHost.on { display: flex; }
+        #v4PopupHost.block { pointer-events: auto; background: rgba(2,6,23,.55); backdrop-filter: blur(4px); }
+        .v4-pop { width: min(340px, 100%); border-radius: 26px; padding: 22px 20px 18px; text-align: center; pointer-events: auto;
+            background: #fff; color: var(--v4-ink); box-shadow: 0 30px 80px -20px rgba(2,6,23,.5), 0 0 0 1px rgba(226,232,240,.9);
+            animation: v4pop .5s var(--v4-ease); }
+        .dark .v4-pop { background: #0f172a; color: #f1f5f9; box-shadow: 0 30px 80px -20px rgba(0,0,0,.8), 0 0 0 1px rgba(51,65,85,.9); }
+        .v4-pop.out { animation: v4popout .28s ease forwards; }
+        @keyframes v4pop { from { opacity: 0; transform: translateY(18px) scale(.9); } to { opacity: 1; transform: none; } }
+        @keyframes v4popout { to { opacity: 0; transform: translateY(8px) scale(.96); } }
+        .v4-pop-ic { width: 62px; height: 62px; margin: 0 auto 10px; border-radius: 9999px; display: flex; align-items: center; justify-content: center; font-size: 26px; color: #fff; }
+        .v4-pop-ic.ok { background: linear-gradient(135deg, #10b981, #34d399); box-shadow: 0 10px 28px -8px rgba(16,185,129,.7); animation: v4tick .6s var(--v4-ease); }
+        .v4-pop-ic.bad { background: linear-gradient(135deg, #f43f5e, #fb7185); box-shadow: 0 10px 28px -8px rgba(244,63,94,.7); }
+        .v4-pop-ic.info { background: linear-gradient(135deg, #6366f1, #8b5cf6); box-shadow: 0 10px 28px -8px rgba(99,102,241,.7); }
+        .v4-pop-ic.warn { background: linear-gradient(135deg, #f59e0b, #fbbf24); box-shadow: 0 10px 28px -8px rgba(245,158,11,.7); }
+        @keyframes v4tick { 0% { transform: scale(.4) rotate(-20deg); } 60% { transform: scale(1.12); } 100% { transform: scale(1); } }
+        .v4-pop h4 { font-weight: 800; font-size: 15px; }
+        .v4-pop p { font-size: 12px; color: var(--v4-muted); margin-top: 4px; line-height: 1.5; }
+        .v4-pop .v4-pop-bar { height: 3px; border-radius: 9999px; margin-top: 14px; background: linear-gradient(90deg, #10b981, #34d399); transform-origin: left; animation: v4bar linear forwards; }
+        @keyframes v4bar { from { transform: scaleX(1); } to { transform: scaleX(0); } }
+        .v4-conf { position: fixed; top: 0; width: 8px; height: 12px; z-index: 270; pointer-events: none; opacity: .95; animation: v4fall linear forwards; }
+        @keyframes v4fall { to { transform: translate3d(var(--dx), 105vh, 0) rotate(var(--rot)); opacity: .9; } }
+
+        /* Sheet (หน้าต่างกลางจอแบบใหม่) */
+        .v4-sheet-bg { position: fixed; inset: 0; z-index: 180; display: flex; align-items: flex-end; justify-content: center; padding: 0;
+            background: rgba(2,6,23,.62); backdrop-filter: blur(6px); animation: v4fade .25s ease; }
+        @media (min-width: 640px) { .v4-sheet-bg { align-items: center; padding: 20px; } }
+        @keyframes v4fade { from { opacity: 0; } to { opacity: 1; } }
+        .v4-sheet { width: 100%; max-height: 94vh; display: flex; flex-direction: column; border-radius: 26px 26px 0 0; overflow: hidden;
+            background: #fff; color: var(--v4-ink); box-shadow: 0 40px 100px -30px rgba(2,6,23,.7); animation: v4sheet .45s var(--v4-ease); }
+        @media (min-width: 640px) { .v4-sheet { border-radius: 26px; max-height: 90vh; } }
+        .dark .v4-sheet { background: #0b1220; color: #e2e8f0; box-shadow: 0 40px 100px -30px #000, 0 0 0 1px rgba(51,65,85,.7); }
+        .v4-sheet.w-md { max-width: 520px; } .v4-sheet.w-lg { max-width: 760px; } .v4-sheet.w-xl { max-width: 1040px; }
+        @keyframes v4sheet { from { opacity: 0; transform: translateY(40px) scale(.97); } to { opacity: 1; transform: none; } }
+        .v4-sheet.out { animation: v4sheetout .22s ease forwards; }
+        @keyframes v4sheetout { to { opacity: 0; transform: translateY(24px) scale(.98); } }
+        .v4-sh-head { display: flex; align-items: center; gap: 12px; padding: 16px 18px; border-bottom: 1px solid var(--v4-line); }
+        .dark .v4-sh-head { border-color: #1e293b; }
+        .v4-sh-ic { width: 40px; height: 40px; border-radius: 14px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 16px; flex: none;
+            background: linear-gradient(135deg, var(--v4-brand), var(--v4-brand2)); box-shadow: 0 8px 18px -8px rgba(79,70,229,.7); }
+        .v4-sh-title { font-weight: 800; font-size: 15px; line-height: 1.2; } .v4-sh-sub { font-size: 11px; color: var(--v4-muted); margin-top: 2px; }
+        .v4-sh-x { margin-left: auto; width: 34px; height: 34px; border-radius: 12px; background: #f1f5f9; color: #475569; }
+        .dark .v4-sh-x { background: #1e293b; color: #cbd5e1; }
+        .v4-sh-body { padding: 16px 18px; overflow: auto; flex: 1; min-height: 0; }
+        .v4-sh-foot { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; align-items: center; padding: 12px 18px; border-top: 1px solid var(--v4-line); background: rgba(248,250,252,.8); }
+        .dark .v4-sh-foot { border-color: #1e293b; background: rgba(15,23,42,.6); }
+        .v4-btn { display: inline-flex; align-items: center; justify-content: center; gap: 7px; padding: 9px 16px; border-radius: 14px; font-size: 12px; font-weight: 800;
+            transition: transform .2s var(--v4-ease), box-shadow .2s, filter .2s; }
+        .v4-btn:hover:not(:disabled) { transform: translateY(-1px); filter: brightness(1.06); }
+        .v4-btn:disabled { opacity: .5; cursor: not-allowed; }
+        .v4-btn.primary { color: #fff; background: linear-gradient(135deg, var(--v4-brand), var(--v4-brand2)); box-shadow: 0 10px 22px -10px rgba(79,70,229,.8); }
+        .v4-btn.ok { color: #fff; background: linear-gradient(135deg, #059669, #10b981); box-shadow: 0 10px 22px -10px rgba(16,185,129,.8); }
+        .v4-btn.danger { color: #fff; background: linear-gradient(135deg, #e11d48, #f43f5e); box-shadow: 0 10px 22px -10px rgba(244,63,94,.8); }
+        .v4-btn.ghost { color: #334155; background: #f1f5f9; } .dark .v4-btn.ghost { color: #e2e8f0; background: #1e293b; }
+        .v4-btn.line { color: #334155; background: #fff; border: 1px solid #cbd5e1; } .dark .v4-btn.line { color: #e2e8f0; background: #0f172a; border-color: #334155; }
+        .v4-seg { display: inline-flex; padding: 3px; border-radius: 14px; background: #f1f5f9; gap: 2px; flex-wrap: wrap; }
+        .dark .v4-seg { background: #1e293b; }
+        .v4-seg button { padding: 7px 12px; border-radius: 11px; font-size: 11.5px; font-weight: 800; color: #64748b; transition: all .25s var(--v4-ease); }
+        .v4-seg button.on { background: #fff; color: var(--v4-brand); box-shadow: 0 4px 12px -4px rgba(15,23,42,.25); }
+        .dark .v4-seg button.on { background: #0f172a; color: #a5b4fc; }
+        .v4-field { width: 100%; border: 1px solid #cbd5e1; border-radius: 12px; padding: 9px 11px; font-size: 12px; font-weight: 600; background: #fff; outline: none; color: inherit; }
+        .dark .v4-field { background: #0f172a; border-color: #334155; }
+        .v4-field:focus { border-color: var(--v4-brand); box-shadow: 0 0 0 3px rgba(99,102,241,.2); }
+        .v4-card { border: 1px solid var(--v4-line); border-radius: 18px; padding: 14px; background: #fff; }
+        .dark .v4-card { border-color: #1e293b; background: #0f172a; }
+        .v4-tag { display: inline-flex; align-items: center; gap: 4px; padding: 2px 9px; border-radius: 9999px; font-size: 10.5px; font-weight: 800; }
+        .v4-tag.ok { background: #d1fae5; color: #047857; } .v4-tag.warn { background: #fef3c7; color: #b45309; }
+        .v4-tag.bad { background: #ffe4e6; color: #be123c; } .v4-tag.info { background: #e0e7ff; color: #4338ca; } .v4-tag.gray { background: #f1f5f9; color: #475569; }
+        .dark .v4-tag.ok { background: rgba(16,185,129,.18); color: #6ee7b7; } .dark .v4-tag.warn { background: rgba(245,158,11,.18); color: #fcd34d; }
+        .dark .v4-tag.bad { background: rgba(244,63,94,.18); color: #fda4af; } .dark .v4-tag.info { background: rgba(99,102,241,.2); color: #c7d2fe; } .dark .v4-tag.gray { background: #1e293b; color: #cbd5e1; }
+        .v4-table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 11.5px; }
+        .v4-table th { position: sticky; top: 0; background: #1e293b; color: #f1f5f9; padding: 8px 8px; font-weight: 800; text-align: center; white-space: nowrap; z-index: 1; }
+        .v4-table td { padding: 7px 8px; border-bottom: 1px solid #f1f5f9; text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+        .dark .v4-table td { border-color: #1e293b; }
+        .v4-table td.l { text-align: left; white-space: normal; } .v4-table td.c { text-align: center; }
+        .v4-table tr:hover td { background: rgba(99,102,241,.06); }
+        .v4-table tfoot td { font-weight: 800; background: #f8fafc; position: sticky; bottom: 0; } .dark .v4-table tfoot td { background: #111a2e; }
+
+        /* เอกสารตัวอย่างส่งออก (กระดาษ) */
+        .v4-paper { background: #fff; color: #0f172a; border-radius: 14px; box-shadow: 0 10px 30px -12px rgba(15,23,42,.35), 0 0 0 1px #e2e8f0; overflow: hidden; font-family: 'Prompt', sans-serif; }
+        .v4-paper .ph { padding: 16px 20px; color: #fff; background: linear-gradient(135deg, #16182c, #2b2a63); }
+        .v4-paper .ph h3 { font-size: 18px; font-weight: 800; } .v4-paper .ph p { font-size: 11px; opacity: .8; margin-top: 3px; }
+        .v4-paper .pk { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 8px; padding: 12px 16px; background: #f8fafc; border-bottom: 1px solid #e2e8f0; }
+        .v4-paper .pk div { background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 8px 10px; }
+        .v4-paper .pk small { display: block; font-size: 10px; color: #64748b; font-weight: 700; } .v4-paper .pk b { font-size: 14px; font-weight: 800; }
+        .v4-paper table { width: 100%; border-collapse: collapse; font-size: 11px; }
+        .v4-paper th { background: #1e293b; color: #fff; padding: 6px 7px; font-weight: 700; } .v4-paper td { padding: 5px 7px; border-bottom: 1px solid #eef2f7; text-align: right; }
+        .v4-paper td.l { text-align: left; } .v4-paper td.c { text-align: center; }
+        .v4-paper tfoot td { background: #f1f5f9; font-weight: 800; border-top: 2px solid #cbd5e1; }
+        .v4-paper h5 { font-weight: 800; font-size: 12.5px; padding: 12px 16px 6px; color: #334155; }
+        .v4-paper .pf { padding: 8px 16px 12px; font-size: 10px; color: #94a3b8; text-align: right; }
+        .v4-pos { color: #059669; } .v4-neg { color: #e11d48; }
+        .v4-prev-wrap { background: repeating-linear-gradient(45deg, #f1f5f9, #f1f5f9 10px, #e9eef5 10px, #e9eef5 20px); border-radius: 16px; padding: 14px; overflow: auto; max-height: 52vh; }
+        .dark .v4-prev-wrap { background: repeating-linear-gradient(45deg, #0f172a, #0f172a 10px, #111c33 10px, #111c33 20px); }
+
+        /* ฟอร์มล็อกอิน: จดจำ + สแกน */
+        .v4-remember { display: flex; align-items: center; gap: 8px; margin-top: 10px; font-size: 11.5px; font-weight: 700; color: #475569; cursor: pointer; user-select: none; }
+        .dark .v4-remember { color: #cbd5e1; }
+        .v4-switch { position: relative; width: 38px; height: 22px; border-radius: 9999px; background: #cbd5e1; transition: background .25s; flex: none; }
+        .v4-switch::after { content: ''; position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; border-radius: 9999px; background: #fff; transition: transform .25s var(--v4-ease); box-shadow: 0 2px 6px rgba(0,0,0,.25); }
+        input:checked + .v4-switch, .v4-switch.on { background: linear-gradient(135deg, #6366f1, #8b5cf6); }
+        input:checked + .v4-switch::after, .v4-switch.on::after { transform: translateX(16px); }
+        #v4BioGate { position: fixed; inset: 0; z-index: 330; display: none; align-items: center; justify-content: center; padding: 18px; text-align: center; color: #fff;
+            background: radial-gradient(800px 500px at 50% 0%, rgba(99,102,241,.35), transparent 60%), #070b14; }
+        #v4BioGate.on { display: flex; animation: v4fade .3s; }
+        .v4-bio-ring { width: 108px; height: 108px; border-radius: 9999px; margin: 0 auto 18px; display: flex; align-items: center; justify-content: center; font-size: 46px; color: #c7d2fe;
+            background: radial-gradient(circle, rgba(99,102,241,.25), rgba(99,102,241,.05)); box-shadow: 0 0 0 1px rgba(165,180,252,.35), 0 0 60px rgba(99,102,241,.45); animation: v4breath 2.4s ease-in-out infinite; }
+        @keyframes v4breath { 0%,100% { transform: scale(1); } 50% { transform: scale(1.06); } }
+
+        /* หน้าต่างบังคับอัปเดต */
+        #v4Update { position: fixed; inset: 0; z-index: 350; display: none; align-items: center; justify-content: center; padding: 18px; background: rgba(2,6,23,.82); backdrop-filter: blur(8px); }
+        #v4Update.on { display: flex; animation: v4fade .3s; }
+
+        /* ปุ่มลอยใหม่บนหน้าหลัก */
+        .v4-quick { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+        .v4-quick button { padding: 8px 14px; border-radius: 14px; font-size: 11.5px; font-weight: 800; background: #fff; border: 1px solid #e2e8f0; color: #334155;
+            box-shadow: 0 6px 16px -10px rgba(15,23,42,.35); transition: transform .25s var(--v4-ease), box-shadow .25s; }
+        .dark .v4-quick button { background: #0f172a; border-color: #1e293b; color: #e2e8f0; }
+        .v4-quick button:hover { transform: translateY(-2px); box-shadow: 0 12px 24px -12px rgba(79,70,229,.5); }
+        .v4-quick button i { margin-right: 6px; }
+        .v4-mini-btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 8px 12px; border-radius: 12px; font-size: 11.5px; font-weight: 800; border: 1px solid #e2e8f0; background: #fff; color: #334155; }
+        .dark .v4-mini-btn { background: #0f172a; border-color: #334155; color: #e2e8f0; }
+        .v4-mini-btn:hover { box-shadow: 0 8px 18px -10px rgba(79,70,229,.6); transform: translateY(-1px); }
+        .v4-mini-btn.brand { background: linear-gradient(135deg, #4f46e5, #7c3aed); color: #fff; border-color: transparent; }
+        .v4-mini-btn.emerald { background: linear-gradient(135deg, #059669, #10b981); color: #fff; border-color: transparent; }
+        .v4-badge-dot { position: absolute; top: -4px; right: -4px; min-width: 18px; height: 18px; border-radius: 9999px; background: #f43f5e; color: #fff; font-size: 10px; font-weight: 800; display: none; align-items: center; justify-content: center; padding: 0 5px; }
+        .v4-badge-dot.on { display: inline-flex; animation: v4pop .4s var(--v4-ease); }
+        .v4-move { display: inline-flex; flex-direction: column; gap: 1px; margin-right: 4px; }
+        .v4-move button { width: 20px; height: 14px; line-height: 1; font-size: 8px; border-radius: 5px; background: #f1f5f9; color: #475569; }
+        .dark .v4-move button { background: #1e293b; color: #cbd5e1; } .v4-move button:hover { background: #e0e7ff; color: #4338ca; }
+        @media print { #v4StatusBar, #v4TopBar, #v4PopupHost, .v4-sheet-bg, #v4Update, #v4BioGate, .v4-quick { display: none !important; } body { padding-bottom: 0 !important; } }
     </style>
 </head>
 <body class="min-h-screen flex flex-col bg-[#f3f5f9] text-slate-800 dark:bg-[#090d16] dark:text-slate-100 selection:bg-indigo-500 selection:text-white">
@@ -2748,6 +2941,7 @@
             const isG = type === 'general';
             const a = jsArg(id);
             return `<div class="act-group">
+                    ${isG ? '' : window.V4.moveBtns(id)}
                     <button type="button" class="act-btn edit ${isG ? '' : 'em'}" onclick="${isG ? 'showGeneralInput' : 'showShootingInput'}('${a}')" title="แก้ไขรายการ" aria-label="แก้ไขรายการ"><i class="fas fa-pen"></i></button>
                     <span class="act-sep"></span>
                     <button type="button" class="act-btn copy" onclick="duplicateRecord('${type}','${a}')" title="คัดลอกเป็นรายการใหม่" aria-label="คัดลอกรายการ"><i class="far fa-copy"></i></button>
@@ -3225,6 +3419,8 @@
                 const mOrderA = monthOrderMap[a.month] !== undefined ? monthOrderMap[a.month] : 99;
                 const mOrderB = monthOrderMap[b.month] !== undefined ? monthOrderMap[b.month] : 99;
                 if (mOrderA !== mOrderB) return mOrderA - mOrderB;
+                const seqA = (a.seq === undefined || a.seq === null) ? 1e9 : Number(a.seq), seqB = (b.seq === undefined || b.seq === null) ? 1e9 : Number(b.seq);
+                if (seqA !== seqB) return seqA - seqB;
                 return String(a.id).localeCompare(String(b.id), undefined, { numeric: true });
             });
 
@@ -3331,7 +3527,8 @@
                         <th class="border-r border-slate-700/70 bg-emerald-900/40 text-emerald-200">รายรับพิเศษ/ยกยอด</th>
                         <th class="border-r border-slate-700/70 bg-rose-950/70 text-rose-200">รายจ่าย (-)</th>
                         <th class="border-r border-slate-700/70 bg-slate-700 text-sky-200">สุทธิประจำงวด</th>
-                        <th class="bg-slate-900 text-amber-300 font-bold rounded-tr-xl">คงเหลือสุทธิ</th>
+                        <th class="bg-slate-900 text-amber-300 font-bold">คงเหลือสุทธิ</th>
+                        <th class="no-print-capture bg-slate-800 w-24 rounded-tr-xl">จัดการ</th>
                     </tr>`;
 
                 tbody.innerHTML = groups.length ? groups.map(g => {
@@ -3347,8 +3544,9 @@
                             <td class="${bd} font-bold text-rose-500 dark:text-rose-400">${g.specOut ? '-' + fmt(g.specOut) : '-'}</td>
                             <td class="${bd} font-bold ${net < 0 ? 'text-rose-600 dark:text-rose-400' : 'text-sky-700 dark:text-sky-300'}">${fmtSigned(net)}</td>
                             <td class="font-extrabold ${g.endBal < 0 ? 'text-rose-600 dark:text-rose-400' : 'text-amber-600 dark:text-amber-400'} bg-amber-50/30 dark:bg-slate-800/30">${fmt(g.endBal)}</td>
+                            <td class="no-print-capture"><button type="button" onclick="V4.openMonthManager('${jsArg(g.key)}')" class="v4-mini-btn !px-2.5 !py-1.5" title="แก้ไข / เลื่อนลำดับ / เพิ่ม / ลบ รายการของเดือนนี้"><i class="fas fa-sliders"></i> จัดการ</button></td>
                         </tr>`;
-                }).join('') : emptyRow(8, 'shooting');
+                }).join('') : emptyRow(9, 'shooting');
 
                 tfoot.innerHTML = `
                     <tr>
@@ -3359,6 +3557,7 @@
                         <td class="text-rose-600 dark:text-rose-400 font-black ${bf}">-${fmt(sumSpecialOut)}</td>
                         <td class="font-black ${bf} ${periodNet < 0 ? 'text-rose-600 dark:text-rose-400' : 'text-sky-700 dark:text-sky-300'}">${fmtSigned(periodNet)}</td>
                         <td class="text-amber-600 dark:text-amber-400 font-black bg-amber-50/50 dark:bg-slate-800/50">${fmt(lastRunBal)}</td>
+                        <td class="no-print-capture"></td>
                     </tr>`;
                 return;
             }
@@ -3474,6 +3673,7 @@
             const idx = editId ? appData.shootingRecords.findIndex(r => String(r.id) === String(editId)) : -1;
             if (idx > -1) {
                 if (!rec.attachment && !removeAttach) rec.attachment = appData.shootingRecords[idx].attachment || "";
+                ['seq', 'src', 'ldSnap'].forEach(k => { if (appData.shootingRecords[idx][k] !== undefined) rec[k] = appData.shootingRecords[idx][k]; });
                 appData.shootingRecords[idx] = rec;
             } else {
                 appData.shootingRecords.push(rec);
@@ -5004,6 +5204,1238 @@
         if (session && session.role === 'staff') { navigationHistory = ['view-field']; initFieldView(); navigateTo('view-field'); }
         else if (session) { updateRangeMenuInfo(); }
     }
+    </script>
+    <script>
+/* ===== Executive Pro v4 layer ===== */
+(function () {
+    /* ==========================================================================
+       Executive Pro v4 — ชั้นเสริมใหม่ (ส่วน A: แกนหลัก / ป๊อปอัพ / แถบสถานะ / ตรวจอัปเดต)
+       ========================================================================== */
+    const V4 = window.V4 = { version: "4.0.0", sec: null };
+    const q = (sel, root) => (root || document).querySelector(sel);
+    const esc = v => escapeHtml(v);
+    const money = n => (Number(n) || 0).toLocaleString('th-TH', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    const moneyS = n => { const v = Number(n) || 0; return (v > 0 ? '+' : '') + money(v); };
+    const int0 = n => (Number(n) || 0).toLocaleString('th-TH', { maximumFractionDigits: 2 });
+    V4.money = money; V4.moneyS = moneyS; V4.int0 = int0;
+
+    function lsJ(k, d) { try { const v = JSON.parse(localStorage.getItem(k)); return v === null || v === undefined ? d : v; } catch (e) { return d; } }
+    function lsS(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { } }
+    V4.lsJ = lsJ; V4.lsS = lsS;
+
+    /* ----------------------------- Sheet (หน้าต่างแบบใหม่) ----------------------------- */
+    V4.sheet = function (o) {
+        const bg = document.createElement('div');
+        bg.className = 'v4-sheet-bg';
+        if (o.id) bg.id = o.id;
+        bg.innerHTML = `<div class="v4-sheet ${o.size || 'w-lg'}" role="dialog" aria-modal="true">
+            <div class="v4-sh-head">
+                <div class="v4-sh-ic" style="${o.iconBg ? 'background:' + o.iconBg : ''}"><i class="fas ${o.icon || 'fa-layer-group'}"></i></div>
+                <div class="min-w-0"><div class="v4-sh-title">${esc(o.title || '')}</div>${o.sub ? `<div class="v4-sh-sub">${esc(o.sub)}</div>` : ''}</div>
+                ${o.noClose ? '' : '<button type="button" class="v4-sh-x" data-x aria-label="ปิด"><i class="fas fa-xmark"></i></button>'}
+            </div>
+            <div class="v4-sh-body">${o.body || ''}</div>
+            ${o.foot === false ? '' : `<div class="v4-sh-foot">${o.foot || ''}</div>`}
+        </div>`;
+        document.body.appendChild(bg);
+        const box = bg.firstElementChild;
+        let closed = false;
+        const api = {
+            el: bg, box, body: q('.v4-sh-body', bg), foot: q('.v4-sh-foot', bg),
+            close(result) {
+                if (closed) return; closed = true;
+                box.classList.add('out'); bg.style.opacity = '0'; bg.style.transition = 'opacity .22s';
+                setTimeout(() => bg.remove(), 230);
+                if (o.onClose) o.onClose(result);
+            },
+            q: s => q(s, bg), qa: s => Array.from(bg.querySelectorAll(s))
+        };
+        bg.addEventListener('click', e => { if (e.target === bg && !o.noBackdropClose && !o.noClose) api.close(); });
+        const x = q('[data-x]', bg); if (x) x.onclick = () => api.close();
+        bg.addEventListener('keydown', e => { if (e.key === 'Escape' && !o.noClose) { e.stopPropagation(); api.close(); } });
+        return api;
+    };
+
+    /* ----------------------------- ป๊อปอัพผลการดำเนินการ ----------------------------- */
+    let popHost = null, popTimer = null;
+    function ensurePopHost() {
+        if (popHost) return popHost;
+        popHost = document.createElement('div'); popHost.id = 'v4PopupHost'; document.body.appendChild(popHost);
+        return popHost;
+    }
+    function confetti() {
+        if (prefersReducedMotion) return;
+        const cols = ['#6366f1', '#a855f7', '#f59e0b', '#10b981', '#f43f5e', '#38bdf8'];
+        for (let i = 0; i < 26; i++) {
+            const c = document.createElement('i'); c.className = 'v4-conf';
+            c.style.left = (35 + Math.random() * 30) + 'vw'; c.style.top = '28vh';
+            c.style.background = cols[i % cols.length]; c.style.borderRadius = Math.random() > .5 ? '50%' : '2px';
+            c.style.setProperty('--dx', ((Math.random() - .5) * 360) + 'px'); c.style.setProperty('--rot', (Math.random() * 720) + 'deg');
+            c.style.animationDuration = (1.1 + Math.random() * .9) + 's';
+            document.body.appendChild(c); setTimeout(() => c.remove(), 2200);
+        }
+    }
+    V4.popup = function (o) {
+        const host = ensurePopHost();
+        clearTimeout(popTimer);
+        const type = o.type || 'ok';
+        const icon = { ok: 'fa-check', bad: 'fa-xmark', info: 'fa-info', warn: 'fa-exclamation' }[type] || 'fa-check';
+        const block = !!o.block;
+        const dur = o.duration || 1900;
+        host.className = 'on' + (block ? ' block' : '');
+        host.innerHTML = `<div class="v4-pop" role="alertdialog">
+            <div class="v4-pop-ic ${type}"><i class="fas ${icon}"></i></div>
+            <h4>${esc(o.title || '')}</h4>${o.msg ? `<p>${esc(o.msg)}</p>` : ''}
+            ${o.html ? `<div class="mt-2 text-left text-[11.5px]">${o.html}</div>` : ''}
+            ${block ? `<button type="button" class="v4-btn ${type === 'bad' ? 'danger' : 'primary'} mt-3 w-full" data-ok>ตกลง</button>` : `<div class="v4-pop-bar" style="animation-duration:${dur}ms;${type === 'bad' ? 'background:#f43f5e' : ''}"></div>`}
+        </div>`;
+        const card = host.firstElementChild;
+        const hide = () => { clearTimeout(popTimer); card.classList.add('out'); setTimeout(() => { host.className = ''; host.innerHTML = ''; }, 260); };
+        const ok = q('[data-ok]', host); if (ok) ok.onclick = hide;
+        if (!block) { card.onclick = hide; popTimer = setTimeout(hide, dur); }
+        else host.onclick = e => { if (e.target === host) hide(); };
+        if (type === 'ok' && o.confetti) confetti();
+        return hide;
+    };
+
+    // ให้ toast สำเร็จ/ผิดพลาด แสดงเป็นป๊อปอัพกลางจอด้วย (toast ที่มีปุ่มกด เช่น "เรียกคืน" ยังแสดงเหมือนเดิม)
+    const _showToast = window.showToast;
+    let lastErrAt = 0;
+    window.showToast = function (type, title, msg, opts) {
+        opts = opts || {};
+        const quiet = /รีเฟรช|ซิงก์/.test(String(title || ''));
+        if (type === 'success' && !opts.action && !opts.noPopup && !quiet) {
+            V4.popup({ type: 'ok', title, msg, confetti: /นำเข้า|ส่งออก|สำเร็จ/.test(String(title)) && /นำเข้า|ส่งออก/.test(String(title)) });
+            return;
+        }
+        if (type === 'error' && !opts.noPopup && Date.now() - lastErrAt > 1200 && String(msg || '').length) {
+            lastErrAt = Date.now(); V4.popup({ type: 'bad', title, msg, block: true });
+            return;
+        }
+        return _showToast(type, title, msg, opts);
+    };
+
+    /* ----------------------------- แถบความคืบหน้า + แถบสถานะล่าง ----------------------------- */
+    const st = V4.state = { net: navigator.onLine, sync: 'idle', busyText: '', lastSync: null, syncError: false };
+    let topBar, bar;
+    function buildBars() {
+        topBar = document.createElement('div'); topBar.id = 'v4TopBar'; document.body.appendChild(topBar);
+        bar = document.createElement('div'); bar.id = 'v4StatusBar';
+        bar.innerHTML = `
+            <div class="grp">
+                <span class="chip" id="v4sSync"><span class="dot ok" id="v4sDot"></span><span id="v4sSyncTxt">พร้อมใช้งาน</span></span>
+                <span class="chip hide-sm" id="v4sNet"><i class="fas fa-wifi" style="color:#34d399"></i> ออนไลน์</span>
+                <span class="chip hide-sm" id="v4sPend" style="display:none"><i class="fas fa-hourglass-half" style="color:#fbbf24"></i><span></span></span>
+            </div>
+            <div class="grp">
+                <button type="button" class="chip" id="v4sRole" title="ความปลอดภัยการเข้าสู่ระบบ"><i class="fas fa-user-lock"></i><span>ผู้เยี่ยมชม</span></button>
+                <span class="chip hide-sm" id="v4sLast"><i class="far fa-clock" style="color:#fbbf24"></i><span>-</span></span>
+                <button type="button" class="chip" id="v4sVer" title="ตรวจสอบการอัปเดต"><i class="fas fa-rotate"></i><span>v${esc(V4.version)}</span></button>
+            </div>`;
+        document.body.appendChild(bar);
+        q('#v4sRole', bar).onclick = () => V4.openSecurity && V4.openSecurity();
+        q('#v4sVer', bar).onclick = () => V4.checkUpdate && V4.checkUpdate(true);
+    }
+    function paintBar() {
+        if (!bar) return;
+        const dot = q('#v4sDot', bar), txt = q('#v4sSyncTxt', bar);
+        let cls = 'ok', t = 'ซิงก์คลาวด์ปกติ';
+        if (!st.net) { cls = 'bad'; t = 'ออฟไลน์ — ข้อมูลจะส่งเมื่อกลับมาออนไลน์'; }
+        else if (st.sync === 'saving') { cls = 'busy'; t = st.busyText || 'กำลังบันทึก...'; }
+        else if (st.sync === 'syncing') { cls = 'busy'; t = 'กำลังซิงก์ข้อมูล...'; }
+        else if (st.syncError) { cls = 'bad'; t = 'เชื่อมต่อคลาวด์ไม่ได้'; }
+        dot.className = 'dot ' + cls; txt.textContent = t;
+        q('#v4sNet', bar).innerHTML = st.net ? '<i class="fas fa-wifi" style="color:#34d399"></i> ออนไลน์' : '<i class="fas fa-wifi-slash" style="color:#fb7185"></i> ออฟไลน์';
+        const role = typeof session !== 'undefined' && session ? session.role : 'guest';
+        q('#v4sRole', bar).innerHTML = role === 'admin' ? '<i class="fas fa-user-tie" style="color:#fbbf24"></i><span>ผู้ดูแลระบบ</span>' : role === 'staff' ? '<i class="fas fa-user-shield" style="color:#34d399"></i><span>เจ้าหน้าที่สนาม</span>' : '<i class="fas fa-user-lock"></i><span>ยังไม่เข้าสู่ระบบ</span>';
+        const pend = typeof pendingOrders !== 'undefined' ? pendingOrders.length : 0;
+        const pe = q('#v4sPend', bar); pe.style.display = pend ? 'inline-flex' : 'none'; if (pend) pe.lastElementChild.textContent = `รอส่ง ${pend} รายการ`;
+        if (st.lastSync) q('#v4sLast span', bar).textContent = 'ซิงก์ล่าสุด ' + st.lastSync;
+    }
+    V4.paintBar = paintBar;
+    function topProgress(on) {
+        if (!topBar) return;
+        clearInterval(topProgress.t);
+        if (on) {
+            topBar.classList.add('on'); let w = 8; topBar.style.width = w + '%';
+            topProgress.t = setInterval(() => { w += (92 - w) * .08; topBar.style.width = w + '%'; }, 280);
+        } else { topBar.style.width = '100%'; setTimeout(() => { topBar.classList.remove('on'); topBar.style.width = '0'; }, 350); }
+    }
+    function stamp() { const d = new Date(); return `${d.getDate()} ${thMonths[d.getMonth()]} ${String(d.getFullYear() + 543).slice(-2)} ${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`; }
+
+    const _setSaving = window.setSaving;
+    window.setSaving = function (on, text) {
+        _setSaving(on, text);
+        st.sync = on ? 'saving' : 'idle'; st.busyText = on ? (text || 'กำลังบันทึก...') : '';
+        if (!on) st.lastSync = stamp();
+        topProgress(!!on); paintBar();
+    };
+    const _sync = window.syncWithCloud;
+    window.syncWithCloud = async function (isUI) {
+        st.sync = 'syncing'; paintBar(); topProgress(true);
+        try { await _sync(isUI); } finally {
+            const el = document.getElementById('syncStatusUI');
+            st.syncError = !!(el && /ออฟไลน์/.test(el.textContent));
+            st.sync = 'idle'; if (!st.syncError) st.lastSync = stamp();
+            topProgress(false); paintBar();
+            if (V4.afterSync) V4.afterSync();
+        }
+    };
+    window.addEventListener('online', () => { st.net = true; paintBar(); showToast('info', 'กลับมาออนไลน์แล้ว', 'กำลังซิงก์ข้อมูลล่าสุด', { noPopup: true }); syncWithCloud(false); });
+    window.addEventListener('offline', () => { st.net = false; paintBar(); showToast('warning', 'ออฟไลน์', 'ยังบันทึกรายการขายได้ ระบบจะส่งให้เมื่อกลับมาออนไลน์'); });
+    setInterval(paintBar, 2000);
+
+    /* ----------------------------- ริปเปิลปุ่ม + เปลี่ยนหน้าแบบนุ่ม ----------------------------- */
+    document.addEventListener('pointerdown', e => {
+        const b = e.target.closest && e.target.closest('button, .v4-btn');
+        if (!b || b.disabled || prefersReducedMotion) return;
+        const r = b.getBoundingClientRect(), s = Math.max(r.width, r.height) * 2;
+        const d = document.createElement('span'); d.className = 'v4-ripple';
+        d.style.cssText = `width:${s}px;height:${s}px;left:${e.clientX - r.left - s / 2}px;top:${e.clientY - r.top - s / 2}px`;
+        b.appendChild(d); setTimeout(() => d.remove(), 650);
+    }, { passive: true });
+    const _nav = window.navigateTo;
+    window.navigateTo = function (id) {
+        _nav(id);
+        const el = document.getElementById(id);
+        if (el && !prefersReducedMotion) { el.classList.remove('v4-view-in'); void el.offsetWidth; el.classList.add('v4-view-in'); }
+    };
+
+    /* ----------------------------- แจ้งเตือนอัปเดต + บังคับรีเฟรช ----------------------------- */
+    const WHATS_NEW = [
+        ['fa-wand-magic-sparkles', 'หน้าตาใหม่ ทันสมัยขึ้น', 'การ์ดเคลื่อนไหวนุ่มนวล ปุ่มมีเอฟเฟกต์ แถบสถานะด้านล่างบอกสถานะซิงก์/ออนไลน์/รอส่ง'],
+        ['fa-eye', 'ตัวอย่างก่อนส่งออกทุกครั้ง', 'ศูนย์ส่งออก PNG / PDF / Excel / CSV พร้อมรายงานสรุปผลรวม'],
+        ['fa-file-import', 'นำเข้าข้อมูลจากไฟล์ Excel', 'สรุปบัญชีสนามยิงปืน 2569 และบัญชีกองกลาง พร้อมตัวอย่างก่อนลงข้อมูล'],
+        ['fa-calendar-days', 'สรุปรายเดือนสนามยิงปืน', 'แก้ไข เลื่อนลำดับได้ และดึงต่อจากรายการสนามยิงปืนอัตโนมัติ'],
+        ['fa-fingerprint', 'จดจำการเข้าสู่ระบบ + สแกนนิ้ว/ใบหน้า', 'ตั้งค่าได้ที่แถบสถานะด้านล่าง (ปุ่มบทบาท)']
+    ];
+    let updShown = false;
+    function showForcedUpdate(newVer) {
+        if (updShown) return; updShown = true;
+        let el = document.getElementById('v4Update');
+        if (!el) { el = document.createElement('div'); el.id = 'v4Update'; document.body.appendChild(el); }
+        el.innerHTML = `<div class="v4-pop" style="width:min(380px,100%)">
+            <div class="v4-pop-ic info"><i class="fas fa-cloud-arrow-down"></i></div>
+            <h4>มีเวอร์ชันใหม่พร้อมใช้งาน</h4>
+            <p>เวอร์ชัน ${esc(newVer || '')} (ปัจจุบัน ${esc(V4.version)}) — ต้องรีเฟรชเพื่อใช้งานต่อ ข้อมูลที่บันทึกแล้วจะไม่หาย รายการที่ยังรอส่งยังคงอยู่ในเครื่อง</p>
+            <button type="button" class="v4-btn primary mt-4 w-full" id="v4UpdGo"><i class="fas fa-rotate"></i> อัปเดตและรีเฟรชตอนนี้</button>
+            <p class="mt-2" style="font-size:10.5px">หากไม่ได้ผล ให้ปิดแอปแล้วเปิดใหม่อีกครั้ง</p>
+        </div>`;
+        el.classList.add('on');
+        q('#v4UpdGo', el).onclick = async () => {
+            q('#v4UpdGo', el).innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> กำลังอัปเดต...';
+            try { if (window.caches) { const ks = await caches.keys(); await Promise.all(ks.map(k => caches.delete(k))); } } catch (e) { }
+            try { if (navigator.serviceWorker) { const rs = await navigator.serviceWorker.getRegistrations(); await Promise.all(rs.map(r => r.unregister())); } } catch (e) { }
+            lsS('execpro_v4_seen_ver', V4.version);
+            const u = new URL(location.href); u.searchParams.set('_v', String(newVer || Date.now())); u.hash = '';
+            location.replace(u.toString());
+        };
+    }
+    V4.checkUpdate = async function (manual) {
+        if (!/^https?:/.test(location.protocol)) { if (manual) V4.popup({ type: 'info', title: 'ตรวจอัปเดตไม่ได้', msg: 'เปิดไฟล์จากเครื่องโดยตรง (file://) — ระบบตรวจอัปเดตทำงานเมื่อเปิดผ่านเว็บไซต์' }); return; }
+        try {
+            const u = new URL(location.href); u.hash = ''; u.searchParams.set('_chk', Date.now());
+            const r = await fetch(u.toString(), { cache: 'no-store' });
+            if (!r.ok) throw new Error('HTTP ' + r.status);
+            const t = await r.text();
+            const m = /<meta\s+name=["']app-version["']\s+content=["']([^"']+)["']/i.exec(t);
+            const remote = m && m[1];
+            if (remote && remote !== V4.version) { showForcedUpdate(remote); return; }
+            if (manual) V4.popup({ type: 'ok', title: 'เป็นเวอร์ชันล่าสุดแล้ว', msg: 'เวอร์ชัน ' + V4.version });
+        } catch (e) { if (manual) V4.popup({ type: 'warn', title: 'ตรวจอัปเดตไม่สำเร็จ', msg: 'ตรวจสอบอินเทอร์เน็ตแล้วลองใหม่' }); }
+    };
+    function whatsNewOnce() {
+        const seen = lsJ('execpro_v4_seen_ver', null);
+        lsS('execpro_v4_seen_ver', V4.version);
+        if (seen === V4.version) return;
+        if (seen === null && !lsJ('execpro_v4_boot', false)) { lsS('execpro_v4_boot', true); }
+        const sh = V4.sheet({
+            title: 'ยินดีต้อนรับสู่ Executive Pro v' + V4.version, sub: 'สิ่งที่ใหม่ในเวอร์ชันนี้', icon: 'fa-gift', size: 'w-md',
+            body: `<div class="space-y-2.5">${WHATS_NEW.map(w => `<div class="flex gap-3 items-start"><div class="v4-sh-ic" style="width:34px;height:34px;font-size:13px;border-radius:12px"><i class="fas ${w[0]}"></i></div><div><div class="font-extrabold text-[12.5px]">${esc(w[1])}</div><div class="text-[11px] text-slate-500 dark:text-slate-400">${esc(w[2])}</div></div></div>`).join('')}</div>`,
+            foot: '<button type="button" class="v4-btn primary" data-go>เริ่มใช้งาน</button>'
+        });
+        q('[data-go]', sh.el).onclick = () => sh.close();
+    }
+    V4.whatsNew = whatsNewOnce;
+    setInterval(() => V4.checkUpdate(false), 4 * 60 * 1000);
+    document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') V4.checkUpdate(false); });
+
+    V4.initCore = function () {
+        buildBars(); paintBar();
+        setTimeout(() => V4.checkUpdate(false), 2500);
+        setTimeout(whatsNewOnce, 900);
+    };
+    V4.q = q; V4.esc = esc; V4.stamp = stamp;
+})();
+
+(function () {
+    /* ==========================================================================
+       ส่วน B: จดจำการเข้าสู่ระบบ / สแกนใบหน้า-ลายนิ้วมือ (WebAuthn) / ล็อกอัตโนมัติเมื่อไม่ใช้งาน
+       ========================================================================== */
+    const V4 = window.V4, q = V4.q, esc = V4.esc;
+    const REM_KEY = 'execpro_v4_remember', SEC_KEY = 'execpro_v4_sec';
+    const sec = V4.sec = Object.assign({ remember: true, bio: false, bioDeclined: false, lockMin: 0 }, V4.lsJ(SEC_KEY, {}));
+    const saveSec = () => V4.lsS(SEC_KEY, sec);
+    let restoring = false, lastActive = Date.now();
+
+    /* ---------- ห้องนิรภัยในเครื่อง: เข้ารหัส PIN ด้วย AES-GCM (กุญแจเก็บใน IndexedDB แบบไม่ส่งออกได้) ---------- */
+    const b64 = buf => btoa(String.fromCharCode.apply(null, new Uint8Array(buf)));
+    const unb64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+    const hasCrypto = !!(window.crypto && crypto.subtle && window.indexedDB);
+    function idbOpen() { return new Promise((res, rej) => { const r = indexedDB.open('execpro_v4', 1); r.onupgradeneeded = () => r.result.createObjectStore('k'); r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error); }); }
+    async function vaultKey(create) {
+        const db = await idbOpen();
+        const got = await new Promise(res => { const t = db.transaction('k').objectStore('k').get('main'); t.onsuccess = () => res(t.result || null); t.onerror = () => res(null); });
+        if (got || !create) return got;
+        const k = await crypto.subtle.generateKey({ name: 'AES-GCM', length: 256 }, false, ['encrypt', 'decrypt']);
+        await new Promise(res => { const tx = db.transaction('k', 'readwrite'); tx.objectStore('k').put(k, 'main'); tx.oncomplete = res; tx.onerror = res; });
+        return k;
+    }
+    async function encPin(pin) {
+        if (!hasCrypto) return 'b64:' + btoa(unescape(encodeURIComponent(pin)));
+        const k = await vaultKey(true), iv = crypto.getRandomValues(new Uint8Array(12));
+        const ct = await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, k, new TextEncoder().encode(pin));
+        return 'gcm:' + b64(iv) + ':' + b64(ct);
+    }
+    async function decPin(s) {
+        if (String(s).startsWith('b64:')) return decodeURIComponent(escape(atob(s.slice(4))));
+        const [, iv, ct] = String(s).split(':');
+        const k = await vaultKey(false); if (!k) throw new Error('no key');
+        const pt = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: unb64(iv) }, k, unb64(ct));
+        return new TextDecoder().decode(pt);
+    }
+    const A = V4.auth = {
+        async save(role, pin, extra) {
+            const old = V4.lsJ(REM_KEY, null) || {};
+            V4.lsS(REM_KEY, Object.assign({ v: 1, role, enc: await encPin(pin), at: Date.now(), bioId: old.role === role ? (old.bioId || null) : null }, extra || {}));
+        },
+        rec() { return V4.lsJ(REM_KEY, null); },
+        async load() { const r = A.rec(); if (!r || !r.enc) return null; try { return Object.assign({}, r, { pin: await decPin(r.enc) }); } catch (e) { A.clear(); return null; } },
+        clear() { try { localStorage.removeItem(REM_KEY); } catch (e) { } sec.bio = false; saveSec(); }
+    };
+
+    /* ---------- WebAuthn (สแกนใบหน้า / ลายนิ้วมือของเครื่อง) ---------- */
+    let bioOk = null;
+    async function bioAvailable() {
+        if (bioOk !== null) return bioOk;
+        try { bioOk = !!(window.PublicKeyCredential && PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable && await PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable()); }
+        catch (e) { bioOk = false; }
+        return bioOk;
+    }
+    const rnd = n => crypto.getRandomValues(new Uint8Array(n));
+    async function bioRegister(role) {
+        const cred = await navigator.credentials.create({ publicKey: {
+            challenge: rnd(32), rp: { name: 'Executive Pro', id: location.hostname },
+            user: { id: rnd(16), name: 'execpro-' + role, displayName: role === 'admin' ? 'ผู้ดูแลระบบ' : 'เจ้าหน้าที่สนาม' },
+            pubKeyCredParams: [{ type: 'public-key', alg: -7 }, { type: 'public-key', alg: -257 }],
+            authenticatorSelection: { authenticatorAttachment: 'platform', userVerification: 'required', residentKey: 'discouraged' },
+            timeout: 60000, attestation: 'none'
+        } });
+        return b64(cred.rawId);
+    }
+    async function bioVerify(id) {
+        await navigator.credentials.get({ publicKey: {
+            challenge: rnd(32), rpId: location.hostname, timeout: 60000, userVerification: 'required',
+            allowCredentials: [{ type: 'public-key', id: unb64(id), transports: ['internal'] }]
+        } });
+        return true;
+    }
+    V4.bioAvailable = bioAvailable;
+
+    /* ---------- เข้าสู่ระบบ (ใช้ฟังก์ชันเดิมของระบบ) ---------- */
+    async function loginWith(role, pin, silent) {
+        await api('login', {}, { role, pin });
+        session = { role, pin };
+        try { sessionStorage.setItem(SESSION_KEY, JSON.stringify(session)); } catch (e) { }
+        restoring = true;
+        try { applyRole(); afterLogin(); } finally { restoring = false; }
+        if (!silent) showToast('success', 'เข้าสู่ระบบสำเร็จ', role === 'admin' ? 'ยินดีต้อนรับผู้ดูแลระบบ' : 'พร้อมบันทึกรายการขายหน้าสนาม');
+        V4.paintBar();
+    }
+    async function restore() {
+        if (session) return;
+        const rec = await A.load(); if (!rec) return;
+        if (rec.bioId && sec.bio && await bioAvailable()) { showGate(rec); return; }
+        try { await loginWith(rec.role, rec.pin, true); V4.popup({ type: 'ok', title: 'เข้าสู่ระบบอัตโนมัติ', msg: rec.role === 'admin' ? 'ผู้ดูแลระบบ' : 'เจ้าหน้าที่สนาม', duration: 1400 }); }
+        catch (e) {
+            if (e.code === 'AUTH') { A.clear(); showToast('warning', 'รหัสเดิมใช้ไม่ได้แล้ว', 'กรุณาเข้าสู่ระบบด้วยรหัสใหม่'); }
+            else if (e.code === 'NETWORK') {
+                session = { role: rec.role, pin: rec.pin }; try { sessionStorage.setItem(SESSION_KEY, JSON.stringify(session)); } catch (x) { }
+                applyRole(); navigationHistory = [session.role === 'staff' ? 'view-field' : 'view-home'];
+                if (session.role === 'staff') { initFieldView(); navigateTo('view-field'); }
+                showToast('warning', 'ออฟไลน์ — เข้าใช้งานด้วยรหัสที่จดจำไว้', 'ระบบจะตรวจรหัสอีกครั้งเมื่อกลับมาออนไลน์');
+            }
+        }
+    }
+    V4.restore = restore;
+
+    /* ---------- หน้าจอสแกนปลดล็อก ---------- */
+    function showGate(rec, reason) {
+        let g = document.getElementById('v4BioGate');
+        if (!g) { g = document.createElement('div'); g.id = 'v4BioGate'; document.body.appendChild(g); }
+        const role = rec.role;
+        g.innerHTML = `<div style="max-width:340px;width:100%">
+            <div class="v4-bio-ring"><i class="fas fa-fingerprint"></i></div>
+            <div style="font-weight:800;font-size:19px">${reason === 'lock' ? 'ล็อกอยู่ — ไม่มีการใช้งานสักครู่' : 'ยืนยันตัวตนเพื่อเข้าใช้งาน'}</div>
+            <div style="opacity:.7;font-size:12px;margin-top:6px">${role === 'admin' ? 'ผู้ดูแลระบบ' : 'เจ้าหน้าที่สนาม'} · สแกนใบหน้าหรือลายนิ้วมือของเครื่องนี้</div>
+            <div id="v4GateErr" style="color:#fda4af;font-size:12px;margin-top:10px;min-height:16px"></div>
+            <button type="button" class="v4-btn primary w-full mt-3" id="v4GateScan"><i class="fas fa-fingerprint"></i> สแกนเพื่อเข้าสู่ระบบ</button>
+            <button type="button" class="v4-btn w-full mt-2" style="background:rgba(255,255,255,.1);color:#e2e8f0" id="v4GatePin"><i class="fas fa-keyboard"></i> ใช้รหัส PIN แทน</button>
+            <button type="button" class="mt-4" style="font-size:11px;opacity:.55;text-decoration:underline" id="v4GateForget">ไม่ใช่เครื่องของฉัน / ลืมเครื่องนี้</button>
+        </div>`;
+        g.classList.add('on');
+        const err = q('#v4GateErr', g);
+        const hide = () => g.classList.remove('on');
+        const scan = async () => {
+            err.textContent = '';
+            try {
+                await bioVerify(rec.bioId);
+                const full = rec.pin ? rec : await A.load();
+                if (!full) throw new Error('vault');
+                try { await loginWith(full.role, full.pin, true); hide(); lastActive = Date.now(); V4.popup({ type: 'ok', title: 'ยืนยันตัวตนสำเร็จ', msg: 'ยินดีต้อนรับกลับ', duration: 1300 }); }
+                catch (e) {
+                    if (e.code === 'AUTH') { A.clear(); hide(); showToast('warning', 'รหัสเดิมใช้ไม่ได้แล้ว', 'กรุณาเข้าสู่ระบบด้วยรหัสใหม่'); openLogin(full.role); }
+                    else err.textContent = e.message || 'เข้าสู่ระบบไม่สำเร็จ';
+                }
+            } catch (e) { err.textContent = (e && e.name === 'NotAllowedError') ? 'ยกเลิกหรือสแกนไม่ผ่าน ลองอีกครั้ง' : 'สแกนไม่สำเร็จ — ใช้รหัส PIN แทนได้'; }
+        };
+        q('#v4GateScan', g).onclick = scan;
+        q('#v4GatePin', g).onclick = () => { hide(); openLogin(role); };
+        q('#v4GateForget', g).onclick = () => { A.clear(); hide(); showToast('info', 'ลืมเครื่องนี้แล้ว', 'ข้อมูลจดจำการเข้าสู่ระบบถูกลบออกจากเครื่อง'); };
+        setTimeout(scan, 350);
+    }
+
+    /* ---------- ต่อเข้ากับขั้นตอนเข้าสู่ระบบเดิม ---------- */
+    const _afterLogin = window.afterLogin;
+    window.afterLogin = function () {
+        _afterLogin();
+        if (restoring || !session) return;
+        postLogin();
+    };
+    async function postLogin() {
+        const chk = document.getElementById('v4Remember');
+        sec.remember = chk ? chk.checked : sec.remember; saveSec();
+        if (sec.remember) {
+            try { await A.save(session.role, session.pin); } catch (e) { console.warn('remember failed', e); return; }
+            const rec = A.rec();
+            if (rec && !rec.bioId && !sec.bioDeclined && await bioAvailable()) {
+                setTimeout(async () => {
+                    if (!session) return;
+                    const ok = await confirmDialog({ title: 'เปิดสแกนใบหน้า / ลายนิ้วมือ?', msg: 'ครั้งต่อไปเปิดแอปแล้วสแกนเพื่อเข้าใช้งานได้เลย ไม่ต้องกรอกรหัส (ใช้ระบบสแกนของเครื่องนี้ ข้อมูลสแกนไม่ถูกส่งออกจากเครื่อง)', okText: 'เปิดใช้งาน', variant: 'info' });
+                    if (!ok) { sec.bioDeclined = true; saveSec(); return; }
+                    await enableBio();
+                }, 900);
+            }
+        } else { A.clear(); }
+    }
+    async function enableBio() {
+        try {
+            if (!(await bioAvailable())) { V4.popup({ type: 'warn', title: 'เครื่องนี้ไม่รองรับการสแกน', msg: 'ต้องเปิดผ่านเว็บไซต์ https และเครื่องต้องตั้งค่าล็อกหน้าจอ (ใบหน้า/ลายนิ้วมือ/PIN) ไว้', block: true }); return false; }
+            if (!A.rec()) { await A.save(session.role, session.pin); }
+            const id = await bioRegister(session.role);
+            const r = A.rec(); r.bioId = id; r.role = session.role; V4.lsS(REM_KEY, r);
+            sec.bio = true; sec.bioDeclined = false; if (!sec.lockMin) sec.lockMin = 15; saveSec();
+            V4.popup({ type: 'ok', title: 'เปิดสแกนสำเร็จ', msg: 'ล็อกอัตโนมัติเมื่อไม่ใช้งาน ' + sec.lockMin + ' นาที (ตั้งค่าได้)', confetti: true });
+            return true;
+        } catch (e) {
+            V4.popup({ type: 'warn', title: 'เปิดสแกนไม่สำเร็จ', msg: (e && e.name === 'NotAllowedError') ? 'ยกเลิกหรือสแกนไม่ผ่าน' : 'ลองใหม่อีกครั้ง หรือใช้รหัส PIN ตามปกติ', block: true });
+            return false;
+        }
+    }
+    const _logout = window.logoutNow;
+    window.logoutNow = async function () {
+        const had = session;
+        await _logout();
+        if (had && !session) A.clear();
+    };
+    const _lost = window.handleAuthLost;
+    window.handleAuthLost = function () { A.clear(); _lost(); };
+    const _pin = window.savePinSettings;
+    window.savePinSettings = async function () {
+        const before = session && session.pin;
+        await _pin();
+        if (session && session.pin !== before && A.rec()) { try { await A.save(session.role, session.pin); } catch (e) { } }
+    };
+
+    /* ---------- ช่องจดจำ + ปุ่มสแกนในหน้าต่างล็อกอิน ---------- */
+    function decorateLogin() {
+        const err = document.getElementById('loginError'); if (!err || document.getElementById('v4Remember')) return;
+        const w = document.createElement('div');
+        w.innerHTML = `<label class="v4-remember"><input type="checkbox" id="v4Remember" class="hidden" ${sec.remember ? 'checked' : ''}><span class="v4-switch"></span> จดจำการเข้าสู่ระบบในเครื่องนี้</label>
+            <button type="button" id="v4LoginBio" class="v4-btn ghost w-full mt-2 hidden"><i class="fas fa-fingerprint"></i> สแกนใบหน้า / ลายนิ้วมือ</button>`;
+        err.parentNode.insertBefore(w, err);
+        q('#v4LoginBio', w).onclick = async () => {
+            const rec = await A.load(); if (!rec || !rec.bioId) return;
+            try { await bioVerify(rec.bioId); closeLogin(); await loginWith(rec.role, rec.pin); } catch (e) { loginError('สแกนไม่สำเร็จ ลองอีกครั้งหรือกรอกรหัส'); }
+        };
+    }
+    const _openLogin = window.openLogin;
+    window.openLogin = function (role) {
+        _openLogin(role); decorateLogin();
+        const chk = document.getElementById('v4Remember'); if (chk) chk.checked = sec.remember;
+        const b = document.getElementById('v4LoginBio'); const rec = A.rec();
+        if (b) b.classList.toggle('hidden', !(rec && rec.bioId && sec.bio && rec.role === role));
+    };
+
+    /* ---------- ศูนย์ความปลอดภัย ---------- */
+    V4.openSecurity = async function () {
+        const rec = A.rec(), avail = await bioAvailable();
+        const role = session ? session.role : null;
+        const sh = V4.sheet({
+            title: 'ความปลอดภัยการเข้าสู่ระบบ', sub: role ? (role === 'admin' ? 'ผู้ดูแลระบบ' : 'เจ้าหน้าที่สนาม') : 'ยังไม่ได้เข้าสู่ระบบ', icon: 'fa-shield-halved', size: 'w-md', foot: false,
+            body: `<div class="space-y-3">
+                <label class="v4-card flex items-center gap-3 cursor-pointer"><div class="flex-1"><div class="font-extrabold text-[12.5px]">จดจำการเข้าสู่ระบบ</div><div class="text-[11px] text-slate-500 dark:text-slate-400">เปิดแอปครั้งถัดไปเข้าใช้งานอัตโนมัติ ไม่ต้องกรอกรหัส</div></div>
+                    <input type="checkbox" id="secRem" class="hidden" ${rec ? 'checked' : ''}><span class="v4-switch"></span></label>
+                <label class="v4-card flex items-center gap-3 ${avail ? 'cursor-pointer' : 'opacity-60'}"><div class="flex-1"><div class="font-extrabold text-[12.5px]">สแกนใบหน้า / ลายนิ้วมือ</div><div class="text-[11px] text-slate-500 dark:text-slate-400">${avail ? 'ใช้ระบบสแกนของเครื่องนี้ยืนยันก่อนเข้าใช้งาน' : 'เครื่อง/เบราว์เซอร์นี้ไม่รองรับ หรือเปิดผ่าน http/ไฟล์ในเครื่อง'}</div></div>
+                    <input type="checkbox" id="secBio" class="hidden" ${rec && rec.bioId && sec.bio ? 'checked' : ''} ${avail ? '' : 'disabled'}><span class="v4-switch"></span></label>
+                <div class="v4-card"><div class="font-extrabold text-[12.5px] mb-1.5">ล็อกอัตโนมัติเมื่อไม่ใช้งาน</div>
+                    <select id="secLock" class="v4-field"><option value="0">ปิด</option><option value="5">5 นาที</option><option value="15">15 นาที</option><option value="30">30 นาที</option><option value="60">60 นาที</option></select>
+                    <div class="text-[10.5px] text-slate-500 dark:text-slate-400 mt-1.5">เมื่อล็อก ต้องสแกนหรือกรอกรหัสอีกครั้ง (รายการที่รอส่งไม่หาย)</div></div>
+                <div class="text-[10.5px] leading-relaxed text-slate-500 dark:text-slate-400 p-3 rounded-xl bg-amber-50 dark:bg-amber-950/20 border border-amber-200/60 dark:border-amber-900/40"><i class="fas fa-circle-info text-amber-500 mr-1"></i> รหัส PIN ที่จดจำถูกเข้ารหัสและเก็บเฉพาะในเครื่องนี้ ไม่ควรเปิดใช้บนเครื่องที่ใช้ร่วมกับผู้อื่น การสแกนเป็นการยืนยันตัวตนบนเครื่อง ไม่ได้เปลี่ยนรหัสที่ใช้กับเซิร์ฟเวอร์</div>
+                <div class="flex gap-2 flex-wrap"><button type="button" class="v4-btn danger" id="secForget"><i class="fas fa-eraser"></i> ลืมเครื่องนี้</button>
+                    <button type="button" class="v4-btn ghost ml-auto" data-x2>ปิด</button></div>
+            </div>`
+        });
+        sh.q('#secLock').value = String(sec.lockMin || 0);
+        sh.q('[data-x2]').onclick = () => sh.close();
+        sh.q('#secRem').onchange = async e => {
+            if (!session) { e.target.checked = false; return V4.popup({ type: 'info', title: 'เข้าสู่ระบบก่อน', msg: 'ต้องเข้าสู่ระบบด้วยรหัสก่อนจึงจะจดจำได้', block: true }); }
+            if (e.target.checked) { await A.save(session.role, session.pin); sec.remember = true; saveSec(); }
+            else { A.clear(); sec.remember = false; saveSec(); sh.q('#secBio').checked = false; }
+        };
+        sh.q('#secBio').onchange = async e => {
+            if (!session) { e.target.checked = false; return V4.popup({ type: 'info', title: 'เข้าสู่ระบบก่อน', msg: 'ต้องเข้าสู่ระบบด้วยรหัสก่อน', block: true }); }
+            if (e.target.checked) { const ok = await enableBio(); e.target.checked = !!ok; if (ok) sh.q('#secRem').checked = true; }
+            else { const r = A.rec(); if (r) { r.bioId = null; V4.lsS(REM_KEY, r); } sec.bio = false; saveSec(); }
+        };
+        sh.q('#secLock').onchange = e => { sec.lockMin = Number(e.target.value) || 0; saveSec(); showToast('info', 'บันทึกการตั้งค่าแล้ว', sec.lockMin ? `ล็อกอัตโนมัติหลังไม่ใช้งาน ${sec.lockMin} นาที` : 'ปิดการล็อกอัตโนมัติ', { noPopup: true }); };
+        sh.q('#secForget').onclick = () => { A.clear(); sec.remember = false; saveSec(); sh.q('#secRem').checked = false; sh.q('#secBio').checked = false; V4.popup({ type: 'ok', title: 'ลืมเครื่องนี้แล้ว', msg: 'ลบข้อมูลจดจำและการสแกนออกจากเครื่อง' }); };
+    };
+
+    /* ---------- ล็อกอัตโนมัติเมื่อไม่ใช้งาน ---------- */
+    ['pointerdown', 'keydown', 'touchstart', 'scroll'].forEach(ev => document.addEventListener(ev, () => { lastActive = Date.now(); }, { passive: true, capture: true }));
+    setInterval(() => {
+        if (!session || !sec.lockMin) return;
+        if (Date.now() - lastActive < sec.lockMin * 60000) return;
+        lockNow();
+    }, 15000);
+    async function lockNow() {
+        const role = session && session.role; if (!role) return;
+        session = null; try { sessionStorage.removeItem(SESSION_KEY); } catch (e) { }
+        applyRole(); navigationHistory = ['view-home']; navigateTo('view-home'); V4.paintBar();
+        const rec = await A.load();
+        if (rec && rec.bioId && sec.bio && await bioAvailable()) showGate(rec, 'lock');
+        else { showToast('info', 'ล็อกอัตโนมัติ', 'ไม่มีการใช้งานสักครู่ กรุณาเข้าสู่ระบบอีกครั้ง'); openLogin(role); }
+    }
+    V4.lockNow = lockNow;
+})();
+
+(function () {
+    /* ==========================================================================
+       ส่วน C: ศูนย์ส่งออก (ตัวอย่างก่อนส่งออก) + รายงานสรุปผล + ตัวอย่างไฟล์สำรอง
+       ========================================================================== */
+    const V4 = window.V4, q = V4.q, esc = V4.esc, money = V4.money, moneyS = V4.moneyS, int0 = V4.int0;
+
+    const PAPER_CSS = `
+        *{box-sizing:border-box} body{margin:0;font-family:'Prompt','Sarabun',sans-serif;color:#0f172a;background:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+        .v4-paper{background:#fff;color:#0f172a;font-family:'Prompt','Sarabun',sans-serif}
+        .ph{padding:16px 20px;color:#fff;background:linear-gradient(135deg,#16182c,#2b2a63)} .ph h3{margin:0;font-size:18px;font-weight:800} .ph p{margin:3px 0 0;font-size:11px;opacity:.85}
+        .pk{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;padding:12px 16px;background:#f8fafc;border-bottom:1px solid #e2e8f0}
+        .pk div{background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:8px 10px} .pk small{display:block;font-size:10px;color:#64748b;font-weight:700} .pk b{font-size:14px;font-weight:800}
+        table{width:100%;border-collapse:collapse;font-size:11px} th{background:#1e293b;color:#fff;padding:6px 7px;font-weight:700}
+        td{padding:5px 7px;border-bottom:1px solid #eef2f7;text-align:right} td.l{text-align:left} td.c{text-align:center}
+        tfoot td{background:#f1f5f9;font-weight:800;border-top:2px solid #cbd5e1} h5{margin:0;font-weight:800;font-size:12.5px;padding:12px 16px 6px;color:#334155}
+        .pf{padding:8px 16px 12px;font-size:10px;color:#94a3b8;text-align:right} .v4-pos{color:#059669} .v4-neg{color:#e11d48}
+        @page{size:A4 landscape;margin:10mm} tr{break-inside:avoid} thead{display:table-header-group}`;
+
+    /* ---------------- ตัวช่วยจัดรูปแบบ ---------------- */
+    const num = (v, dash) => (v === null || v === undefined || v === '') ? '' : (dash && Number(v) === 0 ? '-' : int0(v));
+    const todayStr = () => (typeof todayISO === 'function' ? todayISO() : new Date().toISOString().slice(0, 10));
+    function withAllScope(all, fn) {
+        if (!all) return fn();
+        const s = { g: JSON.stringify(filterState.general), s: JSON.stringify(filterState.shooting), ly: ledgerState.years, lm: ledgerState.months, lq: ledgerState.q };
+        filterState.general = { years: [], months: [] }; filterState.shooting = { years: [], months: [] };
+        ledgerState.years = []; ledgerState.months = []; ledgerState.q = '';
+        try { return fn(); } finally {
+            filterState.general = JSON.parse(s.g); filterState.shooting = JSON.parse(s.s);
+            ledgerState.years = s.ly; ledgerState.months = s.lm; ledgerState.q = s.lq;
+        }
+    }
+    const nowTxt = () => (typeof getThaiFormattedNow === 'function' ? getThaiFormattedNow() : new Date().toLocaleString('th-TH'));
+
+    /* ---------------- ตัวสร้างรายงาน (โมเดลเดียว ใช้ทั้งตัวอย่าง/PNG/PDF/Excel/CSV) ---------------- */
+    function ledgerRowsFiltered() { return (Array.isArray(appData.rangeLedger) ? buildLedgerRows() : []).filter(ledgerPass); }
+    function ledgerScopeText() {
+        const s = ledgerState, yy = s.years.length ? 'ปี ' + s.years.join(', ') : 'ทุกปี';
+        const mm = s.months.length ? 'เดือน ' + s.months.map(m => thMonths[Number(m) - 1]).join(' ') : 'ทุกเดือน';
+        return `${yy} · ${mm}${s.q ? ' · ค้นหา "' + s.q + '"' : ''}`;
+    }
+    function ledgerMonthly(rows) {
+        const g = {}, order = [];
+        rows.forEach(r => {
+            const ym = ledgerYM(r), key = ym ? ym.y + '-' + ym.m : 'none';
+            if (!g[key]) { g[key] = { label: ym ? `${thFullMonths[Number(ym.m) - 1]} ${ym.y}` : 'ไม่ระบุวันที่', n: 0, bTr: 0, bCash: 0, tTr: 0, tCash: 0, acct: 0, cash: 0, end: 0 }; order.push(key); }
+            const x = g[key]; x.n++; x.bTr += r.v.bTr; x.bCash += r.v.bCash; x.tTr += r.v.tTr; x.tCash += r.v.tCash; x.acct += r.v.acct; x.cash += r.v.cash; x.end = r.total;
+        });
+        return order.map(k => g[k]);
+    }
+    const R = {};
+    R.generalDetail = () => {
+        const rows = getFilteredGeneralData(); let a = 0, b = 0, c = 0, d = 0;
+        rows.forEach(r => { a += r.inC; b += r.inA; c += r.outC; d += r.outA; });
+        const last = rows[rows.length - 1];
+        return { title: 'รายงานบัญชีกองกลาง — รายละเอียด', file: 'บัญชีกองกลาง_รายละเอียด', scope: getScopeParts('general').full,
+            kpis: [{ l: 'รับรวม', v: money(a + b) }, { l: 'จ่ายรวม', v: money(c + d) }, { l: 'สุทธิในช่วง', v: moneyS(a + b - c - d) }, { l: 'คงเหลือสุทธิ', v: money(last ? last.totalNet : 0) }, { l: 'เงินสด / บัญชี', v: `${int0(last ? last.runCash : 0)} / ${int0(last ? last.runAcc : 0)}` }],
+            sections: [{ cols: [{ h: 'ลำดับ', a: 'c' }, { h: 'วันที่', a: 'c' }, { h: 'รายการ', a: 'l' }, { h: 'รับ (สด)', n: 1 }, { h: 'รับ (โอน)', n: 1 }, { h: 'จ่าย (สด)', n: 1 }, { h: 'จ่าย (โอน)', n: 1 }, { h: 'คงเหลือ (สด)', n: 1, nz: 1 }, { h: 'คงเหลือ (บัญชี)', n: 1, nz: 1 }, { h: 'รวมสุทธิ', n: 1, nz: 1 }, { h: 'หมายเหตุ', a: 'l' }],
+                rows: rows.map((r, i) => [i + 1, formatDateThaiShort(r.date), r.desc || '', r.inC, r.inA, r.outC, r.outA, r.runCash, r.runAcc, r.totalNet, r.note || '']),
+                foot: ['', '', `รวม ${rows.length.toLocaleString()} รายการ`, a, b, c, d, last ? last.runCash : 0, last ? last.runAcc : 0, last ? last.totalNet : 0, ''] }] };
+    };
+    R.generalMonthly = () => {
+        const rows = getFilteredGeneralData(), gs = groupGeneralByMonth(rows); let tin = 0, tout = 0;
+        gs.forEach(g => { tin += g.inV; tout += g.outV; });
+        const last = rows[rows.length - 1];
+        return { title: 'รายงานบัญชีกองกลาง — สรุปรายเดือน', file: 'บัญชีกองกลาง_สรุปรายเดือน', scope: getScopeParts('general').full,
+            kpis: [{ l: 'รับรวม', v: money(tin) }, { l: 'จ่ายรวม', v: money(tout) }, { l: 'สุทธิในช่วง', v: moneyS(tin - tout) }, { l: 'คงเหลือสุทธิ', v: money(last ? last.totalNet : 0) }],
+            sections: [{ cols: [{ h: 'เดือน', a: 'l' }, { h: 'รายการ', n: 1 }, { h: 'รับ (สด)', n: 1 }, { h: 'รับ (โอน)', n: 1 }, { h: 'จ่าย (สด)', n: 1 }, { h: 'จ่าย (โอน)', n: 1 }, { h: 'รวมรับ', n: 1 }, { h: 'รวมจ่าย', n: 1 }, { h: 'สุทธิ', n: 1, nz: 1, sg: 1 }, { h: 'คงเหลือปลายเดือน', n: 1, nz: 1 }],
+                rows: gs.map(g => [g.label, g.count, g.inC, g.inA, g.outC, g.outA, g.inV, g.outV, g.inV - g.outV, g.endNet]),
+                foot: ['รวม', gs.reduce((s, g) => s + g.count, 0), gs.reduce((s, g) => s + g.inC, 0), gs.reduce((s, g) => s + g.inA, 0), gs.reduce((s, g) => s + g.outC, 0), gs.reduce((s, g) => s + g.outA, 0), tin, tout, tin - tout, last ? last.totalNet : 0] }] };
+    };
+    R.shootingDetail = () => {
+        const rows = getFilteredShootingData(); let sb = 0, st = 0, si = 0, so = 0;
+        rows.forEach(r => { sb += r.totB; st += r.totT; si += r.specialIn; so += r.specialOut; });
+        const last = rows[rows.length - 1];
+        return { title: 'รายงานสรุปสนามยิงปืน — รายละเอียด', file: 'สนามยิงปืน_รายละเอียด', scope: getScopeParts('shooting').full,
+            kpis: [{ l: 'ขายกระสุน', v: money(sb) }, { l: 'ขายเป้า', v: money(st) }, { l: 'รายรับพิเศษ/ยกยอด', v: money(si) }, { l: 'รายจ่าย', v: money(so) }, { l: 'คงเหลือสุทธิ', v: money(last ? last.runBal : 0) }],
+            sections: [{ cols: [{ h: 'เดือน/ปี', a: 'c' }, { h: 'รายการ', a: 'l' }, { h: 'กระสุนโอน (นัด)', n: 1 }, { h: 'กระสุนสด (นัด)', n: 1 }, { h: 'รวมกระสุน (บาท)', n: 1 }, { h: 'เป้าโอน (ใบ)', n: 1 }, { h: 'เป้าสด (ใบ)', n: 1 }, { h: 'รวมเป้า (บาท)', n: 1 }, { h: 'รายรับพิเศษ', n: 1 }, { h: 'รายจ่าย', n: 1 }, { h: 'คงเหลือสุทธิ', n: 1, nz: 1 }],
+                rows: rows.map(r => [`${r.month} ${r.year || '2569'}`, r.expDesc || (r.expAmt > 0 ? '' : 'ยอดขายประจำเดือน'), r.bTrQ, r.bBCQ, r.totB, r.tTrQ, r.tBCQ, r.totT, r.specialIn, r.specialOut, r.runBal]),
+                foot: ['', `รวม ${rows.length.toLocaleString()} รายการ`, rows.reduce((s, r) => s + r.bTrQ, 0), rows.reduce((s, r) => s + r.bBCQ, 0), sb, rows.reduce((s, r) => s + r.tTrQ, 0), rows.reduce((s, r) => s + r.tBCQ, 0), st, si, so, last ? last.runBal : 0] }] };
+    };
+    R.shootingMonthly = () => {
+        const rows = getFilteredShootingData(), gs = groupShootingByMonth(rows); let ti = 0, to = 0;
+        gs.forEach(g => { ti += g.inV; to += g.outV; });
+        const last = rows[rows.length - 1];
+        return { title: 'รายงานสรุปสนามยิงปืน — สรุปรายเดือน', file: 'สนามยิงปืน_สรุปรายเดือน', scope: getScopeParts('shooting').full,
+            kpis: [{ l: 'รายรับรวม', v: money(ti) }, { l: 'รายจ่ายรวม', v: money(to) }, { l: 'สุทธิในช่วง', v: moneyS(ti - to) }, { l: 'คงเหลือสุทธิ', v: money(last ? last.runBal : 0) }],
+            sections: [{ cols: [{ h: 'เดือน/ปี', a: 'l' }, { h: 'สรุปรายการ', a: 'l' }, { h: 'กระสุน (นัด)', n: 1 }, { h: 'ขายกระสุน (บาท)', n: 1 }, { h: 'เป้า (ใบ)', n: 1 }, { h: 'ขายเป้า (บาท)', n: 1 }, { h: 'รายรับพิเศษ/ยกยอด', n: 1 }, { h: 'รายจ่าย', n: 1 }, { h: 'สุทธิประจำงวด', n: 1, nz: 1, sg: 1 }, { h: 'คงเหลือสุทธิ', n: 1, nz: 1 }],
+                rows: gs.map(g => [g.label, g.notes.length ? g.notes.join(', ') : 'ยอดขายกระสุนและเป้าประจำเดือน', g.bQ, g.totB, g.tQ, g.totT, g.specIn, g.specOut, g.inV - g.outV, g.endBal]),
+                foot: ['รวม', '', gs.reduce((s, g) => s + g.bQ, 0), gs.reduce((s, g) => s + g.totB, 0), gs.reduce((s, g) => s + g.tQ, 0), gs.reduce((s, g) => s + g.totT, 0), gs.reduce((s, g) => s + g.specIn, 0), to, ti - to, last ? last.runBal : 0] }] };
+    };
+    R.ledgerDetail = () => {
+        const rows = ledgerRowsFiltered(), last = rows[rows.length - 1];
+        const sum = k => rows.reduce((s, r) => s + r.v[k], 0);
+        return { title: 'รายการสนามยิงปืน — รายละเอียด', file: 'รายการสนามยิงปืน_รายละเอียด', scope: ledgerScopeText(),
+            kpis: [{ l: 'เงินในบัญชี (รวมช่วง)', v: money(sum('acct')) }, { l: 'เงินที่สนาม (รวมช่วง)', v: money(sum('cash')) }, { l: 'ยอดรวมสะสม', v: money(last ? last.total : 0) }, { l: 'จำนวนแถว', v: rows.length.toLocaleString() }],
+            sections: [{ cols: [{ h: 'ลำดับ', a: 'c' }, { h: 'วันที่', a: 'c' }, { h: 'รายการ', a: 'l' }, { h: 'กระสุนโอน', n: 1 }, { h: 'กระสุนสด', n: 1 }, { h: 'เป้าโอน', n: 1 }, { h: 'เป้าสด', n: 1 }, { h: 'เงินในบัญชี', n: 1 }, { h: 'เงินที่สนาม', n: 1 }, { h: 'รวม', n: 1, nz: 1 }, { h: 'หมายเหตุ', a: 'l' }],
+                rows: rows.map(r => [r.i + 1, r.entry.date ? thDateCompact(r.entry.date) : '', r.desc, r.v.bTr, r.v.bCash, r.v.tTr, r.v.tCash, r.v.acct, r.v.cash, r.total, r.note]),
+                foot: ['', '', 'รวม', sum('bTr'), sum('bCash'), sum('tTr'), sum('tCash'), sum('acct'), sum('cash'), last ? last.total : 0, ''] }] };
+    };
+    R.ledgerMonthly = () => {
+        const rows = ledgerRowsFiltered(), ms = ledgerMonthly(rows), last = rows[rows.length - 1];
+        const s = k => ms.reduce((a, m) => a + m[k], 0);
+        return { title: 'รายการสนามยิงปืน — สรุปรายเดือน', file: 'รายการสนามยิงปืน_สรุปรายเดือน', scope: ledgerScopeText(),
+            kpis: [{ l: 'ยอดรวมสะสม', v: money(last ? last.total : 0) }, { l: 'จำนวนเดือน', v: String(ms.length) }, { l: 'แถวข้อมูล', v: rows.length.toLocaleString() }],
+            sections: [{ cols: [{ h: 'เดือน', a: 'l' }, { h: 'แถว', n: 1 }, { h: 'กระสุนโอน', n: 1 }, { h: 'กระสุนสด', n: 1 }, { h: 'เป้าโอน', n: 1 }, { h: 'เป้าสด', n: 1 }, { h: 'เงินในบัญชี (สุทธิ)', n: 1, nz: 1, sg: 1 }, { h: 'เงินที่สนาม (สุทธิ)', n: 1, nz: 1, sg: 1 }, { h: 'ยอดรวมปลายเดือน', n: 1, nz: 1 }],
+                rows: ms.map(m => [m.label, m.n, m.bTr, m.bCash, m.tTr, m.tCash, m.acct, m.cash, m.end]),
+                foot: ['รวม', s('n'), s('bTr'), s('bCash'), s('tTr'), s('tCash'), s('acct'), s('cash'), last ? last.total : 0] }] };
+    };
+    R.all = () => {
+        const g = R.generalMonthly(), s = R.shootingMonthly(), l = R.ledgerMonthly();
+        return { title: 'รายงานสรุปผลภาพรวม — Executive Pro', file: 'รายงานสรุปผลภาพรวม', scope: `บัญชีกองกลาง: ${g.scope} | สนามยิงปืน: ${s.scope}`,
+            kpis: [{ l: 'คงเหลือสุทธิ (กองกลาง)', v: g.kpis[3].v }, { l: 'คงเหลือสุทธิ (สรุปสนามยิงปืน)', v: s.kpis[3].v }, { l: 'ยอดรวมสะสม (รายการสนามยิงปืน)', v: l.kpis[0].v }, { l: 'สุทธิกองกลางในช่วง', v: g.kpis[2].v }, { l: 'สุทธิสนามในช่วง', v: s.kpis[2].v }],
+            sections: [Object.assign({ h: 'บัญชีกองกลาง — สรุปรายเดือน' }, g.sections[0]), Object.assign({ h: 'สรุปสนามยิงปืน — รายเดือน' }, s.sections[0]), Object.assign({ h: 'รายการสนามยิงปืน — สรุปรายเดือน' }, l.sections[0])] };
+    };
+    const KINDS = {
+        general: { label: 'บัญชีกองกลาง', icon: 'fa-landmark', detail: R.generalDetail, monthly: R.generalMonthly },
+        shooting: { label: 'สรุปสนามยิงปืน', icon: 'fa-chart-pie', detail: R.shootingDetail, monthly: R.shootingMonthly },
+        ledger: { label: 'รายการสนามยิงปืน', icon: 'fa-table-list', detail: R.ledgerDetail, monthly: R.ledgerMonthly },
+        all: { label: 'รายงานสรุปผลภาพรวม', icon: 'fa-file-chart-column', detail: R.all, monthly: R.all }
+    };
+
+    /* ---------------- เรนเดอร์เอกสาร ---------------- */
+    function cellHtml(col, v, isFoot) {
+        if (col.n) {
+            const t = num(v, !col.nz); let cls = '';
+            if (col.sg && Number(v)) cls = Number(v) > 0 ? 'v4-pos' : 'v4-neg';
+            return `<td class="${cls}">${t}</td>`;
+        }
+        return `<td class="${col.a === 'l' ? 'l' : 'c'}">${esc(v == null ? '' : v)}</td>`;
+    }
+    function paperHtml(m, o) {
+        o = o || {}; const max = o.maxRows || 1e9; let truncNote = '';
+        const secs = m.sections.map(sec => {
+            let rows = sec.rows;
+            if (rows.length > max) { const cut = rows.length - max; rows = o.keep === 'head' ? rows.slice(0, max) : rows.slice(cut); truncNote = `แสดง ${max} แถว${o.keep === 'head' ? 'แรก' : 'ล่าสุด'} จากทั้งหมด ${sec.rows.length.toLocaleString()} แถว (ไฟล์ที่ส่งออกจริงมีครบทุกแถว)`; if (o.pngNote) truncNote = `ภาพแสดง ${max} แถวล่าสุดจากทั้งหมด ${sec.rows.length.toLocaleString()} แถว — ต้องการครบทุกแถวให้ใช้ Excel/PDF`; }
+            return `${sec.h ? `<h5>${esc(sec.h)}</h5>` : ''}<table><thead><tr>${sec.cols.map(c => `<th>${esc(c.h)}</th>`).join('')}</tr></thead>
+                <tbody>${rows.length ? rows.map(r => `<tr>${sec.cols.map((c, i) => cellHtml(c, r[i])).join('')}</tr>`).join('') : `<tr><td class="c" colspan="${sec.cols.length}" style="padding:22px;color:#94a3b8">ไม่มีข้อมูลในช่วงที่เลือก</td></tr>`}</tbody>
+                <tfoot><tr>${sec.cols.map((c, i) => cellHtml(c, sec.foot[i], true)).join('')}</tr></tfoot></table>`;
+        }).join('');
+        return `<div class="v4-paper">
+            <div class="ph"><h3>${esc(m.title)}</h3><p>ขอบเขตข้อมูล: ${esc(m.scope)} · ออกรายงานเมื่อ ${esc(nowTxt())}</p></div>
+            <div class="pk">${m.kpis.map(k => `<div><small>${esc(k.l)}</small><b>${esc(k.v)}</b></div>`).join('')}</div>
+            ${secs}
+            <div class="pf">${truncNote ? esc(truncNote) + ' · ' : ''}Executive Pro v${esc(V4.version)}</div></div>`;
+    }
+    function toAoa(m) {
+        const out = [[m.title], ['ขอบเขตข้อมูล: ' + m.scope], ['ออกรายงานเมื่อ ' + nowTxt()], []];
+        m.kpis.forEach(k => out.push([k.l, k.v]));
+        out.push([]);
+        m.sections.forEach(s => { if (s.h) out.push([s.h]); out.push(s.cols.map(c => c.h)); s.rows.forEach(r => out.push(r.map((v, i) => s.cols[i].n ? (v === null || v === '' ? '' : Number(v)) : v))); out.push(s.foot.map((v, i) => s.cols[i].n && v !== '' ? Number(v) : v)); out.push([]); });
+        return out;
+    }
+    function toCsv(m) {
+        const q2 = v => { v = v == null ? '' : String(v); return /[",\n]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; };
+        return '﻿' + toAoa(m).map(r => r.map(q2).join(',')).join('\r\n');
+    }
+    function download(blob, name) {
+        const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click(); a.remove();
+        setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+    }
+    async function toXlsx(m, name) {
+        await loadScriptOnce('https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js');
+        const wb = XLSX.utils.book_new(), used = new Set();
+        const addSheet = (aoa, nm, widths) => {
+            let n = String(nm).replace(/[\\/?*\[\]:]/g, ' ').slice(0, 28) || 'Sheet', i = 2; while (used.has(n)) n = n.slice(0, 25) + ' ' + (i++); used.add(n);
+            const ws = XLSX.utils.aoa_to_sheet(aoa); if (widths) ws['!cols'] = widths.map(w => ({ wch: w }));
+            XLSX.utils.book_append_sheet(wb, ws, n);
+        };
+        if (m.sections.length === 1) {
+            const s = m.sections[0];
+            addSheet(toAoa(m), m.title.slice(0, 28), s.cols.map(c => c.n ? 14 : (c.a === 'l' ? 34 : 13)));
+        } else {
+            addSheet([[m.title], ['ขอบเขตข้อมูล: ' + m.scope], ['ออกรายงานเมื่อ ' + nowTxt()], [], ...m.kpis.map(k => [k.l, k.v])], 'สรุปภาพรวม', [38, 26]);
+            m.sections.forEach(s => addSheet([[s.h], s.cols.map(c => c.h), ...s.rows.map(r => r.map((v, i) => s.cols[i].n && v !== '' ? Number(v) : v)), s.foot.map((v, i) => s.cols[i].n && v !== '' ? Number(v) : v)], s.h, s.cols.map(c => c.n ? 14 : (c.a === 'l' ? 34 : 13))));
+        }
+        XLSX.writeFile(wb, name);
+    }
+    async function toPng(m) {
+        await loadScriptOnce('https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js');
+        const stage = document.getElementById('offscreenReportStage');
+        stage.innerHTML = `<div id="v4Snap" style="width:${m.sections[0].cols.length > 9 ? 1300 : 1100}px;background:#fff">${paperHtml(m, { maxRows: 220, pngNote: true })}</div>`;
+        const el = document.getElementById('v4Snap');
+        try {
+            const canvas = await html2canvas(el, { scale: Math.min(2, 14000 / Math.max(1, el.offsetHeight)), useCORS: true, backgroundColor: '#ffffff', onclone: d => d.documentElement.classList.remove('dark') });
+            return await new Promise(r => canvas.toBlob(r, 'image/png'));
+        } finally { stage.innerHTML = ''; }
+    }
+    function printHtml(m) {
+        const f = document.createElement('iframe'); f.style.cssText = 'position:fixed;right:0;bottom:0;width:0;height:0;border:0';
+        document.body.appendChild(f);
+        const d = f.contentDocument; d.open();
+        d.write(`<!DOCTYPE html><html lang="th"><head><meta charset="utf-8"><title>${esc(m.title)}</title><link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;600;800&display=swap" rel="stylesheet"><style>${PAPER_CSS}</style></head><body>${paperHtml(m)}</body></html>`);
+        d.close();
+        const go = () => { try { f.contentWindow.focus(); f.contentWindow.print(); } catch (e) { } setTimeout(() => f.remove(), 60000); };
+        if (d.fonts && d.fonts.ready) Promise.race([d.fonts.ready, new Promise(r => setTimeout(r, 1500))]).then(() => setTimeout(go, 120)); else setTimeout(go, 600);
+    }
+
+    /* ---------------- หน้าต่างศูนย์ส่งออก ---------------- */
+    V4.openExport = function (kind, opt) {
+        opt = opt || {};
+        if (!KINDS[kind]) kind = 'general';
+        const st = { kind, content: opt.content || 'detail', fmt: opt.format || 'png', all: false, model: null, png: null, busy: false, seq: 0 };
+        const seg = (id, items) => `<div class="v4-seg" id="${id}">${items.map(([v, l, ic]) => `<button type="button" data-v="${v}">${ic ? `<i class="fas ${ic}"></i> ` : ''}${l}</button>`).join('')}</div>`;
+        const sh = V4.sheet({
+            title: 'ส่งออกรายงาน — ดูตัวอย่างก่อนบันทึก', sub: KINDS[kind].label, icon: 'fa-file-export', size: 'w-xl',
+            body: `<div class="space-y-3">
+                <div class="flex flex-wrap gap-x-5 gap-y-2.5 items-center">
+                    <div><div class="text-[10.5px] font-bold text-slate-500 mb-1">รายงาน</div>${seg('exKind', [['general', 'บัญชีกองกลาง'], ['shooting', 'สรุปสนามยิงปืน'], ['ledger', 'รายการสนามยิงปืน'], ['all', 'สรุปผลภาพรวม']])}</div>
+                    <div id="exContentWrap"><div class="text-[10.5px] font-bold text-slate-500 mb-1">เนื้อหา</div>${seg('exContent', [['detail', 'รายละเอียด'], ['monthly', 'สรุปรายเดือน']])}</div>
+                    <div><div class="text-[10.5px] font-bold text-slate-500 mb-1">ขอบเขตข้อมูล</div>${seg('exScope', [['cur', 'ตามตัวกรองปัจจุบัน'], ['all', 'ทั้งหมด']])}</div>
+                    <div><div class="text-[10.5px] font-bold text-slate-500 mb-1">รูปแบบไฟล์</div>${seg('exFmt', [['png', 'ภาพ PNG', 'fa-image'], ['pdf', 'PDF / พิมพ์', 'fa-file-pdf'], ['xlsx', 'Excel', 'fa-file-excel'], ['csv', 'CSV', 'fa-file-csv']])}</div>
+                </div>
+                <div class="flex items-center justify-between"><span class="v4-tag info" id="exInfo">—</span><span class="text-[10.5px] text-slate-500" id="exHint"></span></div>
+                <div class="v4-prev-wrap" id="exPrev"></div>
+            </div>`,
+            foot: `<span class="text-[10.5px] text-slate-500 mr-auto" id="exFoot"></span>
+                <button type="button" class="v4-btn ghost" data-cancel>ยกเลิก</button>
+                <button type="button" class="v4-btn line hidden" id="exShare"><i class="fas fa-share-nodes"></i> แชร์</button>
+                <button type="button" class="v4-btn ok" id="exGo"><i class="fas fa-download"></i> ยืนยันส่งออก</button>`
+        });
+        const sync = () => {
+            ['exKind:kind', 'exContent:content', 'exScope:scope', 'exFmt:fmt'].forEach(p => {
+                const [id, key] = p.split(':'); sh.qa('#' + id + ' button').forEach(b => {
+                    const cur = key === 'scope' ? (st.all ? 'all' : 'cur') : st[key]; b.classList.toggle('on', b.dataset.v === cur);
+                });
+            });
+            sh.q('#exContentWrap').style.display = st.kind === 'all' ? 'none' : '';
+            sh.q('#exHint').textContent = { png: 'ภาพตรงกับตัวอย่างด้านล่าง', pdf: 'จะเปิดหน้าพิมพ์ — เลือก "บันทึกเป็น PDF"', xlsx: 'ไฟล์ .xlsx แก้ไขต่อได้', csv: 'เปิดด้วย Excel ได้ (UTF-8)' }[st.fmt];
+        };
+        const render = async () => {
+            const my = ++st.seq; sync();
+            const prev = sh.q('#exPrev'); prev.innerHTML = '<div class="text-center py-10 text-slate-500 text-xs"><i class="fas fa-circle-notch fa-spin mr-2"></i> กำลังสร้างตัวอย่าง...</div>';
+            sh.q('#exGo').disabled = true; sh.q('#exShare').classList.add('hidden'); st.png = null;
+            try {
+                const fn = st.kind === 'all' ? KINDS.all.detail : KINDS[st.kind][st.content];
+                st.model = withAllScope(st.all, fn);
+                const total = st.model.sections.reduce((s, x) => s + x.rows.length, 0);
+                sh.q('#exInfo').innerHTML = `<i class="fas fa-list-ol"></i> ${total.toLocaleString()} แถว`;
+                sh.q('#exFoot').textContent = 'ขอบเขต: ' + st.model.scope.slice(0, 90);
+                if (st.fmt === 'png') {
+                    const blob = await toPng(st.model); if (my !== st.seq) return;
+                    st.png = blob; const url = URL.createObjectURL(blob);
+                    prev.innerHTML = `<img src="${url}" alt="ตัวอย่างภาพที่จะส่งออก" style="max-width:100%;border-radius:12px;box-shadow:0 10px 30px -12px rgba(15,23,42,.4);margin:0 auto;display:block">`;
+                    try { if (navigator.canShare && navigator.canShare({ files: [new File([blob], 'x.png', { type: 'image/png' })] })) sh.q('#exShare').classList.remove('hidden'); } catch (e) { }
+                } else {
+                    prev.innerHTML = paperHtml(st.model, { maxRows: 60, keep: 'head' });
+                }
+                sh.q('#exGo').disabled = false;
+            } catch (e) { if (my === st.seq) prev.innerHTML = `<div class="text-center py-10 text-rose-500 text-xs"><i class="fas fa-triangle-exclamation mr-1"></i> สร้างตัวอย่างไม่สำเร็จ: ${esc(e.message || e)}</div>`; }
+        };
+        const bind = (id, key) => sh.qa('#' + id + ' button').forEach(b => b.onclick = () => {
+            if (key === 'scope') st.all = b.dataset.v === 'all'; else st[key] = b.dataset.v;
+            if (key === 'kind' && st.kind === 'all') st.content = 'detail';
+            render();
+        });
+        bind('exKind', 'kind'); bind('exContent', 'content'); bind('exScope', 'scope'); bind('exFmt', 'fmt');
+        sh.q('[data-cancel]').onclick = () => sh.close();
+        sh.q('#exShare').onclick = async () => { try { await navigator.share({ files: [new File([st.png], st.model.file + '.png', { type: 'image/png' })], title: st.model.title }); } catch (e) { } };
+        sh.q('#exGo').onclick = async () => {
+            if (!st.model) return;
+            const name = `${st.model.file}_${todayStr()}`; const go = sh.q('#exGo'); const old = go.innerHTML;
+            go.disabled = true; go.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> กำลังสร้างไฟล์...';
+            try {
+                if (st.fmt === 'png') download(st.png || await toPng(st.model), name + '.png');
+                else if (st.fmt === 'csv') download(new Blob([toCsv(st.model)], { type: 'text/csv;charset=utf-8' }), name + '.csv');
+                else if (st.fmt === 'xlsx') await toXlsx(st.model, name + '.xlsx');
+                else printHtml(st.model);
+                sh.close();
+                V4.popup({ type: 'ok', title: st.fmt === 'pdf' ? 'เปิดหน้าพิมพ์แล้ว' : 'ส่งออกสำเร็จ', msg: st.fmt === 'pdf' ? 'เลือก "บันทึกเป็น PDF" ในหน้าต่างพิมพ์' : name + '.' + st.fmt, confetti: st.fmt !== 'pdf' });
+            } catch (e) { go.disabled = false; go.innerHTML = old; V4.popup({ type: 'bad', title: 'ส่งออกไม่สำเร็จ', msg: (e && e.message) || 'กรุณาลองใหม่ (ไฟล์ Excel/ภาพต้องใช้อินเทอร์เน็ตโหลดตัวช่วยครั้งแรก)', block: true }); }
+        };
+        render();
+        return sh;
+    };
+
+    /* ---------------- เชื่อมปุ่มส่งออกเดิมทั้งหมดเข้าศูนย์ส่งออก (ทุกการส่งออกมีตัวอย่างก่อน) ---------------- */
+    window.printReport = type => V4.openExport(type, { format: 'pdf', content: (type === 'general' ? generalViewMode : shootingViewMode) === 'summary' ? 'monthly' : 'detail' });
+    window.printLedger = () => V4.openExport('ledger', { format: 'pdf' });
+    window.exportLedgerImage = () => V4.openExport('ledger', { format: 'png' });
+    window.exportLedgerExcel = () => V4.openExport('ledger', { format: 'xlsx' });
+    window.exportCurrentAccountCSV = () => {
+        const t = document.getElementById('quickShareType').value;
+        document.getElementById('quickShareModal').classList.add('hidden');
+        V4.openExport(t === 'general' ? 'general' : 'shooting', { format: 'csv' });
+    };
+
+    /* ---------------- ตัวอย่างก่อนดาวน์โหลดไฟล์สำรอง ---------------- */
+    const _backup = window.exportBackupJSON;
+    window.exportBackupJSON = function () {
+        const nG = appData.generalRecords.length, nS = appData.shootingRecords.length, nL = Array.isArray(appData.rangeLedger) ? appData.rangeLedger.length : 0, nF = (appData.fieldOrders || []).length;
+        const sh = V4.sheet({
+            title: 'ดาวน์โหลดไฟล์สำรองข้อมูล', sub: 'ตรวจสอบรายการก่อนบันทึกลงเครื่อง', icon: 'fa-cloud-arrow-down', size: 'w-md',
+            body: `<div class="v4-card"><table class="v4-table"><thead><tr><th>ชุดข้อมูล</th><th>จำนวน</th></tr></thead><tbody>
+                <tr><td class="l">บัญชีกองกลาง</td><td>${nG.toLocaleString()} รายการ</td></tr>
+                <tr><td class="l">สรุปสนามยิงปืน</td><td>${nS.toLocaleString()} รายการ</td></tr>
+                <tr><td class="l">รายการสนามยิงปืน (ตาราง)</td><td>${nL.toLocaleString()} แถว</td></tr>
+                <tr><td class="l">ออเดอร์เจ้าหน้าที่สนาม</td><td>${nF.toLocaleString()} รายการ</td></tr></tbody></table></div>
+                <p class="text-[11px] text-slate-500 mt-3">ไฟล์ JSON ใช้นำเข้ากลับได้ที่ปุ่ม "นำเข้าไฟล์สำรอง" บนหน้าแรกของผู้ดูแล</p>`,
+            foot: '<button type="button" class="v4-btn ghost" data-c>ยกเลิก</button><button type="button" class="v4-btn ok" data-g><i class="fas fa-download"></i> ยืนยันดาวน์โหลด</button>'
+        });
+        sh.q('[data-c]').onclick = () => sh.close();
+        sh.q('[data-g]').onclick = () => { _backup(); V4.lsS('execpro_v4_lastBackup', Date.now()); sh.close(); };
+    };
+    V4.exportKinds = KINDS;
+})();
+
+(function () {
+    /* ==========================================================================
+       ส่วน D: นำเข้าข้อมูลจาก Excel / สรุปรายเดือนสนามยิงปืน (แก้ไข-เลื่อนลำดับ) / ดึงจากรายการสนามยิงปืน / ตรวจสุขภาพข้อมูล
+       ========================================================================== */
+    const V4 = window.V4, q = V4.q, esc = V4.esc, money = V4.money, moneyS = V4.moneyS, int0 = V4.int0;
+    const XL_SHOOT = [{"id": "xl69-carry", "month": "ยกยอดมา", "year": "2569", "adjType": "income_carry", "expDesc": "ยกยอดปี 2568", "expAmt": 199855.0, "bTrQ": 0, "bBCQ": 0, "tTrQ": 0, "tBCQ": 0, "seq": 1, "src": "excel69"}, {"id": "xl69-01-s", "month": "ม.ค.", "year": "2569", "adjType": "expense", "expDesc": "", "expAmt": 0, "bTrQ": 6.0, "bBCQ": 2.0, "tTrQ": 3.0, "tBCQ": 4.0, "seq": 1, "src": "excel69"}, {"id": "xl69-01-x", "month": "ม.ค.", "year": "2569", "adjType": "expense", "expDesc": "ซื้อกระสุน 10000 นัด", "expAmt": 167000.0, "bTrQ": 0, "bBCQ": 0, "tTrQ": 0, "tBCQ": 0, "seq": 2, "src": "excel69"}, {"id": "xl69-02-s", "month": "ก.พ.", "year": "2569", "adjType": "expense", "expDesc": "", "expAmt": 0, "bTrQ": 1.0, "bBCQ": 0.0, "tTrQ": 3.0, "tBCQ": 0.0, "seq": 1, "src": "excel69"}, {"id": "xl69-03-s", "month": "มี.ค.", "year": "2569", "adjType": "expense", "expDesc": "", "expAmt": 0, "bTrQ": 2.0, "bBCQ": 1.0, "tTrQ": 4.0, "tBCQ": 0.0, "seq": 1, "src": "excel69"}, {"id": "xl69-04-s", "month": "เม.ย.", "year": "2569", "adjType": "expense", "expDesc": "", "expAmt": 0, "bTrQ": 24.0, "bBCQ": 0.0, "tTrQ": 90.0, "tBCQ": 0.0, "seq": 1, "src": "excel69"}, {"id": "xl69-05-s", "month": "พ.ค.", "year": "2569", "adjType": "expense", "expDesc": "", "expAmt": 0, "bTrQ": 4.0, "bBCQ": 5.0, "tTrQ": 15.0, "tBCQ": 2.0, "seq": 1, "src": "excel69"}, {"id": "xl69-06-s", "month": "มิ.ย.", "year": "2569", "adjType": "expense", "expDesc": "", "expAmt": 0, "bTrQ": 63.0, "bBCQ": 1.0, "tTrQ": 117.0, "tBCQ": 4.0, "seq": 1, "src": "excel69"}, {"id": "xl69-07-s", "month": "ก.ค.", "year": "2569", "adjType": "expense", "expDesc": "", "expAmt": 0, "bTrQ": 5.0, "bBCQ": 3.0, "tTrQ": 18.0, "tBCQ": 5.0, "seq": 1, "src": "excel69"}, {"id": "xl69-07-x", "month": "ก.ค.", "year": "2569", "adjType": "expense", "expDesc": "ค่าเป้ายิงปืนพี่แซนด์", "expAmt": 15000.0, "bTrQ": 0, "bBCQ": 0, "tTrQ": 0, "tBCQ": 0, "seq": 2, "src": "excel69"}, {"id": "xl69-08-s", "month": "ส.ค.", "year": "2569", "adjType": "expense", "expDesc": "", "expAmt": 0, "bTrQ": 6.0, "bBCQ": 1.0, "tTrQ": 0.0, "tBCQ": 0.0, "seq": 1, "src": "excel69"}, {"id": "xl69-09-s", "month": "ก.ย.", "year": "2569", "adjType": "expense", "expDesc": "", "expAmt": 0, "bTrQ": 0.0, "bBCQ": 2.0, "tTrQ": 8.0, "tBCQ": 0.0, "seq": 1, "src": "excel69"}, {"id": "xl69-10-s", "month": "ต.ค.", "year": "2569", "adjType": "expense", "expDesc": "", "expAmt": 0, "bTrQ": 0.0, "bBCQ": 0.0, "tTrQ": 30.0, "tBCQ": 0.0, "seq": 1, "src": "excel69"}, {"id": "xl69-11-s", "month": "พ.ย.", "year": "2569", "adjType": "expense", "expDesc": "", "expAmt": 0, "bTrQ": 1.0, "bBCQ": 0.0, "tTrQ": 0.0, "tBCQ": 1.0, "seq": 1, "src": "excel69"}];
+    const XL_CENTRAL = [{"id": "cg-001", "date": "2025-05-08", "desc": "เงินทำงาน ปอท.", "inCash": 0, "inAcc": 6583.0, "outCash": 0, "outAcc": 0, "note": "รับ 17,000 หักค่าใช้จ่าย เหลือ 13,167", "attachment": "", "src": "excelcg"}, {"id": "cg-002", "date": "2025-05-16", "desc": "สอน สรรพาสามิตร", "inCash": 1000.0, "inAcc": 0, "outCash": 0, "outAcc": 0, "note": "", "attachment": "", "src": "excelcg"}, {"id": "cg-003", "date": "2025-05-16", "desc": "เงินในกล่อง", "inCash": 4115.0, "inAcc": 0, "outCash": 0, "outAcc": 0, "note": "", "attachment": "", "src": "excelcg"}, {"id": "cg-004", "date": "2025-05-26", "desc": "ค่าซักผ้า", "inCash": 0, "inAcc": 0, "outCash": 0, "outAcc": 568.0, "note": "", "attachment": "", "src": "excelcg"}, {"id": "cg-005", "date": "2025-05-26", "desc": "ในกล่อง", "inCash": 3000.0, "inAcc": 0, "outCash": 4000.0, "outAcc": 0, "note": "ใช้งานอะไรไม่รู้น่าจะสาธิตเงินสด ลืม", "attachment": "", "src": "excelcg"}, {"id": "cg-006", "date": "2025-07-30", "desc": "IDPA PAD", "inCash": 0, "inAcc": 0, "outCash": 0, "outAcc": 2889.0, "note": "", "attachment": "", "src": "excelcg"}, {"id": "cg-007", "date": "2025-08-02", "desc": "เงิน กก.5", "inCash": 2000.0, "inAcc": 0, "outCash": 0, "outAcc": 0, "note": "จับคดี ชนตำรวจ", "attachment": "", "src": "excelcg"}, {"id": "cg-008", "date": "2025-08-03", "desc": "เงินสวาท", "inCash": 4000.0, "inAcc": 0, "outCash": 0, "outAcc": 0, "note": "", "attachment": "", "src": "excelcg"}, {"id": "cg-009", "date": "2025-09-14", "desc": "สอน ปคบ", "inCash": 0, "inAcc": 14000.0, "outCash": 0, "outAcc": 0, "note": "", "attachment": "", "src": "excelcg"}, {"id": "cg-010", "date": "2025-09-12", "desc": "ค่ากระสุน", "inCash": 0, "inAcc": 0, "outCash": 9850.0, "outAcc": 0, "note": "", "attachment": "", "src": "excelcg"}, {"id": "cg-011", "date": "2025-09-15", "desc": "ค่ากระจก", "inCash": 0, "inAcc": 0, "outCash": 0, "outAcc": 11500.0, "note": "", "attachment": "", "src": "excelcg"}, {"id": "cg-012", "date": "2025-09-15", "desc": "รีเซ็ต", "inCash": 0, "inAcc": 0, "outCash": 265.0, "outAcc": 5626.0, "note": "", "attachment": "", "src": "excelcg"}, {"id": "cg-013", "date": "2025-10-29", "desc": "รับโอนจากณัฐ", "inCash": 0, "inAcc": 4050.0, "outCash": 0, "outAcc": 0, "note": "", "attachment": "", "src": "excelcg"}, {"id": "cg-014", "date": "2025-10-29", "desc": "นับจากกล่อง", "inCash": 1265.0, "inAcc": 0, "outCash": 0, "outAcc": 0, "note": "", "attachment": "", "src": "excelcg"}, {"id": "cg-015", "date": "2025-10-30", "desc": "โอนจากสนาม", "inCash": 0, "inAcc": 13000.0, "outCash": 0, "outAcc": 0, "note": "สนามยิงปืนมาช่วย", "attachment": "", "src": "excelcg"}, {"id": "cg-016", "date": "2025-10-30", "desc": "ค่ากระจกรถ", "inCash": 0, "inAcc": 0, "outCash": 0, "outAcc": 17000.0, "note": "กอล์ฟ", "attachment": "", "src": "excelcg"}, {"id": "cg-017", "date": "2025-10-30", "desc": "ทอนค่ากระจก", "inCash": 0, "inAcc": 500.0, "outCash": 0, "outAcc": 0, "note": "", "attachment": "", "src": "excelcg"}, {"id": "cg-018", "date": "2025-12-01", "desc": "เงินเหลือจากแอปลิป", "inCash": 0, "inAcc": 11100.0, "outCash": 0, "outAcc": 0, "note": "", "attachment": "", "src": "excelcg"}, {"id": "cg-019", "date": "2025-12-01", "desc": "เงินเหลือจากส่งผู้ร้ายฯ", "inCash": 22000.0, "inAcc": 0, "outCash": 0, "outAcc": 0, "note": "", "attachment": "", "src": "excelcg"}, {"id": "cg-020", "date": "2025-12-02", "desc": "ค่าข้าวน้อง", "inCash": 0, "inAcc": 0, "outCash": 0, "outAcc": 500.0, "note": "งาน กก.3", "attachment": "", "src": "excelcg"}, {"id": "cg-021", "date": "2025-12-19", "desc": "ค่ากระจกรถ", "inCash": 0, "inAcc": 0, "outCash": 0, "outAcc": 10500.0, "note": "", "attachment": "", "src": "excelcg"}, {"id": "cg-022", "date": "2025-12-22", "desc": "เข้า บช.", "inCash": 0, "inAcc": 22000.0, "outCash": 22000.0, "outAcc": 0, "note": "", "attachment": "", "src": "excelcg"}, {"id": "cg-024", "date": "2026-02-13", "desc": "(ไม่ระบุรายการ)", "inCash": 2740.0, "inAcc": 0, "outCash": 0, "outAcc": 0, "note": "", "attachment": "", "src": "excelcg"}, {"id": "cg-025", "date": "2026-02-13", "desc": "(ไม่ระบุรายการ)", "inCash": 0, "inAcc": 0, "outCash": 3700.0, "outAcc": 0, "note": "ยอดหายไป 500", "attachment": "", "src": "excelcg"}, {"id": "cg-026", "date": "2026-02-23", "desc": "(ไม่ระบุรายการ)", "inCash": 0, "inAcc": 0, "outCash": 0, "outAcc": 2000.0, "note": "เก็ทเบิก", "attachment": "", "src": "excelcg"}, {"id": "cg-027", "date": "2026-03-02", "desc": "(ไม่ระบุรายการ)", "inCash": 5000.0, "inAcc": 0, "outCash": 0, "outAcc": 5000.0, "note": "กดเบิกไปเคสยิงตำรวจทางหลวง/คืนแล้ว", "attachment": "", "src": "excelcg"}, {"id": "cg-028", "date": "2026-03-04", "desc": "ค่าข้าวเคสสวีเดน", "inCash": 0, "inAcc": 0, "outCash": 0, "outAcc": 320.0, "note": "", "attachment": "", "src": "excelcg"}, {"id": "cg-029", "date": "2026-03-27", "desc": "ค่ากาแฟสวาทชาเล้น", "inCash": 0, "inAcc": 0, "outCash": 0, "outAcc": 5000.0, "note": "ให้เก็ท", "attachment": "", "src": "excelcg"}, {"id": "cg-030", "date": "2026-05-19", "desc": "สลับ", "inCash": 4000.0, "inAcc": 0, "outCash": 0, "outAcc": 4000.0, "note": "", "attachment": "", "src": "excelcg"}, {"id": "cg-031", "date": "2026-05-27", "desc": "ค่ากาแฟ", "inCash": 0, "inAcc": 0, "outCash": 0, "outAcc": 456.0, "note": "", "attachment": "", "src": "excelcg"}, {"id": "cg-032", "date": "2026-05-27", "desc": "ค่าซักผ้าปูโต๊ะ", "inCash": 0, "inAcc": 0, "outCash": 0, "outAcc": 100.0, "note": "", "attachment": "", "src": "excelcg"}, {"id": "cg-033", "date": "2026-05-28", "desc": "ค่าอุปกรณ์ดูงาน FBi", "inCash": 0, "inAcc": 0, "outCash": 0, "outAcc": 1186.0, "note": "", "attachment": "", "src": "excelcg"}, {"id": "cg-034", "date": "2026-05-29", "desc": "ค่าของแขกพี่ก้อง FBI", "inCash": 0, "inAcc": 1751.0, "outCash": 0, "outAcc": 0, "note": "", "attachment": "", "src": "excelcg"}, {"id": "cg-035", "date": "2026-06-25", "desc": "ซ่อมมอไซค์", "inCash": 0, "inAcc": 0, "outCash": 0, "outAcc": 1000.0, "note": "", "attachment": "", "src": "excelcg"}, {"id": "cg-036", "date": "2026-07-03", "desc": "ค่าดูงาน", "inCash": 0, "inAcc": 300.0, "outCash": 0, "outAcc": 0, "note": "วปอ.", "attachment": "", "src": "excelcg"}, {"id": "cg-037", "date": "2026-07-03", "desc": "ค่าดูงาน", "inCash": 0, "inAcc": 200.0, "outCash": 0, "outAcc": 0, "note": "วปอ.", "attachment": "", "src": "excelcg"}, {"id": "cg-039", "date": "2026-07-10", "desc": "active สาธิตวัดพระศรี", "inCash": 0, "inAcc": 360.0, "outCash": 0, "outAcc": 0, "note": "", "attachment": "", "src": "excelcg"}, {"id": "cg-040", "date": "2026-07-21", "desc": "ตรวจรับ", "inCash": 9000.0, "inAcc": 0, "outCash": 0, "outAcc": 0, "note": "", "attachment": "", "src": "excelcg"}, {"id": "cg-041", "date": "2026-08-04", "desc": "active", "inCash": 300.0, "inAcc": 0, "outCash": 0, "outAcc": 0, "note": "", "attachment": "", "src": "excelcg"}, {"id": "cg-042", "date": "2026-08-05", "desc": "งานแม่สอด", "inCash": 0, "inAcc": 852.0, "outCash": 0, "outAcc": 0, "note": "", "attachment": "", "src": "excelcg"}, {"id": "cg-043", "date": "2026-08-18", "desc": "วิทยากร รร.สุขุม", "inCash": 0, "inAcc": 960.0, "outCash": 0, "outAcc": 0, "note": "", "attachment": "", "src": "excelcg"}, {"id": "cg-044", "date": "2026-08-21", "desc": "วิทยากร มหิดล", "inCash": 0, "inAcc": 1000.0, "outCash": 0, "outAcc": 0, "note": "", "attachment": "", "src": "excelcg"}, {"id": "cg-045", "date": "2026-08-26", "desc": "วิทยากร มหิดล", "inCash": 0, "inAcc": 1800.0, "outCash": 0, "outAcc": 0, "note": "", "attachment": "", "src": "excelcg"}, {"id": "cg-046", "date": "2026-08-27", "desc": "วิทยากร shrewsbury", "inCash": 0, "inAcc": 1200.0, "outCash": 0, "outAcc": 0, "note": "", "attachment": "", "src": "excelcg"}, {"id": "cg-047", "date": "2026-08-28", "desc": "op กอง 5", "inCash": 1000.0, "inAcc": 0, "outCash": 0, "outAcc": 0, "note": "", "attachment": "", "src": "excelcg"}, {"id": "cg-048", "date": "2026-08-29", "desc": "ไปทำงาน กก.2", "inCash": 0, "inAcc": 0, "outCash": 3567.0, "outAcc": 0, "note": "", "attachment": "", "src": "excelcg"}, {"id": "cg-049", "date": "2026-08-31", "desc": "ทำงาน กก.2", "inCash": 0, "inAcc": 3567.0, "outCash": 0, "outAcc": 0, "note": "", "attachment": "", "src": "excelcg"}, {"id": "cg-050", "date": "2026-08-31", "desc": "เข้าบัญชี", "inCash": 0, "inAcc": 200.0, "outCash": 200.0, "outAcc": 0, "note": "", "attachment": "", "src": "excelcg"}, {"id": "cg-051", "date": "2026-09-01", "desc": "ย้าย", "inCash": 6000.0, "inAcc": 0, "outCash": 0, "outAcc": 6000.0, "note": "กระสุน", "attachment": "", "src": "excelcg"}, {"id": "cg-052", "date": "2026-09-05", "desc": "active", "inCash": 0, "inAcc": 450.0, "outCash": 0, "outAcc": 0, "note": "", "attachment": "", "src": "excelcg"}, {"id": "cg-053", "date": "2026-09-08", "desc": "ย้าย", "inCash": 2000.0, "inAcc": 0, "outCash": 0, "outAcc": 2000.0, "note": "", "attachment": "", "src": "excelcg"}, {"id": "cg-054", "date": "2026-09-12", "desc": "active", "inCash": 0, "inAcc": 450.0, "outCash": 0, "outAcc": 0, "note": "", "attachment": "", "src": "excelcg"}, {"id": "cg-055", "date": "2026-09-20", "desc": "active", "inCash": 0, "inAcc": 450.0, "outCash": 0, "outAcc": 0, "note": "", "attachment": "", "src": "excelcg"}, {"id": "cg-056", "date": "2026-09-20", "desc": "สลับ", "inCash": 4000.0, "inAcc": 0, "outCash": 0, "outAcc": 4000.0, "note": "กดเป็นเงินสดตอนทำงาน (ย้อนหลัง)", "attachment": "", "src": "excelcg"}, {"id": "cg-057", "date": "2026-10-06", "desc": "สอน ปคบ.", "inCash": 0, "inAcc": 12000.0, "outCash": 0, "outAcc": 0, "note": "", "attachment": "", "src": "excelcg"}, {"id": "cg-058", "date": "2026-10-07", "desc": "active", "inCash": 0, "inAcc": 400.0, "outCash": 0, "outAcc": 0, "note": "", "attachment": "", "src": "excelcg"}, {"id": "cg-059", "date": "2026-10-07", "desc": "active", "inCash": 0, "inAcc": 600.0, "outCash": 0, "outAcc": 0, "note": "อรุณประดิษฐ์", "attachment": "", "src": "excelcg"}, {"id": "cg-060", "date": "2026-10-09", "desc": "active", "inCash": 0, "inAcc": 1000.0, "outCash": 0, "outAcc": 0, "note": "SIIT รังสิต", "attachment": "", "src": "excelcg"}, {"id": "cg-061", "date": "2026-10-13", "desc": "ขายกระสุนลูกแบงค์", "inCash": 1000.0, "inAcc": 0, "outCash": 0, "outAcc": 0, "note": "จากพี่โจ้", "attachment": "", "src": "excelcg"}, {"id": "cg-062", "date": "2026-10-13", "desc": "เบี้ยเลี้ยงครูฝึก", "inCash": 500.0, "inAcc": 0, "outCash": 0, "outAcc": 0, "note": "บย.สส.", "attachment": "", "src": "excelcg"}, {"id": "cg-063", "date": "2026-10-15", "desc": "ค่าแก๊ส", "inCash": 0, "inAcc": 0, "outCash": 1400.0, "outAcc": 0, "note": "บนดาดฟ้า", "attachment": "", "src": "excelcg"}, {"id": "cg-064", "date": "2026-10-15", "desc": "กก.2 บก.ป.", "inCash": 0, "inAcc": 2000.0, "outCash": 0, "outAcc": 0, "note": "ชิงทอง", "attachment": "", "src": "excelcg"}, {"id": "cg-065", "date": "2026-10-19", "desc": "กด", "inCash": 6000.0, "inAcc": 0, "outCash": 0, "outAcc": 6000.0, "note": "", "attachment": "", "src": "excelcg"}, {"id": "cg-066", "date": "2026-10-24", "desc": "เข้าบัญชี", "inCash": 0, "inAcc": 20000.0, "outCash": 20000.0, "outAcc": 0, "note": "", "attachment": "", "src": "excelcg"}, {"id": "cg-067", "date": "2026-10-27", "desc": "Active", "inCash": 100.0, "inAcc": 300.0, "outCash": 0, "outAcc": 0, "note": "Tilleke & gibbins international (สำนักงานกฎหมาย)", "attachment": "", "src": "excelcg"}, {"id": "cg-068", "date": "2026-10-27", "desc": "กด", "inCash": 4500.0, "inAcc": 0, "outCash": 0, "outAcc": 4500.0, "note": "", "attachment": "", "src": "excelcg"}, {"id": "cg-069", "date": "2026-11-04", "desc": "กก.3 บก.ป.", "inCash": 0, "inAcc": 1000.0, "outCash": 0, "outAcc": 0, "note": "เคสเข้าระบบ Crime", "attachment": "", "src": "excelcg"}, {"id": "cg-070", "date": "2026-11-06", "desc": "Active", "inCash": 0, "inAcc": 210.0, "outCash": 0, "outAcc": 0, "note": "magnet นนทบุรี มะขาม", "attachment": "", "src": "excelcg"}, {"id": "cg-071", "date": "2026-11-06", "desc": "Active", "inCash": 0, "inAcc": 210.0, "outCash": 0, "outAcc": 0, "note": "บิว / รร.หนองเสือวิทยาคม", "attachment": "", "src": "excelcg"}, {"id": "cg-072", "date": "2026-11-06", "desc": "Active", "inCash": 0, "inAcc": 210.0, "outCash": 0, "outAcc": 0, "note": "นิค", "attachment": "", "src": "excelcg"}, {"id": "cg-073", "date": "2026-11-09", "desc": "Active", "inCash": 0, "inAcc": 140.0, "outCash": 0, "outAcc": 0, "note": "บิว", "attachment": "", "src": "excelcg"}, {"id": "cg-074", "date": "2026-11-09", "desc": "Active", "inCash": 0, "inAcc": 140.0, "outCash": 0, "outAcc": 0, "note": "ต้น", "attachment": "", "src": "excelcg"}, {"id": "cg-075", "date": "2026-11-09", "desc": "Active", "inCash": 0, "inAcc": 140.0, "outCash": 0, "outAcc": 0, "note": "จา", "attachment": "", "src": "excelcg"}, {"id": "cg-076", "date": "2026-11-09", "desc": "Active", "inCash": 0, "inAcc": 140.0, "outCash": 0, "outAcc": 0, "note": "ฟลุ๊ค", "attachment": "", "src": "excelcg"}];
+    const XL_FIXES = [{"row": "1", "what": "ปี 1968 → 2025", "was": "1968-05-08", "now": "2025-05-08"}, {"row": "2", "what": "ปี 1968 → 2025", "was": "1968-05-16", "now": "2025-05-16"}, {"row": "3", "what": "ปี 1968 → 2025", "was": "1968-05-16", "now": "2025-05-16"}, {"row": "9", "what": "ปี 1968 → 2025", "was": "1968-09-14", "now": "2025-09-14"}, {"row": "10", "what": "ปี 1968 → 2025", "was": "1968-09-12", "now": "2025-09-12"}, {"row": "12", "what": "วันที่ว่าง → ใช้วันที่ของรายการก่อนหน้า", "was": null, "now": "2025-09-15"}, {"row": "24", "what": "รายการว่าง → \"(ไม่ระบุรายการ)\"", "was": null, "now": "(ไม่ระบุรายการ)"}, {"row": "25", "what": "วันที่ย้อนหลังผิดลำดับ → ใช้วันที่ของรายการก่อนหน้า", "was": "2025-07-03", "now": "2026-02-13"}, {"row": "25", "what": "รายการว่าง → \"(ไม่ระบุรายการ)\"", "was": null, "now": "(ไม่ระบุรายการ)"}, {"row": "26", "what": "รายการว่าง → \"(ไม่ระบุรายการ)\"", "was": null, "now": "(ไม่ระบุรายการ)"}, {"row": "27", "what": "รายการว่าง → \"(ไม่ระบุรายการ)\"", "was": null, "now": "(ไม่ระบุรายการ)"}, {"row": "31", "what": "ปี 1969 → 2026", "was": "1969-05-27", "now": "2026-05-27"}, {"row": "40", "what": "ปี 1969 → 2026", "was": "1969-07-21", "now": "2026-07-21"}, {"row": "64", "what": "ปี 1969 → 2026", "was": "1969-10-15", "now": "2026-10-15"}, {"row": "65", "what": "ปี 1969 → 2026", "was": "1969-10-19", "now": "2026-10-19"}, {"row": "67", "what": "ปี 1969 → 2026", "was": "1969-10-27", "now": "2026-10-27"}];
+    const BASELINE_END = '2026-11-06';   // ไฟล์สรุปปี 2569 ครอบคลุมรายการถึงวันที่นี้ (ตรงกับรายการล่าสุดในตารางสนามยิงปืนที่ยอดเท่ากับเดือน พ.ย.)
+    const LD_CUT_KEY = 'execpro_v4_ldcut';
+    const MON = thMonths;
+    const R2 = n => Math.round((Number(n) || 0) * 100) / 100;
+    const nz = v => (Number(v) || 0);
+
+    /* ---------- คำนวณซ้ำด้วยกติกาเดียวกับหน้าจอ (ใช้โชว์ยอดก่อน-หลังนำเข้า) ---------- */
+    function sortShoot(arr) {
+        return arr.slice().sort((a, b) => {
+            const ya = parseInt(a.year) || 2569, yb = parseInt(b.year) || 2569; if (ya !== yb) return ya - yb;
+            const ma = monthOrderMap[a.month] !== undefined ? monthOrderMap[a.month] : 99, mb = monthOrderMap[b.month] !== undefined ? monthOrderMap[b.month] : 99; if (ma !== mb) return ma - mb;
+            const sa = a.seq === undefined || a.seq === null ? 1e9 : Number(a.seq), sb = b.seq === undefined || b.seq === null ? 1e9 : Number(b.seq); if (sa !== sb) return sa - sb;
+            return String(a.id).localeCompare(String(b.id), undefined, { numeric: true });
+        });
+    }
+    function replayShoot(recs) {
+        let bal = 0;
+        const rows = sortShoot(recs).map(r => {
+            const sales = (nz(r.bTrQ) + nz(r.bBCQ)) * 1000 + (nz(r.tTrQ) + nz(r.tBCQ)) * 15, e = nz(r.expAmt);
+            const adj = r.adjType || (r.month === 'ยกยอดมา' ? 'income_carry' : 'expense');
+            if (e > 0) bal += adj === 'income_carry' ? e : -e;
+            bal += sales; return { r, sales, bal };
+        });
+        return { bal, rows };
+    }
+    function replayGeneral(recs) {
+        const s = recs.slice().sort((a, b) => { const da = parseLocalYMD(a.date) || '0000', db = parseLocalYMD(b.date) || '0000'; if (da !== db) return da < db ? -1 : 1; return String(a.id).localeCompare(String(b.id), undefined, { numeric: true }); });
+        let c = 0, ac = 0; const rows = s.map(r => { c += nz(r.inCash) - nz(r.outCash); ac += nz(r.inAcc) - nz(r.outAcc); return { r, c, a: ac, t: c + ac }; });
+        return { c, a: ac, t: c + ac, rows };
+    }
+    V4.sortShoot = sortShoot; V4.replayShoot = replayShoot;
+
+    async function afterDataChange() {
+        sanitizeData(); populateFilterDropdowns(); updateHomeSummaryCards();
+        try { refreshCurrentView(); } catch (e) { }
+        V4.afterSync && V4.afterSync();
+    }
+    function downloadBackupSilently() {
+        const payload = { app: 'Executive Pro', note: 'สำรองอัตโนมัติก่อนนำเข้าข้อมูล', exportedAt: new Date().toISOString(), generalRecords: appData.generalRecords, shootingRecords: appData.shootingRecords, rangeLedger: appData.rangeLedger, rangeMeta: appData.rangeMeta };
+        const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+        const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `ExecutivePro_Backup_ก่อนนำเข้า_${new Date().toISOString().slice(0, 16).replace(/[:T]/g, '-')}.json`;
+        document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+    }
+
+    /* ---------- ศูนย์นำเข้าข้อมูล ---------- */
+    V4.openImport = function () {
+        if (!session || session.role !== 'admin') return V4.popup({ type: 'warn', title: 'เฉพาะผู้ดูแลระบบ', msg: 'กรุณาเข้าสู่ระบบผู้ดูแลก่อนนำเข้าข้อมูล', block: true });
+        const sFin = replayShoot(XL_SHOOT).bal, gFin = replayGeneral(XL_CENTRAL);
+        const sHave = appData.shootingRecords.filter(r => String(r.src) === 'excel69').length, gHave = appData.generalRecords.filter(r => String(r.src) === 'excelcg').length;
+        const sh = V4.sheet({
+            title: 'นำเข้าข้อมูลจากไฟล์ Excel', sub: 'ทุกขั้นตอนมีตัวอย่างให้ตรวจก่อนลงข้อมูลจริง', icon: 'fa-file-import', size: 'w-lg', foot: false,
+            body: `<div class="grid md:grid-cols-2 gap-3">
+                <div class="v4-card flex flex-col gap-2"><div class="flex items-center gap-2"><div class="v4-sh-ic" style="background:linear-gradient(135deg,#059669,#10b981)"><i class="fas fa-crosshairs"></i></div><div><div class="font-extrabold text-[13px]">สรุปบัญชีสนามยิงปืน ปี 2569</div><div class="text-[11px] text-slate-500">ยกยอดปี 2568 + ม.ค.–พ.ย. 2569</div></div></div>
+                    <div class="text-[11.5px]">${XL_SHOOT.length} รายการ · คงเหลือสุดท้าย <b>${money(sFin)}</b> บาท</div>
+                    <div>${sHave ? '<span class="v4-tag ok"><i class="fas fa-check"></i> นำเข้าแล้ว ' + sHave + ' รายการ</span>' : '<span class="v4-tag warn">ยังไม่ได้นำเข้า</span>'}</div>
+                    <div class="text-[10.5px] text-slate-500">ลงข้อมูลก่อน แล้วค่อยดึงสรุปต่อจากรายการสนามยิงปืน</div>
+                    <button type="button" class="v4-btn ok mt-auto" data-imp="shoot"><i class="fas fa-eye"></i> ดูตัวอย่างและนำเข้า</button></div>
+                <div class="v4-card flex flex-col gap-2"><div class="flex items-center gap-2"><div class="v4-sh-ic"><i class="fas fa-landmark"></i></div><div><div class="font-extrabold text-[13px]">บัญชีกองกลาง (ปัจจุบัน)</div><div class="text-[11px] text-slate-500">ตามไฟล์ "เงินส่วนกลาง" ถึง 9 พ.ย. 2569</div></div></div>
+                    <div class="text-[11.5px]">${XL_CENTRAL.length} รายการ · คงเหลือ <b>${money(gFin.t)}</b> (สด ${int0(gFin.c)} / บัญชี ${int0(gFin.a)})</div>
+                    <div>${gHave ? '<span class="v4-tag ok"><i class="fas fa-check"></i> นำเข้าแล้ว ' + gHave + ' รายการ</span>' : '<span class="v4-tag warn">ยังไม่ได้นำเข้า</span>'}</div>
+                    <div class="text-[10.5px] text-slate-500">แก้ปีที่พิมพ์ผิดในไฟล์ (1968/1969 → 2568/2569) ให้อัตโนมัติ</div>
+                    <button type="button" class="v4-btn primary mt-auto" data-imp="central"><i class="fas fa-eye"></i> ดูตัวอย่างและนำเข้า</button></div>
+            </div>
+            <div class="mt-3 flex justify-end"><button type="button" class="v4-btn ghost" data-x2>ปิด</button></div>`
+        });
+        sh.q('[data-x2]').onclick = () => sh.close();
+        sh.qa('[data-imp]').forEach(b => b.onclick = () => { sh.close(); previewImport(b.dataset.imp); });
+    };
+
+    function previewImport(kind) {
+        const isS = kind === 'shoot';
+        const st = { mode: 'replace', backup: true };
+        const incoming = isS ? XL_SHOOT : XL_CENTRAL;
+        const existing = isS ? appData.shootingRecords : appData.generalRecords;
+        const sh = V4.sheet({
+            title: isS ? 'ตัวอย่างนำเข้า: สรุปบัญชีสนามยิงปืน 2569' : 'ตัวอย่างนำเข้า: บัญชีกองกลาง', sub: `${incoming.length} รายการจากไฟล์ Excel`, icon: 'fa-file-import', size: 'w-xl',
+            body: `<div class="space-y-3"><div class="flex flex-wrap items-center gap-3"><div class="v4-seg" id="impMode"><button type="button" data-v="replace">${isS ? 'แทนที่ข้อมูลปี 2569 เดิม' : 'แทนที่ข้อมูลเดิมทั้งหมด'}</button><button type="button" data-v="merge">เพิ่มเฉพาะรายการที่ยังไม่มี</button></div>
+                <label class="v4-remember !mt-0"><input type="checkbox" id="impBak" class="hidden" checked><span class="v4-switch"></span> ดาวน์โหลดไฟล์สำรองก่อนนำเข้า</label></div>
+                <div id="impImpact"></div>
+                <div class="v4-prev-wrap" style="max-height:44vh"><div id="impTbl"></div></div></div>`,
+            foot: '<button type="button" class="v4-btn ghost" data-c>ยกเลิก</button><button type="button" class="v4-btn ok" id="impGo"><i class="fas fa-file-import"></i> ยืนยันนำเข้า</button>'
+        });
+        const paint = () => {
+            sh.qa('#impMode button').forEach(b => b.classList.toggle('on', b.dataset.v === st.mode));
+            const have = new Set(existing.map(r => String(r.id)));
+            let after, removed, added, warn = '';
+            if (isS) {
+                removed = st.mode === 'replace' ? existing.filter(r => String(r.year || '2569') === '2569' && r.src !== 'ledger') : [];
+                const rm = new Set(removed.map(r => String(r.id)));
+                const add = incoming.filter(r => st.mode === 'replace' || !have.has(String(r.id))); added = add;
+                after = replayShoot(existing.filter(r => !rm.has(String(r.id))).concat(add));
+            } else {
+                removed = st.mode === 'replace' ? existing.slice() : [];
+                const add = incoming.filter(r => st.mode === 'replace' || !have.has(String(r.id))); added = add;
+                after = replayGeneral((st.mode === 'replace' ? [] : existing).concat(add));
+                const att = removed.filter(r => r.attachment).length; if (att) warn = `<div class="v4-tag warn" style="display:flex;margin-top:6px"><i class="fas fa-paperclip"></i> ${att} รายการเดิมมีสลิปแนบ จะหายไปในโหมดแทนที่ — แนะนำ "เพิ่มเฉพาะรายการที่ยังไม่มี"</div>`;
+            }
+            const beforeBal = isS ? replayShoot(existing).bal : replayGeneral(existing).t, afterBal = isS ? after.bal : after.t;
+            sh.q('#impImpact').innerHTML = `<div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                <div class="v4-card !p-2.5"><div class="text-[10px] text-slate-500 font-bold">ข้อมูลเดิมในระบบ</div><div class="font-extrabold">${existing.length.toLocaleString()} รายการ</div></div>
+                <div class="v4-card !p-2.5"><div class="text-[10px] text-slate-500 font-bold">จะถูกแทนที่/ลบ</div><div class="font-extrabold ${removed.length ? 'text-rose-600' : ''}">${removed.length.toLocaleString()} รายการ</div></div>
+                <div class="v4-card !p-2.5"><div class="text-[10px] text-slate-500 font-bold">จะเพิ่มใหม่</div><div class="font-extrabold text-emerald-600">${added.length.toLocaleString()} รายการ</div></div>
+                <div class="v4-card !p-2.5"><div class="text-[10px] text-slate-500 font-bold">ยอดคงเหลือ ก่อน → หลัง</div><div class="font-extrabold text-[12px]">${int0(beforeBal)} → <span class="text-indigo-600">${int0(afterBal)}</span></div></div></div>${warn}
+                ${!isS && XL_FIXES.length ? `<details class="mt-2 text-[11px]"><summary class="cursor-pointer font-bold text-amber-600">มีข้อมูลในไฟล์ที่ระบบปรับให้อัตโนมัติ ${XL_FIXES.length} จุด (กดดู)</summary><div class="mt-1 text-slate-500 leading-relaxed">${XL_FIXES.map(f => `แถวที่ ${esc(f.row)}: ${esc(f.what)}${f.now ? ' (' + esc(f.now) + ')' : ''}`).join('<br>')}<br>แถวที่ 38 (“สลับ” ไม่มียอดเงิน) ข้ามไป</div></details>` : ''}`;
+            const tbl = isS
+                ? `<table class="v4-table"><thead><tr><th>เดือน/ปี</th><th>รายการ</th><th>กระสุนโอน</th><th>กระสุนสด</th><th>เป้าโอน</th><th>เป้าสด</th><th>ยอดขาย</th><th>รายการพิเศษ</th><th>คงเหลือ</th></tr></thead><tbody>${
+                    replayShoot(added).rows.map(x => { const r = x.r; const adj = r.adjType === 'income_carry'; return `<tr><td class="c">${esc(r.month)} ${esc(r.year)}</td><td class="l">${esc(r.expDesc || (r.expAmt ? '' : 'ยอดขายประจำเดือน'))}</td><td>${int0(r.bTrQ) || '-'}</td><td>${int0(r.bBCQ) || '-'}</td><td>${int0(r.tTrQ) || '-'}</td><td>${int0(r.tBCQ) || '-'}</td><td>${x.sales ? int0(x.sales) : '-'}</td><td class="${adj ? 'text-emerald-600' : 'text-rose-600'}">${r.expAmt ? (adj ? '+' : '-') + int0(r.expAmt) : '-'}</td><td><b>${int0(x.bal)}</b></td></tr>`; }).join('') || '<tr><td class="c" colspan="9" style="padding:18px">ไม่มีรายการใหม่ (นำเข้าครบแล้ว)</td></tr>'}</tbody></table>`
+                : `<table class="v4-table"><thead><tr><th>วันที่</th><th>รายการ</th><th>รับสด</th><th>รับโอน</th><th>จ่ายสด</th><th>จ่ายโอน</th><th>คงเหลือรวม</th><th>หมายเหตุ</th></tr></thead><tbody>${
+                    replayGeneral(added).rows.map(x => { const r = x.r; return `<tr><td class="c">${esc(formatDateThaiShort(r.date))}</td><td class="l">${esc(r.desc)}</td><td>${int0(r.inCash) || '-'}</td><td>${int0(r.inAcc) || '-'}</td><td>${int0(r.outCash) || '-'}</td><td>${int0(r.outAcc) || '-'}</td><td><b>${int0(x.t)}</b></td><td class="l">${esc(r.note || '')}</td></tr>`; }).join('') || '<tr><td class="c" colspan="8" style="padding:18px">ไม่มีรายการใหม่ (นำเข้าครบแล้ว)</td></tr>'}</tbody></table>`;
+            sh.q('#impTbl').innerHTML = tbl;
+            sh.q('#impGo').disabled = !added.length && !removed.length;
+            st.added = added; st.removed = removed;
+        };
+        sh.qa('#impMode button').forEach(b => b.onclick = () => { st.mode = b.dataset.v; paint(); });
+        sh.q('#impBak').onchange = e => { st.backup = e.target.checked; };
+        sh.q('[data-c]').onclick = () => sh.close();
+        sh.q('#impGo').onclick = async () => {
+            const go = sh.q('#impGo'); go.disabled = true; go.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> กำลังนำเข้า...';
+            try {
+                if (!(await ensureCloudReady())) { go.disabled = false; go.innerHTML = '<i class="fas fa-file-import"></i> ยืนยันนำเข้า'; return; }
+                if (st.backup) downloadBackupSilently();
+                if (isS) {
+                    const rm = new Set(st.removed.map(r => String(r.id)));
+                    appData.shootingRecords = appData.shootingRecords.filter(r => !rm.has(String(r.id))).concat(JSON.parse(JSON.stringify(st.added)));
+                } else {
+                    const rm = new Set(st.removed.map(r => String(r.id)));
+                    appData.generalRecords = appData.generalRecords.filter(r => !rm.has(String(r.id))).concat(JSON.parse(JSON.stringify(st.added)));
+                }
+                const ok = await saveToCloud('กำลังนำเข้าข้อมูลขึ้นคลาวด์...');
+                await afterDataChange();
+                sh.close();
+                if (ok) V4.popup({ type: 'ok', title: 'นำเข้าข้อมูลสำเร็จ', msg: `เพิ่ม ${st.added.length} รายการ${st.removed.length ? ' · แทนที่ ' + st.removed.length + ' รายการ' : ''}`, confetti: true, duration: 2600 });
+                if (ok && isS) setTimeout(() => V4.openLedgerSync && V4.afterSync && V4.afterSync(true), 600);
+            } catch (e) { go.disabled = false; go.innerHTML = '<i class="fas fa-file-import"></i> ยืนยันนำเข้า'; V4.popup({ type: 'bad', title: 'นำเข้าไม่สำเร็จ', msg: e.message || 'ลองใหม่อีกครั้ง', block: true }); }
+        };
+        paint();
+    }
+
+    /* ---------- เลื่อนลำดับรายการในเดือนเดียวกัน ---------- */
+    V4.moveBtns = id => `<span class="v4-move"><button type="button" onclick="V4.moveShoot('${jsArg(id)}',-1)" title="เลื่อนขึ้น" aria-label="เลื่อนขึ้น"><i class="fas fa-chevron-up"></i></button><button type="button" onclick="V4.moveShoot('${jsArg(id)}',1)" title="เลื่อนลง" aria-label="เลื่อนลง"><i class="fas fa-chevron-down"></i></button></span><span class="act-sep"></span>`;
+    let moveBusy = false;
+    V4.moveShoot = async function (id, delta) {
+        if (moveBusy) return;
+        const rec = appData.shootingRecords.find(r => String(r.id) === String(id)); if (!rec) return;
+        const sameGroup = r => String(r.year || '2569') === String(rec.year || '2569') && r.month === rec.month;
+        const grp = sortShoot(appData.shootingRecords.filter(sameGroup)), i = grp.findIndex(r => String(r.id) === String(id)), j = i + delta;
+        if (j < 0 || j >= grp.length) { showToast('info', delta < 0 ? 'อยู่บนสุดของเดือนนี้แล้ว' : 'อยู่ล่างสุดของเดือนนี้แล้ว', 'เลื่อนลำดับได้ภายในเดือนเดียวกัน — ย้ายเดือนให้กดแก้ไขแล้วเปลี่ยนเดือน', { noPopup: true }); return; }
+        if (!(await ensureCloudReady())) return;
+        moveBusy = true;
+        try {
+            const t = grp[i]; grp[i] = grp[j]; grp[j] = t; grp.forEach((r, k) => { r.seq = k + 1; });
+            renderShootingTable(); updateHomeSummaryCards();
+            await saveToCloud('กำลังบันทึกลำดับ...');
+            highlightRow(rec.id);
+        } finally { moveBusy = false; }
+    };
+
+    /* ---------- จัดการสรุปรายเดือน (แก้ไข / เลื่อนลำดับ / เพิ่ม / ลบ ในหน้าต่างเดียว) ---------- */
+    V4.openMonthManager = function (key) {
+        const year = key.slice(0, 4), month = key.slice(5);
+        const base = sortShoot(appData.shootingRecords.filter(r => String(r.year || '2569') === year && r.month === month));
+        let draft = base.map(r => Object.assign({}, r));
+        const label = month === 'ยกยอดมา' ? `ยอดยกมา ${year}` : `${thFullMonths[monthOrderMap[month]] || month} ${year}`;
+        const sh = V4.sheet({
+            title: 'จัดการสรุปรายเดือน — ' + label, sub: 'แก้ไขตัวเลข เลื่อนลำดับด้วยลูกศร เพิ่มหรือลบรายการ แล้วกดบันทึก', icon: 'fa-calendar-days', size: 'w-xl',
+            body: `<div class="v4-prev-wrap" style="max-height:52vh;padding:0"><div id="mmTbl"></div></div>
+                <div class="flex flex-wrap items-center gap-2 mt-3"><button type="button" class="v4-btn line" id="mmAdd"><i class="fas fa-plus"></i> เพิ่มรายการในเดือนนี้</button><span class="text-[11px] text-slate-500 ml-auto" id="mmSum"></span></div>`,
+            foot: '<button type="button" class="v4-btn ghost" data-c>ยกเลิก</button><button type="button" class="v4-btn ok" id="mmSave"><i class="fas fa-floppy-disk"></i> บันทึกการเปลี่ยนแปลง</button>'
+        });
+        const read = () => sh.qa('#mmTbl tr[data-i]').forEach(tr => {
+            const d = draft[Number(tr.dataset.i)]; if (!d) return;
+            d.expDesc = q('[data-f=desc]', tr).value; d.adjType = q('[data-f=adj]', tr).value; d.expAmt = R2(q('[data-f=amt]', tr).value);
+            d.bTrQ = nz(q('[data-f=bTr]', tr).value); d.bBCQ = nz(q('[data-f=bC]', tr).value); d.tTrQ = nz(q('[data-f=tTr]', tr).value); d.tBCQ = nz(q('[data-f=tC]', tr).value);
+        });
+        const paint = () => {
+            const inp = (f, v, w) => `<input data-f="${f}" type="number" step="any" min="0" value="${v || 0}" class="v4-field" style="width:${w || 74}px;text-align:right;padding:6px 8px">`;
+            sh.q('#mmTbl').innerHTML = `<table class="v4-table"><thead><tr><th></th><th>รายการ</th><th>ประเภทรายการพิเศษ</th><th>จำนวนเงินพิเศษ</th><th>กระสุนโอน</th><th>กระสุนสด</th><th>เป้าโอน</th><th>เป้าสด</th><th>ยอดขาย</th><th></th></tr></thead><tbody>${
+                draft.length ? draft.map((d, i) => `<tr data-i="${i}"><td class="c" style="white-space:nowrap"><div class="v4-move"><button type="button" data-up="${i}" ${i === 0 ? 'disabled' : ''} aria-label="เลื่อนขึ้น"><i class="fas fa-chevron-up"></i></button><button type="button" data-dn="${i}" ${i === draft.length - 1 ? 'disabled' : ''} aria-label="เลื่อนลง"><i class="fas fa-chevron-down"></i></button></div></td>
+                    <td class="l"><input data-f="desc" class="v4-field" style="min-width:150px;padding:6px 8px" value="${esc(d.expDesc || '')}" placeholder="${d.src === 'ledger' ? 'จากรายการสนามยิงปืน' : 'รายละเอียด'}"></td>
+                    <td><select data-f="adj" class="v4-field" style="padding:6px 8px"><option value="expense" ${d.adjType !== 'income_carry' ? 'selected' : ''}>รายจ่าย (−)</option><option value="income_carry" ${d.adjType === 'income_carry' ? 'selected' : ''}>รายรับ/ยกยอด (+)</option></select></td>
+                    <td>${inp('amt', d.expAmt, 96)}</td><td>${inp('bTr', d.bTrQ, 64)}</td><td>${inp('bC', d.bBCQ, 64)}</td><td>${inp('tTr', d.tTrQ, 64)}</td><td>${inp('tC', d.tBCQ, 64)}</td>
+                    <td data-sales><b>${int0((nz(d.bTrQ) + nz(d.bBCQ)) * 1000 + (nz(d.tTrQ) + nz(d.tBCQ)) * 15)}</b></td>
+                    <td class="c"><button type="button" data-del="${i}" class="act-btn del" aria-label="ลบรายการ"><i class="fas fa-trash-can"></i></button></td></tr>`).join('')
+                    : '<tr><td class="c" colspan="10" style="padding:22px;color:#94a3b8">ไม่มีรายการในเดือนนี้ — กด "เพิ่มรายการในเดือนนี้"</td></tr>'}</tbody></table>`;
+            sh.qa('#mmTbl [data-up]').forEach(b => b.onclick = () => { read(); const i = Number(b.dataset.up); [draft[i - 1], draft[i]] = [draft[i], draft[i - 1]]; paint(); });
+            sh.qa('#mmTbl [data-dn]').forEach(b => b.onclick = () => { read(); const i = Number(b.dataset.dn); [draft[i + 1], draft[i]] = [draft[i], draft[i + 1]]; paint(); });
+            sh.qa('#mmTbl [data-del]').forEach(b => b.onclick = () => { read(); draft.splice(Number(b.dataset.del), 1); paint(); });
+            sh.qa('#mmTbl input, #mmTbl select').forEach(el => el.oninput = el.onchange = () => { read(); calc(); });
+            calc();
+        };
+        const calc = () => {
+            sh.qa('#mmTbl tr[data-i]').forEach(tr => { const d = draft[Number(tr.dataset.i)]; q('[data-sales] b', tr).textContent = int0((nz(d.bTrQ) + nz(d.bBCQ)) * 1000 + (nz(d.tTrQ) + nz(d.tBCQ)) * 15); });
+            const sales = draft.reduce((s, d) => s + (nz(d.bTrQ) + nz(d.bBCQ)) * 1000 + (nz(d.tTrQ) + nz(d.tBCQ)) * 15, 0);
+            const inc = draft.reduce((s, d) => s + (d.adjType === 'income_carry' ? nz(d.expAmt) : 0), 0), out = draft.reduce((s, d) => s + (d.adjType !== 'income_carry' ? nz(d.expAmt) : 0), 0);
+            sh.q('#mmSum').innerHTML = `ยอดขาย <b>${int0(sales)}</b> · รับพิเศษ <b class="text-emerald-600">${int0(inc)}</b> · จ่าย <b class="text-rose-600">${int0(out)}</b> · สุทธิเดือน <b>${moneyS(sales + inc - out)}</b>`;
+        };
+        sh.q('#mmAdd').onclick = () => { read(); draft.push({ id: newId('s'), month, year, adjType: month === 'ยกยอดมา' ? 'income_carry' : 'expense', expDesc: '', expAmt: 0, bTrQ: 0, bBCQ: 0, tTrQ: 0, tBCQ: 0, attachment: '' }); paint(); };
+        sh.q('[data-c]').onclick = () => sh.close();
+        sh.q('#mmSave').onclick = async () => {
+            read();
+            if (draft.some(d => [d.expAmt, d.bTrQ, d.bBCQ, d.tTrQ, d.tBCQ].some(v => nz(v) < 0))) return V4.popup({ type: 'warn', title: 'ตัวเลขติดลบไม่ได้', msg: 'กรุณาตรวจสอบตัวเลขในตาราง', block: true });
+            const changed = JSON.stringify(draft.map((d, i) => [d.id, d.expDesc, d.adjType, d.expAmt, d.bTrQ, d.bBCQ, d.tTrQ, d.tBCQ, i])) !== JSON.stringify(base.map((d, i) => [d.id, d.expDesc, d.adjType, d.expAmt, d.bTrQ, d.bBCQ, d.tTrQ, d.tBCQ, i]));
+            if (!changed) { sh.close(); return showToast('info', 'ไม่มีการเปลี่ยนแปลง', '', { noPopup: true }); }
+            if (!(await ensureCloudReady())) return;
+            const removedN = base.filter(b => !draft.some(d => d.id === b.id)).length;
+            if (removedN && !(await confirmDialog({ title: `ลบ ${removedN} รายการในเดือนนี้?`, msg: 'ยอดคงเหลือสะสมจะคำนวณใหม่ทันที', okText: 'บันทึกและลบ' }))) return;
+            const ids = new Set(base.map(b => String(b.id)));
+            appData.shootingRecords = appData.shootingRecords.filter(r => !ids.has(String(r.id)));
+            draft.forEach((d, i) => { d.seq = i + 1; d.expAmt = R2(d.expAmt); appData.shootingRecords.push(d); });
+            const ok = await saveToCloud('กำลังบันทึกสรุปรายเดือน...');
+            await afterDataChange(); sh.close();
+            if (ok) showToast('success', 'บันทึกสรุปรายเดือนสำเร็จ', `${label} · ${draft.length} รายการ`);
+        };
+        paint();
+    };
+
+    /* ---------- ดึงสรุปต่อจาก "รายการสนามยิงปืน" ---------- */
+    function ldSnap(r) { return [nz(r.bTrQ), nz(r.bBCQ), nz(r.tTrQ), nz(r.tBCQ), R2(r.expAmt), r.adjType || ''].join('|'); }
+    function deriveLedger(cut) {
+        const rows = Array.isArray(appData.rangeLedger) ? buildLedgerRows() : [];
+        const months = {};
+        rows.forEach(r => {
+            const d = r.entry.date; if (!d || d <= cut) return;
+            const p = isoParts(d); if (!p) return;
+            const key = `${p.y}${pad2(p.m)}`;
+            const m = months[key] || (months[key] = { key, y: String(p.y + 543), mi: p.m - 1, bTr: 0, bCash: 0, tTr: 0, tCash: 0, items: [], n: 0 });
+            m.n++; m.bTr += r.v.bTr; m.bCash += r.v.bCash; m.tTr += r.v.tTr; m.tCash += r.v.tCash;
+            const other = R2(r.v.acct + r.v.cash - (r.v.bTr + r.v.bCash) * 1000 - (r.v.tTr + r.v.tCash) * 15);
+            if (Math.abs(other) >= 0.01 && !String(r.key).startsWith('virt-')) m.items.push({ id: 'ld-' + r.entry.id, other, desc: r.desc || r.note || 'รายการจากตารางสนามยิงปืน', date: d });
+        });
+        return Object.values(months).sort((a, b) => a.key.localeCompare(b.key)).map(m => {
+            const recs = [], mon = MON[m.mi];
+            if (m.bTr || m.bCash || m.tTr || m.tCash) recs.push({ id: `ld-${m.key}-s`, month: mon, year: m.y, adjType: 'expense', expDesc: 'ยอดขายจากรายการสนามยิงปืน', expAmt: 0, bTrQ: m.bTr, bBCQ: m.bCash, tTrQ: m.tTr, tBCQ: m.tCash, seq: 1, src: 'ledger', attachment: '' });
+            m.items.forEach((it, i) => recs.push({ id: it.id, month: mon, year: m.y, adjType: it.other > 0 ? 'income_carry' : 'expense', expDesc: it.desc, expAmt: Math.abs(it.other), bTrQ: 0, bBCQ: 0, tTrQ: 0, tBCQ: 0, seq: 2 + i, src: 'ledger', attachment: '' }));
+            recs.forEach(r => { r.ldSnap = ldSnap(r); });
+            return Object.assign(m, { mon, recs });
+        });
+    }
+    function ldStatus(m) {
+        const exist = appData.shootingRecords.filter(r => r.src === 'ledger' && String(r.year) === m.y && r.month === m.mon);
+        const byId = new Map(exist.map(r => [String(r.id), r]));
+        let edited = 0, changed = 0, same = 0, fresh = 0;
+        m.recs.forEach(r => { const e = byId.get(String(r.id)); if (!e) fresh++; else if (e.ldSnap && e.ldSnap !== ldSnap(e)) edited++; else if (e.ldSnap === r.ldSnap) same++; else changed++; byId.delete(String(r.id)); });
+        const gone = Array.from(byId.values()); gone.forEach(e => { if (e.ldSnap && e.ldSnap !== ldSnap(e)) edited++; });
+        const tag = edited ? ['warn', 'มีที่แก้ไขเองแล้ว'] : (fresh || changed || gone.length) ? [fresh && !same && !changed ? 'info' : 'warn', fresh && !changed && !gone.length ? 'ใหม่' : 'มีการเปลี่ยนแปลง'] : ['ok', 'ตรงกันแล้ว'];
+        return { exist, edited, changed, same, fresh, gone, tag, actionable: fresh + changed + gone.length > 0 };
+    }
+    V4.ledgerPending = function () {
+        if (!Array.isArray(appData.rangeLedger)) return 0;
+        if (!appData.shootingRecords.some(r => r.src === 'excel69')) return 0;
+        const cut = V4.lsJ(LD_CUT_KEY, BASELINE_END);
+        return deriveLedger(cut).filter(m => ldStatus(m).actionable).length;
+    };
+    V4.openLedgerSync = function () {
+        if (!Array.isArray(appData.rangeLedger)) return V4.popup({ type: 'info', title: 'ยังไม่มีข้อมูลรายการสนามยิงปืน', msg: 'เปิดเมนู "รายการสนามยิงปืน" ให้ระบบโหลดข้อมูลก่อน', block: true });
+        let cut = V4.lsJ(LD_CUT_KEY, BASELINE_END), months = [], pick = new Set(), over = false;
+        const sh = V4.sheet({
+            title: 'ดึงสรุปรายเดือนจากรายการสนามยิงปืน', sub: 'ต่อจากข้อมูลไฟล์สรุปปี 2569 ที่ลงไว้ก่อน', icon: 'fa-link', size: 'w-xl',
+            body: `<div class="space-y-3"><div class="flex flex-wrap items-end gap-3"><div><div class="text-[10.5px] font-bold text-slate-500 mb-1">ไฟล์สรุปครอบคลุมถึงวันที่ (รายการหลังวันนี้จะถูกสรุปต่อ)</div><input type="date" id="ldCut" class="v4-field" style="width:180px"></div>
+                <label class="v4-remember !mt-0"><input type="checkbox" id="ldOver" class="hidden"><span class="v4-switch"></span> เขียนทับเดือนที่เคยแก้ไขเอง</label></div>
+                <div class="text-[11px] text-slate-500 leading-relaxed">ระบบรวมจำนวนนัดกระสุน/ใบเป้าที่ขายต่อเดือน และสร้างรายการพิเศษ (รายจ่าย/รายรับ) จากแถวที่เงินเข้า-ออกไม่ใช่ยอดขาย รายการที่ดึงมาแก้ไข เลื่อนลำดับ หรือลบได้ภายหลัง</div>
+                <div class="v4-prev-wrap" style="max-height:46vh"><div id="ldTbl"></div></div></div>`,
+            foot: '<button type="button" class="v4-btn ghost" data-c>ปิด</button><button type="button" class="v4-btn ok" id="ldGo"><i class="fas fa-link"></i> นำไปสรุป</button>'
+        });
+        const paint = () => {
+            months = deriveLedger(cut); const stats = months.map(ldStatus);
+            if (!sh.el.dataset.init) { sh.el.dataset.init = '1'; months.forEach((m, i) => { if (stats[i].actionable && !stats[i].edited) pick.add(m.key); }); }
+            sh.q('#ldTbl').innerHTML = months.length ? `<table class="v4-table"><thead><tr><th></th><th>เดือน</th><th>แถว</th><th>กระสุน (โอน/สด)</th><th>เป้า (โอน/สด)</th><th>รายการพิเศษ</th><th>สถานะ</th></tr></thead><tbody>${months.map((m, i) => {
+                const s = stats[i], sales = (m.bTr + m.bCash) * 1000 + (m.tTr + m.tCash) * 15;
+                return `<tr><td class="c"><input type="checkbox" data-pick="${m.key}" ${pick.has(m.key) ? 'checked' : ''}></td><td class="l"><b>${thFullMonths[m.mi]} ${m.y}</b></td><td>${m.n}</td><td>${int0(m.bTr)} / ${int0(m.bCash)}</td><td>${int0(m.tTr)} / ${int0(m.tCash)}</td>
+                    <td class="l">${m.items.length ? m.items.map(it => `<div>${esc(it.desc)} <b class="${it.other > 0 ? 'text-emerald-600' : 'text-rose-600'}">${moneyS(it.other)}</b></div>`).join('') : '-'}</td><td><span class="v4-tag ${s.tag[0]}">${s.tag[1]}</span></td></tr>`;
+            }).join('')}</tbody></table>` : `<div class="text-center py-10 text-slate-500 text-xs"><i class="fas fa-circle-check text-emerald-500 text-2xl block mb-2"></i>ไม่มีรายการสนามยิงปืนใหม่หลังวันที่ ${esc(thDateLong(cut))}<br>เมื่อมีรายการขายใหม่ ระบบจะแจ้งให้ดึงสรุปต่อที่นี่</div>`;
+            sh.qa('[data-pick]').forEach(c => c.onchange = () => { c.checked ? pick.add(c.dataset.pick) : pick.delete(c.dataset.pick); sh.q('#ldGo').disabled = !pick.size; });
+            sh.q('#ldGo').disabled = !pick.size;
+        };
+        sh.q('#ldCut').value = cut;
+        sh.q('#ldCut').onchange = e => { if (!/^\d{4}-\d{2}-\d{2}$/.test(e.target.value)) return; cut = e.target.value; V4.lsS(LD_CUT_KEY, cut); sh.el.dataset.init = ''; pick.clear(); paint(); };
+        sh.q('#ldOver').onchange = e => { over = e.target.checked; };
+        sh.q('[data-c]').onclick = () => sh.close();
+        sh.q('#ldGo').onclick = async () => {
+            if (!(await ensureCloudReady())) return;
+            const go = sh.q('#ldGo'); go.disabled = true; let add = 0, del = 0, skip = 0;
+            months.filter(m => pick.has(m.key)).forEach(m => {
+                const st = ldStatus(m), editedIds = new Set(st.exist.filter(e => e.ldSnap && e.ldSnap !== ldSnap(e)).map(e => String(e.id)));
+                const drop = st.exist.filter(e => over || !editedIds.has(String(e.id))); const dropIds = new Set(drop.map(e => String(e.id)));
+                appData.shootingRecords = appData.shootingRecords.filter(r => !dropIds.has(String(r.id))); del += drop.length;
+                m.recs.forEach(r => { if (!over && editedIds.has(String(r.id))) { skip++; return; } appData.shootingRecords.push(r); add++; });
+            });
+            const ok = await saveToCloud('กำลังบันทึกสรุปรายเดือน...');
+            await afterDataChange(); sh.close();
+            if (ok) V4.popup({ type: 'ok', title: 'ดึงสรุปรายเดือนสำเร็จ', msg: `เพิ่ม/อัปเดต ${add} รายการ${skip ? ' · ข้ามที่แก้ไขเอง ' + skip : ''}`, confetti: true });
+        };
+        paint();
+    };
+    V4.afterSync = function (force) {
+        const n = (session && session.role === 'admin') ? V4.ledgerPending() : 0;
+        const b = document.getElementById('v4LdBadge'); if (b) { b.textContent = n; b.classList.toggle('on', n > 0); }
+        if (n > 0 && (force === true || !V4._ldToast)) { V4._ldToast = true; showToast('info', `มีรายการสนามยิงปืนใหม่ ${n} เดือน`, 'กด "ดึงสรุปจากรายการสนามยิงปืน" เพื่อสรุปต่อรายเดือน', { noPopup: true, duration: 6000, action: { label: 'ดูตัวอย่าง', fn: () => V4.openLedgerSync() } }); }
+    };
+
+    /* ---------- ตรวจสุขภาพข้อมูล ---------- */
+    V4.openHealth = function () {
+        const checks = [], add = (area, ok, text, detail) => checks.push({ area, ok, text, detail });
+        const G = appData.generalRecords || [], S = appData.shootingRecords || [];
+        const noDate = G.filter(r => !r.date), zero = G.filter(r => !(nz(r.inCash) || nz(r.inAcc) || nz(r.outCash) || nz(r.outAcc)));
+        const strangeYear = G.filter(r => { const y = parseInt(String(r.date || '').slice(0, 4)); return r.date && (y < 2020 || y > new Date().getFullYear() + 1); });
+        const seen = {}, dup = []; G.forEach(r => { const k = [r.date, r.desc, nz(r.inCash), nz(r.inAcc), nz(r.outCash), nz(r.outAcc)].join('|'); if (seen[k]) dup.push(r); seen[k] = 1; });
+        const gr = replayGeneral(G), neg = gr.rows.filter(x => x.c < 0 || x.a < 0);
+        add('บัญชีกองกลาง', !noDate.length, noDate.length ? `${noDate.length} รายการไม่มีวันที่` : 'ทุกรายการมีวันที่', noDate.slice(0, 3).map(r => r.desc).join(', '));
+        add('บัญชีกองกลาง', !strangeYear.length, strangeYear.length ? `${strangeYear.length} รายการมีปีผิดปกติ (เช่น 1968/2568 ที่พิมพ์ผิด)` : 'วันที่อยู่ในช่วงปกติ', strangeYear.slice(0, 3).map(r => `${r.date} ${r.desc}`).join(', '));
+        add('บัญชีกองกลาง', !zero.length, zero.length ? `${zero.length} รายการไม่มียอดเงิน` : 'ไม่มีรายการที่ยอดเป็นศูนย์', '');
+        add('บัญชีกองกลาง', !dup.length, dup.length ? `พบรายการซ้ำที่น่าสงสัย ${dup.length} รายการ` : 'ไม่พบรายการซ้ำ', dup.slice(0, 3).map(r => `${r.date} ${r.desc}`).join(', '));
+        add('บัญชีกองกลาง', !neg.length, neg.length ? `ยอดคงเหลือติดลบ ${neg.length} จุด (สด หรือ บัญชี)` : 'ยอดสะสมไม่ติดลบ', neg.slice(0, 3).map(x => `${x.r.date} ${x.r.desc}`).join(', '));
+        const sr = replayShoot(S), sneg = sr.rows.filter(x => x.bal < 0), sempty = S.filter(r => !(nz(r.expAmt) || nz(r.bTrQ) || nz(r.bBCQ) || nz(r.tTrQ) || nz(r.tBCQ)));
+        add('สรุปสนามยิงปืน', !sneg.length, sneg.length ? `ยอดคงเหลือติดลบ ${sneg.length} จุด` : 'ยอดสะสมไม่ติดลบ', sneg.slice(0, 3).map(x => `${x.r.month} ${x.r.year}`).join(', '));
+        add('สรุปสนามยิงปืน', !sempty.length, sempty.length ? `${sempty.length} รายการไม่มีข้อมูล` : 'ทุกรายการมีข้อมูล', '');
+        if (Array.isArray(appData.rangeLedger)) {
+            const rows = buildLedgerRows(), nd = rows.filter(r => !r.entry.date && !/ยกมา|โอนเข้า|เงินฝาก/.test(r.desc || '')), mm = rows.filter(r => r.totalManual && Math.abs(r.total - r.calc) > 0.01);
+            add('รายการสนามยิงปืน', !nd.length, nd.length ? `${nd.length} แถวไม่มีวันที่` : 'แถวที่มียอดมีวันที่ครบ', nd.slice(0, 3).map(r => r.desc).join(', '));
+            add('รายการสนามยิงปืน', !mm.length, mm.length ? `${mm.length} แถวที่ยอดรวมกรอกเองไม่ตรงกับยอดที่คำนวณ` : 'ยอดรวมตรงกับที่คำนวณ', mm.slice(0, 3).map(r => `แถว ${r.i + 1}`).join(', '));
+        }
+        add('ระบบ', typeof pendingOrders === 'undefined' || !pendingOrders.length, (typeof pendingOrders !== 'undefined' && pendingOrders.length) ? `มี ${pendingOrders.length} ออเดอร์รอส่งในเครื่อง` : 'ไม่มีออเดอร์ค้างส่ง', '');
+        add('ระบบ', !!cloudLoaded, cloudLoaded ? 'เชื่อมต่อคลาวด์แล้ว' : 'ยังไม่ได้โหลดข้อมูลจากคลาวด์', '');
+        const bad = checks.filter(c => !c.ok).length;
+        const sh = V4.sheet({
+            title: 'ตรวจสุขภาพข้อมูล', sub: bad ? `พบสิ่งที่ควรตรวจสอบ ${bad} จุด` : 'ทุกอย่างเรียบร้อย', icon: 'fa-stethoscope', size: 'w-md',
+            iconBg: bad ? 'linear-gradient(135deg,#f59e0b,#f43f5e)' : 'linear-gradient(135deg,#10b981,#059669)',
+            body: `<div class="space-y-2">${checks.map(c => `<div class="v4-card !p-2.5 flex gap-2.5 items-start"><span class="v4-tag ${c.ok ? 'ok' : 'warn'}"><i class="fas ${c.ok ? 'fa-check' : 'fa-triangle-exclamation'}"></i></span><div class="min-w-0"><div class="text-[10px] font-bold text-slate-500">${esc(c.area)}</div><div class="text-[12px] font-bold">${esc(c.text)}</div>${!c.ok && c.detail ? `<div class="text-[10.5px] text-slate-500 truncate">เช่น ${esc(c.detail)}</div>` : ''}</div></div>`).join('')}</div>`,
+            foot: '<button type="button" class="v4-btn ghost" data-c>ปิด</button>'
+        });
+        sh.q('[data-c]').onclick = () => sh.close();
+    };
+})();
+
+(function () {
+    /* ==========================================================================
+       ส่วน E: ต่อปุ่ม/เมนูใหม่เข้ากับหน้าเดิม + เริ่มระบบ
+       ========================================================================== */
+    const V4 = window.V4, q = V4.q;
+    const htmlToEl = h => { const t = document.createElement('template'); t.innerHTML = h.trim(); return t.content.firstElementChild; };
+
+    V4.showMonthly = function () { showShootingRange(); setShootingViewMode('summary'); };
+
+    function wire() {
+        // หน้าแรกผู้ดูแล: แถวปุ่มลัดใหม่
+        const adm = document.getElementById('homeAdminSection');
+        if (adm && !document.getElementById('v4AdminQuick')) {
+            adm.appendChild(htmlToEl(`<div id="v4AdminQuick" class="v4-quick max-w-4xl mx-auto pt-1">
+                <button type="button" onclick="V4.openImport()"><i class="fas fa-file-import text-emerald-500"></i>นำเข้าข้อมูลจาก Excel</button>
+                <button type="button" onclick="V4.openExport('all')"><i class="fas fa-file-export text-indigo-500"></i>ส่งออกรายงานสรุปผล</button>
+                <button type="button" onclick="V4.openSecurity()"><i class="fas fa-fingerprint text-violet-500"></i>ความปลอดภัย / สแกนนิ้ว</button>
+                <button type="button" onclick="V4.openHealth()"><i class="fas fa-stethoscope text-rose-500"></i>ตรวจสุขภาพข้อมูล</button>
+            </div>`));
+        }
+        // หน้าเจ้าหน้าที่สนาม / ผู้เยี่ยมชม: ปุ่มความปลอดภัยเล็กๆ ใต้หัวการ์ด
+        const guest = document.getElementById('homeGuestSection');
+        if (guest && !document.getElementById('v4GuestQuick')) guest.appendChild(htmlToEl(`<div id="v4GuestQuick" class="v4-quick pt-1"><button type="button" onclick="V4.checkUpdate(true)"><i class="fas fa-rotate text-indigo-500"></i>ตรวจสอบการอัปเดต</button></div>`));
+
+        const before = (sel, html) => { const b = document.querySelector(sel); if (b && !b.parentNode.querySelector('[data-v4="' + html.id + '"]')) { const el = htmlToEl(html.h); el.dataset.v4 = html.id; b.parentNode.insertBefore(el, b); } };
+        before(`button[onclick*="openQuickShareModal('general')"]`, { id: 'gx', h: `<button type="button" class="v4-mini-btn brand" onclick="V4.openExport('general')"><i class="fas fa-file-export"></i> ส่งออก / ตัวอย่าง</button>` });
+        before(`button[onclick*="openQuickShareModal('shooting')"]`, { id: 'sx', h: `<button type="button" class="v4-mini-btn brand" onclick="V4.openExport('shooting')"><i class="fas fa-file-export"></i> ส่งออก / ตัวอย่าง</button>` });
+        before(`button[onclick*="openQuickShareModal('shooting')"]`, { id: 'sld', h: `<button type="button" id="v4LdBtn" class="v4-mini-btn emerald" onclick="V4.openLedgerSync()"><i class="fas fa-link"></i> ดึงสรุปจากรายการสนามยิงปืน<span id="v4LdBadge" class="v4-badge-dot"></span></button>` });
+        before(`button[onclick*="openQuickShareModal('shooting')"]`, { id: 'simp', h: `<button type="button" class="v4-mini-btn" onclick="V4.openImport()"><i class="fas fa-file-import"></i> นำเข้า Excel</button>` });
+        before(`button[onclick="printLedger()"]`, { id: 'lx', h: `<button type="button" class="v4-mini-btn brand" onclick="V4.openExport('ledger')"><i class="fas fa-file-export"></i> ส่งออก / ตัวอย่าง</button>` });
+        before(`button[onclick="printLedger()"]`, { id: 'lm', h: `<button type="button" class="v4-mini-btn emerald" onclick="V4.showMonthly()"><i class="fas fa-calendar-days"></i> สรุปรายเดือน</button>` });
+        // เมนูสนามยิงปืน: การ์ดสรุปรายเดือน
+        const menu = document.getElementById('view-range-menu');
+        if (menu && !document.getElementById('v4MonthlyCard')) {
+            const grid = menu.querySelector('.grid');
+            if (grid) grid.appendChild(htmlToEl(`<button id="v4MonthlyCard" type="button" onclick="V4.showMonthly()" class="hero-card md:col-span-2 rounded-[2rem] p-5 sm:p-6 text-left group relative overflow-hidden flex items-center gap-4">
+                <div class="w-14 h-14 bg-gradient-to-br from-[#0f2f2a] to-[#0f5b4d] text-white rounded-2xl flex items-center justify-center text-2xl shadow-lg shrink-0"><i class="fas fa-calendar-days text-emerald-300"></i></div>
+                <div class="flex-1"><h3 class="text-lg font-extrabold text-slate-900 dark:text-white">สรุปรายเดือน (แก้ไข / เลื่อนลำดับได้)</h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">ลงข้อมูลจากไฟล์สรุปปี 2569 ก่อน แล้วดึงสรุปต่อจากรายการสนามยิงปืนทุกเดือน พร้อมจัดการแต่ละเดือนได้ในหน้าต่างเดียว</p></div>
+                <i class="fas fa-arrow-right text-emerald-600"></i></button>`));
+        }
+    }
+    V4.wire = wire;
+
+    function start() {
+        wire();
+        V4.initCore();
+        setTimeout(() => { try { V4.restore(); } catch (e) { console.warn(e); } }, 150);
+        // เตือนสำรองข้อมูลสัปดาห์ละครั้ง (ผู้ดูแล)
+        setInterval(() => {
+            if (!session || session.role !== 'admin' || V4._bakNag) return;
+            const last = V4.lsJ('execpro_v4_lastBackup', 0);
+            if (Date.now() - last > 7 * 864e5) { V4._bakNag = true; showToast('info', 'ถึงเวลาสำรองข้อมูลแล้ว', last ? 'ครั้งล่าสุดเกิน 7 วัน' : 'ยังไม่เคยดาวน์โหลดไฟล์สำรองจากเครื่องนี้', { noPopup: true, duration: 9000, action: { label: 'ดาวน์โหลดเลย', fn: () => exportBackupJSON() } }); }
+        }, 20000);
+    }
+    if (document.readyState === 'complete') setTimeout(start, 0); else window.addEventListener('load', () => setTimeout(start, 0));
+})();
+
     </script>
 </body>
 </html>
