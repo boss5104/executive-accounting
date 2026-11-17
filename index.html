@@ -415,6 +415,145 @@
             thead.sticky { position: static !important; }
             * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
         }
+
+        /* ==================== v3: ACCESS / FIELD SALES / RANGE LEDGER ==================== */
+        body[data-role="guest"] .need-login { display: none !important; }
+        body:not([data-role="admin"]) .admin-only { display: none !important; }
+        body[data-role="admin"] .guest-only, body[data-role="staff"] .guest-only { display: none !important; }
+
+        /* PIN pad */
+        .pin-dot { width: 14px; height: 14px; border-radius: 9999px; border: 2px solid #cbd5e1; transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1); }
+        .pin-dot.on { background: linear-gradient(135deg, #6366f1, #4338ca); border-color: transparent; transform: scale(1.18); box-shadow: 0 4px 10px -2px rgba(79, 70, 229, 0.55); }
+        .dark .pin-dot { border-color: #475569; }
+        .shake { animation: shakeX 0.4s ease; }
+        @keyframes shakeX { 0%,100% { transform: translateX(0); } 20% { transform: translateX(-9px); } 40% { transform: translateX(8px); } 60% { transform: translateX(-6px); } 80% { transform: translateX(4px); } }
+        .npad-key {
+            height: 3.4rem; border-radius: 1rem; font-size: 1.25rem; font-weight: 700; background: #f1f5f9; color: #0f172a;
+            transition: all 0.15s ease; user-select: none; -webkit-user-select: none; display: flex; align-items: center; justify-content: center;
+        }
+        .npad-key:hover { background: #e2e8f0; }
+        .npad-key:active { transform: scale(0.94); background: #cbd5e1; }
+        .npad-key.fn { font-size: 0.95rem; background: #e0e7ff; color: #3730a3; }
+        .npad-key.warn { background: #fee2e2; color: #be123c; }
+        .npad-key.go { background: linear-gradient(135deg, #6366f1, #4338ca); color: #fff; box-shadow: 0 10px 20px -8px rgba(79, 70, 229, 0.6); }
+        .dark .npad-key { background: #1e293b; color: #f1f5f9; }
+        .dark .npad-key:hover { background: #334155; }
+        .dark .npad-key.fn { background: rgba(99, 102, 241, 0.2); color: #c7d2fe; }
+        .dark .npad-key.warn { background: rgba(244, 63, 94, 0.18); color: #fda4af; }
+
+        /* Thai calendar (matches the supplied reference) */
+        .thcal { width: min(340px, 100%); border-radius: 1.5rem; padding: 1.25rem 1.25rem 0.9rem; background: #fdf3f3; color: #1f2937; box-shadow: 0 30px 70px -20px rgba(15, 23, 42, 0.55); }
+        .dark .thcal { background: #131c2f; color: #e2e8f0; }
+        .thcal-head { display: flex; align-items: center; justify-content: space-between; gap: 6px; margin-bottom: 0.9rem; }
+        .thcal-title { display: flex; align-items: baseline; justify-content: center; gap: 8px; flex: 1; flex-wrap: wrap; }
+        .thcal-month { font-size: 1.85rem; font-weight: 800; line-height: 1.15; letter-spacing: -0.01em; background: linear-gradient(90deg, #111827 0%, #312e81 55%, #4338ca 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+        .dark .thcal-month { background: linear-gradient(90deg, #f8fafc 0%, #c7d2fe 100%); -webkit-background-clip: text; background-clip: text; }
+        .thcal-year { font-size: 1rem; font-weight: 700; color: #6366f1; }
+        .thcal-title button { border-radius: 10px; padding: 0 4px; }
+        .thcal-title button:hover { background: rgba(99, 102, 241, 0.1); }
+        .thcal-nav { width: 2rem; height: 2rem; border-radius: 9999px; display: flex; align-items: center; justify-content: center; color: #475569; font-size: 0.8rem; }
+        .thcal-nav:hover { background: rgba(99, 102, 241, 0.12); color: #4338ca; }
+        .thcal-week, .thcal-grid { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; }
+        .thcal-week span { font-size: 0.95rem; font-weight: 800; color: #1e293b; padding: 0.35rem 0 0.55rem; }
+        .dark .thcal-week span { color: #cbd5e1; }
+        .thcal-week span:first-child { color: #be123c; }
+        .thcal-day { height: 2.35rem; margin: 1px auto; width: 2.35rem; border-radius: 9999px; font-size: 1.05rem; font-weight: 400; color: #374151; display: flex; align-items: center; justify-content: center; transition: all 0.15s ease; font-variant-numeric: tabular-nums; }
+        .dark .thcal-day { color: #e2e8f0; }
+        .thcal-day:hover { background: rgba(99, 102, 241, 0.14); }
+        .thcal-day.today { box-shadow: inset 0 0 0 1.5px #f59e0b; font-weight: 700; }
+        .thcal-day.sel { background: linear-gradient(135deg, #4f46e5, #3730a3); color: #fff; font-weight: 700; box-shadow: 0 8px 16px -6px rgba(67, 56, 202, 0.6); }
+        .thcal-foot { margin-top: 0.7rem; padding-top: 0.6rem; border-top: 2px solid #1f2937; display: flex; align-items: center; justify-content: space-between; gap: 6px; }
+        .dark .thcal-foot { border-top-color: #475569; }
+        .thcal-foot button { font-size: 12px; font-weight: 700; padding: 0.45rem 0.8rem; border-radius: 0.8rem; }
+        .thcal select { background: #fff; border: 1px solid #e2e8f0; border-radius: 0.75rem; padding: 0.45rem 0.6rem; font-weight: 700; font-size: 13px; color: #1e293b; }
+        .dark .thcal select { background: #0b1220; border-color: #334155; color: #e2e8f0; }
+
+        /* Field officer */
+        .field-hero { background: radial-gradient(circle at 90% 10%, rgba(16, 185, 129, 0.32) 0%, transparent 45%), radial-gradient(circle at 5% 100%, rgba(217, 119, 6, 0.18) 0%, transparent 45%), linear-gradient(145deg, #0c1f1d 0%, #0f3b35 55%, #0a1a18 100%); }
+        .qty-tile { border-radius: 1.1rem; border: 1px solid #e2e8f0; background: #f8fafc; padding: 0.65rem 0.6rem 0.7rem; text-align: center; }
+        .dark .qty-tile { background: #0b1220; border-color: #1e293b; }
+        .qty-btn { width: 2.4rem; height: 2.4rem; border-radius: 0.8rem; font-weight: 800; font-size: 1.1rem; background: #fff; border: 1px solid #e2e8f0; color: #334155; display: flex; align-items: center; justify-content: center; transition: all 0.15s ease; }
+        .qty-btn:active { transform: scale(0.9); }
+        .qty-btn:hover { border-color: #a5b4fc; color: #4338ca; }
+        .dark .qty-btn { background: #131c2f; border-color: #334155; color: #e2e8f0; }
+        .qty-num { flex: 1; min-width: 3.2rem; height: 2.4rem; border-radius: 0.8rem; font-size: 1.35rem; font-weight: 800; font-variant-numeric: tabular-nums; background: #fff; border: 1.5px dashed #94a3b8; color: #0f172a; }
+        .qty-num:hover { border-color: #6366f1; color: #4338ca; }
+        .dark .qty-num { background: #131c2f; color: #f8fafc; border-color: #475569; }
+        .fld-label { display: block; font-size: 11.5px; font-weight: 700; color: #475569; margin-bottom: 0.4rem; }
+        .dark .fld-label { color: #cbd5e1; }
+        .fld-input { width: 100%; border: 1px solid #cbd5e1; border-radius: 0.9rem; padding: 0.7rem 0.9rem; background: #fff; font-weight: 600; font-size: 13px; outline: none; transition: all 0.2s ease; color: #0f172a; }
+        .fld-input:focus { border-color: #6366f1; box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15); }
+        .fld-input.invalid { border-color: #e11d48; box-shadow: 0 0 0 4px rgba(225, 29, 72, 0.12); }
+        .dark .fld-input { background: #0b1220; border-color: #334155; color: #f1f5f9; }
+        .order-card { border-radius: 1.2rem; border: 1px solid #e2e8f0; background: #fff; padding: 0.85rem 0.95rem; }
+        .dark .order-card { background: #0f172a; border-color: #1e293b; }
+        .order-card.pending { border-color: #fbbf24; background: #fffbeb; }
+        .dark .order-card.pending { background: rgba(245, 158, 11, 0.08); border-color: #b45309; }
+        .chip { display: inline-flex; align-items: center; gap: 4px; font-size: 10px; font-weight: 800; padding: 2px 8px; border-radius: 9999px; }
+        .chip.ok { background: #d1fae5; color: #047857; } .chip.wait { background: #fef3c7; color: #b45309; } .chip.err { background: #ffe4e6; color: #be123c; } .chip.info { background: #e0e7ff; color: #4338ca; }
+        .dark .chip.ok { background: rgba(16, 185, 129, 0.18); color: #6ee7b7; } .dark .chip.wait { background: rgba(245, 158, 11, 0.18); color: #fcd34d; } .dark .chip.err { background: rgba(244, 63, 94, 0.18); color: #fda4af; } .dark .chip.info { background: rgba(99, 102, 241, 0.2); color: #c7d2fe; }
+
+        /* Progress dialog */
+        .pstep { display: flex; align-items: center; gap: 10px; font-size: 12.5px; font-weight: 600; color: #94a3b8; padding: 6px 0; transition: color 0.2s ease; }
+        .pstep .pi { width: 24px; height: 24px; border-radius: 9999px; display: flex; align-items: center; justify-content: center; font-size: 11px; background: #f1f5f9; color: #94a3b8; flex-shrink: 0; }
+        .dark .pstep .pi { background: #1e293b; }
+        .pstep.run { color: #4338ca; } .pstep.run .pi { background: #e0e7ff; color: #4338ca; }
+        .pstep.ok { color: #047857; } .pstep.ok .pi { background: #10b981; color: #fff; }
+        .pstep.warn { color: #b45309; } .pstep.warn .pi { background: #f59e0b; color: #fff; }
+        .pstep.err { color: #be123c; } .pstep.err .pi { background: #e11d48; color: #fff; }
+        .dark .pstep.run { color: #a5b4fc; } .dark .pstep.ok { color: #6ee7b7; }
+        .success-burst { width: 5rem; height: 5rem; margin: 0 auto; border-radius: 9999px; display: flex; align-items: center; justify-content: center; font-size: 2.2rem; color: #fff; background: linear-gradient(135deg, #34d399, #059669); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.5); animation: burst 1.2s ease-out 1; }
+        .success-burst.err { background: linear-gradient(135deg, #fb7185, #be123c); }
+        .success-burst.wait { background: linear-gradient(135deg, #fbbf24, #d97706); }
+        @keyframes burst { 0% { transform: scale(0.4); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.55); } 60% { transform: scale(1.08); } 100% { transform: scale(1); box-shadow: 0 0 0 26px rgba(16, 185, 129, 0); } }
+
+        /* Range ledger table */
+        table.ledger-table { border-collapse: separate; border-spacing: 0; width: 100%; }
+        table.ledger-table th { padding: 8px 8px; font-size: 11.5px; font-weight: 700; white-space: nowrap; text-align: center; position: sticky; z-index: 3; background: #1e293b; color: #f8fafc; border-right: 1px solid rgba(255, 255, 255, 0.12); }
+        table.ledger-table thead tr.h1 th { top: 0; }
+        table.ledger-table thead tr.h2 th { top: var(--lh1, 33px); }
+        table.ledger-table thead tr.h3 th { top: calc(var(--lh1, 33px) * 2); background: #334155; font-size: 11px; }
+        table.ledger-table th.grp-ammo { background: #0f3b35; } table.ledger-table th.grp-target { background: #7c2d12; }
+        table.ledger-table thead tr.h3 th.sub-ammo { background: #115e59; } table.ledger-table thead tr.h3 th.sub-target { background: #9a3412; }
+        table.ledger-table td { padding: 6px 8px; font-size: 12px; border-bottom: 1px solid #f1f5f9; border-right: 1px solid #f8fafc; vertical-align: middle; font-variant-numeric: tabular-nums; }
+        .dark table.ledger-table td { border-bottom-color: #1e293b; border-right-color: #131c2f; }
+        table.ledger-table td.num { text-align: right; white-space: nowrap; }
+        table.ledger-table td.ctr { text-align: center; white-space: nowrap; }
+        table.ledger-table td.wrap { white-space: normal; min-width: 150px; max-width: 260px; word-break: break-word; }
+        table.ledger-table tbody tr.lrow:nth-child(even) { background: rgba(248, 250, 252, 0.8); }
+        .dark table.ledger-table tbody tr.lrow:nth-child(even) { background: rgba(30, 41, 59, 0.25); }
+        table.ledger-table tbody tr.lrow:hover { background: rgba(99, 102, 241, 0.07) !important; }
+        table.ledger-table tbody tr.lrow.auto-row { background: rgba(16, 185, 129, 0.07); }
+        table.ledger-table tbody tr.drop-before { box-shadow: inset 0 3px 0 #6366f1; }
+        table.ledger-table tbody tr.drop-after { box-shadow: inset 0 -3px 0 #6366f1; }
+        table.ledger-table tbody tr.dragging { opacity: 0.4; }
+        table.ledger-table td.editable { cursor: pointer; }
+        table.ledger-table td.editable:hover { background: rgba(251, 191, 36, 0.2); }
+        table.ledger-table tfoot td { position: sticky; bottom: 0; background: #f1f5f9; font-weight: 800; border-top: 2px solid #cbd5e1; z-index: 2; }
+        .dark table.ledger-table tfoot td { background: #1e293b; border-top-color: #475569; }
+        .dash { color: #cbd5e1; } .dark .dash { color: #475569; }
+        .neg { color: #e11d48; } .dark .neg { color: #fb7185; }
+        .ov-dot { display: inline-block; width: 6px; height: 6px; border-radius: 9999px; background: #f59e0b; margin-left: 4px; vertical-align: middle; }
+        .drag-handle { cursor: grab; color: #94a3b8; padding: 2px 4px; }
+        .drag-handle:active { cursor: grabbing; }
+        .mini-btn { width: 24px; height: 24px; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; font-size: 10.5px; color: #64748b; transition: all 0.15s ease; }
+        .mini-btn:hover { background: #e0e7ff; color: #4338ca; }
+        .mini-btn.del:hover { background: #ffe4e6; color: #be123c; }
+        .dark .mini-btn:hover { background: rgba(99, 102, 241, 0.25); color: #c7d2fe; }
+        .stat-cell { border-radius: 1rem; padding: 0.7rem 0.8rem; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.12); text-align: left; }
+        .actual-btn { display: inline-flex; align-items: center; gap: 6px; padding: 0.4rem 0.75rem; border-radius: 0.8rem; font-weight: 800; font-size: 13px; background: #fffbeb; border: 1.5px dashed #f59e0b; color: #92400e; transition: all 0.15s ease; font-variant-numeric: tabular-nums; }
+        .actual-btn:hover { background: #fef3c7; }
+        .dark .actual-btn { background: rgba(245, 158, 11, 0.1); color: #fcd34d; border-color: #b45309; }
+        #backendBanner { background: linear-gradient(90deg, #7c2d12, #9a3412); }
+
+        @media print {
+            .ledger-table th, .ledger-table td { font-size: 9px !important; padding: 3px 4px !important; }
+            .ledger-table .col-act { display: none !important; }
+            table.ledger-table th { position: static !important; }
+            table.ledger-table tfoot td { position: static !important; }
+        }
+
+        .cap table.ledger-table th, .cap table.ledger-table tfoot td { position: static !important; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col bg-[#f3f5f9] text-slate-800 dark:bg-[#090d16] dark:text-slate-100 selection:bg-indigo-500 selection:text-white">
@@ -443,8 +582,9 @@
                 <button onclick="refreshAllData(true)" id="refreshNavBtn" class="w-9 h-9 sm:w-auto sm:h-auto justify-center sm:px-3.5 sm:py-2 rounded-full bg-emerald-500 hover:bg-emerald-400 transition text-[11px] font-bold flex items-center gap-1.5 text-white shadow-md shadow-emerald-500/20" title="รีเฟรชข้อมูลล่าสุด">
                     <i class="fas fa-sync-alt" id="refreshNavIcon"></i><span class="hidden sm:inline">รีเฟรช</span>
                 </button>
-                <button onclick="exportBackupJSON()" class="hidden sm:flex w-9 h-9 items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition text-sky-300" title="ดาวน์โหลดไฟล์สำรองข้อมูล (JSON)"><i class="fas fa-cloud-arrow-down text-xs"></i></button>
-                <button onclick="clearAllSystemData()" class="w-9 h-9 md:w-auto md:px-3 md:py-2 rounded-xl bg-rose-950/80 hover:bg-rose-900 border border-rose-500/30 transition text-[11px] font-bold flex items-center justify-center gap-1.5 text-rose-300" title="ล้างข้อมูลทั้งหมด">
+                <button id="logoutNavBtn" onclick="logoutNow()" class="need-login h-9 px-3 rounded-full bg-white/10 hover:bg-white/20 transition text-[11px] font-bold flex items-center gap-1.5 text-white" title="ออกจากระบบ"><i class="fas fa-right-from-bracket"></i><span class="hidden sm:inline">ออกจากระบบ</span></button>
+                <button onclick="exportBackupJSON()" class="admin-only hidden sm:flex w-9 h-9 items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition text-sky-300" title="ดาวน์โหลดไฟล์สำรองข้อมูล (JSON)"><i class="fas fa-cloud-arrow-down text-xs"></i></button>
+                <button onclick="clearAllSystemData()" class="admin-only w-9 h-9 md:w-auto md:px-3 md:py-2 rounded-xl bg-rose-950/80 hover:bg-rose-900 border border-rose-500/30 transition text-[11px] font-bold flex items-center justify-center gap-1.5 text-rose-300" title="ล้างข้อมูลทั้งหมด">
                     <i class="fas fa-trash-alt"></i><span class="hidden md:inline">ล้างข้อมูล</span>
                 </button>
             </div>
@@ -453,11 +593,13 @@
         <div class="bg-[#0b101d] border-t border-white/5 px-3 sm:px-6 py-1.5 text-[10px] text-slate-400">
             <div class="max-w-7xl mx-auto flex justify-between items-center">
                 <span id="syncStatusUI" class="flex items-center gap-1.5 font-medium text-slate-300"><span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> ระบบคลาวด์พร้อมใช้งาน</span>
+                <span id="roleChip" class="need-login flex items-center gap-1.5 font-bold text-slate-200"></span>
                 <span id="lastUpdatedUI" class="flex items-center gap-1 text-slate-300 font-medium"><i class="far fa-clock text-amber-400"></i> กำลังตรวจสอบเวลา...</span>
             </div>
         </div>
         <div class="nav-gold-line"></div>
     </nav>
+    <div id="backendBanner" class="hidden text-white text-[11px] font-bold text-center px-3 py-2"></div>
 
     <main class="flex-grow p-3.5 sm:p-5 md:p-6 max-w-7xl mx-auto w-full space-y-6">
 
@@ -476,14 +618,14 @@
                         <i class="fas fa-gem text-[10px] text-amber-400"></i> EXECUTIVE FINANCIAL MANAGEMENT
                     </div>
                     <h1 class="text-[1.65rem] sm:text-4xl md:text-[2.6rem] font-extrabold tracking-tight leading-[1.25]">
-                        ระบบบริหารจัดการ<span class="gold-shimmer">บัญชีกองกลาง</span><br class="hidden sm:inline" /> และรายการสรุปสนามยิงปืน
+                        ระบบบริหารจัดการ<span class="gold-shimmer">บัญชีกองกลาง</span><br class="hidden sm:inline" /> และสนามยิงปืน
                     </h1>
                     <p class="text-slate-300/90 text-xs sm:text-sm font-normal max-w-xl mx-auto leading-relaxed px-2">
                         ยกระดับการตรวจสอบบัญชีการเงินด้วยระบบรายงานอัจฉริยะ คัดกรองได้หลายปี/หลายเดือนพร้อมกัน แชร์ภาพรายงาน และสรุปข้อความส่งไลน์ได้ในคลิกเดียว
                     </p>
 
                     <!-- Global Search Bar -->
-                    <div class="max-w-lg mx-auto pt-2 relative">
+                    <div id="homeSearchWrap" class="hidden max-w-lg mx-auto pt-2 relative">
                         <div class="relative group">
                             <input type="text" id="globalSearchInput" oninput="handleGlobalSearch(this.value)" placeholder="ค้นหารายการ, หมายเหตุ, เดือน หรือยอดเงิน..." class="w-full bg-white/10 hover:bg-white/15 focus:bg-white dark:focus:bg-slate-900 text-white focus:text-slate-900 dark:focus:text-white placeholder-slate-300/80 focus:placeholder-slate-400 border border-white/15 focus:border-amber-400 rounded-2xl py-3.5 px-5 pl-12 text-xs sm:text-sm font-medium shadow-xl backdrop-blur-md outline-none transition-all">
                             <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-amber-300 group-focus-within:text-indigo-500 text-sm transition"></i>
@@ -493,6 +635,38 @@
                 </div>
             </div>
 
+
+            <!-- v3: Guest login chooser -->
+            <div id="homeGuestSection" class="space-y-5">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-4xl mx-auto">
+                    <button onclick="openLogin('staff')" class="hero-card rounded-[2rem] p-6 sm:p-7 text-left group relative overflow-hidden flex flex-col justify-between min-h-[210px]">
+                        <div class="absolute -right-10 -top-10 w-40 h-40 bg-gradient-to-br from-emerald-500/15 to-teal-500/10 rounded-full blur-2xl group-hover:scale-125 transition-transform duration-500"></div>
+                        <div class="relative z-10">
+                            <div class="flex items-center justify-between mb-5">
+                                <div class="w-14 h-14 bg-gradient-to-br from-[#112423] to-[#0f3b35] text-white rounded-2xl flex items-center justify-center text-2xl shadow-lg"><i class="fas fa-user-shield text-emerald-400"></i></div>
+                                <span class="px-3.5 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950/70 text-emerald-600 dark:text-emerald-300 text-[11px] font-bold border border-emerald-100 dark:border-emerald-800/50"><i class="fas fa-key mr-1"></i> เข้าสู่ระบบด้วยรหัส</span>
+                            </div>
+                            <h2 class="text-xl sm:text-2xl font-extrabold mb-1.5 text-slate-900 dark:text-white">เจ้าหน้าที่สนาม</h2>
+                            <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed">บันทึกรายการขายกระสุนและเป้า ส่งยอดเข้าระบบ ตรวจสอบสถานะ และแก้ไขรายการที่ลงผิดได้</p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-emerald-600 dark:text-emerald-400 font-bold text-xs relative z-10"><span>กรอกรหัสเจ้าหน้าที่สนาม</span><span class="w-8 h-8 rounded-full bg-emerald-50 dark:bg-emerald-950 flex items-center justify-center group-hover:bg-emerald-600 group-hover:text-white transition"><i class="fas fa-arrow-right"></i></span></div>
+                    </button>
+                    <button onclick="openLogin('admin')" class="hero-card rounded-[2rem] p-6 sm:p-7 text-left group relative overflow-hidden flex flex-col justify-between min-h-[210px]">
+                        <div class="absolute -right-10 -top-10 w-40 h-40 bg-gradient-to-br from-indigo-500/15 to-purple-500/10 rounded-full blur-2xl group-hover:scale-125 transition-transform duration-500"></div>
+                        <div class="relative z-10">
+                            <div class="flex items-center justify-between mb-5">
+                                <div class="w-14 h-14 bg-gradient-to-br from-[#161b33] to-[#232454] text-white rounded-2xl flex items-center justify-center text-2xl shadow-lg"><i class="fas fa-user-tie text-amber-400"></i></div>
+                                <span class="px-3.5 py-1 rounded-full bg-indigo-50 dark:bg-indigo-950/70 text-indigo-600 dark:text-indigo-300 text-[11px] font-bold border border-indigo-100 dark:border-indigo-800/50"><i class="fas fa-key mr-1"></i> เข้าสู่ระบบด้วยรหัส</span>
+                            </div>
+                            <h2 class="text-xl sm:text-2xl font-extrabold mb-1.5 text-slate-900 dark:text-white">ผู้ดูแลระบบ</h2>
+                            <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed">บัญชีกองกลาง สนามยิงปืน ตารางรายการ กระสุนคงเหลือ ยอดเงินรวม และส่งออกรายงาน</p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-indigo-600 dark:text-indigo-400 font-bold text-xs relative z-10"><span>กรอกรหัสผู้ดูแลระบบ</span><span class="w-8 h-8 rounded-full bg-indigo-50 dark:bg-indigo-950 flex items-center justify-center group-hover:bg-indigo-600 group-hover:text-white transition"><i class="fas fa-arrow-right"></i></span></div>
+                    </button>
+                </div>
+            </div>
+
+            <div id="homeAdminSection" class="hidden space-y-5">
             <!-- Live Overview Mini-Widgets -->
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 max-w-4xl mx-auto">
                 <div onclick="showGeneralSummary()" class="widget-card cursor-pointer rounded-[1.35rem] p-4 flex items-center justify-between">
@@ -508,7 +682,7 @@
                     <span class="text-[11px] font-bold px-3 py-1 rounded-full bg-indigo-50 text-indigo-600 dark:bg-indigo-950 dark:text-indigo-300">กองกลาง</span>
                 </div>
 
-                <div onclick="showShootingRange()" class="widget-card cursor-pointer rounded-[1.35rem] p-4 flex items-center justify-between">
+                <div onclick="showRangeMenu()" class="widget-card cursor-pointer rounded-[1.35rem] p-4 flex items-center justify-between">
                     <div class="flex items-center gap-3.5">
                         <div class="w-11 h-11 rounded-2xl bg-emerald-50 dark:bg-emerald-950/70 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-base border border-emerald-100/70 dark:border-emerald-800/50">
                             <i class="fas fa-crosshairs"></i>
@@ -544,7 +718,7 @@
                 </button>
 
                 <!-- Card 2: รายการสรุปสนามยิงปืน -->
-                <button onclick="showShootingRange()" class="hero-card rounded-[2rem] p-6 sm:p-7 text-left group relative overflow-hidden flex flex-col justify-between min-h-[210px]">
+                <button onclick="showRangeMenu()" class="hero-card rounded-[2rem] p-6 sm:p-7 text-left group relative overflow-hidden flex flex-col justify-between min-h-[210px]">
                     <div class="absolute -right-10 -top-10 w-40 h-40 bg-gradient-to-br from-emerald-500/15 to-teal-500/10 rounded-full blur-2xl group-hover:scale-125 transition-transform duration-500"></div>
                     <div class="relative z-10">
                         <div class="flex items-center justify-between mb-5">
@@ -553,14 +727,19 @@
                             </div>
                             <span class="px-3.5 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950/70 text-emerald-600 dark:text-emerald-300 text-[11px] font-bold border border-emerald-100 dark:border-emerald-800/50">Shooting Range</span>
                         </div>
-                        <h2 class="text-xl sm:text-2xl font-extrabold mb-1.5 text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition">รายการสรุปสนามยิงปืน</h2>
-                        <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-normal leading-relaxed">สรุปยอดขายกระสุนและเป้าอัตโนมัติ แยกรายเดือน/รายปี แสดงผลแบบละเอียดหรือแบบสรุป พร้อมส่งรายงานไลน์</p>
+                        <h2 class="text-xl sm:text-2xl font-extrabold mb-1.5 text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition">สนามยิงปืน</h2>
+                        <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-normal leading-relaxed">รายการสรุปสนามยิงปืน และตารางรายการสนามยิงปืน (ยอดขาย เงินในบัญชี เงินที่สนาม กระสุนคงเหลือ) พร้อมรับยอดจากเจ้าหน้าที่สนามอัตโนมัติ</p>
                     </div>
                     <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-emerald-600 dark:text-emerald-400 font-bold text-xs relative z-10">
-                        <span>เข้าสู่รายการสรุปสนามยิงปืน</span>
+                        <span>เข้าสู่เมนูสนามยิงปืน</span>
                         <span class="w-8 h-8 rounded-full bg-emerald-50 dark:bg-emerald-950 flex items-center justify-center group-hover:bg-emerald-600 group-hover:text-white transition"><i class="fas fa-arrow-right"></i></span>
                     </div>
                 </button>
+            </div>
+                <div class="max-w-4xl mx-auto flex flex-wrap items-center justify-center gap-2.5 pt-1">
+                    <button onclick="openPinSettings()" class="px-4 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-200 shadow-sm hover:shadow transition"><i class="fas fa-key text-amber-500 mr-1.5"></i> ตั้งค่ารหัสเข้าสู่ระบบ</button>
+                    <button onclick="openImportBackup()" class="px-4 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-200 shadow-sm hover:shadow transition"><i class="fas fa-cloud-arrow-up text-sky-500 mr-1.5"></i> นำเข้าไฟล์สำรอง</button>
+                </div>
             </div>
         </div>
 
@@ -1093,6 +1272,221 @@
                 </form>
             </div>
         </div>
+
+        <!-- ==================== v3 VIEW: RANGE MENU (ผู้ดูแล > สนามยิงปืน) ==================== -->
+        <div id="view-range-menu" class="hidden space-y-5 py-1 sm:py-3">
+            <div class="text-center space-y-1.5 pt-1">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 text-[11px] font-bold border border-emerald-100 dark:border-emerald-800/50"><i class="fas fa-crosshairs"></i> SHOOTING RANGE</div>
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">สนามยิงปืน</h2>
+                <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">เลือกเมนูที่ต้องการ</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-4xl mx-auto">
+                <button onclick="showShootingRange()" class="hero-card rounded-[2rem] p-6 sm:p-7 text-left group relative overflow-hidden flex flex-col justify-between min-h-[200px]">
+                    <div class="relative z-10">
+                        <div class="w-14 h-14 bg-gradient-to-br from-[#112423] to-[#0f3b35] text-white rounded-2xl flex items-center justify-center text-2xl shadow-lg mb-5"><i class="fas fa-chart-pie text-emerald-400"></i></div>
+                        <h3 class="text-xl font-extrabold mb-1.5 text-slate-900 dark:text-white">รายการสรุปสนามยิงปืน</h3>
+                        <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed">สรุปยอดขายกระสุนและเป้า แยกรายเดือน/รายปี (ระบบเดิม)</p>
+                    </div>
+                    <div class="mt-5 pt-4 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-emerald-600 dark:text-emerald-400 font-bold text-xs relative z-10"><span id="rangeMenuNet">-</span><i class="fas fa-arrow-right"></i></div>
+                </button>
+                <button onclick="showRangeLedger()" class="hero-card rounded-[2rem] p-6 sm:p-7 text-left group relative overflow-hidden flex flex-col justify-between min-h-[200px]">
+                    <div class="relative z-10">
+                        <div class="w-14 h-14 bg-gradient-to-br from-[#16182c] to-[#232454] text-white rounded-2xl flex items-center justify-center text-2xl shadow-lg mb-5"><i class="fas fa-table-list text-amber-400"></i></div>
+                        <h3 class="text-xl font-extrabold mb-1.5 text-slate-900 dark:text-white">รายการสนามยิงปืน</h3>
+                        <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed">ตารางรายการขาย/จ่าย เงินในบัญชี เงินที่สนาม กระสุนคงเหลือ และรายการจากเจ้าหน้าที่สนามแบบเรียลไทม์</p>
+                    </div>
+                    <div class="mt-5 pt-4 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-indigo-600 dark:text-indigo-400 font-bold text-xs relative z-10"><span id="rangeMenuLedgerInfo">-</span><i class="fas fa-arrow-right"></i></div>
+                </button>
+            </div>
+        </div>
+
+        <!-- ==================== v3 VIEW: FIELD OFFICER (เจ้าหน้าที่สนาม) ==================== -->
+        <div id="view-field" class="hidden max-w-2xl mx-auto w-full space-y-4 py-1">
+            <div class="field-hero rounded-[1.75rem] text-white p-5 shadow-xl border border-emerald-400/15">
+                <div class="flex items-start justify-between gap-3">
+                    <div>
+                        <div class="text-[10px] font-bold tracking-widest text-emerald-300 uppercase"><i class="fas fa-user-shield mr-1"></i> เจ้าหน้าที่สนาม</div>
+                        <h2 class="text-xl sm:text-2xl font-extrabold mt-1">บันทึกรายการขายหน้าสนาม</h2>
+                        <p id="fieldSyncLine" class="text-[11px] text-emerald-100/80 mt-1">-</p>
+                    </div>
+                    <div class="flex gap-2 shrink-0">
+                        <button type="button" onclick="refreshAllData(true)" class="px-3 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-[11px] font-bold flex items-center gap-1.5"><i class="fas fa-sync-alt"></i><span>รีเฟรช</span></button>
+                    </div>
+                </div>
+                <div class="grid grid-cols-3 gap-2 mt-4 text-center">
+                    <div class="rounded-2xl bg-white/10 py-2"><div class="text-[10px] text-emerald-100/80">ขายวันนี้ (รายการ)</div><div id="fieldTodayCount" class="font-extrabold text-lg">0</div></div>
+                    <div class="rounded-2xl bg-white/10 py-2"><div class="text-[10px] text-emerald-100/80">ยอดวันนี้ (฿)</div><div id="fieldTodayTotal" class="font-extrabold text-lg">0</div></div>
+                    <div class="rounded-2xl bg-white/10 py-2"><div class="text-[10px] text-emerald-100/80">รอส่ง</div><div id="fieldPendingCount" class="font-extrabold text-lg">0</div></div>
+                </div>
+            </div>
+
+            <form id="fieldForm" onsubmit="submitFieldOrder(event)" class="panel-card p-4 sm:p-5 space-y-4" novalidate>
+                <div id="fieldEditBanner" class="hidden flex items-center justify-between gap-2 rounded-2xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 px-3 py-2 text-xs font-bold text-amber-800 dark:text-amber-200">
+                    <span><i class="fas fa-pen-to-square mr-1.5"></i> กำลังแก้ไขรายการที่ส่งไปแล้ว — แก้ไขแล้วกดส่งใหม่</span>
+                    <button type="button" onclick="cancelFieldEdit()" class="px-2.5 py-1 rounded-lg bg-white dark:bg-slate-900 border border-amber-300 text-[11px]">ยกเลิก</button>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                        <label class="fld-label">วันที่ขายกระสุน <span class="text-rose-500">*</span></label>
+                        <button type="button" id="fDateBtn" onclick="openFieldDate()" class="fld-input text-left flex items-center justify-between"><span id="fDateText">เลือกวันที่...</span><i class="far fa-calendar-days text-indigo-500"></i></button>
+                    </div>
+                    <div>
+                        <label class="fld-label">ผู้ทำรายการ <span class="text-rose-500">*</span></label>
+                        <input id="fOperator" type="text" autocomplete="name" placeholder="ชื่อผู้บันทึกรายการ" class="fld-input" oninput="this.classList.remove('invalid')">
+                    </div>
+                </div>
+
+                <div class="rounded-2xl border border-emerald-200/70 dark:border-emerald-900/60 p-3.5 space-y-3 bg-emerald-50/40 dark:bg-emerald-950/10">
+                    <div class="flex items-center justify-between gap-2">
+                        <div class="font-extrabold text-sm text-emerald-800 dark:text-emerald-300"><i class="fas fa-bullseye mr-1.5"></i> กระสุน <span class="text-[11px] font-semibold text-slate-500">(จำนวนกล่อง)</span></div>
+                        <div id="ammoSubtotal" class="text-xs font-extrabold text-emerald-700 dark:text-emerald-300">0 ฿</div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <select id="fAmmoSel" onchange="fieldPickProduct('ammo', this.value)" class="fld-input flex-1 !py-2.5"></select>
+                        <button type="button" onclick="openProductEditor('ammo')" class="px-3 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-xs font-bold shrink-0"><i class="fas fa-pen"></i></button>
+                    </div>
+                    <div id="ammoPriceChip" class="text-[11px] font-semibold text-slate-500">-</div>
+                    <div id="ammoTiles" class="grid grid-cols-2 gap-2.5"></div>
+                </div>
+
+                <div class="rounded-2xl border border-orange-200/70 dark:border-orange-900/60 p-3.5 space-y-3 bg-orange-50/40 dark:bg-orange-950/10">
+                    <div class="flex items-center justify-between gap-2">
+                        <div class="font-extrabold text-sm text-orange-800 dark:text-orange-300"><i class="fas fa-circle-dot mr-1.5"></i> เป้า <span class="text-[11px] font-semibold text-slate-500">(จำนวนใบ)</span></div>
+                        <div id="targetSubtotal" class="text-xs font-extrabold text-orange-700 dark:text-orange-300">0 ฿</div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <select id="fTargetSel" onchange="fieldPickProduct('target', this.value)" class="fld-input flex-1 !py-2.5"></select>
+                        <button type="button" onclick="openProductEditor('target')" class="px-3 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-xs font-bold shrink-0"><i class="fas fa-pen"></i></button>
+                    </div>
+                    <div id="targetPriceChip" class="text-[11px] font-semibold text-slate-500">-</div>
+                    <div id="targetTiles" class="grid grid-cols-2 gap-2.5"></div>
+                </div>
+
+                <div>
+                    <label class="fld-label">เหตุขัดข้อง <span class="font-normal text-slate-400">(ถ้ามี)</span></label>
+                    <textarea id="fIssue" rows="2" placeholder="เช่น เป้าชำรุด เครื่องโอนเงินล่าช้า ฯลฯ" class="fld-input"></textarea>
+                </div>
+
+                <div class="grid grid-cols-3 gap-2 text-center">
+                    <div class="rounded-2xl bg-indigo-50 dark:bg-indigo-950/40 py-2.5"><div class="text-[10px] font-bold text-indigo-600 dark:text-indigo-300">โอน (เข้าบัญชี)</div><div id="sumTr" class="font-extrabold text-sm text-indigo-700 dark:text-indigo-200">0</div></div>
+                    <div class="rounded-2xl bg-amber-50 dark:bg-amber-950/30 py-2.5"><div class="text-[10px] font-bold text-amber-700 dark:text-amber-300">เงินสด (ที่สนาม)</div><div id="sumCash" class="font-extrabold text-sm text-amber-800 dark:text-amber-200">0</div></div>
+                    <div class="rounded-2xl bg-slate-900 text-white py-2.5"><div class="text-[10px] font-bold text-amber-300">รวมทั้งหมด</div><div id="sumAll" class="font-extrabold text-sm">0</div></div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-5 gap-2.5">
+                    <button type="button" onclick="openProductEditor()" class="sm:col-span-2 py-3 rounded-2xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-xs font-bold hover:bg-slate-50 dark:hover:bg-slate-800 transition"><i class="fas fa-sliders mr-1.5 text-indigo-500"></i> แก้ไขรายการสินค้า / ราคา</button>
+                    <button type="submit" id="fSubmitBtn" class="sm:col-span-3 py-3 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:brightness-110 text-white text-sm font-extrabold shadow-lg shadow-emerald-600/25 transition"><i class="fas fa-paper-plane mr-1.5"></i> <span id="fSubmitText">ส่งรายการสั่งซื้อ</span></button>
+                </div>
+            </form>
+
+            <div class="panel-card p-4 sm:p-5 space-y-3">
+                <div class="flex flex-wrap items-center justify-between gap-2">
+                    <h3 class="font-extrabold text-sm text-slate-800 dark:text-white"><i class="fas fa-clipboard-check text-emerald-500 mr-1.5"></i> รายการที่ส่งแล้ว</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <button type="button" onclick="copyTodaySummary()" class="px-3 py-1.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-[11px] font-bold"><i class="far fa-copy mr-1"></i> คัดลอกสรุปวันนี้</button>
+                        <button type="button" onclick="verifyAllOrders()" class="px-3 py-1.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-200 dark:border-emerald-800 text-emerald-700 dark:text-emerald-300 text-[11px] font-bold"><i class="fas fa-shield-check mr-1"></i> ตรวจสอบยอดในระบบ</button>
+                        <button type="button" id="flushBtn" onclick="flushPending(true)" class="hidden px-3 py-1.5 rounded-xl bg-amber-500 text-white text-[11px] font-bold"><i class="fas fa-rotate mr-1"></i> ส่งรายการที่ค้าง</button>
+                    </div>
+                </div>
+                <div id="fieldOrderList" class="space-y-2.5"></div>
+                <button type="button" id="fieldMoreBtn" onclick="fieldState.listLimit += 20; renderFieldOrders()" class="hidden w-full py-2.5 rounded-2xl bg-slate-100 dark:bg-slate-800 text-xs font-bold">แสดงเพิ่มเติม</button>
+            </div>
+        </div>
+
+        <!-- ==================== v3 VIEW: RANGE LEDGER (รายการสนามยิงปืน) ==================== -->
+        <div id="view-range-ledger" class="hidden space-y-4">
+            <div class="print-only mb-1">
+                <div style="font-size:18px;font-weight:800;color:#0f172a;">รายการสนามยิงปืน</div>
+                <div id="ledgerPrintScope" style="font-size:11px;color:#475569;margin-top:2px;"></div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-5 gap-3">
+                <div class="kpi-card kpi-hero emerald lg:col-span-2">
+                    <div class="flex items-start justify-between gap-2">
+                        <span class="kpi-label">กระสุนคงเหลือ (กล่อง)</span>
+                        <span class="kpi-icon bg-white/10 text-emerald-300"><i class="fas fa-boxes-stacked"></i></span>
+                    </div>
+                    <div id="ammoRemain" class="kpi-value" style="font-size:2.1rem">-</div>
+                    <div class="grid grid-cols-2 gap-2 mt-3 text-[11px]">
+                        <button type="button" onclick="editAmmoTotal()" class="stat-cell hover:bg-white/15 transition"><div class="text-emerald-200/90">กระสุนทั้งหมด <i class="fas fa-pen text-[9px]"></i></div><div id="ammoTotal" class="font-extrabold text-base">-</div></button>
+                        <div class="stat-cell"><div class="text-emerald-200/90">ขายไปแล้ว</div><div id="ammoSold" class="font-extrabold text-base">0</div></div>
+                    </div>
+                    <button type="button" onclick="editAmmoSince()" class="mt-2 text-[10.5px] text-emerald-100/85 hover:text-white underline decoration-dotted">นับยอดขายตั้งแต่วันที่ <span id="ammoSince">-</span> <i class="fas fa-pen text-[9px]"></i></button>
+                </div>
+
+                <div class="panel-card p-4 lg:col-span-3">
+                    <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+                        <h3 class="font-extrabold text-sm text-slate-800 dark:text-white"><i class="fas fa-scale-balanced text-indigo-500 mr-1.5"></i> ยอดเงินรวม</h3>
+                        <span id="actualUpdated" class="text-[10.5px] text-slate-400 font-medium">-</span>
+                    </div>
+                    <div class="overflow-x-auto">
+                    <table class="w-full text-xs">
+                        <thead><tr class="text-slate-500 dark:text-slate-400 text-[10.5px]"><th class="text-left py-1.5"></th><th class="text-right py-1.5 px-2">ยอดรวมตามบัญชี<br><span class="font-normal">(ระบบคำนวณ)</span></th><th class="text-right py-1.5 px-2">ยอดรวมจริง<br><span class="font-normal">(กรอกเอง)</span></th><th class="text-right py-1.5 px-2">ผลต่าง</th></tr></thead>
+                        <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+                            <tr><td class="py-2 font-bold">เงินในบัญชี</td><td id="calcAcct" class="text-right px-2 font-extrabold tabular-nums">0</td><td class="text-right px-2"><button type="button" id="actAcct" onclick="editActual('acct')" class="actual-btn">-</button></td><td id="diffAcct" class="text-right px-2 font-bold tabular-nums">-</td></tr>
+                            <tr><td class="py-2 font-bold">เงินสดที่สนาม</td><td id="calcCash" class="text-right px-2 font-extrabold tabular-nums">0</td><td class="text-right px-2"><button type="button" id="actCash" onclick="editActual('cash')" class="actual-btn">-</button></td><td id="diffCash" class="text-right px-2 font-bold tabular-nums">-</td></tr>
+                            <tr class="bg-slate-50/70 dark:bg-slate-800/40"><td class="py-2 font-extrabold">รวมทั้งหมด</td><td id="calcTotal" class="text-right px-2 font-black tabular-nums">0</td><td class="text-right px-2"><button type="button" id="actTotal" onclick="editActual('total')" class="actual-btn">-</button></td><td id="diffTotal" class="text-right px-2 font-black tabular-nums">-</td></tr>
+                        </tbody>
+                    </table>
+                    </div>
+                    <div id="calcAdjNote" class="hidden mt-1.5 text-[10.5px] text-amber-600 dark:text-amber-300"></div>
+                </div>
+            </div>
+
+            <div class="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-[1.75rem] shadow-sm overflow-hidden">
+                <div class="p-4 sm:p-5 border-b border-slate-100 dark:border-slate-800 flex flex-col lg:flex-row justify-between items-start lg:items-center gap-3 bg-slate-50/50 dark:bg-slate-900/50">
+                    <div>
+                        <h2 class="text-base sm:text-lg font-extrabold flex items-center gap-2.5 text-slate-800 dark:text-white"><span class="w-8 h-8 rounded-xl bg-indigo-100 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-300 flex items-center justify-center text-sm"><i class="fas fa-table-list"></i></span> รายการสนามยิงปืน</h2>
+                        <div id="ledgerSaveStatus" class="no-print text-[10.5px] text-slate-400 mt-1 font-medium">-</div>
+                    </div>
+                    <div class="no-print flex flex-wrap items-center gap-2 w-full lg:w-auto">
+                        <button onclick="refreshAllData(true)" class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 px-3 py-2 rounded-xl text-xs font-bold shadow-sm flex items-center gap-1.5"><i class="fas fa-sync-alt text-emerald-500"></i><span class="hidden sm:inline">รีเฟรช</span></button>
+                        <button onclick="printLedger()" class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 px-3 py-2 rounded-xl text-xs font-bold shadow-sm flex items-center gap-1.5"><i class="fas fa-file-pdf text-rose-500"></i> PDF</button>
+                        <button onclick="exportLedgerImage()" class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 px-3 py-2 rounded-xl text-xs font-bold shadow-sm flex items-center gap-1.5"><i class="fas fa-image text-sky-500"></i> ภาพ</button>
+                        <button onclick="exportLedgerExcel()" class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 px-3 py-2 rounded-xl text-xs font-bold shadow-sm flex items-center gap-1.5"><i class="fas fa-file-excel text-emerald-600"></i> Excel</button>
+                        <button onclick="openLedgerEdit(null)" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-xl text-xs font-bold shadow-sm flex items-center gap-1.5 ml-auto lg:ml-0"><i class="fas fa-plus"></i> เพิ่มรายการ</button>
+                    </div>
+                </div>
+
+                <div class="no-print px-4 sm:px-5 py-3.5 bg-gradient-to-b from-slate-50/90 to-white dark:from-slate-800/40 dark:to-slate-900 border-b border-slate-100 dark:border-slate-800 space-y-2.5">
+                    <div class="flex flex-wrap items-center justify-between gap-2">
+                        <div class="text-[11px] font-bold text-slate-500"><i class="fas fa-sliders text-indigo-500 mr-1.5"></i> เลือกการแสดงผล</div>
+                        <div class="flex flex-wrap items-center gap-2">
+                            <div id="ledgerScopeChip" class="scope-chip"></div>
+                            <input id="ledgerSearch" type="search" oninput="ledgerSearchChanged(this.value)" placeholder="ค้นหารายการ / หมายเหตุ..." class="fld-input !py-1.5 !text-xs !rounded-xl w-44 sm:w-56">
+                        </div>
+                    </div>
+                    <div class="filter-row"><div class="filter-label"><i class="fas fa-calendar"></i> ปี (พ.ศ.)</div><div id="ledgerYearPills" class="flex flex-wrap gap-1.5 flex-1"></div></div>
+                    <div class="filter-row"><div class="filter-label"><i class="fas fa-calendar-days"></i> เดือน</div><div id="ledgerMonthPills" class="flex flex-wrap gap-1.5 flex-1"></div></div>
+                </div>
+
+                <div class="table-luxury-wrapper !rounded-none !shadow-none !border-0" style="max-height:68vh">
+                    <div id="ledgerTableCapture" class="min-w-[1080px] bg-white dark:bg-slate-900">
+                        <table class="ledger-table" id="ledgerTable">
+                            <thead>
+                                <tr class="h1">
+                                    <th rowspan="3" style="top:0">ลำดับ</th>
+                                    <th rowspan="3" style="top:0">วันที่ขาย</th>
+                                    <th rowspan="3" style="top:0;min-width:150px">รายการจ่าย</th>
+                                    <th colspan="4" style="top:0">รายการขาย</th>
+                                    <th rowspan="3" style="top:0">เงินในบัญชี</th>
+                                    <th rowspan="3" style="top:0">เงินที่สนาม</th>
+                                    <th rowspan="3" style="top:0">รวม</th>
+                                    <th rowspan="3" style="top:0;min-width:150px">หมายเหตุ</th>
+                                    <th rowspan="3" class="col-act no-print-capture" style="top:0;min-width:128px">จัดการ</th>
+                                </tr>
+                                <tr class="h2"><th colspan="2" class="grp-ammo">กระสุน</th><th colspan="2" class="grp-target">เป้า</th></tr>
+                                <tr class="h3"><th class="sub-ammo">โอน</th><th class="sub-ammo">เงินสด</th><th class="sub-target">โอน</th><th class="sub-target">เงินสด</th></tr>
+                            </thead>
+                            <tbody id="ledgerTbody"></tbody>
+                            <tfoot id="ledgerTfoot"></tfoot>
+                        </table>
+                    </div>
+                </div>
+                <div class="no-print px-4 py-2.5 text-[10.5px] text-slate-400 border-t border-slate-100 dark:border-slate-800">เคล็ดลับ: คลิกตัวเลขในช่อง เงินในบัญชี / เงินที่สนาม / รวม เพื่อแก้ไขได้ทันที · ลากไอคอน <i class="fas fa-grip-vertical"></i> หรือกดลูกศรเพื่อสลับลำดับ · แถวสีเขียวอ่อนคือยอดรวมรายวันจากเจ้าหน้าที่สนาม</div>
+            </div>
+        </div>
+
     </main>
 
     <!-- ==================== MODAL 1: LINE TEXT SUMMARY REPORT ==================== -->
@@ -1270,6 +1664,164 @@
     </div>
 
     <!-- Toast Notifications -->
+    
+    <!-- ===== v3 Modal: Login (PIN) ===== -->
+    <div id="loginModal" class="hidden fixed inset-0 z-[155] bg-slate-950/70 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-slate-900 rounded-[1.75rem] max-w-sm w-full p-6 space-y-4 shadow-2xl border border-slate-100 dark:border-slate-800 modal-animate">
+            <div class="flex justify-between items-start">
+                <div class="flex items-center gap-3">
+                    <div id="loginIcon" class="w-12 h-12 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 text-white flex items-center justify-center text-xl"><i class="fas fa-user-shield"></i></div>
+                    <div><h3 id="loginTitle" class="font-extrabold text-base text-slate-900 dark:text-white">เข้าสู่ระบบ</h3><p class="text-[11px] text-slate-500">กรอกรหัสตัวเลข</p></div>
+                </div>
+                <button type="button" onclick="closeLogin()" class="w-8 h-8 bg-slate-100 dark:bg-slate-800 rounded-full text-slate-500"><i class="fas fa-times text-xs"></i></button>
+            </div>
+            <div id="loginDots" class="flex justify-center items-center gap-3 py-3"></div>
+            <div id="loginError" class="hidden text-center text-[11.5px] font-bold text-rose-600 dark:text-rose-400 min-h-[1rem]"></div>
+            <div id="loginBusy" class="hidden text-center text-xs font-bold text-indigo-600"><i class="fas fa-circle-notch fa-spin mr-1.5"></i> กำลังตรวจสอบรหัส...</div>
+            <div class="grid grid-cols-3 gap-2.5">
+                <button type="button" class="npad-key" data-lk="1">1</button><button type="button" class="npad-key" data-lk="2">2</button><button type="button" class="npad-key" data-lk="3">3</button>
+                <button type="button" class="npad-key" data-lk="4">4</button><button type="button" class="npad-key" data-lk="5">5</button><button type="button" class="npad-key" data-lk="6">6</button>
+                <button type="button" class="npad-key" data-lk="7">7</button><button type="button" class="npad-key" data-lk="8">8</button><button type="button" class="npad-key" data-lk="9">9</button>
+                <button type="button" class="npad-key warn" data-lk="back" aria-label="ลบ"><i class="fas fa-delete-left"></i></button>
+                <button type="button" class="npad-key" data-lk="0">0</button>
+                <button type="button" class="npad-key go" data-lk="ok" aria-label="ยืนยัน"><i class="fas fa-arrow-right"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== v3 Modal: Numeric keypad popup ===== -->
+    <div id="numpadModal" class="hidden fixed inset-0 z-[165] bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-slate-900 rounded-[1.75rem] max-w-xs w-full p-5 space-y-3.5 shadow-2xl border border-slate-100 dark:border-slate-800 modal-animate">
+            <div class="flex justify-between items-center">
+                <h3 id="npTitle" class="font-extrabold text-sm text-slate-800 dark:text-white">กรอกตัวเลข</h3>
+                <button type="button" onclick="npClose(null)" class="w-7 h-7 bg-slate-100 dark:bg-slate-800 rounded-full text-slate-500"><i class="fas fa-times text-xs"></i></button>
+            </div>
+            <div class="rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 px-4 py-3 text-right">
+                <div id="npHint" class="text-[10.5px] text-slate-400 text-left min-h-[0.9rem]"></div>
+                <div class="flex items-baseline justify-end gap-2"><span id="npDisplay" class="text-3xl font-black text-indigo-600 dark:text-indigo-300 tabular-nums break-all">0</span><span id="npUnit" class="text-xs font-bold text-slate-400"></span></div>
+            </div>
+            <div id="npPresets" class="grid grid-cols-4 gap-1.5"></div>
+            <div class="grid grid-cols-3 gap-2">
+                <button type="button" class="npad-key" data-nk="7">7</button><button type="button" class="npad-key" data-nk="8">8</button><button type="button" class="npad-key" data-nk="9">9</button>
+                <button type="button" class="npad-key" data-nk="4">4</button><button type="button" class="npad-key" data-nk="5">5</button><button type="button" class="npad-key" data-nk="6">6</button>
+                <button type="button" class="npad-key" data-nk="1">1</button><button type="button" class="npad-key" data-nk="2">2</button><button type="button" class="npad-key" data-nk="3">3</button>
+                <button type="button" id="npAlt" class="npad-key fn" data-nk="alt">.</button>
+                <button type="button" class="npad-key" data-nk="0">0</button>
+                <button type="button" class="npad-key warn" data-nk="back"><i class="fas fa-delete-left"></i></button>
+            </div>
+            <div class="grid grid-cols-3 gap-2">
+                <button type="button" class="py-3 rounded-2xl bg-rose-50 dark:bg-rose-950/30 text-rose-600 text-xs font-bold" data-nk="clear">ล้างค่า</button>
+                <button type="button" class="col-span-2 py-3 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-extrabold shadow-lg" data-nk="ok"><i class="fas fa-check mr-1.5"></i> ยืนยัน</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== v3 Modal: Thai calendar ===== -->
+    <div id="thaiPickModal" class="hidden fixed inset-0 z-[165] bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="thcal modal-animate" id="thcalCard">
+            <div class="thcal-head">
+                <button type="button" class="thcal-nav" data-tc="prev" aria-label="เดือนก่อน"><i class="fas fa-chevron-left"></i></button>
+                <div class="thcal-title"><button type="button" data-tc="toggleSel" title="เลือกเดือน/ปี"><span id="thcalMonth" class="thcal-month">มกราคม</span></button><button type="button" data-tc="toggleSel"><span id="thcalYear" class="thcal-year">2569</span></button></div>
+                <button type="button" class="thcal-nav" data-tc="next" aria-label="เดือนถัดไป"><i class="fas fa-chevron-right"></i></button>
+            </div>
+            <div id="thcalSel" class="hidden flex gap-2 mb-3"><select id="thcalMonthSel" class="flex-1"></select><select id="thcalYearSel" class="w-28"></select></div>
+            <div class="thcal-week"><span>อา</span><span>จ</span><span>อ</span><span>พ</span><span>พฤ</span><span>ศ</span><span>ส</span></div>
+            <div id="thcalGrid" class="thcal-grid"></div>
+            <div class="thcal-foot">
+                <button type="button" data-tc="today" class="text-indigo-700 dark:text-indigo-300">วันนี้</button>
+                <button type="button" data-tc="clear" id="thcalClear" class="text-rose-600">ล้างค่า</button>
+                <button type="button" data-tc="close" class="text-slate-600 dark:text-slate-300">ปิด</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== v3 Modal: Progress / result ===== -->
+    <div id="progressModal" class="hidden fixed inset-0 z-[175] bg-slate-950/65 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-slate-900 rounded-[1.75rem] max-w-sm w-full p-6 space-y-4 shadow-2xl border border-slate-100 dark:border-slate-800 modal-animate">
+            <div id="progIcon" class="text-center"></div>
+            <h3 id="progTitle" class="text-center font-extrabold text-base text-slate-900 dark:text-white">กำลังดำเนินการ</h3>
+            <div id="progSteps" class="px-1"></div>
+            <div id="progBody" class="hidden text-xs"></div>
+            <div id="progActions" class="hidden grid gap-2"></div>
+        </div>
+    </div>
+
+    <!-- ===== v3 Modal: Ledger row edit ===== -->
+    <div id="ledgerEditModal" class="hidden fixed inset-0 z-[150] bg-slate-950/70 backdrop-blur-sm flex items-start sm:items-center justify-center p-3 overflow-y-auto">
+        <div class="bg-white dark:bg-slate-900 rounded-[1.75rem] max-w-lg w-full p-5 sm:p-6 space-y-4 shadow-2xl border border-slate-100 dark:border-slate-800 modal-animate my-4">
+            <div class="flex justify-between items-center">
+                <h3 id="leTitle" class="font-extrabold text-base text-slate-900 dark:text-white">แก้ไขรายการ</h3>
+                <button type="button" onclick="closeLedgerEdit()" class="w-8 h-8 bg-slate-100 dark:bg-slate-800 rounded-full text-slate-500"><i class="fas fa-times text-xs"></i></button>
+            </div>
+            <div id="leFieldNote" class="hidden text-[11px] rounded-xl bg-emerald-50 dark:bg-emerald-950/30 text-emerald-700 dark:text-emerald-300 px-3 py-2 font-semibold"></div>
+            <div class="grid grid-cols-2 gap-3">
+                <div><label class="fld-label">วันที่ขาย</label><button type="button" id="leDateBtn" class="fld-input text-left flex items-center justify-between"><span id="leDateText">-</span><i class="far fa-calendar-days text-indigo-500"></i></button></div>
+                <div><label class="fld-label">รายการจ่าย</label><input id="leDesc" type="text" class="fld-input" placeholder="เช่น ซื้อกระสุน, ค่าซ่อม"></div>
+            </div>
+            <div class="grid grid-cols-4 gap-2">
+                <div><label class="fld-label text-emerald-700">กระสุนโอน</label><input id="leBTr" type="number" step="any" class="fld-input !px-2 text-center"></div>
+                <div><label class="fld-label text-emerald-700">กระสุนสด</label><input id="leBCash" type="number" step="any" class="fld-input !px-2 text-center"></div>
+                <div><label class="fld-label text-orange-700">เป้าโอน</label><input id="leTTr" type="number" step="any" class="fld-input !px-2 text-center"></div>
+                <div><label class="fld-label text-orange-700">เป้าสด</label><input id="leTCash" type="number" step="any" class="fld-input !px-2 text-center"></div>
+            </div>
+            <button type="button" onclick="leAutoCalc()" class="text-[11px] font-bold text-indigo-600 dark:text-indigo-300"><i class="fas fa-calculator mr-1"></i> คำนวณเงินจากจำนวน (ตามราคาสินค้าปัจจุบัน)</button>
+            <div class="grid grid-cols-3 gap-2">
+                <div><label class="fld-label">เงินในบัญชี</label><input id="leAcct" type="number" step="any" class="fld-input text-right"></div>
+                <div><label class="fld-label">เงินที่สนาม</label><input id="leCash" type="number" step="any" class="fld-input text-right"></div>
+                <div><label class="fld-label">รวม <span class="font-normal text-slate-400">(ว่าง=อัตโนมัติ)</span></label><input id="leTotal" type="number" step="any" class="fld-input text-right" placeholder="อัตโนมัติ"></div>
+            </div>
+            <div><label class="fld-label">หมายเหตุ</label><textarea id="leNote" rows="2" class="fld-input"></textarea></div>
+            <div class="grid grid-cols-3 gap-2 pt-1">
+                <button type="button" onclick="closeLedgerEdit()" class="py-3 rounded-2xl bg-slate-100 dark:bg-slate-800 text-xs font-bold">ยกเลิก</button>
+                <button type="button" onclick="saveLedgerEdit()" class="col-span-2 py-3 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-extrabold shadow-lg"><i class="fas fa-floppy-disk mr-1.5"></i> บันทึก</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== v3 Modal: Product editor ===== -->
+    <div id="productModal" class="hidden fixed inset-0 z-[150] bg-slate-950/70 backdrop-blur-sm flex items-start sm:items-center justify-center p-3 overflow-y-auto">
+        <div class="bg-white dark:bg-slate-900 rounded-[1.75rem] max-w-lg w-full p-5 sm:p-6 space-y-4 shadow-2xl border border-slate-100 dark:border-slate-800 modal-animate my-4">
+            <div class="flex justify-between items-center">
+                <h3 class="font-extrabold text-base text-slate-900 dark:text-white"><i class="fas fa-sliders text-indigo-500 mr-1.5"></i> แก้ไขรายการสินค้า / ราคาต่อหน่วย</h3>
+                <button type="button" onclick="closeProductEditor()" class="w-8 h-8 bg-slate-100 dark:bg-slate-800 rounded-full text-slate-500"><i class="fas fa-times text-xs"></i></button>
+            </div>
+            <p class="text-[11px] text-slate-500">ระบบจำชื่อและราคาที่แก้ไขล่าสุดไว้ให้ใช้ครั้งถัดไป รายการที่ส่งไปแล้วจะไม่เปลี่ยนตามราคาใหม่</p>
+            <div>
+                <div class="flex items-center justify-between mb-1.5"><span class="font-extrabold text-xs text-emerald-700 dark:text-emerald-300">กระสุน (ราคาต่อกล่อง)</span><button type="button" onclick="peAdd('ammo')" class="text-[11px] font-bold text-indigo-600"><i class="fas fa-plus mr-1"></i> เพิ่มยี่ห้อ</button></div>
+                <div id="peAmmo" class="space-y-2"></div>
+            </div>
+            <div>
+                <div class="flex items-center justify-between mb-1.5"><span class="font-extrabold text-xs text-orange-700 dark:text-orange-300">เป้า (ราคาต่อใบ)</span><button type="button" onclick="peAdd('target')" class="text-[11px] font-bold text-indigo-600"><i class="fas fa-plus mr-1"></i> เพิ่มชนิดเป้า</button></div>
+                <div id="peTarget" class="space-y-2"></div>
+            </div>
+            <div class="grid grid-cols-3 gap-2 pt-1">
+                <button type="button" onclick="closeProductEditor()" class="py-3 rounded-2xl bg-slate-100 dark:bg-slate-800 text-xs font-bold">ยกเลิก</button>
+                <button type="button" onclick="peSave()" class="col-span-2 py-3 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-extrabold shadow-lg"><i class="fas fa-floppy-disk mr-1.5"></i> บันทึกรายการสินค้า</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== v3 Modal: Orders of a ledger row ===== -->
+    <div id="ordersPopupModal" class="hidden fixed inset-0 z-[150] bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-3">
+        <div class="bg-white dark:bg-slate-900 rounded-[1.75rem] max-w-lg w-full p-5 space-y-3 shadow-2xl border border-slate-100 dark:border-slate-800 modal-animate max-h-[88vh] overflow-y-auto">
+            <div class="flex justify-between items-center"><h3 id="opTitle" class="font-extrabold text-sm text-slate-900 dark:text-white">รายการจากเจ้าหน้าที่สนาม</h3><button type="button" onclick="document.getElementById('ordersPopupModal').classList.add('hidden')" class="w-8 h-8 bg-slate-100 dark:bg-slate-800 rounded-full text-slate-500"><i class="fas fa-times text-xs"></i></button></div>
+            <div id="opBody" class="space-y-2"></div>
+        </div>
+    </div>
+
+    <!-- ===== v3 Modal: PIN settings ===== -->
+    <div id="pinSettingsModal" class="hidden fixed inset-0 z-[150] bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-3">
+        <div class="bg-white dark:bg-slate-900 rounded-[1.75rem] max-w-sm w-full p-6 space-y-3.5 shadow-2xl border border-slate-100 dark:border-slate-800 modal-animate">
+            <div class="flex justify-between items-center"><h3 class="font-extrabold text-base text-slate-900 dark:text-white"><i class="fas fa-key text-amber-500 mr-1.5"></i> ตั้งค่ารหัสเข้าสู่ระบบ</h3><button type="button" onclick="closePinSettings()" class="w-8 h-8 bg-slate-100 dark:bg-slate-800 rounded-full text-slate-500"><i class="fas fa-times text-xs"></i></button></div>
+            <div><label class="fld-label">เปลี่ยนรหัสของ</label><select id="psTarget" class="fld-input"><option value="staff">เจ้าหน้าที่สนาม</option><option value="admin">ผู้ดูแลระบบ</option></select></div>
+            <div><label class="fld-label">รหัสใหม่ (ตัวเลข 4–8 หลัก)</label><input id="psNew" type="password" inputmode="numeric" maxlength="8" autocomplete="new-password" class="fld-input tracking-widest"></div>
+            <div><label class="fld-label">ยืนยันรหัสใหม่</label><input id="psNew2" type="password" inputmode="numeric" maxlength="8" autocomplete="new-password" class="fld-input tracking-widest"></div>
+            <div id="psError" class="hidden text-xs font-bold text-rose-600"></div>
+            <button type="button" id="psBtn" onclick="savePinSettings()" class="w-full py-3 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-extrabold shadow-lg">บันทึกรหัสใหม่</button>
+        </div>
+    </div>
+    <input type="file" id="importBackupInput" accept="application/json,.json" class="hidden" onchange="importBackupFile(this)">
+
     <div id="toastStack" aria-live="polite"></div>
 
     <script>
@@ -1296,7 +1848,11 @@
 
         let appData = {
             generalRecords: [],
-            shootingRecords: []
+            shootingRecords: [],
+            fieldOrders: [],
+            rangeLedger: null,
+            rangeMeta: {},
+            settings: {}
         };
 
         // ==================== CORE STATE & HELPERS ====================
@@ -1565,6 +2121,7 @@
         function sanitizeData() {
             if (!Array.isArray(appData.generalRecords)) appData.generalRecords = [];
             if (!Array.isArray(appData.shootingRecords)) appData.shootingRecords = [];
+            if (!Array.isArray(appData.fieldOrders)) appData.fieldOrders = [];
             appData.generalRecords = appData.generalRecords.filter(r => r && typeof r === 'object');
             appData.shootingRecords = appData.shootingRecords.filter(r => r && typeof r === 'object' && r.month);
             const ensureId = (r, p) => {
@@ -1719,11 +2276,12 @@
 
         // --- Navigation ---
         window.hideAllViews = function() {
-            ['view-home', 'view-general-summary', 'view-general-input', 'view-shooting-app', 'view-shooting-input'].forEach(v => {
+            ['view-home', 'view-general-summary', 'view-general-input', 'view-shooting-app', 'view-shooting-input', 'view-range-menu', 'view-range-ledger', 'view-field'].forEach(v => {
                 document.getElementById(v).classList.add('hidden');
             });
         }
         window.navigateTo = function(id) {
+            if (typeof canViewV3 === 'function' && !canViewV3(id)) id = 'view-home';
             hideAllViews();
             const el = document.getElementById(id);
             el.classList.remove('hidden', 'view-enter');
@@ -1734,6 +2292,7 @@
             updateLastSyncTime();
         }
         window.goHome = function() {
+            if (session && session.role === 'staff') { navigationHistory = ['view-field']; navigateTo('view-field'); renderFieldAll(); return; }
             navigationHistory = ['view-home'];
             document.getElementById('globalSearchInput').value = "";
             const dropdown = document.getElementById('searchResultsDropdown');
@@ -1755,6 +2314,7 @@
             const cur = navigationHistory[navigationHistory.length-1];
             if(cur === 'view-general-summary') renderGeneralTable();
             if(cur === 'view-shooting-app') renderShootingTable();
+            if(typeof renderV3View === 'function') renderV3View(cur);
             updateLastSyncTime();
         }
 
@@ -1828,13 +2388,15 @@
                 if (!res.ok) throw new Error('HTTP ' + res.status);
                 const json = await res.json();
                 if (isSaving) return; // มีการบันทึกระหว่างดึงข้อมูล — ไม่เขียนทับข้อมูลล่าสุดในหน้า
-                if (json && (json.generalRecords || json.shootingRecords)) {
-                    appData.generalRecords = json.generalRecords || [];
-                    appData.shootingRecords = json.shootingRecords || [];
+                if (json && typeof json === 'object' && (Array.isArray(json.generalRecords) || Array.isArray(json.shootingRecords) || json.scriptVersion)) {
+                    appData.generalRecords = Array.isArray(json.generalRecords) ? json.generalRecords : [];
+                    appData.shootingRecords = Array.isArray(json.shootingRecords) ? json.shootingRecords : [];
+                    applyCloudExtras(json);
                 }
                 cloudLoaded = true;
                 sanitizeData();
                 refreshCurrentView();
+                onCloudDataLoaded();
                 if (refreshIcon) refreshIcon.classList.remove('fa-spin');
                 if (isUIAction) {
                     syncStatusUI.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-400"></span> ซิงก์ข้อมูลล่าสุดสำเร็จ`;
@@ -1873,7 +2435,7 @@
             setSaving(true, label);
             try {
                 sanitizeData();
-                await fetch(SHEETS_API_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(appData) });
+                await api('setKeys', { keys: { generalRecords: appData.generalRecords, shootingRecords: appData.shootingRecords } });
                 updateLastSyncTime();
                 return true;
             } catch (e) {
@@ -3335,7 +3897,7 @@
 
         // ดาวน์โหลดไฟล์สำรองข้อมูลทั้งหมด (JSON)
         window.exportBackupJSON = function() {
-            const payload = { app: 'Executive Pro', exportedAt: new Date().toISOString(), generalRecords: appData.generalRecords, shootingRecords: appData.shootingRecords };
+            const payload = { app: 'Executive Pro', exportedAt: new Date().toISOString(), generalRecords: appData.generalRecords, shootingRecords: appData.shootingRecords, rangeLedger: appData.rangeLedger, rangeMeta: appData.rangeMeta, fieldOrders: appData.fieldOrders, settings: appData.settings };
             const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
@@ -3390,6 +3952,7 @@
 
         // --- App Boot ---
         window.onload = () => {
+            bootV3();
             initThaiCalendarDropdowns();
             setThaiDateValue(null);
             populateFilterDropdowns();
@@ -3403,6 +3966,1044 @@
             if (document.visibilityState === 'visible') { syncWithCloud(false); updateLastSyncTime(); }
         });
         setInterval(updateLastSyncTime, 60000);
+    </script>
+
+    <script>
+    /* ==========================================================================
+       Executive Pro v3 — เข้าสู่ระบบด้วยรหัส / เจ้าหน้าที่สนาม / ตารางรายการสนามยิงปืน
+       ========================================================================== */
+    const RANGE_SEED = [["","ยอดยกมา",0,0,0,0,106331,7032,null,"ยอดยกมาจากไฟล์เดิม"],["2023-06-03","",1,0,0,0,1000,0,null,""],["2023-06-13","",1,0,0,1,1000,0,null,""],["2023-06-14","",0,1,0,1,0,1015,null,""],["2023-06-15","",2,0,0,25,2000,375,null,""],["2023-06-16","",0,1,0,30,0,1450,null,""],["2023-06-22","",0,0,0,6,0,90,null,""],["2023-06-23","",0,1,0,0,0,1000,null,""],["2023-06-27","",1,0,0,8,1000,120,null,""],["2023-06-28","",1,2,1,6,1015,2090,null,""],["2023-06-29","",1,0,2,0,1030,0,null,""],["2023-06-30","",1,1,0,3,1000,1045,null,""],["2023-07-01","",0,0,0,2,0,30,null,""],["2023-07-02","",2,0,0,0,2000,0,null,""],["2023-07-05","",2,0,0,0,2000,0,null,""],["2023-07-07","",0,1,0,2,0,1030,null,""],["2023-07-10","",1,0,2,0,1030,0,null,""],["2023-07-21","",2,0,2,0,2030,0,null,""],["2023-07-23","",3,4,3,4,3045,4060,null,""],["2023-07-25","",0,1,3,0,45,1000,null,""],["2023-07-26","",2,1,3,2,2045,1030,null,""],["2023-07-28","",0,3,9,0,135,3000,null,""],["2023-07-30","",0,0,1,0,15,0,null,""],["2023-08-03","",3,0,0,0,3000,0,null,""],["2023-08-09","",0,3,0,7,0,3105,null,""],["2023-08-11","",0,2,0,4,0,2060,null,""],["2023-08-13","",0,0,1,0,15,0,null,""],["2023-08-14","",1,0,0,0,1000,0,null,""],["2023-08-15","",0,0,0,1,0,15,null,""],["2023-08-16","",0,0,0,2,0,30,null,""],["2023-08-18","ซื้อกระสุนไทยอาร์ม 9มม.",0,0,0,0,-71000,0,null,"4,000 นัด"],["2023-08-22","",4,0,0,0,4000,0,null,""],["2023-08-24","",1,0,0,0,1000,0,null,""],["2023-08-25","",5,0,0,0,5000,0,null,""],["2023-08-26","",3,0,0,0,3000,0,null,""],["2023-08-28","ฝากเงินเข้าบัญชี",0,0,0,0,28500,-27500,null,"ล้างปืน (100x10)"],["2023-08-29","",0,0,0,0,1200,0,null,"ล้างปืน (100x12)"],["2023-08-29","",3,0,0,0,3000,0,null,""],["2023-08-30","",0,0,0,0,200,0,null,"ล้างปืน (100x2)"],["2023-08-31","",0,0,0,0,500,0,null,"ล้างปืน (100x5)"],["2023-09-01","กระสุน NRC",0,0,0,0,-88700,0,null,"ล้างปืน (100x13) · 10,000 นัด"],["2023-09-03","",1,0,0,0,1000,0,null,""],["2023-09-04","",0,0,0,0,200,0,null,"ล้างปืน (100x2)"],["2023-09-05","",0,0,0,0,1500,0,null,"ล้างปืน (100x15)"],["2023-09-05","",4,0,0,0,4000,0,null,""],["2023-09-06","",0,0,0,0,400,0,null,"ล้างปืน"],["2023-09-07","",0,1,0,3,0,1045,null,""],["2023-09-09","",1,0,3,0,1045,0,null,""],["2023-09-09","",0,0,0,0,500,0,null,"ล้างปืน"],["2023-09-11","",0,1,0,0,0,1000,null,""],["2023-09-12","",0,1,0,0,0,1000,null,""],["2023-09-12","",0,0,0,0,200,0,null,"ล้างปืน"],["","โอนเข้าสนาม",0,0,0,0,1045,-1045,null,""],["2023-09-13","",1,0,0,0,1000,0,null,""],["2023-09-13","",0,0,0,0,200,0,null,"ล้างปืน"],["2023-09-15","",0,0,0,0,620,0,null,"ล้างปืน"],["2023-09-25","",0,0,0,0,1400,0,null,"ล้างปืน"],["2023-09-26","",0,0,0,0,900,0,null,"ล้างปืน"],["2023-09-27","",0,0,0,0,500,0,null,"ล้างปืน"],["2023-09-28","",0,4,0,3,0,4045,null,""],["2023-09-29","",0,0,0,28,0,420,null,""],["2023-09-30","",0,0,0,1,0,15,null,""],["2023-10-03","",1,0,3,0,1045,0,null,""],["2023-10-04","",0,1,0,4,0,1060,null,""],["2023-10-09","",19,0,95,0,20425,0,null,"จ่ายแล้ว 27 พ.ย.66"],["2023-10-11","",2,0,5,0,2075,0,null,""],["2023-10-12","",0,0,0,0,-11541,0,null,"เบิกเงิน ล้างปืน"],["2023-10-16","",1,0,0,0,1000,0,null,""],["2023-10-17","",0,0,0,4,0,60,null,""],["2023-10-19","",0,1,0,1,0,1015,null,""],["2023-10-21","",2,0,2,2,2030,30,null,""],["2023-10-24","ป้ายห้องน้ำ",0,0,0,0,-210,0,null,""],["2023-10-24","",0,0,0,1,0,15,null,""],["2023-10-26","",0,1,0,6,0,1090,null,""],["2023-10-30","",0,2,0,2,0,2030,null,""],["2023-10-28","หักค่าธรรมเนียมบัตร",0,0,0,0,-200,0,null,""],["2023-11-01","",0,1,2,0,30,1000,null,""],["2023-11-02","",1,0,1,0,1015,0,null,""],["2023-11-03","",0,0,1,0,15,0,null,""],["2023-11-04","",0,3,5,0,75,3000,null,""],["2023-11-17","",20,0,50,0,20750,0,null,"YPO"],["2023-11-20","",2,2,0,0,2000,2000,null,""],["2023-11-20","",0,0,5,0,75,0,null,""],["2023-11-22","",0,5,0,14,0,5210,null,""],["2023-11-23","",0,0,0,6,0,90,null,""],["2023-11-24","",1,0,3,0,1045,0,null,""],["2023-11-25","",1,0,0,0,1000,0,null,""],["2023-11-27","",2,0,0,2,2000,30,null,""],["2023-11-28","",0,0,0,5,0,75,null,""],["2023-11-29","",2,2,3,0,2045,2000,null,""],["2023-11-05","",1,0,0,0,1000,0,null,""],["2023-11-06","",1,0,0,0,1000,0,null,""],["2023-11-07","",0,1,0,1,0,1015,null,""],["2023-11-07","โอนเข้า บช",0,0,0,0,26000,-26000,null,""],["2023-12-08","",0,0,0,2,0,30,null,""],["2023-12-14","โอนเกิน",0,0,0,0,0,0,null,"โอนคืนโจ้ 300"],["2023-12-14","",2,0,3,1,2045,15,null,""],["2023-12-16","**กระสุนเหลือ 150**",0,0,0,0,0,0,null,""],["2023-12-19","",0,1,0,4,0,1060,null,""],["2023-12-25","กระสุนเหลือ 149",0,0,0,0,0,0,null,"เงินสนาม 5542"],["2023-12-26","",3,1,0,10,3000,1150,null,""],["2023-12-27","",0,0,0,1,0,15,null,""],["2024-01-02","",1,0,0,0,1000,0,null,""],["2024-01-06","กระสุนเหลือ 144",0,0,0,0,0,0,null,"เงินสนาม 6692"],["2024-01-14","",0,2,0,4,0,2060,null,""],["2024-01-17","ถอนเงินช่วยงานโบว์",0,0,0,0,-10000,0,null,""],["2024-01-19","",0,3,0,10,0,3150,null,""],["2024-01-22","",3,0,3,0,3045,0,null,""],["2024-01-23","",0,0,0,4,0,60,null,""],["2024-01-24","",0,2,0,4,0,2060,null,""],["2024-01-26","",0,1,0,8,0,1120,null,""],["2024-01-27","",1,0,1,0,1015,0,null,""],["2024-01-30","กระสุนเหลือ 130",0,0,0,0,0,0,null,"เงินสนาม 15287"],["2024-02-03","",0,3,0,6,0,3090,null,""],["2024-02-05","",1,0,0,0,1000,0,null,""],["2024-02-07","",0,5,0,0,0,5000,null,""],["2024-02-08","",0,1,0,2,0,1030,null,""],["2024-02-09","",0,1,0,0,0,1000,null,""],["2024-02-10","",0,0,0,3,0,45,null,""],["2024-02-12","",0,1,0,1,0,1015,null,""],["2024-02-13","เบิกเงินเสื้อบอล",0,0,0,0,-10000,0,null,""],["2024-02-17","",1,0,0,2,1000,30,null,""],["2024-02-19","",0,0,0,5,0,75,null,""],["2024-02-22","",0,1,0,1,0,1015,null,""],["2024-02-23","",2,0,4,0,2060,0,null,""],["2024-02-23","NRC 79 / Th 25 รวม 104",0,0,0,0,0,0,null,"เงินสนาม 27632"],["2024-02-26","",0,3,0,0,0,3000,null,""],["2024-02-26","",8,0,16,0,8240,0,null,""],["2024-02-28","",0,0,1,0,15,0,null,""],["2024-03-01","",2,0,0,0,2000,0,null,""],["2024-03-02","",1,3,0,2,1000,3030,null,""],["2024-03-03","",0,0,0,3,0,45,null,""],["2024-03-12","",0,0,0,1,0,15,null,""],["2024-03-14","",2,0,6,0,2090,0,null,""],["2024-03-22","",4,0,5,0,4075,0,null,""],["2024-03-24","",1,0,0,0,1000,0,null,""],["2024-03-29","",4,0,0,0,4000,0,null,""],["2024-04-04","",2,0,0,0,2000,0,null,""],["2024-04-05","เงินเข้าบัญชี",0,0,0,0,30000,-30000,null,"เงินสนาม 1732"],["2024-04-07","",0,2,0,5,0,2075,null,""],["2024-04-18","",0,0,0,2,0,30,null,""],["2024-04-19","",12,0,60,0,12900,0,null,"PADA"],["2024-04-20","",1,0,0,0,1000,0,null,""],["2024-04-21","",0,0,4,0,60,0,null,""],["2024-04-26","",0,4,12,6,180,4090,null,""],["2024-04-29","",0,0,0,4,0,60,null,""],["2024-05-04","",2,0,0,0,2000,0,null,""],["2024-05-09","",1,0,0,0,1000,0,null,""],["2024-05-13","",0,1,0,0,0,1000,null,""],["2024-05-15","",0,3,2,5,30,3075,null,""],["2024-05-20","NRC 28 / TH 14 รวม 42",0,0,0,0,0,0,null,"เงินสนาม 11067"],["2024-05-20","",1,1,0,0,1000,1000,null,""],["2024-05-24","",1,0,1,0,1015,0,null,""],["2024-05-30","",0,0,2,0,30,0,null,""],["2024-06-01","",5,1,8,0,5120,1000,null,""],["2024-06-01","โอนเงินเข้า บช.",0,0,0,0,10000,-10000,null,""],["2024-06-04","",3,0,0,0,3000,0,null,""],["2024-06-06","",0,0,1,0,15,0,null,""],["2024-06-14","ผช.67",0,0,0,0,0,0,null,"19 กล่อง (ยืมคลัง 10 กล่อง)"],["2024-06-16","",4,0,2,0,4030,0,null,""],["2024-06-07","",0,0,0,0,0,0,null,""],["2024-06-18","",0,0,0,9,0,135,null,""],["2024-06-19","NRC 3 / TH 7 รวม 10",0,0,0,0,0,0,null,""],["2024-06-21","ซื้อกระสุน",0,0,0,0,-162500,0,null,""],["2024-06-22","รับกระสุน 10,000 นัด(10 ลัง)",0,0,0,0,0,0,null,""],["2024-06-20","",0,0,0,15,0,225,null,""],["2024-07-01","",0,0,0,1,0,15,null,""],["2024-07-03","",0,2,0,2,0,2030,null,""],["2024-07-04","",0,1,0,0,0,1000,null,""],["2024-07-05","",1,0,2,0,1030,0,null,""],["2024-07-11","",0,1,0,0,0,1000,null,""],["2024-07-12","",4,1,3,0,4045,1000,null,""],["2024-07-17","",5,0,4,0,5060,0,null,""],["2024-07-18","",1,0,0,0,1000,0,null,""],["2024-07-22","",0,0,4,0,60,0,null,""],["2024-08-01","",0,4,0,0,0,4000,null,""],["2024-08-02","",0,0,1,1,15,15,null,""],["2024-08-04","",2,0,3,0,2045,0,null,""],["2024-08-06","",1,0,1,0,1015,0,null,"ไม่ได้ลงระบบ"],["2024-08-08","",1,0,1,0,1015,0,null,""],["2024-08-10","",0,2,0,1,0,2015,null,""],["2024-08-17","",0,0,0,2,0,30,null,""],["2024-08-18","",1,0,0,0,1000,0,null,"ไม่ได้ลงระบบ"],["2024-08-20","",1,1,0,0,1000,1000,null,""],["2024-08-21","",1,2,1,3,1015,2045,null,""],["2024-08-25","",0,0,0,5,0,75,null,""],["2024-08-31","",2,0,3,0,2045,0,null,""],["2024-09-09","",1,0,0,0,1000,0,null,"กอส.4 กล่องยืมคลัง (ยังไม่ได้จ่าย)"],["2024-09-10","",0,1,0,0,0,1000,null,""],["2024-09-10","",0,1,0,5,0,1075,null,""],["2024-09-10","กระสุน 173 กล่อง",0,0,0,0,0,0,null,""],["2024-09-11","",1,0,2,0,1030,0,null,""],["2024-09-12","",1,0,0,0,1000,0,null,""],["2024-09-14","",1,0,1,0,1015,0,null,""],["2024-09-16","กระสุน 160 กล่อง",0,0,0,0,0,0,null,"คืนคลัง (กอส.) 4 กล่อง"],["2024-09-16","",0,0,0,4,0,60,null,""],["2024-09-18","",1,0,3,0,1045,0,null,""],["2024-09-19","",0,0,0,2,0,30,null,""],["2024-09-22","",0,0,0,1,0,15,null,""],["2024-09-24","",0,1,0,1,0,1015,null,""],["2024-09-27","",0,1,0,0,0,1000,null,""],["2024-10-03","",2,0,4,0,2060,0,null,""],["2024-10-04","",0,0,0,2,0,30,null,""],["2024-10-06","",1,0,3,0,1045,0,null,""],["2024-10-08","เติม 10 ขาย 2 เหลือ 8",4,0,3,0,4045,0,null,""],["2024-10-09","เงินเข้าบัญชี",0,0,0,0,22000,-22000,null,"23,549"],["2024-10-10","",1,0,2,0,1030,0,null,""],["2024-10-11","",0,20,0,0,0,20000,null,""],["2024-10-11","",0,0,0,0,0,0,null,""],["2024-10-11","ส่วนต่าง 3000",0,0,0,0,3000,0,null,""],["2024-10-11","เหลือ 7",0,0,0,0,0,0,null,""],["2024-10-17","เหลืือ 5",2,0,4,0,2060,0,null,""],["2024-10-16","อคิลิคป้ายปืน 465 บาท",0,0,0,0,-465,0,null,""],["2024-10-22","งานเลี้ยงมิว",0,0,0,0,-8000,0,null,""],["2024-10-23","เหลือ 4",1,0,1,0,1015,0,null,""],["2024-10-24","เติม 10 เหลือ 13",1,0,2,0,1030,0,null,""],["2024-10-24","อคิลิคป้ายปืน 155 บาท",0,0,0,0,-155,0,null,""],["2024-10-25","PADA",12,0,60,0,12900,0,null,""],["2024-10-25","เหลือ 11",2,0,0,0,2000,0,null,""],["2024-10-25","กาแฟ",0,0,0,0,-315,0,null,""],["2024-10-25","ค่ายกเก้าอี้",0,0,0,0,2000,0,null,""],["2024-10-28","ค่าเครื่องหมายผ้า",0,0,0,0,-3180,0,null,""],["2024-10-26","",0,0,6,0,90,0,null,""],["2024-11-08","",0,0,0,0,22000,-22000,null,""],["2024-11-07","เหลือ 9",2,0,0,0,2000,0,null,""],["2024-11-10","ใช้เงินสดซื้อของ / รับโอน",0,0,0,0,308,-308,null,""],["2024-11-10","เงินเข้าบัญชี",0,0,0,0,21000,0,null,"รับเงินค้าง"],["2024-11-11","เติม 4 เหลือ 10",3,0,6,0,3090,0,null,""],["2024-11-12","",0,0,0,3,0,45,null,""],["2024-11-13","",0,0,2,0,30,0,null,""],["2024-11-20","ซื้อหลอดไฟ",0,0,0,0,-971,0,null,""],["2024-11-22","",0,0,0,1,0,15,null,""],["2024-11-24","",8,0,0,5,8000,75,null,""],["2024-11-26","เติม 20 เหลือ 19",0,3,0,4,0,3060,null,"ต้องแลก ปคบ. 1"],["2024-11-29","ค่ากระสุน(พี่แซนด์)",0,0,0,0,-7000,0,null,"ลูกซอง burst shot"],["2024-11-27","",0,0,4,1,60,15,null,""],["2024-11-28","ยอดซื้อของ",0,0,0,0,-1984,0,null,""],["2024-12-06","",0,0,0,0,0,0,null,"6,532"],["2024-12-07","ค่ากระสุนฝึก ปคบ.",0,0,0,0,158810,0,null,"ต้องเหลือกระสุน 160-72=88"],["2024-12-08","ซื้อกระสุน 200 กล่อง",0,0,0,0,-165000,0,null,"ต้องมีกระสุน 288 กล่อง"],["2024-12-09","",0,1,2,0,30,1000,null,""],["2024-12-11","",0,2,0,0,0,2000,null,""],["2024-12-12","",0,2,0,2,0,2030,null,""],["2024-12-13","ค่า Texus Star",0,0,0,0,0,0,null,""],["2024-12-15","",0,6,5,0,75,6000,null,""],["2024-12-16","",0,2,0,3,0,2045,null,""],["2024-12-18","กระสุนตู้ขาย 50",0,0,0,0,0,0,null,"84+50"],["2024-12-19","ค่าอุปกรณ์รถยนต์",0,0,0,2,-1223,30,null,""],["2024-12-21","",8,0,13,0,8195,0,null,""],["2024-12-20","อุปกรณ์ BB Gun",0,0,0,0,-7000,0,null,""],["2024-12-22","",0,0,0,0,0,0,null,""],["2024-12-23","",0,3,0,2,0,3030,null,""],["2024-12-27","",1,0,1,3,1015,45,null,""],["2025-01-03","",1,0,1,1,1015,15,null,""],["2025-01-07","",1,0,0,0,1000,0,null,""],["2025-01-08","ค่า Texus star",0,0,0,0,-15000,0,null,""],["2025-01-09","",4,0,0,0,4000,0,null,""],["2025-01-11","",2,0,8,0,2120,0,null,""],["2025-01-20","",1,0,1,0,1015,0,null,""],["2025-01-21","",0,6,12,0,180,6000,null,""],["2025-01-24","",17,0,75,0,18125,0,null,""],["2025-01-29","",1,3,0,0,1000,3000,null,""],["2025-02-05","",3,0,4,0,3060,0,null,""],["2025-02-06","",0,0,0,13,0,195,null,""],["2025-02-10","",12,0,30,0,12450,0,null,"YPO"],["2025-02-14","",0,2,0,6,0,2090,null,""],["2025-02-28","",0,0,0,0,0,0,null,""],["2025-03-01","",0,0,6,0,90,0,null,""],["2025-03-08","",0,1,0,0,0,1000,null,""],["2025-03-15","",0,0,0,0,0,0,null,"VIP CP 5 กล่อง / นกฬ 10 กล่อง"],["2025-03-17","",0,4,0,9,0,4135,null,""],["2025-03-19","",7,2,21,10,7315,2150,null,""],["2025-03-25","",2,0,4,2,2060,30,null,"ต้องเหลือกระสุน 288-94-158=36"],["2025-03-26","ค่ากระสุน 10,000 นัด",0,0,0,0,-170000,0,null,""],["2025-03-27","ซื้อกระสุน 200 กล่อง",0,0,0,0,0,0,null,"ต้องมีกระสุน 200+36=236"],["2025-04-27","",0,1,0,1,0,1015,null,""],["2025-05-01","",0,0,0,1,0,15,null,""],["2025-05-03","",0,1,0,2,0,1030,null,""],["2025-05-04","",1,0,0,0,1000,0,null,""],["2025-05-15","",1,0,1,0,1015,0,null,""],["2025-05-17","",1,0,4,0,1060,0,null,""],["2025-05-18","",0,0,2,0,30,0,null,""],["2025-05-19","กระสุน 180",0,0,0,0,0,0,null,"เงินสนาม 10507"],["2025-05-19","โอนเข้าบัญชี",0,0,0,0,27000,-27000,null,"ยอดตรวจสอบ"],["2025-05-19","ขายกระสุนไม่ลงบัญชี",31,0,31,0,31465,0,82510,"ยอดตรวจสอบ"],["2025-05-20","",7,0,6,0,7090,0,null,""],["2025-06-06","",0,3,0,0,0,3000,null,""],["2025-06-11","",0,1,0,0,0,1000,null,""],["2025-06-11","",0,2,0,0,0,2000,null,""],["2025-06-18","",0,1,0,1,0,1015,null,""],["2025-06-20","",0,0,20,0,300,0,null,""],["2025-06-25","",1,0,1,0,1015,0,null,""],["2025-06-29","",0,8,0,24,0,8360,null,""],["2025-07-08","",0,1,10,0,150,1000,null,""],["2025-07-09","",1,0,0,0,1000,0,null,""],["2025-07-15","",12,0,53,0,12795,0,null,""],["2025-07-16","",0,2,0,21,0,2315,null,""],["2025-07-23","",2,0,6,0,2090,0,null,""],["2025-07-28","",1,0,0,3,1000,45,null,""],["2025-07-31","",2,0,3,0,2045,0,null,""],["2025-08-07","",0,1,0,0,0,1000,null,""],["2025-08-09","",0,0,0,5,0,75,null,""],["2025-09-03","",0,1,0,3,0,1045,null,""],["2025-09-04","",0,1,0,0,0,1000,null,""],["2025-09-09","",0,0,8,0,120,0,null,""],["2025-09-15","",0,3,2,4,30,3060,null,""],["2025-09-16","",0,0,5,0,75,0,null,""],["2025-09-18","",1,2,0,3,1000,2045,null,""],["2025-09-24","",2,0,4,0,2060,0,null,""],["2025-10-10","",14,0,60,0,14900,0,null,"PADA"],["2025-10-28","",0,1,0,0,0,1000,null,""],["2025-10-30","ค่ากระจก",0,0,0,0,-13000,0,null,""],["2025-10-30","เข้า บช.จากกองกลาง",0,0,0,0,4000,0,null,""],["2025-10-30","คืนค่ากระจก",0,0,0,0,500,0,null,""],["2025-11-03","",2,0,0,0,2000,0,null,""],["2025-11-07","",0,0,5,0,75,0,null,""],["2025-11-15","",1,0,0,0,1000,0,null,""],["2025-11-19","",0,2,2,6,30,2090,null,""],["2025-11-22","",0,1,0,0,0,1000,null,""],["2025-11-25","",0,1,0,0,0,1000,null,""],["2025-11-28","",1,0,6,1,1090,15,null,""],["2025-12-08","",0,0,0,2,0,30,null,""],["2025-12-09","",0,0,0,2,0,30,null,""],["2025-12-22","เงินเข้าสนาม 40000",0,0,0,0,40000,-40000,null,""],["2025-12-22","ไม่ได้ลงบัญชี 36 กล่อง",30,6,0,0,30000,6000,null,""],["2025-12-20","",0,4,0,6,0,4090,null,""],["2025-12-21","",0,0,0,6,0,90,null,""],["2025-12-23","",1,0,2,0,1030,0,null,""],["2025-12-25","",0,0,0,2,0,30,null,""],["2025-12-26","",0,2,0,33,0,2495,null,""],["2025-12-29","",0,0,8,0,120,0,null,""],["2026-01-04","",0,0,0,0,0,0,null,"พี่ก้อง 5 กล่อง"],["2026-01-08","",0,1,0,0,0,1000,null,""],["2026-01-09","",0,1,0,0,0,1000,null,""],["2026-01-09","ซื้อกระสุน 10000 นัด",0,0,0,0,-167000,0,null,""],["2026-01-12","",2,0,0,0,2000,0,null,""],["2026-01-16","",1,0,0,2,1000,30,null,""],["2026-01-20","",0,0,0,2,0,30,null,""],["2026-01-21","",2,0,0,0,2000,0,null,""],["2026-01-29","",1,0,3,0,1045,0,null,""],["2026-02-12","",1,0,3,0,1045,0,null,""],["2026-03-26","",0,1,4,0,60,1000,null,""],["2026-03-30","",2,0,0,0,2000,0,null,""],["2026-04-03","",4,0,0,0,4000,0,null,""],["2026-04-10","",3,0,3,0,3045,0,null,""],["2026-04-17","",0,0,5,0,75,0,null,""],["2026-04-29","",17,0,82,0,18230,0,null,"มาเล กระสุน 17 กล่อง เป้า 82"],["2026-05-01","",3,0,10,0,3150,0,null,""],["2026-05-08","",1,0,2,0,1030,0,null,"กระสุน 1 เป้า 2 แขกผกก.โฟล์ก เก็บกับพี่แซนด์"],["2026-05-20","",0,3,0,1,0,3015,null,""],["2026-05-12","",0,1,3,0,45,1000,null,""],["2026-05-26","",0,0,0,1,0,15,null,""],["2026-05-31","",0,1,0,0,0,1000,null,""],["2026-06-01","",2,0,0,0,2000,0,null,""],["2026-06-03","",3,0,6,0,3090,0,null,""],["2026-06-06","",7,0,7,0,7105,0,null,"เงินอยู่รองแซน"],["2026-06-11","ไม่ได้ลงยอด",14,0,3,1,14045,15,null,"11 มิ.ย.69"],["2026-09-08","",0,1,0,2,0,1030,null,""],["2026-06-12","",19,0,85,0,20275,0,null,"ไม่มีจ๊ะ"],["2026-06-12","เงินเข้าบัญชี",0,0,0,0,19000,-19000,null,""],["2026-06-21","",1,0,0,0,1000,0,null,"กระสุน 9 กล่อง 9 พัลลล"],["2026-06-21","",9,0,0,0,9000,0,null,""],["2026-06-24","",5,0,10,0,5150,0,null,""],["2026-06-25","",3,0,6,0,3090,0,null,""],["2026-06-25","",0,0,0,1,0,15,null,""],["2026-07-03","",1,0,0,0,1000,0,null,"วปอ."],["2026-07-07","ค่าเป้ายิงปืนพี่แซนด์ 15000",0,0,0,0,-15000,0,null,"ค่าเป้ายิงปืนพี่แซนด์"],["2026-07-09","",0,2,0,2,0,2030,null,"กองตัวเลข"],["2026-07-10","",0,0,0,3,0,45,null,"ไม่เอาเงินทอน"],["2026-07-10","",2,0,10,0,2150,0,null,""],["2026-07-10","",2,0,2,0,2030,0,null,""],["2026-07-10","",0,0,4,0,60,0,null,""],["2026-07-10","",0,0,2,0,30,0,null,""],["2026-07-29","",0,1,0,0,0,1000,null,"เงินเก็บไว้ในลิ้นชัก"],["2026-08-21","",0,0,0,0,0,0,null,""],["2026-08-21","",0,1,0,0,0,1000,null,""],["2026-08-22","",6,0,0,0,6000,0,null,"ปอท พี่แซนด์"],["2026-09-10","",0,2,0,0,0,2000,null,"กก.5"],["2026-09-18","",0,0,0,0,0,0,null,""],["2026-09-18","",0,0,8,0,120,0,null,""],["2026-10-19","",0,0,30,0,450,0,null,""],["2026-11-05","",0,0,0,1,0,15,null,""],["2026-11-06","",1,0,0,0,1000,0,null,""],["","เงินฝาก",0,0,0,0,9000,-9000,null,"24 ต.ค.69"]];
+    const SESSION_KEY = 'execpro_session_v3';
+    const OPERATOR_KEY = 'execpro_operator_v1';
+    const PENDING_KEY = 'execpro_pending_orders_v1';
+    const CATALOG_KEY = 'execpro_catalog_v1';
+    const LEDGER_UI_KEY = 'execpro_ledger_ui_v1';
+    const DEFAULT_CATALOG = { ammo: [{ id: 'ammo-1', name: 'กระสุน', price: 1000 }], target: [{ id: 'target-1', name: 'เป้า', price: 15 }] };
+
+    let session = null;                 // { role: 'staff' | 'admin', pin }
+    let backendVersion = 0;
+    let pendingOrders = [];
+    let catalog = JSON.parse(JSON.stringify(DEFAULT_CATALOG));
+    let lastUsed = { ammo: '', target: '' };
+    const verifiedMap = {};             // id -> revision ที่ยืนยันแล้วในระบบ
+    let fieldState = { id: null, createdAt: '', date: '', q: { aTr: 0, aCash: 0, tTr: 0, tCash: 0 }, ammoId: '', targetId: '', snap: {}, sending: false, listLimit: 20 };
+    let ledgerState = { years: [], months: [], q: '', dirty: false, saving: false, lastSaved: '', error: '', seeding: false };
+
+    const $ = id => document.getElementById(id);
+    const pad2 = n => String(n).padStart(2, '0');
+    const xnum = v => { const n = Number(v); return isFinite(n) ? n : 0; };
+    function todayISO() { const d = new Date(); return `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}`; }
+    function isoParts(iso) { const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(iso || ''); return m ? { y: +m[1], m: +m[2], d: +m[3] } : null; }
+    function thDateCompact(iso) { const p = isoParts(iso); return p ? `${p.d} ${thMonths[p.m - 1]}${pad2((p.y + 543) % 100)}` : '-'; }
+    function thDateLong(iso) { const p = isoParts(iso); return p ? `${p.d} ${thFullMonths[p.m - 1]} ${p.y + 543}` : 'เลือกวันที่...'; }
+    function newId(prefix) { return prefix + Date.now().toString(36) + Math.random().toString(36).slice(2, 8); }
+    function fm(n) { n = xnum(n); return Number.isInteger(n) ? n.toLocaleString('th-TH') : n.toLocaleString('th-TH', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+    function nowThai() { const d = new Date(); return `${d.getDate()} ${thMonths[d.getMonth()]}${pad2((d.getFullYear() + 543) % 100)} ${pad2(d.getHours())}:${pad2(d.getMinutes())} น.`; }
+    function mkErr(code, message) { const e = new Error(message); e.code = code; return e; }
+    function lsGet(k, d) { try { const v = JSON.parse(localStorage.getItem(k)); return v === null || v === undefined ? d : v; } catch (e) { return d; } }
+    function lsSet(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { } }
+    function loadScriptOnce(src) {
+        return new Promise((res, rej) => {
+            if ([...document.scripts].some(s => s.src === src && s.dataset.ok)) return res();
+            const s = document.createElement('script'); s.src = src;
+            s.onload = () => { s.dataset.ok = '1'; res(); };
+            s.onerror = () => rej(mkErr('LOAD', 'โหลดไลบรารีไม่สำเร็จ กรุณาตรวจสอบอินเทอร์เน็ต'));
+            document.head.appendChild(s);
+        });
+    }
+
+    /* ---------------------------------- Thai calendar ---------------------------------- */
+    const tc = { resolve: null, y: 0, m: 0, sel: '' };
+    function pickThaiDate(opts = {}) {
+        return new Promise(res => {
+            if (tc.resolve) tc.resolve(null);
+            tc.resolve = res;
+            const p = isoParts(opts.value) || isoParts(todayISO());
+            tc.y = p.y; tc.m = p.m - 1; tc.sel = opts.value || '';
+            $('thcalClear').classList.toggle('hidden', !opts.allowClear);
+            $('thcalSel').classList.add('hidden');
+            tcRender();
+            $('thaiPickModal').classList.remove('hidden');
+        });
+    }
+    function tcClose(val) { $('thaiPickModal').classList.add('hidden'); if (tc.resolve) { const r = tc.resolve; tc.resolve = null; r(val); } }
+    function tcRender() {
+        $('thcalMonth').textContent = thFullMonths[tc.m];
+        $('thcalYear').textContent = tc.y + 543;
+        const ms = $('thcalMonthSel'), ys = $('thcalYearSel');
+        if (!ms.options.length) {
+            ms.innerHTML = thFullMonths.map((m, i) => `<option value="${i}">${m}</option>`).join('');
+            const cy = new Date().getFullYear();
+            let o = ''; for (let y = 2007; y <= cy + 10; y++) o += `<option value="${y}">พ.ศ. ${y + 543}</option>`;
+            ys.innerHTML = o;
+        }
+        ms.value = tc.m; ys.value = tc.y;
+        const first = new Date(tc.y, tc.m, 1).getDay(), days = new Date(tc.y, tc.m + 1, 0).getDate(), today = todayISO();
+        let h = '';
+        for (let i = 0; i < first; i++) h += '<span></span>';
+        for (let d = 1; d <= days; d++) {
+            const iso = `${tc.y}-${pad2(tc.m + 1)}-${pad2(d)}`;
+            h += `<button type="button" data-d="${iso}" class="thcal-day${iso === tc.sel ? ' sel' : ''}${iso === today ? ' today' : ''}">${d}</button>`;
+        }
+        $('thcalGrid').innerHTML = h;
+    }
+    $('thaiPickModal').addEventListener('click', e => {
+        if (e.target === $('thaiPickModal')) return tcClose(null);
+        const d = e.target.closest('[data-d]'); if (d) return tcClose(d.dataset.d);
+        const a = e.target.closest('[data-tc]'); if (!a) return;
+        const act = a.dataset.tc;
+        if (act === 'prev') { tc.m--; if (tc.m < 0) { tc.m = 11; tc.y--; } tcRender(); }
+        else if (act === 'next') { tc.m++; if (tc.m > 11) { tc.m = 0; tc.y++; } tcRender(); }
+        else if (act === 'toggleSel') $('thcalSel').classList.toggle('hidden');
+        else if (act === 'today') tcClose(todayISO());
+        else if (act === 'clear') tcClose('');
+        else if (act === 'close') tcClose(null);
+    });
+    $('thcalMonthSel').addEventListener('change', e => { tc.m = +e.target.value; tcRender(); });
+    $('thcalYearSel').addEventListener('change', e => { tc.y = +e.target.value; tcRender(); });
+
+    /* ---------------------------------- Numeric keypad popup ---------------------------------- */
+    const np = { resolve: null, buf: '', neg: false, fresh: false, o: {} };
+    function promptNumber(opts = {}) {
+        return new Promise(res => {
+            if (np.resolve) np.resolve(null);
+            np.resolve = res;
+            np.o = Object.assign({ title: 'กรอกตัวเลข', value: 0, unit: '', allowDecimal: false, allowNegative: false, presets: [], hint: '', max: null }, opts);
+            const v = xnum(np.o.value);
+            np.neg = v < 0; np.buf = v === 0 ? '' : String(Math.abs(v)); np.fresh = np.buf !== '';
+            $('npTitle').textContent = np.o.title; $('npUnit').textContent = np.o.unit; $('npHint').textContent = np.o.hint;
+            const alt = $('npAlt');
+            alt.textContent = np.o.allowDecimal ? '.' : (np.o.allowNegative ? '±' : '');
+            alt.style.visibility = (np.o.allowDecimal || np.o.allowNegative) ? 'visible' : 'hidden';
+            $('npPresets').innerHTML = (np.o.presets || []).map(p => `<button type="button" data-np="${p}" class="py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-[11px] font-bold">+${fm(p)}</button>`).join('');
+            npRender();
+            $('numpadModal').classList.remove('hidden');
+        });
+    }
+    function npRender() { $('npDisplay').textContent = (np.neg ? '-' : '') + (np.buf || '0'); }
+    function npClose(val) { $('numpadModal').classList.add('hidden'); if (np.resolve) { const r = np.resolve; np.resolve = null; r(val); } }
+    function npPress(k) {
+        if (/^\d$/.test(k)) { if (np.fresh) { np.buf = ''; np.fresh = false; } if (np.buf.length < 12) np.buf = (np.buf === '0' ? '' : np.buf) + k; }
+        else if (k === '.') { if (np.fresh) { np.buf = ''; np.fresh = false; } if (np.o.allowDecimal && !np.buf.includes('.')) np.buf = (np.buf || '0') + '.'; }
+        else if (k === 'alt') { if (np.o.allowDecimal) npPress('.'); else if (np.o.allowNegative) np.neg = !np.neg; }
+        else if (k === '-') { if (np.o.allowNegative) np.neg = !np.neg; }
+        else if (k === 'back') { np.buf = np.fresh ? '' : np.buf.slice(0, -1); np.fresh = false; }
+        else if (k === 'clear') { np.buf = ''; np.neg = false; }
+        else if (k === 'ok') {
+            let v = (np.neg ? -1 : 1) * xnum(np.buf);
+            if (np.o.max !== null && v > np.o.max) { showToast('warning', 'ตัวเลขเกินกำหนด', `สูงสุด ${fm(np.o.max)}`); return; }
+            return npClose(v);
+        }
+        npRender();
+    }
+    $('numpadModal').addEventListener('click', e => {
+        if (e.target === $('numpadModal')) return npClose(null);
+        const k = e.target.closest('[data-nk]'); if (k) return npPress(k.dataset.nk);
+        const p = e.target.closest('[data-np]'); if (p) { np.fresh = false; np.buf = String(Math.abs((np.neg ? -1 : 1) * xnum(np.buf) + xnum(p.dataset.np))); npRender(); }
+    });
+
+    /* ---------------------------------- API / Auth ---------------------------------- */
+    async function ensureBackend() {
+        if (backendVersion >= 3) return true;
+        let j;
+        try { const r = await fetch(SHEETS_API_URL + '?ping=1&t=' + Date.now()); j = await r.json(); }
+        catch (e) { throw mkErr('NETWORK', 'เชื่อมต่อระบบคลาวด์ไม่ได้ กรุณาตรวจสอบอินเทอร์เน็ต'); }
+        backendVersion = Number(j && j.scriptVersion) || 0;
+        if (backendVersion < 3) throw mkErr('OLD_BACKEND', 'Google Apps Script บนคลาวด์ยังเป็นเวอร์ชันเก่า — กรุณาอัปเดตไฟล์ Code.gs แล้ว Deploy เวอร์ชันใหม่ก่อน');
+        return true;
+    }
+    async function api(action, payload = {}, authOverride) {
+        await ensureBackend();
+        const auth = authOverride || (session ? { role: session.role, pin: session.pin } : null);
+        let res;
+        try { res = await fetch(SHEETS_API_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(Object.assign({ action, auth }, payload)) }); }
+        catch (e) { throw mkErr('NETWORK', 'ส่งข้อมูลไม่สำเร็จ — เชื่อมต่ออินเทอร์เน็ตไม่ได้'); }
+        let j; try { j = await res.json(); } catch (e) { throw mkErr('BAD_RESPONSE', 'ตอบกลับจากเซิร์ฟเวอร์ไม่ถูกต้อง'); }
+        if (!j || !j.ok) {
+            const err = mkErr((j && j.code) || 'ERROR', (j && j.error) || 'เซิร์ฟเวอร์ปฏิเสธคำขอ');
+            if (err.code === 'AUTH' && action !== 'login') handleAuthLost();
+            throw err;
+        }
+        return j;
+    }
+    function handleAuthLost() {
+        if (!session) return;
+        session = null; try { sessionStorage.removeItem(SESSION_KEY); } catch (e) { }
+        applyRole(); navigationHistory = ['view-home']; navigateTo('view-home');
+        showToast('error', 'กรุณาเข้าสู่ระบบใหม่', 'รหัสไม่ถูกต้องหรือถูกเปลี่ยนแล้ว', { duration: 6000 });
+    }
+    function canViewV3(id) {
+        if (id === 'view-home') return true;
+        if (!session) return false;
+        if (id === 'view-field') return true;
+        return session.role === 'admin';
+    }
+    function applyRole() {
+        const role = session ? session.role : 'guest';
+        document.body.dataset.role = role;
+        $('homeGuestSection').classList.toggle('hidden', role !== 'guest');
+        $('homeAdminSection').classList.toggle('hidden', role !== 'admin');
+        $('homeSearchWrap').classList.toggle('hidden', role !== 'admin');
+        const chip = $('roleChip');
+        if (chip) chip.innerHTML = role === 'admin' ? '<i class="fas fa-user-tie text-amber-400"></i> ผู้ดูแลระบบ' : role === 'staff' ? '<i class="fas fa-user-shield text-emerald-400"></i> เจ้าหน้าที่สนาม' : '';
+    }
+
+    let loginRole = 'staff', loginBuf = '', loginBusy = false;
+    function openLogin(role) {
+        loginRole = role; loginBuf = ''; loginBusy = false;
+        const staff = role === 'staff';
+        $('loginTitle').textContent = staff ? 'เข้าสู่ระบบ — เจ้าหน้าที่สนาม' : 'เข้าสู่ระบบ — ผู้ดูแลระบบ';
+        $('loginIcon').className = 'w-12 h-12 rounded-2xl text-white flex items-center justify-center text-xl bg-gradient-to-br ' + (staff ? 'from-emerald-500 to-teal-600' : 'from-indigo-600 to-violet-700');
+        $('loginIcon').innerHTML = staff ? '<i class="fas fa-user-shield"></i>' : '<i class="fas fa-user-tie"></i>';
+        loginRender(); $('loginError').classList.add('hidden'); $('loginBusy').classList.add('hidden');
+        $('loginModal').classList.remove('hidden');
+    }
+    function closeLogin() { $('loginModal').classList.add('hidden'); loginBuf = ''; }
+    function loginRender() {
+        const n = Math.max(4, loginBuf.length);
+        $('loginDots').innerHTML = Array.from({ length: n }, (_, i) => `<span class="pin-dot${i < loginBuf.length ? ' on' : ''}"></span>`).join('');
+    }
+    function loginError(msg) {
+        const el = $('loginError'); el.textContent = msg; el.classList.remove('hidden');
+        const d = $('loginDots'); d.classList.remove('shake'); void d.offsetWidth; d.classList.add('shake');
+    }
+    function loginPress(k) {
+        if (loginBusy) return;
+        $('loginError').classList.add('hidden');
+        if (/^\d$/.test(k)) { if (loginBuf.length < 8) loginBuf += k; }
+        else if (k === 'back') loginBuf = loginBuf.slice(0, -1);
+        else if (k === 'ok') return submitLogin();
+        loginRender();
+    }
+    async function submitLogin() {
+        if (loginBuf.length < 4) { loginError('กรุณากรอกรหัสอย่างน้อย 4 หลัก'); return; }
+        loginBusy = true; $('loginBusy').classList.remove('hidden');
+        try {
+            await ensureBackend();
+            await api('login', {}, { role: loginRole, pin: loginBuf });
+            session = { role: loginRole, pin: loginBuf };
+            try { sessionStorage.setItem(SESSION_KEY, JSON.stringify(session)); } catch (e) { }
+            closeLogin(); applyRole();
+            showToast('success', 'เข้าสู่ระบบสำเร็จ', session.role === 'admin' ? 'ยินดีต้อนรับผู้ดูแลระบบ' : 'พร้อมบันทึกรายการขายหน้าสนาม');
+            afterLogin();
+        } catch (e) {
+            loginBuf = ''; loginRender();
+            loginError(e.code === 'AUTH' ? 'รหัสไม่ถูกต้อง กรุณาลองใหม่' : e.message);
+        } finally { loginBusy = false; $('loginBusy').classList.add('hidden'); }
+    }
+    function afterLogin() {
+        navigationHistory = [session.role === 'staff' ? 'view-field' : 'view-home'];
+        if (session.role === 'staff') { initFieldView(); navigateTo('view-field'); } else { goHome(); }
+        syncWithCloud(false);
+    }
+    $('loginModal').addEventListener('click', e => {
+        if (e.target === $('loginModal')) return closeLogin();
+        const k = e.target.closest('[data-lk]'); if (k) loginPress(k.dataset.lk);
+    });
+    async function logoutNow() {
+        const ok = await confirmDialog({ title: 'ออกจากระบบ?', msg: pendingOrders.length ? `ยังมี ${pendingOrders.length} รายการที่ส่งไม่สำเร็จเก็บอยู่ในเครื่องนี้ (ไม่หาย)` : 'ต้องกรอกรหัสใหม่เมื่อเข้าใช้งานครั้งถัดไป', okText: 'ออกจากระบบ', variant: 'info' });
+        if (!ok) return;
+        session = null; try { sessionStorage.removeItem(SESSION_KEY); } catch (e) { }
+        applyRole(); navigationHistory = ['view-home']; navigateTo('view-home');
+    }
+
+    /* ---- ตั้งค่ารหัส / นำเข้าไฟล์สำรอง (ผู้ดูแล) ---- */
+    function openPinSettings() { $('psNew').value = ''; $('psNew2').value = ''; $('psError').classList.add('hidden'); $('pinSettingsModal').classList.remove('hidden'); }
+    function closePinSettings() { $('pinSettingsModal').classList.add('hidden'); }
+    async function savePinSettings() {
+        const a = $('psNew').value.trim(), b = $('psNew2').value.trim(), err = $('psError');
+        const bad = m => { err.textContent = m; err.classList.remove('hidden'); };
+        if (!/^\d{4,8}$/.test(a)) return bad('รหัสต้องเป็นตัวเลข 4–8 หลัก');
+        if (a !== b) return bad('รหัสทั้งสองช่องไม่ตรงกัน');
+        const target = $('psTarget').value; $('psBtn').disabled = true;
+        try {
+            await api('changePin', { target, newPin: a });
+            if (target === 'admin') { session.pin = a; try { sessionStorage.setItem(SESSION_KEY, JSON.stringify(session)); } catch (e) { } }
+            closePinSettings(); showToast('success', 'เปลี่ยนรหัสสำเร็จ', target === 'admin' ? 'รหัสผู้ดูแลระบบถูกเปลี่ยนแล้ว' : 'รหัสเจ้าหน้าที่สนามถูกเปลี่ยนแล้ว');
+        } catch (e) { bad(e.message); } finally { $('psBtn').disabled = false; }
+    }
+    function openImportBackup() { $('importBackupInput').value = ''; $('importBackupInput').click(); }
+    async function importBackupFile(input) {
+        const f = input.files && input.files[0]; if (!f) return;
+        let data; try { data = JSON.parse(await f.text()); } catch (e) { return showToast('error', 'อ่านไฟล์ไม่ได้', 'ไฟล์ต้องเป็น JSON ที่ดาวน์โหลดจากปุ่มสำรองข้อมูล'); }
+        const g = Array.isArray(data.generalRecords) ? data.generalRecords : null, s = Array.isArray(data.shootingRecords) ? data.shootingRecords : null;
+        if (!g && !s && !Array.isArray(data.rangeLedger)) return showToast('error', 'ไม่พบข้อมูลในไฟล์', 'โครงสร้างไฟล์ไม่ถูกต้อง');
+        const ok = await confirmDialog({
+            title: 'นำเข้าข้อมูลจากไฟล์สำรอง?', msg: 'ข้อมูลในส่วนที่มีในไฟล์จะถูกแทนที่ด้วยข้อมูลในไฟล์ แนะนำให้สำรองข้อมูลปัจจุบันก่อน', okText: 'นำเข้า', variant: 'info',
+            detailHtml: detailRows([['บัญชีกองกลาง', g ? g.length + ' รายการ' : 'ไม่มีในไฟล์'], ['สรุปสนามยิงปืน', s ? s.length + ' รายการ' : 'ไม่มีในไฟล์'], ['ตารางรายการสนาม', Array.isArray(data.rangeLedger) ? data.rangeLedger.length + ' แถว' : 'ไม่มีในไฟล์'], ['รายการสั่งซื้อสนาม', Array.isArray(data.fieldOrders) ? data.fieldOrders.length + ' รายการ' : 'ไม่มีในไฟล์']])
+        });
+        if (!ok) return;
+        setSaving(true, 'กำลังนำเข้าข้อมูล...');
+        try {
+            const keys = {}; if (g) keys.generalRecords = g; if (s) keys.shootingRecords = s;
+            if (Array.isArray(data.rangeLedger)) keys.rangeLedger = data.rangeLedger;
+            if (data.rangeMeta && typeof data.rangeMeta === 'object') keys.rangeMeta = data.rangeMeta;
+            await api('setKeys', { keys });
+            if (Array.isArray(data.fieldOrders)) for (const o of data.fieldOrders) { try { await api('upsertOrder', { order: o }); } catch (e) { } }
+            cloudLoaded = true; ledgerState.dirty = false;
+            await syncWithCloud(false);
+            showToast('success', 'นำเข้าข้อมูลสำเร็จ', 'ข้อมูลถูกบันทึกขึ้นคลาวด์แล้ว');
+        } catch (e) { showToast('error', 'นำเข้าไม่สำเร็จ', e.message); } finally { setSaving(false); }
+    }
+
+    /* ---------------------------------- Cloud hooks ---------------------------------- */
+    function applyCloudExtras(json) {
+        backendVersion = Number(json.scriptVersion) || 0;
+        appData.fieldOrders = Array.isArray(json.fieldOrders) ? json.fieldOrders.filter(o => o && o.id) : [];
+        appData.settings = (json.settings && typeof json.settings === 'object') ? json.settings : {};
+        if (!ledgerState.dirty && !ledgerState.saving) {
+            appData.rangeLedger = Array.isArray(json.rangeLedger) ? json.rangeLedger : (json.rangeLedger == null ? null : []);
+            appData.rangeMeta = (json.rangeMeta && typeof json.rangeMeta === 'object') ? json.rangeMeta : {};
+        }
+    }
+    function onCloudDataLoaded() {
+        const ban = $('backendBanner');
+        if (ban) {
+            ban.classList.toggle('hidden', backendVersion >= 3);
+            ban.innerHTML = '<i class="fas fa-triangle-exclamation mr-1.5"></i> Google Apps Script บนคลาวด์ยังเป็นเวอร์ชันเก่า — ต้องอัปเดตไฟล์ Code.gs แล้ว Deploy เวอร์ชันใหม่ก่อน จึงจะเข้าสู่ระบบด้วยรหัสได้';
+        }
+        loadCatalogFromSettings();
+        const cur = navigationHistory[navigationHistory.length - 1];
+        renderV3View(cur);
+        updateRangeMenuInfo();
+        if (session && backendVersion >= 3) {
+            if (session.role === 'admin' && appData.rangeLedger === null && !ledgerState.seeding) seedRange();
+            if (pendingOrders.length) flushPending(false);
+        }
+    }
+    function renderV3View(id) {
+        if (id === 'view-field') renderFieldAll();
+        if (id === 'view-range-ledger') renderLedger();
+        if (id === 'view-range-menu') updateRangeMenuInfo();
+    }
+
+    /* =========================== FIELD OFFICER =========================== */
+    function loadLocalState() {
+        pendingOrders = lsGet(PENDING_KEY, []).filter(o => o && o.id);
+        const c = lsGet(CATALOG_KEY, null);
+        if (c && Array.isArray(c.ammo) && c.ammo.length && Array.isArray(c.target) && c.target.length) { catalog = { ammo: c.ammo, target: c.target }; lastUsed = c.lastUsed || lastUsed; }
+    }
+    function loadCatalogFromSettings() {
+        const p = appData.settings && appData.settings.products;
+        if (p && Array.isArray(p.ammo) && p.ammo.length && Array.isArray(p.target) && p.target.length && !catalogSaveTimer) {
+            catalog = { ammo: p.ammo.map(x => ({ id: String(x.id), name: String(x.name), price: xnum(x.price) })), target: p.target.map(x => ({ id: String(x.id), name: String(x.name), price: xnum(x.price) })) };
+            const lu = appData.settings.lastUsed; if (lu) lastUsed = { ammo: lu.ammo || '', target: lu.target || '' };
+            lsSet(CATALOG_KEY, { ammo: catalog.ammo, target: catalog.target, lastUsed });
+        }
+        ensureSelection();
+    }
+    function ensureSelection() {
+        if (!catalog.ammo.some(x => x.id === fieldState.ammoId)) fieldState.ammoId = (catalog.ammo.find(x => x.id === lastUsed.ammo) || catalog.ammo[0]).id;
+        if (!catalog.target.some(x => x.id === fieldState.targetId)) fieldState.targetId = (catalog.target.find(x => x.id === lastUsed.target) || catalog.target[0]).id;
+    }
+    let catalogSaveTimer = null;
+    function persistCatalog() {
+        lsSet(CATALOG_KEY, { ammo: catalog.ammo, target: catalog.target, lastUsed });
+        clearTimeout(catalogSaveTimer);
+        catalogSaveTimer = setTimeout(async () => {
+            try { await api('setSettings', { settings: { products: catalog, lastUsed } }); } catch (e) { if (e.code !== 'AUTH') showToast('warning', 'บันทึกรายการสินค้าขึ้นคลาวด์ไม่สำเร็จ', 'ระบบจำไว้ในเครื่องนี้แล้ว'); }
+            catalogSaveTimer = null;
+        }, 500);
+    }
+    function getProduct(kind) {
+        const id = kind === 'ammo' ? fieldState.ammoId : fieldState.targetId;
+        const list = catalog[kind];
+        return list.find(x => x.id === id) || (fieldState.snap[kind] && fieldState.snap[kind].id === id ? fieldState.snap[kind] : list[0]);
+    }
+    function initFieldView() {
+        if (!fieldState.date) fieldState.date = todayISO();
+        const op = lsGet(OPERATOR_KEY, ''); if (op && !$('fOperator').value) $('fOperator').value = op;
+        ensureSelection(); renderFieldAll();
+    }
+    function qtyTile(key, label, unit) {
+        return `<div class="qty-tile"><div class="text-[11px] font-extrabold text-slate-600 dark:text-slate-300 mb-2">${label}</div>
+            <div class="flex items-center gap-1.5"><button type="button" class="qty-btn" onclick="fieldStep('${key}',-1)" aria-label="ลด">−</button>
+            <button type="button" id="qn-${key}" class="qty-num" onclick="fieldQtyPad('${key}')">0</button>
+            <button type="button" class="qty-btn" onclick="fieldStep('${key}',1)" aria-label="เพิ่ม">+</button></div>
+            <div class="text-[10px] text-slate-400 mt-1.5">${unit}</div></div>`;
+    }
+    function renderFieldForm() {
+        ensureSelection();
+        $('fDateText').textContent = thDateLong(fieldState.date);
+        ['ammo', 'target'].forEach(k => {
+            const sel = $(k === 'ammo' ? 'fAmmoSel' : 'fTargetSel');
+            const list = catalog[k].slice();
+            const snap = fieldState.snap[k]; if (snap && !list.some(x => x.id === snap.id)) list.push(snap);
+            sel.innerHTML = list.map(p => `<option value="${escapeHtml(p.id)}">${escapeHtml(p.name)} — ${fm(p.price)} ฿/${k === 'ammo' ? 'กล่อง' : 'ใบ'}</option>`).join('');
+            sel.value = k === 'ammo' ? fieldState.ammoId : fieldState.targetId;
+            $(k + 'PriceChip').textContent = `ราคาต่อ${k === 'ammo' ? 'กล่อง' : 'ใบ'}: ${fm(getProduct(k).price)} บาท`;
+        });
+        if (!$('ammoTiles').children.length) {
+            $('ammoTiles').innerHTML = qtyTile('aTr', '<i class="fas fa-building-columns text-indigo-500 mr-1"></i> โอน', 'กล่อง') + qtyTile('aCash', '<i class="fas fa-money-bill-wave text-amber-500 mr-1"></i> เงินสด', 'กล่อง');
+            $('targetTiles').innerHTML = qtyTile('tTr', '<i class="fas fa-building-columns text-indigo-500 mr-1"></i> โอน', 'ใบ') + qtyTile('tCash', '<i class="fas fa-money-bill-wave text-amber-500 mr-1"></i> เงินสด', 'ใบ');
+        }
+        ['aTr', 'aCash', 'tTr', 'tCash'].forEach(k => { $('qn-' + k).textContent = fieldState.q[k]; });
+        const a = getProduct('ammo'), t = getProduct('target'), q = fieldState.q;
+        const tr = q.aTr * a.price + q.tTr * t.price, cash = q.aCash * a.price + q.tCash * t.price;
+        $('ammoSubtotal').textContent = fm((q.aTr + q.aCash) * a.price) + ' ฿';
+        $('targetSubtotal').textContent = fm((q.tTr + q.tCash) * t.price) + ' ฿';
+        $('sumTr').textContent = fm(tr); $('sumCash').textContent = fm(cash); $('sumAll').textContent = fm(tr + cash);
+        const editing = !!fieldState.id;
+        $('fieldEditBanner').classList.toggle('hidden', !editing);
+        $('fSubmitText').textContent = editing ? 'บันทึกการแก้ไขและส่งใหม่' : 'ส่งรายการสั่งซื้อ';
+    }
+    function fieldPickProduct(kind, id) {
+        if (kind === 'ammo') fieldState.ammoId = id; else fieldState.targetId = id;
+        if (catalog[kind].some(x => x.id === id)) { lastUsed[kind] = id; persistCatalog(); }
+        renderFieldForm();
+    }
+    function fieldStep(key, d) { fieldState.q[key] = Math.max(0, Math.min(99999, fieldState.q[key] + d)); renderFieldForm(); }
+    const QTY_LABELS = { aTr: 'กระสุน — โอน', aCash: 'กระสุน — เงินสด', tTr: 'เป้า — โอน', tCash: 'เป้า — เงินสด' };
+    async function fieldQtyPad(key) {
+        const v = await promptNumber({ title: QTY_LABELS[key], value: fieldState.q[key], unit: key[0] === 'a' ? 'กล่อง' : 'ใบ', max: 99999, presets: key[0] === 'a' ? [1, 2, 5, 10] : [5, 10, 20, 50] });
+        if (v === null) return;
+        fieldState.q[key] = Math.max(0, Math.floor(v)); renderFieldForm();
+    }
+    async function openFieldDate() {
+        const v = await pickThaiDate({ value: fieldState.date });
+        if (v) { fieldState.date = v; renderFieldForm(); }
+    }
+    function resetFieldForm(keepDate = true) {
+        fieldState.id = null; fieldState.createdAt = ''; fieldState.q = { aTr: 0, aCash: 0, tTr: 0, tCash: 0 }; fieldState.snap = {};
+        if (!keepDate) fieldState.date = todayISO();
+        $('fIssue').value = ''; ensureSelection(); renderFieldForm();
+    }
+    function cancelFieldEdit() { resetFieldForm(true); showToast('info', 'ยกเลิกการแก้ไขแล้ว'); }
+
+    function orderTotals(o) {
+        const A = o.ammo || {}, T = o.target || {};
+        const tr = xnum(A.tr) * xnum(A.price) + xnum(T.tr) * xnum(T.price);
+        const cash = xnum(A.cash) * xnum(A.price) + xnum(T.cash) * xnum(T.price);
+        return { tr, cash, total: tr + cash };
+    }
+    function buildOrderFromForm() {
+        const a = getProduct('ammo'), t = getProduct('target'), q = fieldState.q, now = new Date().toISOString();
+        return {
+            id: fieldState.id || newId('o'), saleDate: fieldState.date, operator: $('fOperator').value.trim(),
+            ammo: { name: a.name, price: a.price, tr: q.aTr, cash: q.aCash }, target: { name: t.name, price: t.price, tr: q.tTr, cash: q.tCash },
+            issue: $('fIssue').value.trim(), createdAt: fieldState.createdAt || now, updatedAt: now
+        };
+    }
+    function orderSummaryRows(o) {
+        const tt = orderTotals(o);
+        return detailRows([['วันที่ขาย', thDateLong(o.saleDate)], ['ผู้ทำรายการ', o.operator],
+            [`กระสุน (${o.ammo.name})`, `โอน ${o.ammo.tr} · สด ${o.ammo.cash} กล่อง`], [`เป้า (${o.target.name})`, `โอน ${o.target.tr} · สด ${o.target.cash} ใบ`],
+            ['ยอดโอน', fm(tt.tr) + ' ฿'], ['ยอดเงินสด', fm(tt.cash) + ' ฿'], ['รวมทั้งหมด', fm(tt.total) + ' ฿'], ...(o.issue ? [['เหตุขัดข้อง', o.issue]] : [])]);
+    }
+    async function submitFieldOrder(ev) {
+        if (ev) ev.preventDefault();
+        if (fieldState.sending) return;
+        const opEl = $('fOperator');
+        if (!opEl.value.trim()) { opEl.classList.add('invalid'); opEl.focus(); showToast('warning', 'กรุณากรอกชื่อผู้ทำรายการ', 'ต้องระบุก่อนส่งรายการทุกครั้ง'); return; }
+        if (!fieldState.date) { showToast('warning', 'กรุณาเลือกวันที่ขาย'); return; }
+        const q = fieldState.q;
+        if (q.aTr + q.aCash + q.tTr + q.tCash <= 0) { showToast('warning', 'ยังไม่ได้ระบุจำนวน', 'กรุณาระบุจำนวนกระสุนหรือเป้าอย่างน้อย 1 รายการ'); return; }
+        lsSet(OPERATOR_KEY, opEl.value.trim());
+        const order = buildOrderFromForm(), isEdit = !!fieldState.id;
+        const ok = await confirmDialog({ title: isEdit ? 'ยืนยันบันทึกการแก้ไข?' : 'ยืนยันส่งรายการสั่งซื้อ?', msg: 'ตรวจสอบความถูกต้องก่อนส่ง หากลงผิดสามารถกลับมาแก้ไขและส่งใหม่ได้', detailHtml: orderSummaryRows(order), okText: isEdit ? 'บันทึกและส่งใหม่' : 'ส่งรายการ', variant: 'info' });
+        if (!ok) return;
+        await runSendOrder(order, isEdit);
+    }
+
+    /* ---- Progress dialog ---- */
+    const Prog = {
+        steps: [],
+        open(title, steps) {
+            this.steps = steps;
+            $('progIcon').innerHTML = '<div class="saving-ring mx-auto" style="width:44px;height:44px"></div>';
+            $('progTitle').textContent = title;
+            $('progSteps').innerHTML = steps.map((s, i) => `<div class="pstep" id="pstep-${i}"><span class="pi"><i class="fas fa-circle text-[6px]"></i></span><span>${escapeHtml(s)}</span></div>`).join('');
+            $('progBody').classList.add('hidden'); $('progActions').classList.add('hidden'); $('progSteps').classList.remove('hidden');
+            $('progressModal').classList.remove('hidden');
+        },
+        mark(i, st) {
+            const el = $('pstep-' + i); if (!el) return;
+            el.className = 'pstep ' + st;
+            el.querySelector('.pi').innerHTML = st === 'run' ? '<i class="fas fa-circle-notch fa-spin"></i>' : st === 'ok' ? '<i class="fas fa-check"></i>' : st === 'warn' ? '<i class="fas fa-exclamation"></i>' : '<i class="fas fa-xmark"></i>';
+        },
+        result(kind, title, bodyHtml, actions) {
+            $('progIcon').innerHTML = `<div class="success-burst ${kind === 'ok' ? '' : kind}"><i class="fas ${kind === 'ok' ? 'fa-check' : kind === 'wait' ? 'fa-cloud-arrow-up' : 'fa-xmark'}"></i></div>`;
+            $('progTitle').textContent = title;
+            $('progBody').innerHTML = bodyHtml; $('progBody').classList.remove('hidden');
+            const box = $('progActions'); box.classList.remove('hidden');
+            box.className = 'grid gap-2 grid-cols-' + Math.min(actions.length, 2);
+            box.innerHTML = actions.map((a, i) => `<button type="button" data-pa="${i}" class="py-3 rounded-2xl text-xs font-extrabold ${a.primary ? 'bg-emerald-600 hover:bg-emerald-700 text-white shadow-lg' : 'bg-slate-100 dark:bg-slate-800'}">${a.label}</button>`).join('');
+            box._acts = actions;
+        },
+        close() { $('progressModal').classList.add('hidden'); }
+    };
+    $('progActions').addEventListener('click', e => { const b = e.target.closest('[data-pa]'); if (!b) return; const a = $('progActions')._acts[+b.dataset.pa]; Prog.close(); if (a && a.fn) a.fn(); });
+
+    function savePending() { lsSet(PENDING_KEY, pendingOrders); renderFieldAll(); }
+    async function runSendOrder(order, isEdit) {
+        fieldState.sending = true; $('fSubmitBtn').disabled = true;
+        Prog.open(isEdit ? 'กำลังบันทึกการแก้ไข' : 'กำลังส่งรายการสั่งซื้อ', ['ตรวจสอบข้อมูลรายการ', 'ส่งข้อมูลไปยังระบบ (Google Sheet)', 'ตรวจสอบยอดที่บันทึกในระบบ']);
+        try {
+            Prog.mark(0, 'run'); await sleep(250); Prog.mark(0, 'ok');
+            Prog.mark(1, 'run');
+            let saved;
+            try { saved = (await api('upsertOrder', { order })).order; }
+            catch (e) {
+                Prog.mark(1, 'err');
+                if (e.code === 'AUTH') { Prog.close(); return; }
+                const i = pendingOrders.findIndex(p => p.id === order.id); if (i >= 0) pendingOrders[i] = order; else pendingOrders.push(order);
+                savePending(); resetFieldForm(true);
+                Prog.result('wait', 'ยังส่งไม่สำเร็จ', `<div class="text-center text-slate-600 dark:text-slate-300 leading-relaxed">${escapeHtml(e.message)}<br><b>รายการถูกเก็บไว้ในเครื่องแล้ว ไม่หาย</b> — กด "ส่งรายการที่ค้าง" เมื่อมีสัญญาณอินเทอร์เน็ต</div>`, [{ label: 'ปิด' }, { label: 'ลองส่งอีกครั้ง', primary: true, fn: () => flushPending(true) }]);
+                return;
+            }
+            Prog.mark(1, 'ok'); Prog.mark(2, 'run');
+            pendingOrders = pendingOrders.filter(p => p.id !== order.id); lsSet(PENDING_KEY, pendingOrders);
+            let verified = false;
+            try { const j = await fetchCloudJSON(); appData.fieldOrders = Array.isArray(j.fieldOrders) ? j.fieldOrders : appData.fieldOrders; const f = appData.fieldOrders.find(x => x.id === saved.id); verified = !!f && xnum(f.revision) >= xnum(saved.revision) && orderTotals(f).total === orderTotals(order).total; if (verified) verifiedMap[saved.id] = f.revision; } catch (e) { }
+            Prog.mark(2, verified ? 'ok' : 'warn');
+            if (!appData.fieldOrders.some(x => x.id === saved.id)) appData.fieldOrders.push(saved);
+            resetFieldForm(true);
+            Prog.result(verified ? 'ok' : 'wait', verified ? (isEdit ? 'แก้ไขและส่งสำเร็จ' : 'ส่งรายการสำเร็จ') : 'ส่งแล้ว แต่ยังตรวจสอบไม่ได้',
+                (verified ? '<div class="text-center text-emerald-600 font-bold mb-2">ตรวจสอบแล้ว: ยอดถูกบันทึกในระบบเรียบร้อย</div>' : '<div class="text-center text-amber-600 font-bold mb-2">กดปุ่ม "ตรวจสอบยอดในระบบ" เพื่อยืนยันอีกครั้ง</div>') +
+                `<div class="rounded-2xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200/80 dark:border-slate-800 px-3.5 py-2 divide-y divide-slate-100 dark:divide-slate-800">${orderSummaryRows(saved)}</div>`,
+                [{ label: 'เสร็จสิ้น' }, { label: '<i class="fas fa-plus mr-1"></i> บันทึกรายการใหม่', primary: true, fn: () => window.scrollTo({ top: 0, behavior: 'smooth' }) }]);
+            updateLastSyncTime();
+        } finally { fieldState.sending = false; $('fSubmitBtn').disabled = false; renderFieldAll(); }
+    }
+    async function fetchCloudJSON() {
+        const res = await fetch(SHEETS_API_URL + '?t=' + Date.now());
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        return await res.json();
+    }
+    async function flushPending(manual) {
+        if (!pendingOrders.length || fieldState.sending) return;
+        let okN = 0, failN = 0;
+        for (const o of pendingOrders.slice()) {
+            try { await api('upsertOrder', { order: o }); pendingOrders = pendingOrders.filter(p => p.id !== o.id); okN++; }
+            catch (e) { failN++; if (e.code === 'AUTH') break; }
+        }
+        lsSet(PENDING_KEY, pendingOrders);
+        if (okN) { try { const j = await fetchCloudJSON(); if (Array.isArray(j.fieldOrders)) appData.fieldOrders = j.fieldOrders; } catch (e) { } }
+        renderFieldAll();
+        if (okN) showToast('success', `ส่งรายการที่ค้างสำเร็จ ${okN} รายการ`);
+        else if (manual && failN) showToast('warning', 'ยังส่งไม่ได้', 'กรุณาตรวจสอบอินเทอร์เน็ตแล้วลองใหม่');
+    }
+    async function verifyAllOrders() {
+        try {
+            setSaving(true, 'กำลังตรวจสอบยอดกับระบบ...');
+            const j = await fetchCloudJSON();
+            appData.fieldOrders = Array.isArray(j.fieldOrders) ? j.fieldOrders : [];
+            appData.fieldOrders.forEach(o => { verifiedMap[o.id] = o.revision; });
+            renderFieldAll();
+            const today = todayISO(), td = appData.fieldOrders.filter(o => o.saleDate === today);
+            const sum = td.reduce((s, o) => s + orderTotals(o).total, 0);
+            await confirmDialog({ title: 'ตรวจสอบยอดในระบบแล้ว', msg: pendingOrders.length ? `ยังมี ${pendingOrders.length} รายการที่ยังไม่ถูกส่งเข้าระบบ` : 'ทุกรายการที่ส่งไว้ถูกบันทึกในระบบเรียบร้อย', okText: 'ตกลง', variant: 'info',
+                detailHtml: detailRows([['รายการทั้งหมดในระบบ', appData.fieldOrders.length + ' รายการ'], ['ขายวันนี้', td.length + ' รายการ'], ['ยอดขายวันนี้', fm(sum) + ' ฿'], ['รอส่ง (ในเครื่อง)', pendingOrders.length + ' รายการ']]) });
+        } catch (e) { showToast('warning', 'ตรวจสอบไม่สำเร็จ', 'เชื่อมต่อระบบคลาวด์ไม่ได้ กรุณาลองใหม่'); } finally { setSaving(false); }
+    }
+    function findOrder(id) { return pendingOrders.find(o => o.id === id) || appData.fieldOrders.find(o => o.id === id); }
+    function editFieldOrder(id) {
+        const o = findOrder(id); if (!o) return;
+        fieldState.id = o.id; fieldState.createdAt = o.createdAt || ''; fieldState.date = o.saleDate;
+        fieldState.q = { aTr: xnum(o.ammo.tr), aCash: xnum(o.ammo.cash), tTr: xnum(o.target.tr), tCash: xnum(o.target.cash) };
+        fieldState.snap = {};
+        [['ammo', o.ammo], ['target', o.target]].forEach(([k, l]) => {
+            const m = catalog[k].find(p => p.name === l.name && p.price === xnum(l.price));
+            if (m) { if (k === 'ammo') fieldState.ammoId = m.id; else fieldState.targetId = m.id; }
+            else { const s = { id: 'orig-' + k, name: l.name, price: xnum(l.price) }; fieldState.snap[k] = s; if (k === 'ammo') fieldState.ammoId = s.id; else fieldState.targetId = s.id; }
+        });
+        $('fOperator').value = o.operator; $('fIssue').value = o.issue || '';
+        renderFieldForm(); window.scrollTo({ top: 0, behavior: 'smooth' });
+        showToast('info', 'โหลดรายการมาแก้ไขแล้ว', 'แก้ไขข้อมูลแล้วกด "บันทึกการแก้ไขและส่งใหม่"');
+    }
+    async function deleteFieldOrder(id) {
+        const o = findOrder(id); if (!o) return;
+        const ok = await confirmDialog({ title: 'ลบรายการนี้?', msg: 'รายการจะถูกลบออกจากระบบและยอดในตารางของผู้ดูแลจะถูกปรับตามทันที', detailHtml: orderSummaryRows(o), okText: 'ลบรายการ' });
+        if (!ok) return;
+        const isPending = pendingOrders.some(p => p.id === id) && !appData.fieldOrders.some(p => p.id === id);
+        if (isPending) { pendingOrders = pendingOrders.filter(p => p.id !== id); savePending(); showToast('success', 'ลบรายการแล้ว'); return; }
+        try {
+            setSaving(true, 'กำลังลบรายการ...');
+            await api('deleteOrder', { id });
+            appData.fieldOrders = appData.fieldOrders.filter(p => p.id !== id); pendingOrders = pendingOrders.filter(p => p.id !== id); lsSet(PENDING_KEY, pendingOrders);
+            if (fieldState.id === id) resetFieldForm(true);
+            showToast('success', 'ลบรายการสำเร็จ'); renderFieldAll();
+        } catch (e) { if (e.code !== 'AUTH') showToast('error', 'ลบไม่สำเร็จ', e.message); } finally { setSaving(false); }
+    }
+    function renderFieldOrders() {
+        const ids = new Set(appData.fieldOrders.map(o => o.id));
+        const all = [...pendingOrders.filter(o => !ids.has(o.id)).map(o => ({ o, st: 'pending' })), ...appData.fieldOrders.map(o => ({ o, st: 'server' })),
+            ...pendingOrders.filter(o => ids.has(o.id)).map(o => ({ o, st: 'pending-edit' }))];
+        const seen = new Set(); const list = [];
+        all.sort((a, b) => String(b.o.saleDate).localeCompare(String(a.o.saleDate)) || String(b.o.createdAt).localeCompare(String(a.o.createdAt)));
+        all.forEach(x => { const k = x.o.id; if (x.st === 'pending-edit') { const j = list.findIndex(y => y.o.id === k); if (j >= 0) list.splice(j, 1); list.push(x); return; } if (!seen.has(k)) { seen.add(k); list.push(x); } });
+        const show = list.slice(0, fieldState.listLimit);
+        $('fieldOrderList').innerHTML = show.length ? show.map(({ o, st }) => {
+            const t = orderTotals(o), pend = st !== 'server', ver = !pend && String(verifiedMap[o.id]) === String(o.revision);
+            const chip = pend ? '<span class="chip wait"><i class="fas fa-clock"></i> รอส่ง</span>' : '<span class="chip ok"><i class="fas fa-circle-check"></i> ' + (ver ? 'ตรวจสอบแล้ว' : 'อยู่ในระบบ') + '</span>';
+            return `<div class="order-card${pend ? ' pending' : ''}">
+                <div class="flex items-start justify-between gap-2"><div class="min-w-0"><div class="font-extrabold text-[13px] text-slate-800 dark:text-white">${escapeHtml(thDateLong(o.saleDate))}</div><div class="text-[11px] text-slate-500"><i class="far fa-user mr-1"></i>${escapeHtml(o.operator)}</div></div>
+                <div class="text-right shrink-0"><div class="font-black text-sm text-emerald-700 dark:text-emerald-300">${fm(t.total)} ฿</div>${chip}</div></div>
+                <div class="mt-2 text-[11.5px] text-slate-600 dark:text-slate-300 space-y-0.5">
+                  ${(o.ammo.tr + o.ammo.cash) ? `<div><i class="fas fa-bullseye text-emerald-500 w-4"></i> ${escapeHtml(o.ammo.name)}: โอน ${o.ammo.tr} · สด ${o.ammo.cash} กล่อง</div>` : ''}
+                  ${(o.target.tr + o.target.cash) ? `<div><i class="fas fa-circle-dot text-orange-500 w-4"></i> ${escapeHtml(o.target.name)}: โอน ${o.target.tr} · สด ${o.target.cash} ใบ</div>` : ''}
+                  ${o.issue ? `<div class="text-amber-700 dark:text-amber-300"><i class="fas fa-triangle-exclamation w-4"></i> ${escapeHtml(o.issue)}</div>` : ''}
+                </div>
+                <div class="mt-2.5 flex gap-2 justify-end">
+                  ${pend ? `<button type="button" onclick="flushPending(true)" class="px-3 py-1.5 rounded-xl bg-amber-500 text-white text-[11px] font-bold"><i class="fas fa-rotate mr-1"></i> ส่งอีกครั้ง</button>` : ''}
+                  <button type="button" onclick="editFieldOrder('${jsArg(o.id)}')" class="px-3 py-1.5 rounded-xl bg-indigo-50 dark:bg-indigo-950/50 text-indigo-700 dark:text-indigo-300 text-[11px] font-bold"><i class="fas fa-pen mr-1"></i> แก้ไข</button>
+                  <button type="button" onclick="deleteFieldOrder('${jsArg(o.id)}')" class="px-3 py-1.5 rounded-xl bg-rose-50 dark:bg-rose-950/40 text-rose-600 text-[11px] font-bold"><i class="fas fa-trash-can mr-1"></i> ลบ</button>
+                </div></div>`;
+        }).join('') : '<div class="text-center text-xs text-slate-400 py-6">ยังไม่มีรายการที่ส่ง</div>';
+        $('fieldMoreBtn').classList.toggle('hidden', list.length <= fieldState.listLimit);
+        const today = todayISO(), td = list.filter(x => x.o.saleDate === today);
+        $('fieldTodayCount').textContent = td.length; $('fieldTodayTotal').textContent = fm(td.reduce((s, x) => s + orderTotals(x.o).total, 0));
+        $('fieldPendingCount').textContent = pendingOrders.length;
+        $('flushBtn').classList.toggle('hidden', !pendingOrders.length);
+    }
+    function renderFieldAll() {
+        if (!$('fieldForm')) return;
+        renderFieldForm(); renderFieldOrders();
+        const t = $('lastUpdatedUI') ? $('lastUpdatedUI').textContent.replace('อัปเดต:', '').trim() : '';
+        $('fieldSyncLine').textContent = backendVersion >= 3 ? `ซิงก์กับ Google Sheet แล้ว · ${t}` : 'กำลังตรวจสอบการเชื่อมต่อ...';
+    }
+    async function copyTodaySummary() {
+        const today = todayISO(), list = appData.fieldOrders.filter(o => o.saleDate === today).concat(pendingOrders.filter(o => o.saleDate === today && !appData.fieldOrders.some(x => x.id === o.id)));
+        if (!list.length) return showToast('info', 'วันนี้ยังไม่มีรายการขาย');
+        const s = list.reduce((a, o) => { a.bt += o.ammo.tr; a.bc += o.ammo.cash; a.tt += o.target.tr; a.tc += o.target.cash; const t = orderTotals(o); a.tr += t.tr; a.cash += t.cash; return a; }, { bt: 0, bc: 0, tt: 0, tc: 0, tr: 0, cash: 0 });
+        const text = `สรุปยอดขายสนามยิงปืน ${thDateCompact(today)}\nกระสุน ${s.bt + s.bc} กล่อง (โอน ${s.bt} / สด ${s.bc})\nเป้า ${s.tt + s.tc} ใบ (โอน ${s.tt} / สด ${s.tc})\nยอดโอน ${fm(s.tr)} บาท\nเงินสด ${fm(s.cash)} บาท\nรวม ${fm(s.tr + s.cash)} บาท`;
+        try { await navigator.clipboard.writeText(text); } catch (e) { const ta = document.createElement('textarea'); ta.value = text; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove(); }
+        showToast('success', 'คัดลอกสรุปวันนี้แล้ว', 'นำไปวางส่งในไลน์ได้ทันที');
+    }
+
+    /* ---- Product editor ---- */
+    let peDraft = null;
+    function openProductEditor(focusKind) {
+        peDraft = JSON.parse(JSON.stringify(catalog)); peRender();
+        $('productModal').classList.remove('hidden');
+    }
+    function closeProductEditor() { $('productModal').classList.add('hidden'); peDraft = null; }
+    function peRender() {
+        ['ammo', 'target'].forEach(k => {
+            $(k === 'ammo' ? 'peAmmo' : 'peTarget').innerHTML = peDraft[k].map((p, i) => `<div class="flex items-center gap-2">
+                <input type="text" value="${escapeHtml(p.name)}" oninput="peDraft['${k}'][${i}].name=this.value" placeholder="${k === 'ammo' ? 'ยี่ห้อกระสุน' : 'ชนิดเป้า'}" class="fld-input flex-1 !py-2.5">
+                <button type="button" onclick="pePrice('${k}',${i})" class="fld-input !w-28 !py-2.5 text-right font-extrabold shrink-0">${fm(p.price)} ฿</button>
+                <button type="button" onclick="peDel('${k}',${i})" class="mini-btn del shrink-0" title="ลบ"><i class="fas fa-trash-can"></i></button></div>`).join('');
+        });
+    }
+    function peAdd(k) { peDraft[k].push({ id: newId(k[0]), name: '', price: k === 'ammo' ? 1000 : 15 }); peRender(); }
+    function peDel(k, i) { if (peDraft[k].length <= 1) return showToast('warning', 'ต้องมีอย่างน้อย 1 รายการ'); peDraft[k].splice(i, 1); peRender(); }
+    async function pePrice(k, i) { const v = await promptNumber({ title: `ราคาต่อ${k === 'ammo' ? 'กล่อง' : 'ใบ'} (บาท)`, value: peDraft[k][i].price, unit: '฿', allowDecimal: true, max: 9999999 }); if (v !== null) { peDraft[k][i].price = v; peRender(); } }
+    function peSave() {
+        for (const k of ['ammo', 'target']) for (const p of peDraft[k]) { p.name = p.name.trim(); if (!p.name) return showToast('warning', 'กรุณากรอกชื่อสินค้าให้ครบ'); }
+        catalog = peDraft; peDraft = null; ensureSelection(); persistCatalog(); renderFieldForm(); $('productModal').classList.add('hidden');
+        showToast('success', 'บันทึกรายการสินค้าแล้ว', 'ระบบจำชื่อและราคาล่าสุดไว้ให้');
+    }
+    
+    /* =========================== RANGE LEDGER (ผู้ดูแล) =========================== */
+    function showRangeMenu() { updateRangeMenuInfo(); navigateTo('view-range-menu'); }
+    function showRangeLedger() { navigateTo('view-range-ledger'); renderLedger(); }
+    function updateRangeMenuInfo() {
+        if (!$('rangeMenuNet')) return;
+        $('rangeMenuNet').textContent = 'คงเหลือสุทธิ ' + fm(computeOverallNet('shooting')) + ' ฿';
+        if (Array.isArray(appData.rangeLedger)) {
+            const rows = buildLedgerRows(), tot = rows.length ? rows[rows.length - 1].total : 0;
+            $('rangeMenuLedgerInfo').textContent = `${rows.length.toLocaleString()} รายการ · ยอดรวม ${fm(tot)} ฿`;
+        } else $('rangeMenuLedgerInfo').textContent = 'กำลังโหลดข้อมูล...';
+    }
+    function getMeta() {
+        if (!appData.rangeMeta || typeof appData.rangeMeta !== 'object') appData.rangeMeta = {};
+        const m = appData.rangeMeta;
+        m.ammo = Object.assign({ total: null, since: '', updatedAt: '' }, m.ammo || {});
+        m.actual = Object.assign({ acct: null, cash: null, total: null, totalManual: false, updatedAt: '' }, m.actual || {});
+        return m;
+    }
+    const LKEYS = ['bTr', 'bCash', 'tTr', 'tCash', 'acct', 'cash'];
+    function ordersByDate() {
+        const m = {};
+        (appData.fieldOrders || []).forEach(o => { if (o && o.saleDate) (m[o.saleDate] = m[o.saleDate] || []).push(o); });
+        Object.values(m).forEach(a => a.sort((x, y) => String(x.createdAt).localeCompare(String(y.createdAt))));
+        return m;
+    }
+    function aggOrders(list) {
+        const a = { bTr: 0, bCash: 0, tTr: 0, tCash: 0, acct: 0, cash: 0 };
+        list.forEach(o => {
+            const A = o.ammo || {}, T = o.target || {};
+            a.bTr += xnum(A.tr); a.bCash += xnum(A.cash); a.tTr += xnum(T.tr); a.tCash += xnum(T.cash);
+            a.acct += xnum(A.tr) * xnum(A.price) + xnum(T.tr) * xnum(T.price);
+            a.cash += xnum(A.cash) * xnum(A.price) + xnum(T.cash) * xnum(T.price);
+        });
+        return a;
+    }
+    // สร้างแถวแสดงผลทั้งหมด (เก็บไว้ + แถวเสมือนของวันที่มีออเดอร์แต่ยังไม่มีแถวในตาราง) พร้อมยอดรวมสะสม
+    function buildLedgerRows() {
+        const led = Array.isArray(appData.rangeLedger) ? appData.rangeLedger : [];
+        const byDate = ordersByDate(), claimed = new Set(), rows = [];
+        led.forEach(e => { rows.push({ entry: e, virtual: false, key: e.id }); });
+        led.forEach(e => { if (e.kind === 'field') claimed.add(e.date); });
+        Object.keys(byDate).filter(d => !claimed.has(d)).sort().forEach(d => rows.push({ entry: { id: 'virt-' + d, kind: 'field', date: d, ov: {}, desc: '', note: '' }, virtual: true, key: 'virt-' + d }));
+        const seenField = new Set(); let run = 0;
+        rows.forEach((r, i) => {
+            const e = r.entry; let v = {}, orders = [], ovKeys = [];
+            if (e.kind === 'field') {
+                if (!seenField.has(e.date)) { seenField.add(e.date); orders = byDate[e.date] || []; }
+                const ag = aggOrders(orders), ov = e.ov || {};
+                LKEYS.forEach(k => { if (ov[k] !== undefined && ov[k] !== null) { v[k] = xnum(ov[k]); ovKeys.push(k); } else v[k] = ag[k]; });
+            } else LKEYS.forEach(k => { v[k] = xnum(e[k]); });
+            const calc = run + v.acct + v.cash;
+            const ot = e.kind === 'field' ? (e.ov && e.ov.total != null ? xnum(e.ov.total) : null) : (e.total != null && e.total !== '' ? xnum(e.total) : null);
+            const total = ot !== null ? ot : calc;
+            const issues = orders.filter(o => o.issue).map(o => `เหตุขัดข้อง: ${o.issue}`);
+            Object.assign(r, { i, v, orders, ovKeys, calc, prev: run, total, totalManual: ot !== null, desc: e.desc || '', note: [e.note || '', ...issues].filter(Boolean).join(' · ') });
+            run = total;
+        });
+        return rows;
+    }
+    function ledgerYM(r) { const p = isoParts(r.entry.date); return p ? { y: String(p.y + 543), m: pad2(p.m) } : null; }
+    function ledgerPass(r) {
+        const f = ledgerState, ym = ledgerYM(r);
+        if (f.years.length || f.months.length) { if (!ym) return false; if (f.years.length && !f.years.includes(ym.y)) return false; if (f.months.length && !f.months.includes(ym.m)) return false; }
+        const q = f.q.trim().toLowerCase();
+        if (q) { const hay = [r.desc, r.note, thDateCompact(r.entry.date), thDateLong(r.entry.date), ...r.orders.map(o => o.operator)].join(' ').toLowerCase(); if (!hay.includes(q)) return false; }
+        return true;
+    }
+    function saveLedgerUi() { lsSet(LEDGER_UI_KEY, { years: ledgerState.years, months: ledgerState.months }); }
+    function toggleLedgerFilter(dim, val) {
+        const arr = ledgerState[dim], i = arr.indexOf(val);
+        if (val === '') arr.length = 0; else if (i > -1) arr.splice(i, 1); else arr.push(val);
+        saveLedgerUi(); renderLedger();
+    }
+    function ledgerSearchChanged(v) { ledgerState.q = v; clearTimeout(ledgerSearchChanged.t); ledgerSearchChanged.t = setTimeout(renderLedger, 150); }
+    function renderLedgerFilters(rows) {
+        const yc = {}, mc = {};
+        rows.forEach(r => { const ym = ledgerYM(r); if (ym) yc[ym.y] = (yc[ym.y] || 0) + 1; });
+        rows.forEach(r => { const ym = ledgerYM(r); if (ym && (!ledgerState.years.length || ledgerState.years.includes(ym.y))) mc[ym.m] = (mc[ym.m] || 0) + 1; });
+        const pill = (dim, val, label, cnt, active) => `<button type="button" class="f-pill${active ? ' active' : ''}${cnt === 0 ? ' is-empty' : ''}" onclick="toggleLedgerFilter('${dim}','${val}')"><i class="fas fa-check f-check"></i>${label}${cnt !== undefined ? `<span class="f-count">${cnt}</span>` : ''}</button>`;
+        $('ledgerYearPills').innerHTML = pill('years', '', 'ทั้งหมด', undefined, !ledgerState.years.length) + Object.keys(yc).sort().map(y => pill('years', y, y, yc[y], ledgerState.years.includes(y))).join('');
+        $('ledgerMonthPills').innerHTML = pill('months', '', 'ทั้งหมด', undefined, !ledgerState.months.length) + thMonths.map((m, i) => pill('months', pad2(i + 1), m, mc[pad2(i + 1)] || 0, ledgerState.months.includes(pad2(i + 1)))).join('');
+        const ys = ledgerState.years.slice().sort().join(', '), ms = ledgerState.months.slice().sort().map(m => thMonths[+m - 1]).join(', ');
+        const scope = (!ys && !ms) ? 'แสดงทั้งหมด' : `${ys ? 'ปี ' + ys : 'ทุกปี'} · ${ms ? 'เดือน ' + ms : 'ทุกเดือน'}`;
+        $('ledgerScopeChip').innerHTML = `<i class="fas fa-filter"></i> ${escapeHtml(scope)}${ledgerState.q ? ' · ค้นหา "' + escapeHtml(ledgerState.q) + '"' : ''}`;
+        return scope;
+    }
+    const moneyCell = v => v === 0 ? '<span class="dash">-</span>' : `<span class="${v < 0 ? 'neg' : ''}">${fm(v)}</span>`;
+    const qtyCell = v => v === 0 ? '<span class="dash">-</span>' : fm(v);
+    function renderLedger() {
+        if (!$('ledgerTbody')) return;
+        if (!Array.isArray(appData.rangeLedger)) {
+            $('ledgerTbody').innerHTML = `<tr><td colspan="12" class="text-center py-10 text-sm text-slate-400"><i class="fas fa-circle-notch fa-spin mr-2"></i>${backendVersion >= 3 ? 'กำลังเตรียมข้อมูลตั้งต้นจากไฟล์เดิม...' : 'กำลังโหลดข้อมูล...'}</td></tr>`;
+            $('ledgerTfoot').innerHTML = ''; return;
+        }
+        const all = buildLedgerRows(), scope = renderLedgerFilters(all), rows = all.filter(ledgerPass);
+        $('ledgerPrintScope').textContent = `ขอบเขตข้อมูล: ${scope} · พิมพ์เมื่อ ${nowThai()}`;
+        let h = '';
+        rows.forEach(r => {
+            const e = r.entry, v = r.v, auto = e.kind === 'field', dot = k => r.ovKeys.includes(k) ? '<span class="ov-dot" title="แก้ไขด้วยมือ"></span>' : '';
+            const badge = auto && r.orders.length ? `<button type="button" data-act="orders" class="tx-tag tag-in ml-1 cursor-pointer" title="ดูรายการจากเจ้าหน้าที่สนาม">จากสนาม ×${r.orders.length}</button>` : '';
+            h += `<tr class="lrow${auto && r.orders.length ? ' auto-row' : ''}" data-key="${escapeHtml(r.key)}">
+              <td class="ctr text-slate-400">${r.i + 1}</td>
+              <td class="ctr font-semibold">${e.date ? escapeHtml(thDateCompact(e.date)) : '<span class="dash">-</span>'}</td>
+              <td class="wrap">${escapeHtml(r.desc)}${badge}</td>
+              <td class="ctr text-emerald-700 dark:text-emerald-300">${qtyCell(v.bTr)}${dot('bTr')}</td><td class="ctr text-emerald-700 dark:text-emerald-300">${qtyCell(v.bCash)}${dot('bCash')}</td>
+              <td class="ctr text-orange-700 dark:text-orange-300">${qtyCell(v.tTr)}${dot('tTr')}</td><td class="ctr text-orange-700 dark:text-orange-300">${qtyCell(v.tCash)}${dot('tCash')}</td>
+              <td class="num editable" data-cell="acct" title="คลิกเพื่อแก้ไข">${moneyCell(v.acct)}${dot('acct')}</td>
+              <td class="num editable" data-cell="cash" title="คลิกเพื่อแก้ไข">${moneyCell(v.cash)}${dot('cash')}</td>
+              <td class="num editable font-extrabold" data-cell="total" title="คลิกเพื่อแก้ไข">${fm(r.total)}${r.totalManual ? '<span class="ov-dot" title="ยอดรวมถูกกำหนดเอง"></span>' : ''}</td>
+              <td class="wrap text-slate-500 dark:text-slate-400">${escapeHtml(r.note)}</td>
+              <td class="ctr col-act no-print-capture"><span class="drag-handle" draggable="true" title="ลากเพื่อสลับลำดับ"><i class="fas fa-grip-vertical"></i></span>
+                <button type="button" class="mini-btn" data-act="up" title="เลื่อนขึ้น"><i class="fas fa-arrow-up"></i></button><button type="button" class="mini-btn" data-act="down" title="เลื่อนลง"><i class="fas fa-arrow-down"></i></button>
+                <button type="button" class="mini-btn" data-act="edit" title="แก้ไข"><i class="fas fa-pen"></i></button><button type="button" class="mini-btn del" data-act="del" title="ลบ"><i class="fas fa-trash-can"></i></button></td></tr>`;
+        });
+        $('ledgerTbody').innerHTML = h || `<tr><td colspan="12" class="text-center py-10 text-sm text-slate-400">ไม่พบรายการตามเงื่อนไขที่เลือก</td></tr>`;
+        const S = rows.reduce((s, r) => { LKEYS.forEach(k => s[k] += r.v[k]); return s; }, { bTr: 0, bCash: 0, tTr: 0, tCash: 0, acct: 0, cash: 0 });
+        const lastTotal = rows.length ? rows[rows.length - 1].total : 0;
+        $('ledgerTfoot').innerHTML = `<tr><td colspan="3" class="ctr">รวม (${rows.length.toLocaleString()} รายการ)</td><td class="ctr">${fm(S.bTr)}</td><td class="ctr">${fm(S.bCash)}</td><td class="ctr">${fm(S.tTr)}</td><td class="ctr">${fm(S.tCash)}</td><td class="num">${fm(S.acct)}</td><td class="num">${fm(S.cash)}</td><td class="num">${fm(lastTotal)}</td><td></td><td class="col-act no-print-capture"></td></tr>`;
+        renderLedgerSummary(all);
+        renderLedgerStatus();
+        const th = document.querySelector('#ledgerTable thead tr.h1 th'); if (th) $('ledgerTable').style.setProperty('--lh1', th.offsetHeight + 'px');
+    }
+    function renderLedgerSummary(all) {
+        const m = getMeta(), a = m.actual;
+        const sAcct = all.reduce((s, r) => s + r.v.acct, 0), sCash = all.reduce((s, r) => s + r.v.cash, 0), tot = all.length ? all[all.length - 1].total : 0;
+        $('calcAcct').textContent = fm(sAcct); $('calcCash').textContent = fm(sCash); $('calcTotal').textContent = fm(tot);
+        const adj = tot - (sAcct + sCash), note = $('calcAdjNote');
+        note.classList.toggle('hidden', Math.abs(adj) < 0.005);
+        note.textContent = `ยอดรวมรวมการปรับค่าด้วยมือในตาราง ${adj > 0 ? '+' : ''}${fm(adj)} บาท (ผลต่างระหว่างยอดรวมกับผลบวกเงินในบัญชี+เงินสด)`;
+        const actTotal = a.totalManual ? a.total : (a.acct !== null && a.cash !== null ? a.acct + a.cash : a.total);
+        const set = (btn, val, calc, diffId) => {
+            $(btn).textContent = val === null || val === undefined ? 'กรอกยอดจริง' : fm(val) + ' ฿';
+            const d = $(diffId);
+            if (val === null || val === undefined) { d.textContent = '-'; d.className = 'text-right px-2 font-bold tabular-nums text-slate-400'; return; }
+            const diff = Math.round((val - calc) * 100) / 100;
+            d.textContent = diff === 0 ? 'ตรงกัน ✓' : (diff > 0 ? '+' : '') + fm(diff);
+            d.className = 'text-right px-2 font-bold tabular-nums ' + (diff === 0 ? 'text-emerald-600' : diff > 0 ? 'text-amber-600' : 'text-rose-600');
+        };
+        set('actAcct', a.acct, sAcct, 'diffAcct'); set('actCash', a.cash, sCash, 'diffCash'); set('actTotal', actTotal, tot, 'diffTotal');
+        $('actualUpdated').innerHTML = a.updatedAt ? `<i class="far fa-clock text-amber-500"></i> อัปเดตยอดจริงล่าสุด ${escapeHtml(thStamp(a.updatedAt))}` : 'ยังไม่เคยกรอกยอดจริง';
+        const am = m.ammo, sinceRows = am.since ? all.filter(r => r.entry.date && r.entry.date >= am.since) : [];
+        const sold = sinceRows.reduce((s, r) => s + r.v.bTr + r.v.bCash, 0);
+        $('ammoTotal').textContent = am.total === null ? 'ตั้งค่า' : fmtQty(am.total);
+        $('ammoSold').textContent = fmtQty(sold);
+        $('ammoSince').textContent = am.since ? thDateCompact(am.since) : 'ยังไม่ระบุ';
+        const rem = $('ammoRemain');
+        rem.textContent = am.total === null ? '-' : fmtQty(am.total - sold);
+        rem.style.color = am.total !== null && am.total - sold < 0 ? '#fda4af' : '';
+    }
+    function thStamp(iso) { const d = new Date(iso); if (isNaN(d)) return '-'; return `${d.getDate()} ${thMonths[d.getMonth()]}${pad2((d.getFullYear() + 543) % 100)} ${pad2(d.getHours())}:${pad2(d.getMinutes())} น.`; }
+    function renderLedgerStatus() {
+        const el = $('ledgerSaveStatus'); if (!el) return;
+        if (ledgerState.saving) el.innerHTML = '<i class="fas fa-circle-notch fa-spin text-indigo-500"></i> กำลังบันทึกขึ้นคลาวด์...';
+        else if (ledgerState.error) el.innerHTML = `<span class="text-rose-500"><i class="fas fa-triangle-exclamation"></i> ยังไม่ได้บันทึก: ${escapeHtml(ledgerState.error)}</span> <button type="button" class="underline font-bold" onclick="saveRange()">ลองอีกครั้ง</button>`;
+        else if (ledgerState.lastSaved) el.innerHTML = `<i class="fas fa-circle-check text-emerald-500"></i> บันทึกล่าสุด ${escapeHtml(ledgerState.lastSaved)}`;
+        else el.innerHTML = '<i class="fas fa-circle-check text-emerald-500"></i> ซิงก์กับ Google Sheet แล้ว';
+    }
+
+    /* ---- บันทึก / ข้อมูลตั้งต้น ---- */
+    let rangeChain = Promise.resolve();
+    function saveRange() {
+        ledgerState.dirty = true; ledgerState.error = ''; ledgerState.saving = true; renderLedgerStatus();
+        rangeChain = rangeChain.then(async () => {
+            try {
+                await api('setKeys', { keys: { rangeLedger: JSON.parse(JSON.stringify(appData.rangeLedger)), rangeMeta: JSON.parse(JSON.stringify(getMeta())) } });
+                ledgerState.lastSaved = nowThai(); ledgerState.dirty = false; ledgerState.error = ''; updateLastSyncTime();
+            } catch (e) { ledgerState.error = e.message; if (e.code !== 'AUTH') showToast('error', 'บันทึกตารางไม่สำเร็จ', e.message, { duration: 6000 }); }
+            ledgerState.saving = false; renderLedgerStatus();
+        });
+        return rangeChain;
+    }
+    async function seedRange() {
+        ledgerState.seeding = true;
+        try {
+            const entries = RANGE_SEED.map((r, i) => ({ id: 'L' + String(i + 1).padStart(4, '0'), kind: 'manual', date: r[0], desc: r[1], bTr: r[2], bCash: r[3], tTr: r[4], tCash: r[5], acct: r[6], cash: r[7], total: r[8], note: r[9] }));
+            const meta = { ammo: { total: null, since: '', updatedAt: '' }, actual: { acct: null, cash: null, total: null, totalManual: false, updatedAt: '' } };
+            const r1 = await api('initKey', { key: 'rangeLedger', value: entries });
+            await api('initKey', { key: 'rangeMeta', value: meta });
+            await syncWithCloud(false);
+            if (r1.applied) showToast('success', 'นำเข้าข้อมูลเดิมจาก Excel แล้ว', `${entries.length.toLocaleString()} แถวพร้อมใช้งานในตาราง`, { duration: 5000 });
+        } catch (e) { if (e.code !== 'AUTH') showToast('error', 'เตรียมข้อมูลตั้งต้นไม่สำเร็จ', e.message); }
+        finally { ledgerState.seeding = false; }
+    }
+
+    /* ---- แถว: แก้ไข / ลบ / สลับ ---- */
+    function materializeVirtuals() {
+        if (!Array.isArray(appData.rangeLedger)) return;
+        buildLedgerRows().filter(r => r.virtual).forEach(r => appData.rangeLedger.push({ id: newId('L'), kind: 'field', date: r.entry.date, desc: '', note: '', ov: {} }));
+    }
+    function resolveEntry(key) {
+        if (String(key).startsWith('virt-')) { const d = key.slice(5); materializeVirtuals(); return appData.rangeLedger.find(e => e.kind === 'field' && e.date === d); }
+        return appData.rangeLedger.find(e => e.id === key);
+    }
+    function rowByKey(key) { return buildLedgerRows().find(r => r.key === key); }
+    function moveEntry(key, delta) {
+        const e = resolveEntry(key); if (!e) return;
+        const arr = appData.rangeLedger, i = arr.indexOf(e), j = i + delta;
+        if (j < 0 || j >= arr.length) return;
+        arr.splice(i, 1); arr.splice(j, 0, e); saveRange(); renderLedger();
+    }
+    function moveEntryTo(srcKey, dstKey, after) {
+        if (srcKey === dstKey) return;
+        const s = resolveEntry(srcKey), d = resolveEntry(dstKey); if (!s || !d) return;
+        const arr = appData.rangeLedger; arr.splice(arr.indexOf(s), 1);
+        let di = arr.indexOf(d); if (after) di++; arr.splice(di, 0, s); saveRange(); renderLedger();
+    }
+    async function ledgerCellEdit(key, cell) {
+        const r = rowByKey(key); if (!r) return;
+        const names = { acct: 'เงินในบัญชี', cash: 'เงินที่สนาม', total: 'รวม' };
+        const cur = cell === 'total' ? r.total : r.v[cell];
+        const v = await promptNumber({ title: `แก้ไข${names[cell]}`, value: cur, unit: '฿', allowDecimal: true, allowNegative: true, hint: cell === 'total' ? 'ระบบจะคำนวณแถวถัดไปต่อจากยอดนี้' : 'ตัวเลขติดลบ = รายจ่าย/ถอนออก', presets: [100, 500, 1000, 5000] });
+        if (v === null) return;
+        const e = resolveEntry(key); if (!e) return;
+        if (e.kind === 'field') { e.ov = e.ov || {}; if (cell === 'total') e.ov.total = v; else e.ov[cell] = v; }
+        else if (cell === 'total') e.total = v; else e[cell] = v;
+        saveRange(); renderLedger();
+    }
+    function openLedgerEdit(key) {
+        const isNew = key === null, r = isNew ? null : rowByKey(key);
+        if (!isNew && !r) return;
+        ledEdit = { key, date: isNew ? todayISO() : (r.entry.date || ''), field: !isNew && r.entry.kind === 'field' };
+        $('leTitle').innerHTML = isNew ? '<i class="fas fa-plus text-indigo-500 mr-1.5"></i> เพิ่มรายการใหม่' : '<i class="fas fa-pen text-indigo-500 mr-1.5"></i> แก้ไขรายการ';
+        const fn = $('leFieldNote'); fn.classList.toggle('hidden', !ledEdit.field);
+        if (ledEdit.field) fn.textContent = `แถวนี้รวมยอดอัตโนมัติจากเจ้าหน้าที่สนาม (${r.orders.length} รายการ) — ค่าที่แก้ไขจะแทนค่าที่ระบบคำนวณ และวันที่แก้ไขไม่ได้`;
+        const v = isNew ? { bTr: 0, bCash: 0, tTr: 0, tCash: 0, acct: 0, cash: 0 } : r.v;
+        $('leDesc').value = isNew ? '' : r.desc; $('leNote').value = isNew ? '' : (r.entry.note || '');
+        $('leBTr').value = v.bTr || ''; $('leBCash').value = v.bCash || ''; $('leTTr').value = v.tTr || ''; $('leTCash').value = v.tCash || '';
+        $('leAcct').value = v.acct || ''; $('leCash').value = v.cash || '';
+        $('leTotal').value = (!isNew && r.totalManual) ? r.total : '';
+        $('leDateBtn').disabled = ledEdit.field; $('leDateBtn').classList.toggle('opacity-60', ledEdit.field);
+        $('leDateText').textContent = ledEdit.date ? thDateLong(ledEdit.date) : 'ไม่ระบุวันที่';
+        $('ledgerEditModal').classList.remove('hidden');
+    }
+    let ledEdit = null;
+    function closeLedgerEdit() { $('ledgerEditModal').classList.add('hidden'); ledEdit = null; }
+    $('leDateBtn').addEventListener('click', async () => { if (!ledEdit || ledEdit.field) return; const v = await pickThaiDate({ value: ledEdit.date, allowClear: true }); if (v !== null) { ledEdit.date = v; $('leDateText').textContent = v ? thDateLong(v) : 'ไม่ระบุวันที่'; } });
+    function leAutoCalc() {
+        const a = catalog.ammo[0].price, t = catalog.target[0].price, n = id => xnum($(id).value);
+        $('leAcct').value = n('leBTr') * a + n('leTTr') * t || ''; $('leCash').value = n('leBCash') * a + n('leTCash') * t || '';
+        showToast('info', 'คำนวณแล้ว', `กระสุน ${fm(a)} ฿/กล่อง · เป้า ${fm(t)} ฿/ใบ (รายการสินค้าแรก)`);
+    }
+    function saveLedgerEdit() {
+        if (!ledEdit) return;
+        const n = id => { const s = $(id).value; return s === '' ? 0 : xnum(s); };
+        const vals = { bTr: n('leBTr'), bCash: n('leBCash'), tTr: n('leTTr'), tCash: n('leTCash'), acct: n('leAcct'), cash: n('leCash') };
+        const totalStr = $('leTotal').value.trim(), desc = $('leDesc').value.trim(), note = $('leNote').value.trim();
+        let e, prev;
+        if (ledEdit.key === null) { e = { id: newId('L'), kind: 'manual' }; prev = Array.isArray(appData.rangeLedger) && appData.rangeLedger.length ? buildLedgerRows().slice(-1)[0].total : 0; }
+        else { const row = rowByKey(ledEdit.key); prev = row ? row.prev : 0; e = resolveEntry(ledEdit.key); }
+        if (!e) return;
+        const calc = prev + vals.acct + vals.cash, ovTotal = (totalStr !== '' && Math.abs(xnum(totalStr) - calc) > 0.004) ? xnum(totalStr) : null;
+        e.desc = desc; e.note = note;
+        if (e.kind === 'field') {
+            const ag = aggOrders(ordersByDate()[e.date] || []); e.ov = {};
+            LKEYS.forEach(k => { if (Math.abs(vals[k] - ag[k]) > 1e-9) e.ov[k] = vals[k]; });
+            if (ovTotal !== null) e.ov.total = ovTotal;
+        } else { e.date = ledEdit.date || ''; LKEYS.forEach(k => { e[k] = vals[k]; }); e.total = ovTotal; }
+        if (ledEdit.key === null) appData.rangeLedger.push(e);
+        closeLedgerEdit(); saveRange(); renderLedger(); updateRangeMenuInfo();
+        showToast('success', 'บันทึกรายการแล้ว');
+    }
+    async function deleteLedgerRow(key) {
+        const r = rowByKey(key); if (!r) return;
+        const auto = r.entry.kind === 'field' && r.orders.length;
+        const ok = await confirmDialog({
+            title: 'ลบรายการนี้?', msg: auto ? `แถวนี้รวมจากเจ้าหน้าที่สนาม ${r.orders.length} รายการ การลบจะลบรายการสั่งซื้อเหล่านั้นออกจากระบบด้วย` : 'รายการจะถูกลบออกจากตารางและยอดรวมจะคำนวณใหม่',
+            detailHtml: detailRows([['วันที่', r.entry.date ? thDateCompact(r.entry.date) : '-'], ['รายการ', r.desc || '-'], ['เงินในบัญชี', fm(r.v.acct)], ['เงินที่สนาม', fm(r.v.cash)]]), okText: 'ลบรายการ'
+        });
+        if (!ok) return;
+        try {
+            if (auto) { setSaving(true, 'กำลังลบรายการสั่งซื้อของวันนั้น...'); for (const o of r.orders) await api('deleteOrder', { id: o.id }); appData.fieldOrders = appData.fieldOrders.filter(o => !r.orders.some(x => x.id === o.id)); }
+            if (!r.virtual) appData.rangeLedger = appData.rangeLedger.filter(e => e.id !== r.entry.id);
+            saveRange(); renderLedger(); updateRangeMenuInfo(); showToast('success', 'ลบรายการสำเร็จ');
+        } catch (e) { if (e.code !== 'AUTH') showToast('error', 'ลบไม่สำเร็จ', e.message); } finally { setSaving(false); }
+    }
+    function showRowOrders(key) {
+        const r = rowByKey(key); if (!r) return;
+        $('opTitle').textContent = `รายการจากเจ้าหน้าที่สนาม — ${thDateLong(r.entry.date)}`;
+        $('opBody').innerHTML = r.orders.map(o => { const t = orderTotals(o); return `<div class="order-card"><div class="flex justify-between gap-2"><div class="font-bold text-xs"><i class="far fa-user mr-1"></i>${escapeHtml(o.operator)}</div><div class="font-black text-sm text-emerald-700">${fm(t.total)} ฿</div></div>
+            <div class="text-[11.5px] text-slate-600 dark:text-slate-300 mt-1">${(o.ammo.tr + o.ammo.cash) ? `กระสุน ${escapeHtml(o.ammo.name)}: โอน ${o.ammo.tr} · สด ${o.ammo.cash} กล่อง<br>` : ''}${(o.target.tr + o.target.cash) ? `เป้า ${escapeHtml(o.target.name)}: โอน ${o.target.tr} · สด ${o.target.cash} ใบ<br>` : ''}โอน ${fm(t.tr)} · สด ${fm(t.cash)}${o.issue ? `<br><span class="text-amber-700">เหตุขัดข้อง: ${escapeHtml(o.issue)}</span>` : ''}</div>
+            <div class="text-[10px] text-slate-400 mt-1">ส่งเมื่อ ${escapeHtml(thStamp(o.createdAt))}</div></div>`; }).join('');
+        $('ordersPopupModal').classList.remove('hidden');
+    }
+    $('ledgerTbody').addEventListener('click', e => {
+        const tr = e.target.closest('tr[data-key]'); if (!tr) return;
+        const key = tr.dataset.key, act = e.target.closest('[data-act]'), cell = e.target.closest('[data-cell]');
+        if (act) { const a = act.dataset.act; if (a === 'edit') openLedgerEdit(key); else if (a === 'del') deleteLedgerRow(key); else if (a === 'up') moveEntry(key, -1); else if (a === 'down') moveEntry(key, 1); else if (a === 'orders') showRowOrders(key); }
+        else if (cell) ledgerCellEdit(key, cell.dataset.cell);
+    });
+    (function initLedgerDnD() {
+        const tb = $('ledgerTbody'); let dragKey = null;
+        tb.addEventListener('dragstart', e => { const h = e.target.closest('.drag-handle'); if (!h) return; const tr = h.closest('tr'); dragKey = tr.dataset.key; tr.classList.add('dragging'); e.dataTransfer.effectAllowed = 'move'; e.dataTransfer.setData('text/plain', dragKey); try { e.dataTransfer.setDragImage(tr, 10, 10); } catch (x) { } });
+        tb.addEventListener('dragover', e => { if (!dragKey) return; const tr = e.target.closest('tr[data-key]'); if (!tr) return; e.preventDefault(); tb.querySelectorAll('.drop-before,.drop-after').forEach(x => x.classList.remove('drop-before', 'drop-after')); const r = tr.getBoundingClientRect(); tr.classList.add(e.clientY > r.top + r.height / 2 ? 'drop-after' : 'drop-before'); });
+        tb.addEventListener('drop', e => { if (!dragKey) return; const tr = e.target.closest('tr[data-key]'); if (!tr) return; e.preventDefault(); const r = tr.getBoundingClientRect(), after = e.clientY > r.top + r.height / 2, src = dragKey; dragKey = null; moveEntryTo(src, tr.dataset.key, after); });
+        tb.addEventListener('dragend', () => { dragKey = null; tb.querySelectorAll('.dragging,.drop-before,.drop-after').forEach(x => x.classList.remove('dragging', 'drop-before', 'drop-after')); });
+    })();
+
+    /* ---- กระสุนคงเหลือ / ยอดจริง ---- */
+    async function editAmmoTotal() {
+        const am = getMeta().ammo;
+        const v = await promptNumber({ title: 'กระสุนทั้งหมด (กล่อง)', value: am.total || 0, unit: 'กล่อง', max: 999999, hint: 'ระบบจะหักยอดขายตั้งแต่วันที่นับสต๊อกออกให้อัตโนมัติ', presets: [10, 50, 100, 200] });
+        if (v === null) return;
+        am.total = Math.floor(v); if (!am.since) am.since = todayISO(); am.updatedAt = new Date().toISOString();
+        saveRange(); renderLedger();
+    }
+    async function editAmmoSince() {
+        const am = getMeta().ammo;
+        const v = await pickThaiDate({ value: am.since || todayISO() }); if (!v) return;
+        am.since = v; am.updatedAt = new Date().toISOString(); saveRange(); renderLedger();
+    }
+    async function editActual(kind) {
+        const a = getMeta().actual, names = { acct: 'เงินในบัญชี (ยอดจริง)', cash: 'เงินสดที่สนาม (ยอดจริง)', total: 'รวมทั้งหมด (ยอดจริง)' };
+        const cur = kind === 'total' ? (a.totalManual ? a.total : (a.acct !== null && a.cash !== null ? a.acct + a.cash : a.total)) : a[kind];
+        const v = await promptNumber({ title: names[kind], value: cur || 0, unit: '฿', allowDecimal: true, allowNegative: true, presets: [100, 500, 1000, 10000] });
+        if (v === null) return;
+        a[kind] = v;
+        if (kind === 'total') a.totalManual = true; else if (!a.totalManual) a.total = (a.acct !== null && a.cash !== null) ? a.acct + a.cash : a.total;
+        a.updatedAt = new Date().toISOString(); saveRange(); renderLedger();
+    }
+
+    /* ---- ส่งออก: PDF / ภาพ / Excel ---- */
+    function printLedger() {
+        renderLedger();
+        const root = document.documentElement, wasDark = root.classList.contains('dark');
+        if (wasDark) root.classList.remove('dark');
+        const restore = () => { if (wasDark) root.classList.add('dark'); window.removeEventListener('afterprint', restore); };
+        window.addEventListener('afterprint', restore);
+        setTimeout(() => window.print(), 80);
+    }
+    async function exportLedgerImage() {
+        if (!Array.isArray(appData.rangeLedger)) return;
+        setSaving(true, 'กำลังสร้างภาพรายงาน...');
+        try {
+            await loadScriptOnce('https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js');
+            const stage = $('offscreenReportStage'), table = $('ledgerTable').cloneNode(true);
+            table.querySelectorAll('.col-act,.no-print-capture').forEach(x => x.remove());
+            const body = table.querySelector('tbody'), MAX = 220, trs = body.querySelectorAll('tr');
+            let cut = 0; if (trs.length > MAX) { cut = trs.length - MAX; for (let i = 0; i < cut; i++) trs[i].remove(); }
+            table.querySelectorAll('th, td').forEach(c => { c.style.position = 'static'; });
+            const colspanFix = table.querySelectorAll('tfoot td[colspan]'); colspanFix.forEach(c => { if (c.colSpan > 3) c.colSpan = 3; });
+            const scope = $('ledgerScopeChip').textContent.trim(), meta = getMeta();
+            stage.innerHTML = `<div id="ledgerSnap" style="width:1100px;background:#fff;font-family:'Prompt',sans-serif;color:#1e293b;border:1px solid #e2e8f0;border-radius:20px;overflow:hidden">
+                <div style="background:linear-gradient(135deg,#16182c,#1d1b42);color:#fff;padding:22px 28px"><div style="font-size:22px;font-weight:800">รายการสนามยิงปืน</div>
+                <div style="font-size:12px;opacity:.8;margin-top:4px">${escapeHtml(scope)} · ออกรายงานเมื่อ ${escapeHtml(nowThai())}${cut ? ` · แสดง ${MAX} รายการล่าสุด` : ''}</div>
+                <div style="display:flex;gap:24px;margin-top:12px;font-size:13px"><span>เงินในบัญชี <b>${$('calcAcct').textContent}</b></span><span>เงินสดที่สนาม <b>${$('calcCash').textContent}</b></span><span>รวม <b>${$('calcTotal').textContent}</b></span><span>กระสุนคงเหลือ <b>${$('ammoRemain').textContent}</b> กล่อง</span></div></div>
+                <div class="cap" style="padding:10px"></div></div>`;
+            stage.querySelector('.cap').appendChild(table);
+            const cardEl = $('ledgerSnap');
+            const canvas = await html2canvas(cardEl, { scale: Math.min(2, 14000 / cardEl.offsetHeight), useCORS: true, backgroundColor: '#ffffff', onclone: d => d.documentElement.classList.remove('dark') });
+            const blob = await new Promise(r => canvas.toBlob(r, 'image/png'));
+            const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `range-ledger_${todayISO()}.png`; document.body.appendChild(a); a.click(); a.remove();
+            setTimeout(() => URL.revokeObjectURL(a.href), 3000); stage.innerHTML = '';
+            showToast('success', 'ส่งออกภาพสำเร็จ', 'ดาวน์โหลดไฟล์ภาพ PNG เรียบร้อยแล้ว');
+        } catch (e) { showToast('error', 'สร้างภาพไม่สำเร็จ', e.message); } finally { setSaving(false); }
+    }
+    async function exportLedgerExcel() {
+        if (!Array.isArray(appData.rangeLedger)) return;
+        setSaving(true, 'กำลังสร้างไฟล์ Excel...');
+        try {
+            await loadScriptOnce('https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js');
+            const rows = buildLedgerRows(), a = getMeta().actual, F = 11, L = F + rows.length - 1;
+            const sAcct = rows.reduce((s, r) => s + r.v.acct, 0), sCash = rows.reduce((s, r) => s + r.v.cash, 0), tot = rows.length ? rows[rows.length - 1].total : 0;
+            const aoa = [];
+            aoa[0] = ['รายการสนามยิงปืน']; aoa[1] = [`ส่งออกเมื่อ ${nowThai()} · ข้อมูลทั้งหมด ${rows.length} แถว (แก้ไขได้ — ช่อง "รวม" เป็นสูตรคำนวณต่อเนื่อง)`]; aoa[2] = [];
+            aoa[3] = ['', '', 'รวม (ตามบัญชี)', '', '', '', '', sAcct, sCash, tot];
+            aoa[4] = ['', '', 'ยอดจริง (กรอกเอง)', '', '', '', '', a.acct, a.cash, a.totalManual ? a.total : (a.acct !== null && a.cash !== null ? a.acct + a.cash : a.total)];
+            aoa[5] = ['', '', 'ผลต่าง', '', '', '', '', null, null, null]; aoa[6] = [];
+            aoa[7] = ['ลำดับ', 'วันที่ขาย', 'รายการจ่าย', 'รายการขาย', '', '', '', 'เงินในบัญชี', 'เงินที่สนาม', 'รวม', 'หมายเหตุ'];
+            aoa[8] = ['', '', '', 'กระสุน', '', 'เป้า', '', '', '', '', ''];
+            aoa[9] = ['', '', '', 'โอน', 'เงินสด', 'โอน', 'เงินสด', '', '', '', ''];
+            const z = v => v === 0 ? '' : v;
+            rows.forEach(r => aoa.push([r.i + 1, r.entry.date ? thDateCompact(r.entry.date) : '', r.desc, z(r.v.bTr), z(r.v.bCash), z(r.v.tTr), z(r.v.tCash), z(r.v.acct), z(r.v.cash), r.total, r.note]));
+            const ws = XLSX.utils.aoa_to_sheet(aoa);
+            rows.forEach((r, i) => { const n = F + i; if (i > 0 && !r.totalManual) ws['J' + n] = { t: 'n', f: `J${n - 1}+H${n}+I${n}`, v: r.total }; });
+            if (rows.length) { ws['H4'] = { t: 'n', f: `SUM(H${F}:H${L})`, v: sAcct }; ws['I4'] = { t: 'n', f: `SUM(I${F}:I${L})`, v: sCash }; ws['J4'] = { t: 'n', f: `J${L}`, v: tot }; }
+            ['H', 'I', 'J'].forEach(c => { const hasV = ws[c + '5'] && typeof ws[c + '5'].v === 'number'; if (hasV) ws[c + '6'] = { t: 'n', f: `${c}5-${c}4`, v: ws[c + '5'].v - (c === 'H' ? sAcct : c === 'I' ? sCash : tot) }; });
+            const R = (r1, c1, r2, c2) => ({ s: { r: r1, c: c1 }, e: { r: r2, c: c2 } });
+            ws['!merges'] = [R(0, 0, 0, 10), R(1, 0, 1, 10), R(7, 0, 9, 0), R(7, 1, 9, 1), R(7, 2, 9, 2), R(7, 3, 7, 6), R(8, 3, 8, 4), R(8, 5, 8, 6), R(7, 7, 9, 7), R(7, 8, 9, 8), R(7, 9, 9, 9), R(7, 10, 9, 10)];
+            ws['!cols'] = [{ wch: 7 }, { wch: 11 }, { wch: 30 }, { wch: 9 }, { wch: 9 }, { wch: 9 }, { wch: 9 }, { wch: 14 }, { wch: 14 }, { wch: 14 }, { wch: 40 }];
+            const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, 'รายการสนามยิงปืน');
+            XLSX.writeFile(wb, `range-ledger_${todayISO()}.xlsx`);
+            showToast('success', 'ส่งออก Excel สำเร็จ', 'ไฟล์ .xlsx แก้ไขได้ — ส่งออกข้อมูลทั้งหมดทุกแถว');
+        } catch (e) { showToast('error', 'ส่งออก Excel ไม่สำเร็จ', e.message); } finally { setSaving(false); }
+    }
+
+    /* ---- Keyboard + Boot ---- */
+    document.addEventListener('keydown', e => {
+        const open = id => !$(id).classList.contains('hidden');
+        if (open('numpadModal')) {
+            if (/^\d$/.test(e.key) || e.key === '.' || e.key === '-') npPress(e.key);
+            else if (e.key === 'Backspace') npPress('back'); else if (e.key === 'Enter') { e.preventDefault(); npPress('ok'); } else if (e.key === 'Escape') npClose(null);
+            e.stopImmediatePropagation(); e.preventDefault(); return;
+        }
+        if (open('thaiPickModal') && e.key === 'Escape') { tcClose(null); return; }
+        if (open('loginModal')) {
+            if (/^\d$/.test(e.key)) loginPress(e.key); else if (e.key === 'Backspace') loginPress('back'); else if (e.key === 'Enter') loginPress('ok'); else if (e.key === 'Escape') closeLogin();
+            return;
+        }
+        if (e.key === 'Escape') ['ledgerEditModal', 'productModal', 'ordersPopupModal', 'pinSettingsModal'].forEach(id => $(id).classList.add('hidden'));
+    }, true);
+
+    function bootV3() {
+        loadLocalState();
+        const ui = lsGet(LEDGER_UI_KEY, null); if (ui) { ledgerState.years = ui.years || []; ledgerState.months = ui.months || []; }
+        try { const s = JSON.parse(sessionStorage.getItem(SESSION_KEY) || 'null'); if (s && (s.role === 'staff' || s.role === 'admin') && s.pin) session = s; } catch (e) { }
+        applyRole();
+        if (session && session.role === 'staff') { navigationHistory = ['view-field']; initFieldView(); navigateTo('view-field'); }
+        else if (session) { updateRangeMenuInfo(); }
+    }
     </script>
 </body>
 </html>
