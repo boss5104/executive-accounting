@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>ระบบบริหารจัดการบัญชีกองกลางและสนามยิงปืน | Executive Pro</title>
-    <meta name="app-version" content="4.2.0">
+    <meta name="app-version" content="4.2.1">
     <meta name="theme-color" content="#131b2e">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -5235,7 +5235,7 @@
     /* ==========================================================================
        Executive Pro v4 — ชั้นเสริมใหม่ (ส่วน A: แกนหลัก / ป๊อปอัพ / แถบสถานะ / ตรวจอัปเดต)
        ========================================================================== */
-    const V4 = window.V4 = { version: "4.2.0", sec: null };
+    const V4 = window.V4 = { version: "4.2.1", sec: null };
     const q = (sel, root) => (root || document).querySelector(sel);
     const esc = v => escapeHtml(v);
     const money = n => (Number(n) || 0).toLocaleString('th-TH', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -5352,12 +5352,11 @@
                 <span class="chip hide-sm" id="v4sPend" style="display:none"><i class="fas fa-hourglass-half" style="color:#fbbf24"></i><span></span></span>
             </div>
             <div class="grp">
-                <button type="button" class="chip" id="v4sRole" title="ความปลอดภัยการเข้าสู่ระบบ"><i class="fas fa-user-lock"></i><span>ผู้เยี่ยมชม</span></button>
+                <span class="chip" id="v4sRole"><i class="fas fa-user-lock"></i><span>ผู้เยี่ยมชม</span></span>
                 <span class="chip hide-sm" id="v4sLast"><i class="far fa-clock" style="color:#fbbf24"></i><span>-</span></span>
                 <button type="button" class="chip" id="v4sVer" title="ตรวจสอบการอัปเดต"><i class="fas fa-rotate"></i><span>v${esc(V4.version)}</span></button>
             </div>`;
         document.body.appendChild(bar);
-        q('#v4sRole', bar).onclick = () => V4.openSecurity && V4.openSecurity();
         q('#v4sVer', bar).onclick = () => V4.checkUpdate && V4.checkUpdate(true);
     }
     function paintBar() {
@@ -5432,7 +5431,6 @@
         ['fa-file-import', 'ลงข้อมูลจากไฟล์ Excel อัตโนมัติ', 'สรุปบัญชีสนามยิงปืน 2569 + บัญชีกองกลาง ลงให้เองเมื่อผู้ดูแลเข้าระบบ (ยังมีปุ่มนำเข้าด้วยตนเอง)'],
         ['fa-calendar-days', 'สรุปรายเดือนสนามยิงปืน', 'แก้ไข เลื่อนลำดับได้ และสรุปต่อจากรายการสนามยิงปืนให้อัตโนมัติ'],
         ['fa-qrcode', 'รับชำระเงิน QR / บัญชีธนาคาร', 'แสดงให้ลูกค้าสแกนจ่ายได้เต็มจอ ผู้ดูแลแก้ไขเลขบัญชีและรูป QR ได้'],
-        ['fa-user-lock', 'จดจำการเข้าสู่ระบบ', 'เปิดแอปครั้งถัดไปเข้าอัตโนมัติ ไม่ต้องกรอกรหัส (ตั้งค่าได้ที่แถบสถานะด้านล่าง)']
     ];
     let updShown = false;
     function showForcedUpdate(newVer) {
@@ -5495,149 +5493,13 @@
 
 (function () {
     /* ==========================================================================
-       ส่วน B: จดจำการเข้าสู่ระบบ (เข้าอัตโนมัติเมื่อเปิดแอปครั้งถัดไป)
-       - ไม่มีสแกนนิ้ว/ใบหน้า และไม่มีล็อกอัตโนมัติเมื่อไม่ใช้งาน
+       ส่วน B: ไม่มีการเข้าสู่ระบบอัตโนมัติ — ต้องกรอกรหัสเองทุกครั้ง (เหมือนระบบเดิม)
+       ลบข้อมูลที่เคยจดจำไว้ในเวอร์ชันก่อนหน้าออกจากเครื่อง (รหัส PIN ที่เข้ารหัสไว้, ค่าตั้งค่า, กุญแจเข้ารหัส)
        ========================================================================== */
-    const V4 = window.V4, q = V4.q, esc = V4.esc;
-    const REM_KEY = 'execpro_v4_remember', SEC_KEY = 'execpro_v4_sec';
-    const sec = V4.sec = { remember: true };
-    (function initSec() {
-        const old = V4.lsJ(SEC_KEY, {}) || {};
-        if (typeof old.remember === 'boolean') sec.remember = old.remember;
-        V4.lsS(SEC_KEY, sec);                       // ล้างค่าสแกน/ล็อกอัตโนมัติที่เคยตั้งไว้ในเวอร์ชันก่อนหน้า
-    })();
-    const saveSec = () => V4.lsS(SEC_KEY, sec);
-    let restoring = false;
-
-    /* ---------- ห้องนิรภัยในเครื่อง: เข้ารหัส PIN ด้วย AES-GCM (กุญแจเก็บใน IndexedDB) ----------
-       ถ้าเบราว์เซอร์ไม่รองรับ (เช่นเบราว์เซอร์ในแอป LINE / โหมดส่วนตัว) จะสำรองเป็นการเก็บแบบเข้ารหัสอย่างง่ายแทน
-       เพื่อให้จดจำการเข้าสู่ระบบได้เสมอ */
-    const b64 = buf => btoa(String.fromCharCode.apply(null, new Uint8Array(buf)));
-    const unb64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
-    const hasCrypto = !!(window.crypto && crypto.subtle && window.indexedDB);
-    const plainEnc = pin => 'b64:' + btoa(unescape(encodeURIComponent(pin)));
-    function idbOpen() { return new Promise((res, rej) => { const r = indexedDB.open('execpro_v4', 1); r.onupgradeneeded = () => r.result.createObjectStore('k'); r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error); r.onblocked = () => rej(new Error('blocked')); }); }
-    async function vaultKey(create) {
-        const db = await idbOpen();
-        const got = await new Promise(res => { const t = db.transaction('k').objectStore('k').get('main'); t.onsuccess = () => res(t.result || null); t.onerror = () => res(null); });
-        if (got || !create) return got;
-        const k = await crypto.subtle.generateKey({ name: 'AES-GCM', length: 256 }, false, ['encrypt', 'decrypt']);
-        await new Promise((res, rej) => { const tx = db.transaction('k', 'readwrite'); tx.objectStore('k').put(k, 'main'); tx.oncomplete = res; tx.onerror = () => rej(tx.error); tx.onabort = () => rej(tx.error); });
-        return k;
-    }
-    async function encPin(pin) {
-        if (!hasCrypto) return plainEnc(pin);
-        try {
-            const k = await vaultKey(true), iv = crypto.getRandomValues(new Uint8Array(12));
-            const ct = await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, k, new TextEncoder().encode(pin));
-            return 'gcm:' + b64(iv) + ':' + b64(ct);
-        } catch (e) { return plainEnc(pin); }
-    }
-    async function decPin(s) {
-        if (String(s).startsWith('b64:')) return decodeURIComponent(escape(atob(s.slice(4))));
-        const [, iv, ct] = String(s).split(':');
-        const k = await vaultKey(false); if (!k) throw new Error('no key');
-        const pt = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: unb64(iv) }, k, unb64(ct));
-        return new TextDecoder().decode(pt);
-    }
-    const A = V4.auth = {
-        async save(role, pin) { V4.lsS(REM_KEY, { v: 2, role, enc: await encPin(pin), at: Date.now() }); },
-        rec() { return V4.lsJ(REM_KEY, null); },
-        async load() { const r = A.rec(); if (!r || !r.enc) return null; try { return Object.assign({}, r, { pin: await decPin(r.enc) }); } catch (e) { A.clear(); return null; } },
-        clear() { try { localStorage.removeItem(REM_KEY); } catch (e) { } }
-    };
-
-    /* ---------- เข้าสู่ระบบ (ใช้ฟังก์ชันเดิมของระบบ) ---------- */
-    async function loginWith(role, pin, silent) {
-        await api('login', {}, { role, pin });
-        session = { role, pin };
-        try { sessionStorage.setItem(SESSION_KEY, JSON.stringify(session)); } catch (e) { }
-        restoring = true;
-        try { applyRole(); afterLogin(); } finally { restoring = false; }
-        if (!silent) showToast('success', 'เข้าสู่ระบบสำเร็จ', role === 'admin' ? 'ยินดีต้อนรับผู้ดูแลระบบ' : 'พร้อมบันทึกรายการขายหน้าสนาม');
-        V4.paintBar();
-    }
-    async function restore() {
-        if (session) return;
-        const rec = await A.load(); if (!rec) return;
-        try {
-            await loginWith(rec.role, rec.pin, true);
-            V4.popup({ type: 'ok', title: 'เข้าสู่ระบบอัตโนมัติ', msg: rec.role === 'admin' ? 'ผู้ดูแลระบบ' : 'เจ้าหน้าที่สนาม', duration: 1400 });
-        } catch (e) {
-            if (e && e.code === 'AUTH') { A.clear(); showToast('warning', 'รหัสเดิมใช้ไม่ได้แล้ว', 'กรุณาเข้าสู่ระบบด้วยรหัสใหม่'); return; }
-            // เชื่อมต่อไม่ได้ชั่วคราว (ออฟไลน์ / เซิร์ฟเวอร์ช้า): เข้าด้วยรหัสที่จดจำไว้ก่อน ไม่บังคับให้กรอกใหม่
-            session = { role: rec.role, pin: rec.pin }; try { sessionStorage.setItem(SESSION_KEY, JSON.stringify(session)); } catch (x) { }
-            restoring = true;
-            try { applyRole(); navigationHistory = [session.role === 'staff' ? 'view-field' : 'view-home']; afterLogin(); } catch (x) { } finally { restoring = false; }
-            V4.paintBar();
-            showToast('warning', 'เชื่อมต่อคลาวด์ไม่ได้ในขณะนี้', 'เข้าใช้งานด้วยรหัสที่จดจำไว้ ระบบจะซิงก์ใหม่เมื่อเชื่อมต่อได้', { noPopup: true });
-        }
-    }
-    V4.restore = restore;
-
-    /* ---------- ต่อเข้ากับขั้นตอนเข้าสู่ระบบเดิม ---------- */
-    const _afterLogin = window.afterLogin;
-    window.afterLogin = function () {
-        _afterLogin();
-        if (restoring || !session) return;
-        postLogin();
-    };
-    async function postLogin() {
-        const chk = document.getElementById('v4Remember');
-        sec.remember = chk ? chk.checked : sec.remember; saveSec();
-        if (sec.remember) { try { await A.save(session.role, session.pin); } catch (e) { console.warn('remember failed', e); } }
-        else { A.clear(); }
-    }
-    const _logout = window.logoutNow;
-    window.logoutNow = async function () {
-        const had = session;
-        await _logout();
-        if (had && !session) A.clear();
-    };
-    const _lost = window.handleAuthLost;
-    window.handleAuthLost = function () { A.clear(); _lost(); };
-    const _pin = window.savePinSettings;
-    window.savePinSettings = async function () {
-        const before = session && session.pin;
-        await _pin();
-        if (session && session.pin !== before && A.rec()) { try { await A.save(session.role, session.pin); } catch (e) { } }
-    };
-
-    /* ---------- ช่อง "จดจำ" ในหน้าต่างล็อกอิน ---------- */
-    function decorateLogin() {
-        const err = document.getElementById('loginError'); if (!err || document.getElementById('v4Remember')) return;
-        const w = document.createElement('div');
-        w.innerHTML = `<label class="v4-remember"><input type="checkbox" id="v4Remember" class="hidden" ${sec.remember ? 'checked' : ''}><span class="v4-switch"></span> จดจำการเข้าสู่ระบบในเครื่องนี้ (เข้าอัตโนมัติครั้งถัดไป)</label>`;
-        err.parentNode.insertBefore(w, err);
-    }
-    const _openLogin = window.openLogin;
-    window.openLogin = function (role) {
-        _openLogin(role); decorateLogin();
-        const chk = document.getElementById('v4Remember'); if (chk) chk.checked = sec.remember;
-    };
-
-    /* ---------- ศูนย์ความปลอดภัย ---------- */
-    V4.openSecurity = async function () {
-        const rec = A.rec();
-        const role = session ? session.role : null;
-        const sh = V4.sheet({
-            title: 'จดจำการเข้าสู่ระบบ', sub: role ? (role === 'admin' ? 'ผู้ดูแลระบบ' : 'เจ้าหน้าที่สนาม') : 'ยังไม่ได้เข้าสู่ระบบ', icon: 'fa-shield-halved', size: 'w-md', foot: false,
-            body: `<div class="space-y-3">
-                <label class="v4-card flex items-center gap-3 cursor-pointer"><div class="flex-1"><div class="font-extrabold text-[12.5px]">จดจำการเข้าสู่ระบบในเครื่องนี้</div><div class="text-[11px] text-slate-500 dark:text-slate-400">เปิดแอปครั้งถัดไปเข้าใช้งานอัตโนมัติ ไม่ต้องกรอกรหัส</div></div>
-                    <input type="checkbox" id="secRem" class="hidden" ${rec ? 'checked' : ''}><span class="v4-switch"></span></label>
-                <div class="text-[10.5px] leading-relaxed text-slate-500 dark:text-slate-400 p-3 rounded-xl bg-amber-50 dark:bg-amber-950/20 border border-amber-200/60 dark:border-amber-900/40"><i class="fas fa-circle-info text-amber-500 mr-1"></i> รหัส PIN ที่จดจำถูกเก็บเฉพาะในเครื่องนี้ ไม่ควรเปิดใช้บนเครื่องที่ใช้ร่วมกับผู้อื่น หากกด "ออกจากระบบ" หรือเปลี่ยนรหัส ระบบจะลบข้อมูลที่จดจำไว้ให้</div>
-                <div class="flex gap-2 flex-wrap"><button type="button" class="v4-btn danger" id="secForget"><i class="fas fa-eraser"></i> ลืมเครื่องนี้</button>
-                    <button type="button" class="v4-btn ghost ml-auto" data-x2>ปิด</button></div>
-            </div>`
-        });
-        sh.q('[data-x2]').onclick = () => sh.close();
-        sh.q('#secRem').onchange = async e => {
-            if (!session) { e.target.checked = false; return V4.popup({ type: 'info', title: 'เข้าสู่ระบบก่อน', msg: 'ต้องเข้าสู่ระบบด้วยรหัสก่อนจึงจะจดจำได้', block: true }); }
-            if (e.target.checked) { await A.save(session.role, session.pin); sec.remember = true; saveSec(); }
-            else { A.clear(); sec.remember = false; saveSec(); }
-        };
-        sh.q('#secForget').onclick = () => { A.clear(); sec.remember = false; saveSec(); sh.q('#secRem').checked = false; V4.popup({ type: 'ok', title: 'ลืมเครื่องนี้แล้ว', msg: 'ลบข้อมูลที่จดจำไว้ออกจากเครื่องแล้ว' }); };
-    };
+    const V4 = window.V4;
+    try { localStorage.removeItem('execpro_v4_remember'); localStorage.removeItem('execpro_v4_sec'); } catch (e) { }
+    try { if (window.indexedDB) indexedDB.deleteDatabase('execpro_v4'); } catch (e) { }
+    V4.restore = function () { };
 })();
 
 (function () {
@@ -6360,7 +6222,6 @@
                 <button type="button" onclick="V4.openExport('all')"><i class="fas fa-file-export text-indigo-500"></i>ส่งออกรายงานสรุปผล</button>
                 <button type="button" onclick="V4.openPay()"><i class="fas fa-qrcode text-sky-600"></i>แสดง QR รับเงิน</button>
                 <button type="button" onclick="V4.editPay()"><i class="fas fa-building-columns text-sky-600"></i>ตั้งค่าบัญชีรับเงิน</button>
-                <button type="button" onclick="V4.openSecurity()"><i class="fas fa-user-lock text-violet-500"></i>จดจำการเข้าสู่ระบบ</button>
                 <button type="button" onclick="V4.openHealth()"><i class="fas fa-stethoscope text-rose-500"></i>ตรวจสุขภาพข้อมูล</button>
             </div>`));
         }
@@ -6392,7 +6253,6 @@
     function start() {
         wire(); if (V4.payWire) V4.payWire();
         V4.initCore();
-        setTimeout(() => { try { V4.restore(); } catch (e) { console.warn(e); } }, 150);
         // เตือนสำรองข้อมูลสัปดาห์ละครั้ง (ผู้ดูแล)
         setInterval(() => {
             if (!session || session.role !== 'admin' || V4._bakNag) return;
