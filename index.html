@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>ระบบบริหารจัดการบัญชีกองกลางและสนามยิงปืน | Executive Pro</title>
-    <meta name="app-version" content="4.0.0">
+    <meta name="app-version" content="4.1.0">
     <meta name="theme-color" content="#131b2e">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -718,12 +718,6 @@
         .v4-switch::after { content: ''; position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; border-radius: 9999px; background: #fff; transition: transform .25s var(--v4-ease); box-shadow: 0 2px 6px rgba(0,0,0,.25); }
         input:checked + .v4-switch, .v4-switch.on { background: linear-gradient(135deg, #6366f1, #8b5cf6); }
         input:checked + .v4-switch::after, .v4-switch.on::after { transform: translateX(16px); }
-        #v4BioGate { position: fixed; inset: 0; z-index: 330; display: none; align-items: center; justify-content: center; padding: 18px; text-align: center; color: #fff;
-            background: radial-gradient(800px 500px at 50% 0%, rgba(99,102,241,.35), transparent 60%), #070b14; }
-        #v4BioGate.on { display: flex; animation: v4fade .3s; }
-        .v4-bio-ring { width: 108px; height: 108px; border-radius: 9999px; margin: 0 auto 18px; display: flex; align-items: center; justify-content: center; font-size: 46px; color: #c7d2fe;
-            background: radial-gradient(circle, rgba(99,102,241,.25), rgba(99,102,241,.05)); box-shadow: 0 0 0 1px rgba(165,180,252,.35), 0 0 60px rgba(99,102,241,.45); animation: v4breath 2.4s ease-in-out infinite; }
-        @keyframes v4breath { 0%,100% { transform: scale(1); } 50% { transform: scale(1.06); } }
 
         /* หน้าต่างบังคับอัปเดต */
         #v4Update { position: fixed; inset: 0; z-index: 350; display: none; align-items: center; justify-content: center; padding: 18px; background: rgba(2,6,23,.82); backdrop-filter: blur(8px); }
@@ -746,7 +740,8 @@
         .v4-move { display: inline-flex; flex-direction: column; gap: 1px; margin-right: 4px; }
         .v4-move button { width: 20px; height: 14px; line-height: 1; font-size: 8px; border-radius: 5px; background: #f1f5f9; color: #475569; }
         .dark .v4-move button { background: #1e293b; color: #cbd5e1; } .v4-move button:hover { background: #e0e7ff; color: #4338ca; }
-        @media print { #v4StatusBar, #v4TopBar, #v4PopupHost, .v4-sheet-bg, #v4Update, #v4BioGate, .v4-quick { display: none !important; } body { padding-bottom: 0 !important; } }
+        @media print { #v4StatusBar, #v4TopBar, #v4PopupHost, .v4-sheet-bg, #v4Update, .v4-quick { display: none !important; } body { padding-bottom: 0 !important; } }
+        table.ledger-table thead tr.h3 th { top: var(--lh12, calc(var(--lh1, 33px) * 2)); }
     </style>
 </head>
 <body class="min-h-screen flex flex-col bg-[#f3f5f9] text-slate-800 dark:bg-[#090d16] dark:text-slate-100 selection:bg-indigo-500 selection:text-white">
@@ -4915,7 +4910,7 @@
         $('ledgerTfoot').innerHTML = `<tr><td colspan="3" class="ctr">รวม (${rows.length.toLocaleString()} รายการ)</td><td class="ctr">${fm(S.bTr)}</td><td class="ctr">${fm(S.bCash)}</td><td class="ctr">${fm(S.tTr)}</td><td class="ctr">${fm(S.tCash)}</td><td class="num">${fm(S.acct)}</td><td class="num">${fm(S.cash)}</td><td class="num">${fm(lastTotal)}</td><td></td><td class="col-act no-print-capture"></td></tr>`;
         renderLedgerSummary(all);
         renderLedgerStatus();
-        const th = document.querySelector('#ledgerTable thead tr.h1 th'); if (th) $('ledgerTable').style.setProperty('--lh1', th.offsetHeight + 'px');
+        (function () { const t = $('ledgerTable'), a = t.querySelector('thead tr.h1 th[colspan]'), b2 = t.querySelector('thead tr.h2 th'); if (a && b2) { t.style.setProperty('--lh1', a.offsetHeight + 'px'); t.style.setProperty('--lh12', (a.offsetHeight + b2.offsetHeight) + 'px'); } })();
     }
     function renderLedgerSummary(all) {
         const m = getMeta(), a = m.actual;
@@ -5211,7 +5206,7 @@
     /* ==========================================================================
        Executive Pro v4 — ชั้นเสริมใหม่ (ส่วน A: แกนหลัก / ป๊อปอัพ / แถบสถานะ / ตรวจอัปเดต)
        ========================================================================== */
-    const V4 = window.V4 = { version: "4.0.0", sec: null };
+    const V4 = window.V4 = { version: "4.1.0", sec: null };
     const q = (sel, root) => (root || document).querySelector(sel);
     const esc = v => escapeHtml(v);
     const money = n => (Number(n) || 0).toLocaleString('th-TH', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -5405,9 +5400,9 @@
     const WHATS_NEW = [
         ['fa-wand-magic-sparkles', 'หน้าตาใหม่ ทันสมัยขึ้น', 'การ์ดเคลื่อนไหวนุ่มนวล ปุ่มมีเอฟเฟกต์ แถบสถานะด้านล่างบอกสถานะซิงก์/ออนไลน์/รอส่ง'],
         ['fa-eye', 'ตัวอย่างก่อนส่งออกทุกครั้ง', 'ศูนย์ส่งออก PNG / PDF / Excel / CSV พร้อมรายงานสรุปผลรวม'],
-        ['fa-file-import', 'นำเข้าข้อมูลจากไฟล์ Excel', 'สรุปบัญชีสนามยิงปืน 2569 และบัญชีกองกลาง พร้อมตัวอย่างก่อนลงข้อมูล'],
-        ['fa-calendar-days', 'สรุปรายเดือนสนามยิงปืน', 'แก้ไข เลื่อนลำดับได้ และดึงต่อจากรายการสนามยิงปืนอัตโนมัติ'],
-        ['fa-fingerprint', 'จดจำการเข้าสู่ระบบ + สแกนนิ้ว/ใบหน้า', 'ตั้งค่าได้ที่แถบสถานะด้านล่าง (ปุ่มบทบาท)']
+        ['fa-file-import', 'ลงข้อมูลจากไฟล์ Excel อัตโนมัติ', 'สรุปบัญชีสนามยิงปืน 2569 + บัญชีกองกลาง ลงให้เองเมื่อผู้ดูแลเข้าระบบ (ยังมีปุ่มนำเข้าด้วยตนเอง)'],
+        ['fa-calendar-days', 'สรุปรายเดือนสนามยิงปืน', 'แก้ไข เลื่อนลำดับได้ และสรุปต่อจากรายการสนามยิงปืนให้อัตโนมัติ'],
+        ['fa-user-lock', 'จดจำการเข้าสู่ระบบ', 'เปิดแอปครั้งถัดไปเข้าอัตโนมัติ ไม่ต้องกรอกรหัส (ตั้งค่าได้ที่แถบสถานะด้านล่าง)']
     ];
     let updShown = false;
     function showForcedUpdate(newVer) {
@@ -5470,32 +5465,43 @@
 
 (function () {
     /* ==========================================================================
-       ส่วน B: จดจำการเข้าสู่ระบบ / สแกนใบหน้า-ลายนิ้วมือ (WebAuthn) / ล็อกอัตโนมัติเมื่อไม่ใช้งาน
+       ส่วน B: จดจำการเข้าสู่ระบบ (เข้าอัตโนมัติเมื่อเปิดแอปครั้งถัดไป)
+       - ไม่มีสแกนนิ้ว/ใบหน้า และไม่มีล็อกอัตโนมัติเมื่อไม่ใช้งาน
        ========================================================================== */
     const V4 = window.V4, q = V4.q, esc = V4.esc;
     const REM_KEY = 'execpro_v4_remember', SEC_KEY = 'execpro_v4_sec';
-    const sec = V4.sec = Object.assign({ remember: true, bio: false, bioDeclined: false, lockMin: 0 }, V4.lsJ(SEC_KEY, {}));
+    const sec = V4.sec = { remember: true };
+    (function initSec() {
+        const old = V4.lsJ(SEC_KEY, {}) || {};
+        if (typeof old.remember === 'boolean') sec.remember = old.remember;
+        V4.lsS(SEC_KEY, sec);                       // ล้างค่าสแกน/ล็อกอัตโนมัติที่เคยตั้งไว้ในเวอร์ชันก่อนหน้า
+    })();
     const saveSec = () => V4.lsS(SEC_KEY, sec);
-    let restoring = false, lastActive = Date.now();
+    let restoring = false;
 
-    /* ---------- ห้องนิรภัยในเครื่อง: เข้ารหัส PIN ด้วย AES-GCM (กุญแจเก็บใน IndexedDB แบบไม่ส่งออกได้) ---------- */
+    /* ---------- ห้องนิรภัยในเครื่อง: เข้ารหัส PIN ด้วย AES-GCM (กุญแจเก็บใน IndexedDB) ----------
+       ถ้าเบราว์เซอร์ไม่รองรับ (เช่นเบราว์เซอร์ในแอป LINE / โหมดส่วนตัว) จะสำรองเป็นการเก็บแบบเข้ารหัสอย่างง่ายแทน
+       เพื่อให้จดจำการเข้าสู่ระบบได้เสมอ */
     const b64 = buf => btoa(String.fromCharCode.apply(null, new Uint8Array(buf)));
     const unb64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
     const hasCrypto = !!(window.crypto && crypto.subtle && window.indexedDB);
-    function idbOpen() { return new Promise((res, rej) => { const r = indexedDB.open('execpro_v4', 1); r.onupgradeneeded = () => r.result.createObjectStore('k'); r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error); }); }
+    const plainEnc = pin => 'b64:' + btoa(unescape(encodeURIComponent(pin)));
+    function idbOpen() { return new Promise((res, rej) => { const r = indexedDB.open('execpro_v4', 1); r.onupgradeneeded = () => r.result.createObjectStore('k'); r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error); r.onblocked = () => rej(new Error('blocked')); }); }
     async function vaultKey(create) {
         const db = await idbOpen();
         const got = await new Promise(res => { const t = db.transaction('k').objectStore('k').get('main'); t.onsuccess = () => res(t.result || null); t.onerror = () => res(null); });
         if (got || !create) return got;
         const k = await crypto.subtle.generateKey({ name: 'AES-GCM', length: 256 }, false, ['encrypt', 'decrypt']);
-        await new Promise(res => { const tx = db.transaction('k', 'readwrite'); tx.objectStore('k').put(k, 'main'); tx.oncomplete = res; tx.onerror = res; });
+        await new Promise((res, rej) => { const tx = db.transaction('k', 'readwrite'); tx.objectStore('k').put(k, 'main'); tx.oncomplete = res; tx.onerror = () => rej(tx.error); tx.onabort = () => rej(tx.error); });
         return k;
     }
     async function encPin(pin) {
-        if (!hasCrypto) return 'b64:' + btoa(unescape(encodeURIComponent(pin)));
-        const k = await vaultKey(true), iv = crypto.getRandomValues(new Uint8Array(12));
-        const ct = await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, k, new TextEncoder().encode(pin));
-        return 'gcm:' + b64(iv) + ':' + b64(ct);
+        if (!hasCrypto) return plainEnc(pin);
+        try {
+            const k = await vaultKey(true), iv = crypto.getRandomValues(new Uint8Array(12));
+            const ct = await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, k, new TextEncoder().encode(pin));
+            return 'gcm:' + b64(iv) + ':' + b64(ct);
+        } catch (e) { return plainEnc(pin); }
     }
     async function decPin(s) {
         if (String(s).startsWith('b64:')) return decodeURIComponent(escape(atob(s.slice(4))));
@@ -5505,42 +5511,11 @@
         return new TextDecoder().decode(pt);
     }
     const A = V4.auth = {
-        async save(role, pin, extra) {
-            const old = V4.lsJ(REM_KEY, null) || {};
-            V4.lsS(REM_KEY, Object.assign({ v: 1, role, enc: await encPin(pin), at: Date.now(), bioId: old.role === role ? (old.bioId || null) : null }, extra || {}));
-        },
+        async save(role, pin) { V4.lsS(REM_KEY, { v: 2, role, enc: await encPin(pin), at: Date.now() }); },
         rec() { return V4.lsJ(REM_KEY, null); },
         async load() { const r = A.rec(); if (!r || !r.enc) return null; try { return Object.assign({}, r, { pin: await decPin(r.enc) }); } catch (e) { A.clear(); return null; } },
-        clear() { try { localStorage.removeItem(REM_KEY); } catch (e) { } sec.bio = false; saveSec(); }
+        clear() { try { localStorage.removeItem(REM_KEY); } catch (e) { } }
     };
-
-    /* ---------- WebAuthn (สแกนใบหน้า / ลายนิ้วมือของเครื่อง) ---------- */
-    let bioOk = null;
-    async function bioAvailable() {
-        if (bioOk !== null) return bioOk;
-        try { bioOk = !!(window.PublicKeyCredential && PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable && await PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable()); }
-        catch (e) { bioOk = false; }
-        return bioOk;
-    }
-    const rnd = n => crypto.getRandomValues(new Uint8Array(n));
-    async function bioRegister(role) {
-        const cred = await navigator.credentials.create({ publicKey: {
-            challenge: rnd(32), rp: { name: 'Executive Pro', id: location.hostname },
-            user: { id: rnd(16), name: 'execpro-' + role, displayName: role === 'admin' ? 'ผู้ดูแลระบบ' : 'เจ้าหน้าที่สนาม' },
-            pubKeyCredParams: [{ type: 'public-key', alg: -7 }, { type: 'public-key', alg: -257 }],
-            authenticatorSelection: { authenticatorAttachment: 'platform', userVerification: 'required', residentKey: 'discouraged' },
-            timeout: 60000, attestation: 'none'
-        } });
-        return b64(cred.rawId);
-    }
-    async function bioVerify(id) {
-        await navigator.credentials.get({ publicKey: {
-            challenge: rnd(32), rpId: location.hostname, timeout: 60000, userVerification: 'required',
-            allowCredentials: [{ type: 'public-key', id: unb64(id), transports: ['internal'] }]
-        } });
-        return true;
-    }
-    V4.bioAvailable = bioAvailable;
 
     /* ---------- เข้าสู่ระบบ (ใช้ฟังก์ชันเดิมของระบบ) ---------- */
     async function loginWith(role, pin, silent) {
@@ -5555,55 +5530,20 @@
     async function restore() {
         if (session) return;
         const rec = await A.load(); if (!rec) return;
-        if (rec.bioId && sec.bio && await bioAvailable()) { showGate(rec); return; }
-        try { await loginWith(rec.role, rec.pin, true); V4.popup({ type: 'ok', title: 'เข้าสู่ระบบอัตโนมัติ', msg: rec.role === 'admin' ? 'ผู้ดูแลระบบ' : 'เจ้าหน้าที่สนาม', duration: 1400 }); }
-        catch (e) {
-            if (e.code === 'AUTH') { A.clear(); showToast('warning', 'รหัสเดิมใช้ไม่ได้แล้ว', 'กรุณาเข้าสู่ระบบด้วยรหัสใหม่'); }
-            else if (e.code === 'NETWORK') {
-                session = { role: rec.role, pin: rec.pin }; try { sessionStorage.setItem(SESSION_KEY, JSON.stringify(session)); } catch (x) { }
-                applyRole(); navigationHistory = [session.role === 'staff' ? 'view-field' : 'view-home'];
-                if (session.role === 'staff') { initFieldView(); navigateTo('view-field'); }
-                showToast('warning', 'ออฟไลน์ — เข้าใช้งานด้วยรหัสที่จดจำไว้', 'ระบบจะตรวจรหัสอีกครั้งเมื่อกลับมาออนไลน์');
-            }
+        try {
+            await loginWith(rec.role, rec.pin, true);
+            V4.popup({ type: 'ok', title: 'เข้าสู่ระบบอัตโนมัติ', msg: rec.role === 'admin' ? 'ผู้ดูแลระบบ' : 'เจ้าหน้าที่สนาม', duration: 1400 });
+        } catch (e) {
+            if (e && e.code === 'AUTH') { A.clear(); showToast('warning', 'รหัสเดิมใช้ไม่ได้แล้ว', 'กรุณาเข้าสู่ระบบด้วยรหัสใหม่'); return; }
+            // เชื่อมต่อไม่ได้ชั่วคราว (ออฟไลน์ / เซิร์ฟเวอร์ช้า): เข้าด้วยรหัสที่จดจำไว้ก่อน ไม่บังคับให้กรอกใหม่
+            session = { role: rec.role, pin: rec.pin }; try { sessionStorage.setItem(SESSION_KEY, JSON.stringify(session)); } catch (x) { }
+            restoring = true;
+            try { applyRole(); navigationHistory = [session.role === 'staff' ? 'view-field' : 'view-home']; afterLogin(); } catch (x) { } finally { restoring = false; }
+            V4.paintBar();
+            showToast('warning', 'เชื่อมต่อคลาวด์ไม่ได้ในขณะนี้', 'เข้าใช้งานด้วยรหัสที่จดจำไว้ ระบบจะซิงก์ใหม่เมื่อเชื่อมต่อได้', { noPopup: true });
         }
     }
     V4.restore = restore;
-
-    /* ---------- หน้าจอสแกนปลดล็อก ---------- */
-    function showGate(rec, reason) {
-        let g = document.getElementById('v4BioGate');
-        if (!g) { g = document.createElement('div'); g.id = 'v4BioGate'; document.body.appendChild(g); }
-        const role = rec.role;
-        g.innerHTML = `<div style="max-width:340px;width:100%">
-            <div class="v4-bio-ring"><i class="fas fa-fingerprint"></i></div>
-            <div style="font-weight:800;font-size:19px">${reason === 'lock' ? 'ล็อกอยู่ — ไม่มีการใช้งานสักครู่' : 'ยืนยันตัวตนเพื่อเข้าใช้งาน'}</div>
-            <div style="opacity:.7;font-size:12px;margin-top:6px">${role === 'admin' ? 'ผู้ดูแลระบบ' : 'เจ้าหน้าที่สนาม'} · สแกนใบหน้าหรือลายนิ้วมือของเครื่องนี้</div>
-            <div id="v4GateErr" style="color:#fda4af;font-size:12px;margin-top:10px;min-height:16px"></div>
-            <button type="button" class="v4-btn primary w-full mt-3" id="v4GateScan"><i class="fas fa-fingerprint"></i> สแกนเพื่อเข้าสู่ระบบ</button>
-            <button type="button" class="v4-btn w-full mt-2" style="background:rgba(255,255,255,.1);color:#e2e8f0" id="v4GatePin"><i class="fas fa-keyboard"></i> ใช้รหัส PIN แทน</button>
-            <button type="button" class="mt-4" style="font-size:11px;opacity:.55;text-decoration:underline" id="v4GateForget">ไม่ใช่เครื่องของฉัน / ลืมเครื่องนี้</button>
-        </div>`;
-        g.classList.add('on');
-        const err = q('#v4GateErr', g);
-        const hide = () => g.classList.remove('on');
-        const scan = async () => {
-            err.textContent = '';
-            try {
-                await bioVerify(rec.bioId);
-                const full = rec.pin ? rec : await A.load();
-                if (!full) throw new Error('vault');
-                try { await loginWith(full.role, full.pin, true); hide(); lastActive = Date.now(); V4.popup({ type: 'ok', title: 'ยืนยันตัวตนสำเร็จ', msg: 'ยินดีต้อนรับกลับ', duration: 1300 }); }
-                catch (e) {
-                    if (e.code === 'AUTH') { A.clear(); hide(); showToast('warning', 'รหัสเดิมใช้ไม่ได้แล้ว', 'กรุณาเข้าสู่ระบบด้วยรหัสใหม่'); openLogin(full.role); }
-                    else err.textContent = e.message || 'เข้าสู่ระบบไม่สำเร็จ';
-                }
-            } catch (e) { err.textContent = (e && e.name === 'NotAllowedError') ? 'ยกเลิกหรือสแกนไม่ผ่าน ลองอีกครั้ง' : 'สแกนไม่สำเร็จ — ใช้รหัส PIN แทนได้'; }
-        };
-        q('#v4GateScan', g).onclick = scan;
-        q('#v4GatePin', g).onclick = () => { hide(); openLogin(role); };
-        q('#v4GateForget', g).onclick = () => { A.clear(); hide(); showToast('info', 'ลืมเครื่องนี้แล้ว', 'ข้อมูลจดจำการเข้าสู่ระบบถูกลบออกจากเครื่อง'); };
-        setTimeout(scan, 350);
-    }
 
     /* ---------- ต่อเข้ากับขั้นตอนเข้าสู่ระบบเดิม ---------- */
     const _afterLogin = window.afterLogin;
@@ -5615,32 +5555,8 @@
     async function postLogin() {
         const chk = document.getElementById('v4Remember');
         sec.remember = chk ? chk.checked : sec.remember; saveSec();
-        if (sec.remember) {
-            try { await A.save(session.role, session.pin); } catch (e) { console.warn('remember failed', e); return; }
-            const rec = A.rec();
-            if (rec && !rec.bioId && !sec.bioDeclined && await bioAvailable()) {
-                setTimeout(async () => {
-                    if (!session) return;
-                    const ok = await confirmDialog({ title: 'เปิดสแกนใบหน้า / ลายนิ้วมือ?', msg: 'ครั้งต่อไปเปิดแอปแล้วสแกนเพื่อเข้าใช้งานได้เลย ไม่ต้องกรอกรหัส (ใช้ระบบสแกนของเครื่องนี้ ข้อมูลสแกนไม่ถูกส่งออกจากเครื่อง)', okText: 'เปิดใช้งาน', variant: 'info' });
-                    if (!ok) { sec.bioDeclined = true; saveSec(); return; }
-                    await enableBio();
-                }, 900);
-            }
-        } else { A.clear(); }
-    }
-    async function enableBio() {
-        try {
-            if (!(await bioAvailable())) { V4.popup({ type: 'warn', title: 'เครื่องนี้ไม่รองรับการสแกน', msg: 'ต้องเปิดผ่านเว็บไซต์ https และเครื่องต้องตั้งค่าล็อกหน้าจอ (ใบหน้า/ลายนิ้วมือ/PIN) ไว้', block: true }); return false; }
-            if (!A.rec()) { await A.save(session.role, session.pin); }
-            const id = await bioRegister(session.role);
-            const r = A.rec(); r.bioId = id; r.role = session.role; V4.lsS(REM_KEY, r);
-            sec.bio = true; sec.bioDeclined = false; if (!sec.lockMin) sec.lockMin = 15; saveSec();
-            V4.popup({ type: 'ok', title: 'เปิดสแกนสำเร็จ', msg: 'ล็อกอัตโนมัติเมื่อไม่ใช้งาน ' + sec.lockMin + ' นาที (ตั้งค่าได้)', confetti: true });
-            return true;
-        } catch (e) {
-            V4.popup({ type: 'warn', title: 'เปิดสแกนไม่สำเร็จ', msg: (e && e.name === 'NotAllowedError') ? 'ยกเลิกหรือสแกนไม่ผ่าน' : 'ลองใหม่อีกครั้ง หรือใช้รหัส PIN ตามปกติ', block: true });
-            return false;
-        }
+        if (sec.remember) { try { await A.save(session.role, session.pin); } catch (e) { console.warn('remember failed', e); } }
+        else { A.clear(); }
     }
     const _logout = window.logoutNow;
     window.logoutNow = async function () {
@@ -5657,77 +5573,41 @@
         if (session && session.pin !== before && A.rec()) { try { await A.save(session.role, session.pin); } catch (e) { } }
     };
 
-    /* ---------- ช่องจดจำ + ปุ่มสแกนในหน้าต่างล็อกอิน ---------- */
+    /* ---------- ช่อง "จดจำ" ในหน้าต่างล็อกอิน ---------- */
     function decorateLogin() {
         const err = document.getElementById('loginError'); if (!err || document.getElementById('v4Remember')) return;
         const w = document.createElement('div');
-        w.innerHTML = `<label class="v4-remember"><input type="checkbox" id="v4Remember" class="hidden" ${sec.remember ? 'checked' : ''}><span class="v4-switch"></span> จดจำการเข้าสู่ระบบในเครื่องนี้</label>
-            <button type="button" id="v4LoginBio" class="v4-btn ghost w-full mt-2 hidden"><i class="fas fa-fingerprint"></i> สแกนใบหน้า / ลายนิ้วมือ</button>`;
+        w.innerHTML = `<label class="v4-remember"><input type="checkbox" id="v4Remember" class="hidden" ${sec.remember ? 'checked' : ''}><span class="v4-switch"></span> จดจำการเข้าสู่ระบบในเครื่องนี้ (เข้าอัตโนมัติครั้งถัดไป)</label>`;
         err.parentNode.insertBefore(w, err);
-        q('#v4LoginBio', w).onclick = async () => {
-            const rec = await A.load(); if (!rec || !rec.bioId) return;
-            try { await bioVerify(rec.bioId); closeLogin(); await loginWith(rec.role, rec.pin); } catch (e) { loginError('สแกนไม่สำเร็จ ลองอีกครั้งหรือกรอกรหัส'); }
-        };
     }
     const _openLogin = window.openLogin;
     window.openLogin = function (role) {
         _openLogin(role); decorateLogin();
         const chk = document.getElementById('v4Remember'); if (chk) chk.checked = sec.remember;
-        const b = document.getElementById('v4LoginBio'); const rec = A.rec();
-        if (b) b.classList.toggle('hidden', !(rec && rec.bioId && sec.bio && rec.role === role));
     };
 
     /* ---------- ศูนย์ความปลอดภัย ---------- */
     V4.openSecurity = async function () {
-        const rec = A.rec(), avail = await bioAvailable();
+        const rec = A.rec();
         const role = session ? session.role : null;
         const sh = V4.sheet({
-            title: 'ความปลอดภัยการเข้าสู่ระบบ', sub: role ? (role === 'admin' ? 'ผู้ดูแลระบบ' : 'เจ้าหน้าที่สนาม') : 'ยังไม่ได้เข้าสู่ระบบ', icon: 'fa-shield-halved', size: 'w-md', foot: false,
+            title: 'จดจำการเข้าสู่ระบบ', sub: role ? (role === 'admin' ? 'ผู้ดูแลระบบ' : 'เจ้าหน้าที่สนาม') : 'ยังไม่ได้เข้าสู่ระบบ', icon: 'fa-shield-halved', size: 'w-md', foot: false,
             body: `<div class="space-y-3">
-                <label class="v4-card flex items-center gap-3 cursor-pointer"><div class="flex-1"><div class="font-extrabold text-[12.5px]">จดจำการเข้าสู่ระบบ</div><div class="text-[11px] text-slate-500 dark:text-slate-400">เปิดแอปครั้งถัดไปเข้าใช้งานอัตโนมัติ ไม่ต้องกรอกรหัส</div></div>
+                <label class="v4-card flex items-center gap-3 cursor-pointer"><div class="flex-1"><div class="font-extrabold text-[12.5px]">จดจำการเข้าสู่ระบบในเครื่องนี้</div><div class="text-[11px] text-slate-500 dark:text-slate-400">เปิดแอปครั้งถัดไปเข้าใช้งานอัตโนมัติ ไม่ต้องกรอกรหัส</div></div>
                     <input type="checkbox" id="secRem" class="hidden" ${rec ? 'checked' : ''}><span class="v4-switch"></span></label>
-                <label class="v4-card flex items-center gap-3 ${avail ? 'cursor-pointer' : 'opacity-60'}"><div class="flex-1"><div class="font-extrabold text-[12.5px]">สแกนใบหน้า / ลายนิ้วมือ</div><div class="text-[11px] text-slate-500 dark:text-slate-400">${avail ? 'ใช้ระบบสแกนของเครื่องนี้ยืนยันก่อนเข้าใช้งาน' : 'เครื่อง/เบราว์เซอร์นี้ไม่รองรับ หรือเปิดผ่าน http/ไฟล์ในเครื่อง'}</div></div>
-                    <input type="checkbox" id="secBio" class="hidden" ${rec && rec.bioId && sec.bio ? 'checked' : ''} ${avail ? '' : 'disabled'}><span class="v4-switch"></span></label>
-                <div class="v4-card"><div class="font-extrabold text-[12.5px] mb-1.5">ล็อกอัตโนมัติเมื่อไม่ใช้งาน</div>
-                    <select id="secLock" class="v4-field"><option value="0">ปิด</option><option value="5">5 นาที</option><option value="15">15 นาที</option><option value="30">30 นาที</option><option value="60">60 นาที</option></select>
-                    <div class="text-[10.5px] text-slate-500 dark:text-slate-400 mt-1.5">เมื่อล็อก ต้องสแกนหรือกรอกรหัสอีกครั้ง (รายการที่รอส่งไม่หาย)</div></div>
-                <div class="text-[10.5px] leading-relaxed text-slate-500 dark:text-slate-400 p-3 rounded-xl bg-amber-50 dark:bg-amber-950/20 border border-amber-200/60 dark:border-amber-900/40"><i class="fas fa-circle-info text-amber-500 mr-1"></i> รหัส PIN ที่จดจำถูกเข้ารหัสและเก็บเฉพาะในเครื่องนี้ ไม่ควรเปิดใช้บนเครื่องที่ใช้ร่วมกับผู้อื่น การสแกนเป็นการยืนยันตัวตนบนเครื่อง ไม่ได้เปลี่ยนรหัสที่ใช้กับเซิร์ฟเวอร์</div>
+                <div class="text-[10.5px] leading-relaxed text-slate-500 dark:text-slate-400 p-3 rounded-xl bg-amber-50 dark:bg-amber-950/20 border border-amber-200/60 dark:border-amber-900/40"><i class="fas fa-circle-info text-amber-500 mr-1"></i> รหัส PIN ที่จดจำถูกเก็บเฉพาะในเครื่องนี้ ไม่ควรเปิดใช้บนเครื่องที่ใช้ร่วมกับผู้อื่น หากกด "ออกจากระบบ" หรือเปลี่ยนรหัส ระบบจะลบข้อมูลที่จดจำไว้ให้</div>
                 <div class="flex gap-2 flex-wrap"><button type="button" class="v4-btn danger" id="secForget"><i class="fas fa-eraser"></i> ลืมเครื่องนี้</button>
                     <button type="button" class="v4-btn ghost ml-auto" data-x2>ปิด</button></div>
             </div>`
         });
-        sh.q('#secLock').value = String(sec.lockMin || 0);
         sh.q('[data-x2]').onclick = () => sh.close();
         sh.q('#secRem').onchange = async e => {
             if (!session) { e.target.checked = false; return V4.popup({ type: 'info', title: 'เข้าสู่ระบบก่อน', msg: 'ต้องเข้าสู่ระบบด้วยรหัสก่อนจึงจะจดจำได้', block: true }); }
             if (e.target.checked) { await A.save(session.role, session.pin); sec.remember = true; saveSec(); }
-            else { A.clear(); sec.remember = false; saveSec(); sh.q('#secBio').checked = false; }
+            else { A.clear(); sec.remember = false; saveSec(); }
         };
-        sh.q('#secBio').onchange = async e => {
-            if (!session) { e.target.checked = false; return V4.popup({ type: 'info', title: 'เข้าสู่ระบบก่อน', msg: 'ต้องเข้าสู่ระบบด้วยรหัสก่อน', block: true }); }
-            if (e.target.checked) { const ok = await enableBio(); e.target.checked = !!ok; if (ok) sh.q('#secRem').checked = true; }
-            else { const r = A.rec(); if (r) { r.bioId = null; V4.lsS(REM_KEY, r); } sec.bio = false; saveSec(); }
-        };
-        sh.q('#secLock').onchange = e => { sec.lockMin = Number(e.target.value) || 0; saveSec(); showToast('info', 'บันทึกการตั้งค่าแล้ว', sec.lockMin ? `ล็อกอัตโนมัติหลังไม่ใช้งาน ${sec.lockMin} นาที` : 'ปิดการล็อกอัตโนมัติ', { noPopup: true }); };
-        sh.q('#secForget').onclick = () => { A.clear(); sec.remember = false; saveSec(); sh.q('#secRem').checked = false; sh.q('#secBio').checked = false; V4.popup({ type: 'ok', title: 'ลืมเครื่องนี้แล้ว', msg: 'ลบข้อมูลจดจำและการสแกนออกจากเครื่อง' }); };
+        sh.q('#secForget').onclick = () => { A.clear(); sec.remember = false; saveSec(); sh.q('#secRem').checked = false; V4.popup({ type: 'ok', title: 'ลืมเครื่องนี้แล้ว', msg: 'ลบข้อมูลที่จดจำไว้ออกจากเครื่องแล้ว' }); };
     };
-
-    /* ---------- ล็อกอัตโนมัติเมื่อไม่ใช้งาน ---------- */
-    ['pointerdown', 'keydown', 'touchstart', 'scroll'].forEach(ev => document.addEventListener(ev, () => { lastActive = Date.now(); }, { passive: true, capture: true }));
-    setInterval(() => {
-        if (!session || !sec.lockMin) return;
-        if (Date.now() - lastActive < sec.lockMin * 60000) return;
-        lockNow();
-    }, 15000);
-    async function lockNow() {
-        const role = session && session.role; if (!role) return;
-        session = null; try { sessionStorage.removeItem(SESSION_KEY); } catch (e) { }
-        applyRole(); navigationHistory = ['view-home']; navigateTo('view-home'); V4.paintBar();
-        const rec = await A.load();
-        if (rec && rec.bioId && sec.bio && await bioAvailable()) showGate(rec, 'lock');
-        else { showToast('info', 'ล็อกอัตโนมัติ', 'ไม่มีการใช้งานสักครู่ กรุณาเข้าสู่ระบบอีกครั้ง'); openLogin(role); }
-    }
-    V4.lockNow = lockNow;
 })();
 
 (function () {
@@ -6338,11 +6218,65 @@
         };
         paint();
     };
+    /* ---------- ลงข้อมูลอัตโนมัติ (ไฟล์ Excel + สรุปต่อจากรายการสนามยิงปืน) เมื่อผู้ดูแลเข้าระบบ ---------- */
+    const SEED_KEY = 'execpro_v4_seeded';
+    const clone = x => JSON.parse(JSON.stringify(x));
+    V4._seedAsked = {};
+    async function autoSeed() {
+        if (V4._seeding || !session || session.role !== 'admin' || typeof cloudLoaded === 'undefined' || !cloudLoaded) return;
+        V4._seeding = true;
+        try {
+            const seeded = V4.lsJ(SEED_KEY, {}) || {}, lines = []; let changed = false, ask = null;
+            const sHas = appData.shootingRecords.some(r => r.src === 'excel69'), gHas = appData.generalRecords.some(r => r.src === 'excelcg');
+            if (sHas) seeded.shoot = 1; if (gHas) seeded.central = 1;
+            // 1) สรุปบัญชีสนามยิงปืน 2569 จากไฟล์ Excel
+            if (!sHas && !seeded.shoot) {
+                const conflict = appData.shootingRecords.some(r => String(r.year || '2569') === '2569' && r.src !== 'ledger');
+                if (conflict) { if (!V4._seedAsked.shoot) ask = 'shoot'; }
+                else { appData.shootingRecords = appData.shootingRecords.concat(clone(XL_SHOOT)); seeded.shoot = 1; changed = true; lines.push(`สรุปสนามยิงปืน 2569 จำนวน ${XL_SHOOT.length} รายการ`); }
+            }
+            // 2) บัญชีกองกลาง (ปัจจุบัน) จากไฟล์ Excel
+            if (!gHas && !seeded.central) {
+                if (appData.generalRecords.length) { if (!ask && !V4._seedAsked.central) ask = 'central'; }
+                else { appData.generalRecords = clone(XL_CENTRAL); seeded.central = 1; changed = true; lines.push(`บัญชีกองกลาง จำนวน ${XL_CENTRAL.length} รายการ`); }
+            }
+            // 3) สรุปต่อจากรายการสนามยิงปืน (เดือนที่แก้ไขเองแล้วจะไม่ถูกเขียนทับ)
+            if (Array.isArray(appData.rangeLedger) && appData.shootingRecords.some(r => r.src === 'excel69')) {
+                const months = deriveLedger(V4.lsJ(LD_CUT_KEY, BASELINE_END)), todo = months.filter(m => ldStatus(m).actionable);
+                const sig = todo.map(m => m.key + ':' + m.recs.map(r => r.ldSnap).join(',')).join(';');
+                if (todo.length && sig !== V4._ldSig) {
+                    todo.forEach(m => {
+                        const st = ldStatus(m), editedIds = new Set(st.exist.filter(e => e.ldSnap && e.ldSnap !== ldSnap(e)).map(e => String(e.id)));
+                        const dropIds = new Set(st.exist.filter(e => !editedIds.has(String(e.id))).map(e => String(e.id)));
+                        appData.shootingRecords = appData.shootingRecords.filter(r => !dropIds.has(String(r.id)));
+                        m.recs.forEach(r => { if (!editedIds.has(String(r.id))) appData.shootingRecords.push(clone(r)); });
+                    });
+                    V4._ldSig = sig; changed = true;
+                    lines.push(`สรุปต่อจากรายการสนามยิงปืน ${todo.map(m => thFullMonths[m.mi] + ' ' + m.y).join(', ')}`);
+                }
+            }
+            if (changed) {
+                let ok = false;
+                try { ok = await saveToCloud('กำลังลงข้อมูลและซิงก์ขึ้นคลาวด์...'); } catch (e) { ok = false; }
+                if (ok) {
+                    V4.lsS(SEED_KEY, seeded);
+                    await afterDataChange();
+                    V4.popup({ type: 'ok', title: 'ลงข้อมูลให้เรียบร้อยแล้ว', msg: lines.join(' · ') + ' · ยอดคงเหลือสนามยิงปืน ' + int0(replayShoot(appData.shootingRecords).bal), confetti: true, duration: 4200 });
+                }
+            }
+            if (ask) { V4._seedAsked[ask] = 1; previewImport(ask); }
+        } catch (e) { console.warn('autoSeed', e); }
+        finally { V4._seeding = false; }
+    }
+    V4.autoSeed = autoSeed;
     V4.afterSync = function (force) {
         const n = (session && session.role === 'admin') ? V4.ledgerPending() : 0;
         const b = document.getElementById('v4LdBadge'); if (b) { b.textContent = n; b.classList.toggle('on', n > 0); }
-        if (n > 0 && (force === true || !V4._ldToast)) { V4._ldToast = true; showToast('info', `มีรายการสนามยิงปืนใหม่ ${n} เดือน`, 'กด "ดึงสรุปจากรายการสนามยิงปืน" เพื่อสรุปต่อรายเดือน', { noPopup: true, duration: 6000, action: { label: 'ดูตัวอย่าง', fn: () => V4.openLedgerSync() } }); }
+        if (n > 0 && (force === true || !V4._ldToast)) { V4._ldToast = true; showToast('info', `มีรายการสนามยิงปืนใหม่ ${n} เดือน`, 'เดือนที่แก้ไขเองแล้วจะไม่ถูกเขียนทับ กด "ดึงสรุปจากรายการสนามยิงปืน" เพื่อเลือกดึงเอง', { noPopup: true, duration: 6000, action: { label: 'ดูตัวอย่าง', fn: () => V4.openLedgerSync() } }); }
+        if (session && session.role === 'admin' && !V4._seeding) setTimeout(autoSeed, 500);
     };
+    const _alSeed = window.afterLogin;
+    window.afterLogin = function () { const r = _alSeed.apply(this, arguments); setTimeout(() => V4.afterSync && V4.afterSync(), 1500); return r; };
 
     /* ---------- ตรวจสุขภาพข้อมูล ---------- */
     V4.openHealth = function () {
@@ -6394,7 +6328,7 @@
             adm.appendChild(htmlToEl(`<div id="v4AdminQuick" class="v4-quick max-w-4xl mx-auto pt-1">
                 <button type="button" onclick="V4.openImport()"><i class="fas fa-file-import text-emerald-500"></i>นำเข้าข้อมูลจาก Excel</button>
                 <button type="button" onclick="V4.openExport('all')"><i class="fas fa-file-export text-indigo-500"></i>ส่งออกรายงานสรุปผล</button>
-                <button type="button" onclick="V4.openSecurity()"><i class="fas fa-fingerprint text-violet-500"></i>ความปลอดภัย / สแกนนิ้ว</button>
+                <button type="button" onclick="V4.openSecurity()"><i class="fas fa-user-lock text-violet-500"></i>จดจำการเข้าสู่ระบบ</button>
                 <button type="button" onclick="V4.openHealth()"><i class="fas fa-stethoscope text-rose-500"></i>ตรวจสุขภาพข้อมูล</button>
             </div>`));
         }
