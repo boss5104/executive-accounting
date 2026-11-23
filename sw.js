@@ -1,7 +1,7 @@
 /* Executive Pro — Service Worker
    - ไม่แคชข้อมูลบัญชี (Google Apps Script) เด็ดขาด
    - หน้าแอปใช้ "เครือข่ายก่อน" เสมอ เพื่อให้ได้เวอร์ชันล่าสุด แคชไว้ใช้เฉพาะตอนออฟไลน์ */
-const CACHE = 'execpro-shell-v5';
+const CACHE = 'execpro-shell-v5.1';
 const SHELL = ['./', './index.html', './manifest.webmanifest', './icons/icon-192.png', './icons/icon-512.png', './icons/apple-touch-icon.png'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL)).catch(() => null)); self.skipWaiting(); });
 self.addEventListener('activate', e => {

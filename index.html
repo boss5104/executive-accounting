@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>ระบบบริหารจัดการบัญชีกองกลางและสนามยิงปืน | Executive Pro</title>
-    <meta name="app-version" content="5.0.0">
+    <meta name="app-version" content="5.1.0">
     <meta name="theme-color" content="#0b1222">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -933,7 +933,7 @@
             border-right: 1px solid rgba(255,255,255,.07) !important; border-bottom: 1px solid rgba(255,255,255,.08) !important; letter-spacing: .01em; }
         table.xt thead th:last-child { border-right: 0 !important; }
         table.xt thead tr.r2 th { background: var(--xt-h2); color: #d5ddef; font-size: 11px; font-weight: 600; padding: 7px 11px; }
-        table.xt thead th.tl { text-align: left; padding-left: 14px; }
+        table.xt thead th.tl { text-align: center; }
         table.xt thead th .th-sub { font-weight: 500; opacity: .75; font-size: 10px; }
         table.xt thead th.g-in { background: #0d4a3b; color: #b7f5dc; } table.xt thead th.s-in { background: #11604c !important; color: #dcfcef !important; }
         table.xt thead th.g-out { background: #5b1a2c; color: #fecdd3; } table.xt thead th.s-out { background: #6f2437 !important; color: #ffe4e6 !important; }
@@ -1084,7 +1084,7 @@
         .v5-bal-sec { margin: 14px 0 6px; font-size: 12px; font-weight: 800; color: #1b2a4a; } .dark .v5-bal-sec { color: #e6cd8f; }
         .v5-bal-tbl { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 12px; border: 1px solid #e2e8f0; border-radius: 14px; overflow: hidden; }
         .dark .v5-bal-tbl { border-color: #1e293b; }
-        .v5-bal-tbl th { background: #14203a; color: #eef2fa; padding: 8px 10px; text-align: right; font-weight: 700; } .v5-bal-tbl th:first-child { text-align: left; }
+        .v5-bal-tbl th { background: #14203a; color: #eef2fa; padding: 8px 10px; text-align: center; font-weight: 700; }
         .v5-bal-tbl td { padding: 8px 10px; text-align: right; border-top: 1px solid #eef1f6; font-variant-numeric: tabular-nums; font-weight: 600; } .v5-bal-tbl td:first-child { text-align: left; color: #475569; }
         .dark .v5-bal-tbl td { border-top-color: #1e293b; } .dark .v5-bal-tbl td:first-child { color: #cbd5e1; }
         .v5-bal-tbl td.in { color: #047857; } .v5-bal-tbl td.out { color: #be123c; }
@@ -1261,31 +1261,28 @@
         }
         /* ---------- เจ้าหน้าที่สนาม: แถวลงจำนวน ---------- */
         .qrows { display: grid; gap: 8px; }
-        .qrow { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(76px, auto); align-items: center; gap: 10px; padding: 10px 12px; border-radius: 16px; background: #fff; border: 1.5px solid #e2e8f0; position: relative; transition: border-color .18s, box-shadow .18s; }
+        .qrow { display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: 'l a' 's s'; align-items: center; column-gap: 10px; row-gap: 10px; padding: 12px 14px; border-radius: 16px; background: #fff; border: 1.5px solid #e2e8f0; position: relative; transition: border-color .18s, box-shadow .18s; }
         .qrow::before { content: ''; position: absolute; left: -1.5px; top: 12px; bottom: 12px; width: 4px; border-radius: 0 4px 4px 0; }
         .qrow.tr::before { background: #2563eb; } .qrow.cash::before { background: #d97706; }
         .qrow.has.tr { border-color: #93c5fd; box-shadow: 0 8px 20px -14px #2563eb; } .qrow.has.cash { border-color: #fcd34d; box-shadow: 0 8px 20px -14px #d97706; }
         .dark .qrow { background: #0b1222; border-color: #1e293b; }
-        .qrow-l { display: flex; align-items: center; gap: 9px; min-width: 0; }
+        .qrow-l { grid-area: l; display: flex; align-items: center; gap: 10px; min-width: 0; } .qrow-l > span:last-child { min-width: 0; }
         .qrow-l b { display: block; font-size: 14px; font-weight: 800; color: #0f172a; line-height: 1.2; } .dark .qrow-l b { color: #f1f5f9; }
         .qrow-l small { display: block; font-size: 10.5px; color: #94a3b8; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .qrow-ic { width: 34px; height: 34px; border-radius: 11px; display: flex; align-items: center; justify-content: center; flex: none; font-size: 14px; }
         .qrow.tr .qrow-ic { background: #dbeafe; color: #1d4ed8; } .qrow.cash .qrow-ic { background: #fef3c7; color: #b45309; }
-        .qrow-s { display: flex; align-items: center; gap: 6px; }
-        .qrow .qty-btn { width: 42px; height: 42px; border-radius: 13px; font-size: 20px; font-weight: 700; }
+        .qrow-s { grid-area: s; display: flex; align-items: center; gap: 8px; min-width: 0; }
+        .qrow .qty-btn { width: 56px; height: 46px; flex: none; border-radius: 13px; font-size: 20px; font-weight: 700; }
         .qrow .qty-btn.plus { background: #0f172a; color: #fff; border-color: #0f172a; }
         .qrow.cash .qty-btn.plus { background: #b45309; border-color: #b45309; } .qrow.tr .qty-btn.plus { background: #1d4ed8; border-color: #1d4ed8; }
-        .qrow .qty-num { width: 58px; height: 42px; font-size: 20px; border-radius: 13px; }
-        .qrow-a { text-align: right; min-width: 0; }
+        .qrow .qty-num { flex: 1 1 auto; width: auto; min-width: 0; height: 46px; font-size: 20px; border-radius: 13px; }
+        .qrow-a { grid-area: a; text-align: right; min-width: 0; }
         .qrow-a b { display: block; font-size: 15px; font-weight: 900; color: #0f172a; font-variant-numeric: tabular-nums; white-space: nowrap; }
         .qrow.has.tr .qrow-a b { color: #1d4ed8; } .qrow.has.cash .qrow-a b { color: #b45309; } .dark .qrow-a b { color: #e2e8f0; }
         .qrow-a small { font-size: 10px; color: #94a3b8; white-space: nowrap; }
-        @media (max-width: 400px) {
-            .qrow { grid-template-columns: minmax(0, 1fr) auto; grid-template-rows: auto auto; row-gap: 6px; }
-            .qrow-a { grid-column: 1 / -1; display: flex; justify-content: space-between; align-items: baseline; border-top: 1px dashed #e2e8f0; padding-top: 6px; }
-            .qrow-a small { order: -1; }
-            .qrow-l small { display: none; }
-            #oeRows .qrow-l small { display: block; white-space: normal; }
+        #oeRows .qrow-l small { white-space: normal; }
+        @media (min-width: 900px) {
+            .qrow { grid-template-columns: minmax(150px, 1fr) minmax(200px, 260px) minmax(90px, auto); grid-template-areas: 'l s a'; }
         }
         .qrow .qty-btn i { font-size: 15px; }
         /* ---------- ตรวจสอบ / แก้ไขยอดที่ส่งแล้ว ---------- */
@@ -1489,7 +1486,7 @@
                             <button type="button" class="npad-key fn" data-lk="back" aria-label="ลบ"><i class="fas fa-delete-left text-base"></i></button>
                         </div>
                         <button type="button" id="loginGo" class="lx-go" data-lk="ok"><i class="fas fa-right-to-bracket"></i> เข้าสู่ระบบ</button>
-                        <p class="lx-note"><i class="fas fa-lock mr-1"></i>ต้องกรอกรหัสทุกครั้งที่เปิดแอปใหม่ · พิมพ์ตัวเลขจากแป้นพิมพ์แล้วกด <kbd>Enter</kbd> ได้</p>
+                        <p class="lx-note"><i class="fas fa-lock mr-1"></i>ต้องกรอกรหัสทุกครั้งที่เปิดแอปใหม่ · กดรหัสครบแล้วเข้าสู่ระบบอัตโนมัติ · พิมพ์จากแป้นพิมพ์ได้</p>
                     </div>
                 </section>
             </div>
@@ -2203,7 +2200,7 @@
                     </div>
                     <div class="overflow-x-auto">
                     <table class="w-full text-xs">
-                        <thead><tr class="text-slate-500 dark:text-slate-400 text-[10.5px]"><th class="text-left py-1.5"></th><th class="text-right py-1.5 px-2">ยอดรวมตามบัญชี<br><span class="font-normal">(ระบบคำนวณ)</span></th><th class="text-right py-1.5 px-2">ยอดรวมจริง<br><span class="font-normal">(กรอกเอง)</span></th><th class="text-right py-1.5 px-2">ผลต่าง</th></tr></thead>
+                        <thead><tr class="text-slate-500 dark:text-slate-400 text-[10.5px]"><th class="text-center py-1.5"></th><th class="text-center py-1.5 px-2">ยอดรวมตามบัญชี<br><span class="font-normal">(ระบบคำนวณ)</span></th><th class="text-center py-1.5 px-2">ยอดรวมจริง<br><span class="font-normal">(กรอกเอง)</span></th><th class="text-center py-1.5 px-2">ผลต่าง</th></tr></thead>
                         <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
                             <tr><td class="py-2 font-bold">เงินในบัญชี</td><td id="calcAcct" class="text-right px-2 font-extrabold tabular-nums">0</td><td class="text-right px-2"><button type="button" id="actAcct" onclick="editActual('acct')" class="actual-btn">-</button></td><td id="diffAcct" class="text-right px-2 font-bold tabular-nums">-</td></tr>
                             <tr><td class="py-2 font-bold">เงินสดที่สนาม</td><td id="calcCash" class="text-right px-2 font-extrabold tabular-nums">0</td><td class="text-right px-2"><button type="button" id="actCash" onclick="editActual('cash')" class="actual-btn">-</button></td><td id="diffCash" class="text-right px-2 font-bold tabular-nums">-</td></tr>
@@ -4932,14 +4929,18 @@
         if (chip) chip.innerHTML = role === 'admin' ? '<i class="fas fa-user-tie text-amber-400"></i> ผู้ดูแลระบบ' : role === 'staff' ? '<i class="fas fa-user-shield text-emerald-400"></i> เจ้าหน้าที่สนาม' : '';
     }
 
-    let loginRole = 'staff', loginBuf = '', loginBusy = false;
+    let loginRole = 'staff', loginBuf = '', loginBusy = false, loginAutoT = null;
+    // v5.1: จำ "จำนวนหลัก" ของรหัสแต่ละประเภทผู้ใช้ (ไม่เก็บตัวรหัส) เพื่อเข้าสู่ระบบอัตโนมัติเมื่อกดครบ
+    const PINLEN_KEY = 'execpro_pinlen_v1';
+    function pinLenGet(role) { try { const m = JSON.parse(localStorage.getItem(PINLEN_KEY) || '{}'); const n = +m[role]; return n >= 4 && n <= 8 ? n : 0; } catch (e) { return 0; } }
+    function pinLenSet(role, n) { try { const m = JSON.parse(localStorage.getItem(PINLEN_KEY) || '{}'); m[role] = n; localStorage.setItem(PINLEN_KEY, JSON.stringify(m)); } catch (e) { } }
     const LOGIN_TEXT = {
         staff: { title: 'เข้าสู่ระบบ — เจ้าหน้าที่สนาม', sub: 'กรอกรหัสเจ้าหน้าที่สนาม (ตัวเลข 4–8 หลัก)', icon: 'fa-user-shield' },
         admin: { title: 'เข้าสู่ระบบ — ผู้ดูแลระบบ', sub: 'กรอกรหัสผู้ดูแลระบบ (ตัวเลข 4–8 หลัก)', icon: 'fa-user-tie' }
     };
     // เลือกประเภทผู้ใช้บนการ์ดเข้าสู่ระบบ (คงชื่อฟังก์ชันเดิมไว้)
     function openLogin(role) {
-        loginRole = role === 'admin' ? 'admin' : 'staff'; loginBuf = ''; loginBusy = false;
+        loginRole = role === 'admin' ? 'admin' : 'staff'; loginBuf = ''; loginBusy = false; clearTimeout(loginAutoT); loginAutoT = null;
         const t = LOGIN_TEXT[loginRole];
         $('loginTitle').textContent = t.title; $('loginSub').textContent = t.sub;
         $('loginIcon').className = 'lx-who-ic ' + loginRole;
@@ -4957,7 +4958,7 @@
         return !(ae && /^(INPUT|TEXTAREA|SELECT)$/.test(ae.tagName));
     }
     function loginRender() {
-        const n = Math.max(4, loginBuf.length);
+        const n = Math.max(pinLenGet(loginRole) || 4, loginBuf.length);
         $('loginDots').innerHTML = Array.from({ length: n }, (_, i) => `<span class="pin-dot${i < loginBuf.length ? ' on' : ''}"></span>`).join('');
         $('loginDots').setAttribute('aria-label', `กรอกแล้ว ${loginBuf.length} หลัก`);
     }
@@ -4968,20 +4969,29 @@
     }
     function loginPress(k) {
         if (loginBusy) return;
+        clearTimeout(loginAutoT); loginAutoT = null;
         $('loginError').classList.add('hidden');
         if (/^\d$/.test(k)) { if (loginBuf.length < 8) loginBuf += k; }
         else if (k === 'back') loginBuf = loginBuf.slice(0, -1);
         else if (k === 'clear') loginBuf = '';
         else if (k === 'ok') return submitLogin();
         loginRender();
+        // เข้าสู่ระบบอัตโนมัติเมื่อกดรหัสครบ: รู้จำนวนหลักแล้ว → ส่งทันที / ยังไม่รู้ → ครบ 8 หลัก หรือหยุดกดครู่หนึ่ง (≥ 4 หลัก)
+        if (!/^\d$/.test(k)) return;
+        const L = pinLenGet(loginRole), n = loginBuf.length;
+        if ((L && n === L) || n === 8) loginAutoT = setTimeout(submitLogin, 140);
+        else if (!L && n >= 4) loginAutoT = setTimeout(submitLogin, 1200);
     }
     async function submitLogin() {
+        clearTimeout(loginAutoT); loginAutoT = null;
+        if (loginBusy) return;
         if (loginBuf.length < 4) { loginError('กรุณากรอกรหัสอย่างน้อย 4 หลัก'); return; }
         loginBusy = true; $('loginBusy').classList.remove('hidden'); $('loginGo').disabled = true;
         try {
             await ensureBackend();
             await api('login', {}, { role: loginRole, pin: loginBuf });
             session = { role: loginRole, pin: loginBuf };
+            pinLenSet(loginRole, loginBuf.length);
             try { sessionStorage.setItem(SESSION_KEY, JSON.stringify(session)); } catch (e) { }
             closeLogin(); applyRole();
             showToast('success', 'เข้าสู่ระบบสำเร็จ', session.role === 'admin' ? 'ยินดีต้อนรับผู้ดูแลระบบ' : 'พร้อมบันทึกรายการขายหน้าสนาม');
@@ -5018,6 +5028,7 @@
         const target = $('psTarget').value; $('psBtn').disabled = true;
         try {
             await api('changePin', { target, newPin: a });
+            pinLenSet(target, a.length);
             if (target === 'admin') { session.pin = a; try { sessionStorage.setItem(SESSION_KEY, JSON.stringify(session)); } catch (e) { } }
             closePinSettings(); showToast('success', 'เปลี่ยนรหัสสำเร็จ', target === 'admin' ? 'รหัสผู้ดูแลระบบถูกเปลี่ยนแล้ว' : 'รหัสเจ้าหน้าที่สนามถูกเปลี่ยนแล้ว');
         } catch (e) { bad(e.message); } finally { $('psBtn').disabled = false; }
@@ -5819,7 +5830,7 @@
     /* ==========================================================================
        Executive Pro v4 — ชั้นเสริมใหม่ (ส่วน A: แกนหลัก / ป๊อปอัพ / แถบสถานะ / ตรวจอัปเดต)
        ========================================================================== */
-    const V4 = window.V4 = { version: "5.0.0", sec: null };
+    const V4 = window.V4 = { version: "5.1.0", sec: null };
     const q = (sel, root) => (root || document).querySelector(sel);
     const esc = v => escapeHtml(v);
     const money = n => (Number(n) || 0).toLocaleString('th-TH', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -6023,6 +6034,9 @@
 
     /* ----------------------------- แจ้งเตือนอัปเดต + บังคับรีเฟรช ----------------------------- */
     const WHATS_NEW = [
+        ['fa-right-to-bracket', 'เข้าสู่ระบบอัตโนมัติ', 'กดรหัสครบแล้วเข้าสู่ระบบทันที ไม่ต้องกดปุ่มเข้าสู่ระบบ'],
+        ['fa-hand-pointer', 'หน้าลงยอดขายอ่านง่ายขึ้น', 'ข้อความ โอน / เงินสด ไม่ถูกปุ่มทับอีกต่อไป ปุ่ม − / + ใหญ่ กดง่ายบนมือถือ'],
+        ['fa-table', 'หัวตารางสรุปจัดกึ่งกลาง', 'หัวคอลัมน์ในตารางสรุปจัดวางตรงกลางทั้งหมด อ่านง่ายเป็นระเบียบ'],
         ['fa-wallet', 'ยอดคงเหลือแยก บัญชี / เงินสด', 'แตะการ์ดยอดคงเหลือ (กองกลาง และสรุปสนามยิงปืน) เพื่อดูยอดเงินในบัญชีและเงินสดแบบชัดเจน'],
         ['fa-file-import', 'นำเข้าข้อมูลจากไฟล์ Excel / CSV', 'ลากวางหรือเลือกไฟล์ เลือกส่วนที่จะเพิ่ม ระบบจับคู่คอลัมน์และคำนวณยอดให้ พร้อมตัวอย่างก่อนบันทึก'],
         ['fa-file-export', 'ส่งออกเร็วขึ้น ใช้ได้จริงทุกอุปกรณ์', 'ภาพ PNG / PDF จริง / Excel / CSV และ "สรุปผลทุกส่วน" ในไฟล์เดียว แชร์เข้า LINE ได้ทันที'],
