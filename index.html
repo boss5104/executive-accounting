@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>ระบบบริหารจัดการบัญชีกองกลางและสนามยิงปืน | Executive Pro</title>
-    <meta name="app-version" content="5.1.0">
+    <meta name="app-version" content="5.2.0">
     <meta name="theme-color" content="#0b1222">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -1092,6 +1092,30 @@
         .v5-bal-tbl td:first-child, .v5-bal-tbl th:first-child { white-space: nowrap; }
         @media (max-width: 520px) { .v5-bal-tbl { font-size: 11px; } .v5-bal-tbl th, .v5-bal-tbl td { padding: 7px 6px; } .v5-bal-grid { grid-template-columns: 1fr 1fr; } .v5-bal-card { flex-direction: column; align-items: flex-start; gap: 8px; padding: 12px; } .v5-bal-card .v { font-size: 17px; } }
         .v5-bal-note { margin-top: 6px; font-size: 10.5px; color: #94a3b8; }
+        .v5-rc-tbl td:first-child { white-space: normal; min-width: 104px; } .v5-rc-tbl td small { display: block; font-size: 10px; font-weight: 500; color: #94a3b8; line-height: 1.35; margin-top: 1px; }
+        .v5-rc-tbl td.na { color: #cbd5e1; } .v5-rc-tbl tr.open td { background: #f8fafc; } .dark .v5-rc-tbl tr.open td { background: #111a2e; }
+        .v5-rc-status { margin-top: 10px; font-size: 11.5px; font-weight: 700; padding: 9px 12px; border-radius: 12px; line-height: 1.45; }
+        .v5-rc-status.ok { background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; } .v5-rc-status.warn { background: #fffbeb; color: #92400e; border: 1px solid #fcd34d; }
+        .dark .v5-rc-status.ok { background: rgba(6,78,59,.25); color: #6ee7b7; border-color: #065f46; } .dark .v5-rc-status.warn { background: rgba(120,53,15,.2); color: #fcd34d; border-color: #92400e; }
+        .v5-rc-hint { font-size: 10.5px; font-weight: 500; color: #94a3b8; margin-left: 6px; }
+        .v5-rc-det { border: 1px solid #e2e8f0; border-radius: 14px; margin-top: 6px; background: #fff; overflow: hidden; } .dark .v5-rc-det { background: #0f172a; border-color: #1e293b; }
+        .v5-rc-det summary { list-style: none; cursor: pointer; display: flex; align-items: center; gap: 8px; padding: 10px 12px; font-size: 12px; font-weight: 700; color: #1b2a4a; }
+        .v5-rc-det summary::-webkit-details-marker { display: none; } .dark .v5-rc-det summary { color: #e2e8f0; }
+        .v5-rc-det summary i { color: #c49a45; width: 16px; text-align: center; } .v5-rc-det summary span { flex: 1; min-width: 0; }
+        .v5-rc-det summary b { font-variant-numeric: tabular-nums; } .v5-rc-det summary::after { content: '\203A'; font-size: 16px; color: #94a3b8; transition: transform .2s; } .v5-rc-det[open] summary::after { transform: rotate(90deg); }
+        .v5-rc-det .bd { padding: 0 12px 12px; font-size: 11.5px; color: #475569; } .dark .v5-rc-det .bd { color: #cbd5e1; }
+        .v5-rc-kv { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; margin-top: 6px; } .v5-rc-kv b { text-align: right; font-variant-numeric: tabular-nums; }
+        .v5-rc-list { display: grid; gap: 5px; margin-top: 6px; max-height: 260px; overflow: auto; }
+        .v5-rc-list .it { display: flex; align-items: center; justify-content: space-between; gap: 8px; border-radius: 10px; padding: 7px 9px; background: #f8fafc; } .dark .v5-rc-list .it { background: #111a2e; }
+        .v5-rc-list .d { font-weight: 700; color: #0f172a; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } .dark .v5-rc-list .d { color: #f1f5f9; } .v5-rc-list .m { font-size: 10.5px; color: #94a3b8; }
+        .v5-rc-list b { font-variant-numeric: tabular-nums; white-space: nowrap; } .v5-rc-list b.in { color: #047857; } .v5-rc-list b.out { color: #be123c; }
+        .v5-rc-ch { display: inline-block; padding: 0 6px; border-radius: 99px; font-weight: 700; font-size: 10px; } .v5-rc-ch.acc { background: #dbeafe; color: #1d4ed8; } .v5-rc-ch.cash { background: #fef3c7; color: #b45309; }
+        .v5-rc-mini { width: 100%; border-collapse: collapse; margin-top: 6px; font-size: 11px; font-variant-numeric: tabular-nums; }
+        .v5-rc-mini th { font-weight: 700; color: #64748b; padding: 4px; border-bottom: 1px solid #e2e8f0; text-align: right; } .v5-rc-mini th small { font-weight: 500; }
+        .v5-rc-mini td { padding: 4px; text-align: right; border-bottom: 1px solid #f1f5f9; } .v5-rc-mini th:first-child, .v5-rc-mini td:first-child { text-align: left; white-space: nowrap; }
+        .v5-rc-mini tfoot td { font-weight: 800; border-top: 1px solid #c49a45; border-bottom: 0; } .dark .v5-rc-mini th, .dark .v5-rc-mini td { border-color: #1e293b; }
+        .v5-rc-cmp td.ok { color: #059669; } .v5-rc-cmp td.bad { color: #be123c; } .v5-rc-cmp tr.last td { font-weight: 900; border-top: 2px solid #c49a45; }
+        .v5-rc-warn { display: flex; gap: 8px; margin-top: 8px; font-size: 11.5px; padding: 10px 12px; border-radius: 12px; background: #fffbeb; color: #92400e; border: 1px solid #fcd34d; } .dark .v5-rc-warn { background: rgba(120,53,15,.2); color: #fcd34d; border-color: #92400e; }
         .v5-bal-fix { margin-top: 14px; border-radius: 16px; border: 1px solid #fcd34d; background: #fffbeb; padding: 12px; }
         .dark .v5-bal-fix { background: rgba(120,53,15,.18); border-color: #92400e; }
         .v5-bal-fix .h { font-size: 12px; font-weight: 800; color: #92400e; } .dark .v5-bal-fix .h { color: #fcd34d; }
@@ -3449,7 +3473,7 @@
                 const g = V5.generalBalance(), sb = V5.shootingBalance();
                 const el1 = document.getElementById('homeGenSplit'), el2 = document.getElementById('homeShootSplit');
                 if (el1) el1.innerHTML = `<span><i class="fas fa-building-columns"></i> บัญชี <b>${fmt(g.acc)}</b></span><span><i class="fas fa-money-bill-wave"></i> สด <b>${fmt(g.cash)}</b></span>`;
-                if (el2) el2.innerHTML = `<span><i class="fas fa-building-columns"></i> บัญชี <b>${fmt(sb.acc)}</b></span><span><i class="fas fa-money-bill-wave"></i> สด <b>${fmt(sb.cash)}</b></span>${Math.abs(sb.other) >= 0.005 ? `<span class="warn"><i class="fas fa-circle-question"></i> ไม่ระบุ <b>${fmt(sb.other)}</b></span>` : ''}`;
+                if (el2) el2.innerHTML = `<span><i class="fas fa-building-columns"></i> บัญชี <b>${fmt(sb.acc)}</b></span><span><i class="fas fa-money-bill-wave"></i> สด <b>${fmt(sb.cash)}</b></span>${Math.abs(sb.other) >= 0.005 ? `<span class="warn"><i class="fas fa-circle-question"></i> ${sb.otherLabel || 'ไม่ระบุ'} <b>${fmt(sb.other)}</b></span>` : ''}`;
             }
         }
 
@@ -4087,10 +4111,11 @@
             setText('shootDashInSub', `กระสุน ${fmt(sumTotB)} · เป้า ${fmt(sumTotT)}${sumSpecialIn ? ' · พิเศษ ' + fmt(sumSpecialIn) : ''}`);
             setText('shootDashOutSub', `${expCount.toLocaleString()} รายการจ่าย`);
             setText('shootDashPeriodSub', `${filtered.length.toLocaleString()} รายการ · ยอดก่อนช่วง ${fmt(opening)}`);
-            const lastS = filtered[filtered.length - 1] || { runAcc: 0, runCash: 0, runOther: 0 };
+            // แยกบัญชี / เงินสด อ้างอิงจากรายการสนามยิงปืน (ถ้ามีข้อมูล) เพื่อให้ตรงกับตารางรายการสนามยิงปืน
+            const lastS = (window.V5 && V5.shootingSplitFor && V5.shootingSplitFor(filtered)) || filtered[filtered.length - 1] || { runAcc: 0, runCash: 0, runOther: 0 };
             animateNumber('shootSplitAcc', lastS.runAcc); animateNumber('shootSplitCash', lastS.runCash);
             const oth = document.getElementById('shootSplitOther');
-            if (oth) { oth.classList.toggle('hidden', Math.abs(lastS.runOther) < 0.005); oth.innerHTML = `<i class="fas fa-circle-question"></i> ไม่ระบุช่องทาง ${fmt(lastS.runOther)}`; }
+            if (oth) { oth.classList.toggle('hidden', Math.abs(lastS.runOther) < 0.005); oth.innerHTML = `<i class="fas fa-circle-question"></i> ${lastS.otherLabel || 'ไม่ระบุช่องทาง'} ${fmt(lastS.runOther)}`; }
             setText('shootDashNetSub', (filterState.shooting.years.length + filterState.shooting.months.length) ? 'ณ สิ้นช่วงที่กรอง' : `กระสุน ${fmtQty(sumBTrQ + sumBCQ)} นัด · เป้า ${fmtQty(sumTTrQ + sumTCQ)} ใบ`);
             setText('shootPrintScope', `ขอบเขตข้อมูล: ${scope.full} · ${shootingViewMode === 'summary' ? 'แบบสรุปภาพรวม' : 'แบบละเอียด'} · พิมพ์เมื่อ ${getThaiFormattedNow()}`);
 
@@ -5830,7 +5855,7 @@
     /* ==========================================================================
        Executive Pro v4 — ชั้นเสริมใหม่ (ส่วน A: แกนหลัก / ป๊อปอัพ / แถบสถานะ / ตรวจอัปเดต)
        ========================================================================== */
-    const V4 = window.V4 = { version: "5.1.0", sec: null };
+    const V4 = window.V4 = { version: "5.2.0", sec: null };
     const q = (sel, root) => (root || document).querySelector(sel);
     const esc = v => escapeHtml(v);
     const money = n => (Number(n) || 0).toLocaleString('th-TH', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -7144,8 +7169,99 @@
         });
         return { cash, acc, other: 0, total: cash + acc, inC, inA, outC, outA, n: (rows || appData.generalRecords).length };
     };
-    // สรุปสนามยิงปืน: ยอดขายแยก โอน/สด จากจำนวน, รายการพิเศษแยกตามช่องทางที่ระบุ (expMethod)
+    /* สรุปสนามยิงปืน — คำนวณจาก "รายการสนามยิงปืน" (แหล่งข้อมูลจริงของเงินในบัญชี / เงินสด)
+       ทุกแถวในตารางรายการสนามยิงปืนถูกแยกเป็นส่วน ๆ ที่อธิบายได้:
+         ยอดขาย  = จำนวนที่ขาย × ราคามาตรฐาน (กระสุน 1,000 / กล่อง, เป้า 15 / ใบ — เหมือนตารางสรุป)
+         ย้ายเงิน = แถวที่บัญชี +x และเงินสด −x (หรือกลับกัน) → ยอดรวมไม่เปลี่ยน
+         พิเศษ   = เงินที่เหลือในแถวซึ่งไม่ใช่ยอดขาย (+ รายรับ / − รายจ่าย)
+         ปรับยอด = ส่วนที่ยอด "รวม" ถูกกำหนดเองด้วยมือ ต่างจากยอดที่คำนวณได้
+       ยอดยกมา = ผลรวมทุกแถวก่อนปีแรกของตารางสรุป → ผลรวมทุกส่วน = ยอด "รวม" แถวสุดท้ายของรายการสนามยิงปืนพอดี */
+    const P_AMMO = 1000, P_TGT = 15, R2 = n => Math.round((Number(n) || 0) * 100) / 100;
+    const sumYearStart = () => {
+        const ys = appData.shootingRecords.filter(r => r.month !== 'ยกยอดมา').map(r => parseInt(r.year, 10)).filter(n => n > 2400);
+        return ys.length ? Math.min.apply(null, ys) : new Date().getFullYear() + 543;
+    };
+    V5.shootingRecon = function (asOf) {
+        if (!Array.isArray(appData.rangeLedger)) return null;
+        const rows = buildLedgerRows(), startBE = sumYearStart(), start = `${startBE - 543}-01-01`;
+        const O = { acc: 0, cash: 0, adj: 0, n: 0, adjList: [] };
+        const S = { bTr: 0, bCash: 0, tTr: 0, tCash: 0, n: 0, months: {} };
+        const spIn = [], spOut = [], tr = [], adj = [];
+        let lastDate = '';
+        rows.forEach(r => {
+            // แถวที่ไม่ได้ใส่วันที่ ถือว่าเกิดวันเดียวกับแถวก่อนหน้า (ตามลำดับในตาราง)
+            const d = r.entry.date || '', ed = d || lastDate, v = r.v, a = R2(r.total - r.calc);
+            lastDate = ed;
+            if (asOf && ed && ed > asOf) return;
+            const desc = r.desc || r.note || '', no = r.i + 1;
+            if (!ed || ed < start) {
+                O.acc += v.acct; O.cash += v.cash; O.n++;
+                if (a) { O.adj += a; O.adjList.push({ no, date: d, desc: desc || 'กำหนดยอดรวมเอง', amt: a }); }
+                return;
+            }
+            S.n++;
+            S.bTr += v.bTr; S.bCash += v.bCash; S.tTr += v.tTr; S.tCash += v.tCash;
+            const p = isoParts(ed), mk = p ? `${p.y}-${String(p.m).padStart(2, '0')}` : '-';
+            const M = S.months[mk] || (S.months[mk] = { key: mk, label: p ? `${thMonths[p.m - 1]} ${String(p.y + 543).slice(-2)}` : 'ไม่ระบุวันที่', bTr: 0, bCash: 0, tTr: 0, tCash: 0 });
+            M.bTr += v.bTr; M.bCash += v.bCash; M.tTr += v.tTr; M.tCash += v.tCash;
+            let oa = R2(v.acct - (v.bTr * P_AMMO + v.tTr * P_TGT)), oc = R2(v.cash - (v.bCash * P_AMMO + v.tCash * P_TGT));
+            if (oa * oc < 0) {   // ย้ายเงินระหว่างบัญชีกับเงินสด
+                const t = Math.sign(oa) * Math.min(Math.abs(oa), Math.abs(oc));
+                tr.push({ no, date: d, desc: desc || (t > 0 ? 'นำเงินสดเข้าบัญชี' : 'ถอนเงินจากบัญชีเป็นเงินสด'), amt: t });
+                oa = R2(oa - t); oc = R2(oc + t);
+            }
+            const sales = v.bTr + v.bCash + v.tTr + v.tCash;
+            [['acc', oa], ['cash', oc]].forEach(([ch, x]) => {
+                if (!x) return;
+                const it = { no, date: d, ch, amt: x, desc: desc || (sales ? 'เงินไม่ตรงกับจำนวนที่ขาย (ส่วนต่างราคา)' : 'ไม่ระบุรายการ') };
+                (x > 0 ? spIn : spOut).push(it);
+            });
+            if (a) adj.push({ no, date: d, desc: desc || 'กำหนดยอดรวมเอง', amt: a });
+        });
+        const sum = (l, ch) => R2(l.reduce((s, x) => s + (!ch || x.ch === ch ? x.amt : 0), 0));
+        const ammo = { acc: S.bTr * P_AMMO, cash: S.bCash * P_AMMO }, tgt = { acc: S.tTr * P_TGT, cash: S.tCash * P_TGT };
+        const inn = { acc: sum(spIn, 'acc'), cash: sum(spIn, 'cash') }, out = { acc: sum(spOut, 'acc'), cash: sum(spOut, 'cash') };
+        const trA = sum(tr), adjT = sum(adj);
+        const open = { acc: R2(O.acc), cash: R2(O.cash), adj: R2(O.adj) }; open.total = R2(open.acc + open.cash + open.adj);
+        const end = { acc: R2(open.acc + ammo.acc + tgt.acc + inn.acc + out.acc + trA), cash: R2(open.cash + ammo.cash + tgt.cash + inn.cash + out.cash - trA), adj: R2(open.adj + adjT) };
+        end.total = R2(end.acc + end.cash + end.adj);
+        const ledgerTotal = rows.length ? R2(rows[rows.length - 1].total) : 0;
+        return { startBE, start, asOf: asOf || null, rowsAll: rows.length, open, openN: O.n, openAdj: O.adjList, S, ammo, tgt, spIn, spOut, inn, out, tr, trA, adj, adjT, end, ledgerTotal,
+            months: Object.values(S.months).filter(m => m.bTr || m.bCash || m.tTr || m.tCash).sort((x, y) => x.key.localeCompare(y.key)) };
+    };
+    // ตัวเลขจากตารางสรุปสนามยิงปืน (ไว้เทียบกับรายการสนามยิงปืน)
+    V5.shootingSummaryParts = function () {
+        const P = { carry: 0, bTr: 0, bCash: 0, tTr: 0, tCash: 0, spIn: 0, spOut: 0 };
+        appData.shootingRecords.forEach(r => {
+            P.bTr += nz(r.bTrQ); P.bCash += nz(r.bBCQ); P.tTr += nz(r.tTrQ); P.tCash += nz(r.tBCQ);
+            const e = nz(r.expAmt); if (!(e > 0)) return;
+            const adj = r.adjType || (r.month === 'ยกยอดมา' ? 'income_carry' : 'expense');
+            if (adj !== 'income_carry') P.spOut += e; else if (r.month === 'ยกยอดมา') P.carry += e; else P.spIn += e;
+        });
+        P.ammo = (P.bTr + P.bCash) * P_AMMO; P.tgt = (P.tTr + P.tCash) * P_TGT;
+        P.total = R2(P.carry + P.ammo + P.tgt + P.spIn - P.spOut);
+        return P;
+    };
+    // ยอดแยกบัญชี / เงินสด ณ สิ้นช่วงที่กรองในหน้าสรุปสนามยิงปืน (อ้างอิงรายการสนามยิงปืน)
+    V5.shootAsOf = function (rec) {
+        if (!rec) return null;
+        const y = parseInt(rec.year, 10) || sumYearStart(), mi = thMonths.indexOf(rec.month);
+        if (mi < 0) return `${y - 543 - 1}-12-31`;
+        const last = new Date(y - 543, mi + 1, 0).getDate();
+        return `${y - 543}-${String(mi + 1).padStart(2, '0')}-${String(last).padStart(2, '0')}`;
+    };
+    V5.shootingSplitFor = function (filtered) {
+        const active = (filterState.shooting.years.length + filterState.shooting.months.length) > 0;
+        const rc = V5.shootingRecon(active ? V5.shootAsOf(filtered[filtered.length - 1]) || '0000-00-00' : null);
+        return rc ? { runAcc: rc.end.acc, runCash: rc.end.cash, runOther: rc.end.adj, otherLabel: 'ปรับยอดด้วยมือ' } : null;
+    };
+    // สรุปสนามยิงปืน: ยอดแยก บัญชี / เงินสด — อ้างอิงรายการสนามยิงปืนเมื่อมีข้อมูล (ไม่ส่ง rows)
     V5.shootingBalance = function (rows) {
+        if (!rows) {
+            const rc = V5.shootingRecon(null);
+            if (rc) return { acc: rc.end.acc, cash: rc.end.cash, other: rc.end.adj, total: rc.end.total, otherLabel: 'ปรับยอด', fromLedger: true,
+                salesAcc: rc.ammo.acc + rc.tgt.acc, salesCash: rc.ammo.cash + rc.tgt.cash, spIn: rc.inn.acc + rc.inn.cash, spOut: -(rc.out.acc + rc.out.cash), unknownCount: 0, recon: rc };
+        }
         let acc = 0, cash = 0, other = 0, salesAcc = 0, salesCash = 0, spIn = 0, spOut = 0, unk = 0;
         (rows || appData.shootingRecords).forEach(r => {
             const tr = (nz(r.bTrQ)) * 1000 + nz(r.tTrQ) * 15, ca = nz(r.bBCQ) * 1000 + nz(r.tBCQ) * 15;
@@ -7156,7 +7272,7 @@
             if (v > 0) spIn += v; else spOut -= v;
             if (r.expMethod === 'acc') acc += v; else if (r.expMethod === 'cash') cash += v; else { other += v; unk++; }
         });
-        return { acc, cash, other, total: acc + cash + other, salesAcc, salesCash, spIn, spOut, unknownCount: unk };
+        return { acc, cash, other, total: acc + cash + other, otherLabel: 'ไม่ระบุ', salesAcc, salesCash, spIn, spOut, unknownCount: unk };
     };
     // รายการสนามยิงปืน: เงินในบัญชี / เงินที่สนาม (+ ส่วนปรับยอดรวมด้วยมือ)
     V5.ledgerBalance = function () {
@@ -7220,7 +7336,7 @@
             const m = fn.apply(this, arguments);
             const b = k === 'general' ? V5.generalBalance() : V5.shootingBalance();
             m.kpis = m.kpis.concat([{ l: 'คงเหลือ: เงินในบัญชี (ทั้งหมด)', v: m2(b.acc) }, { l: 'คงเหลือ: เงินสด (ทั้งหมด)', v: m2(b.cash) }]);
-            if (b.other) m.kpis.push({ l: 'ไม่ระบุช่องทาง', v: m2(b.other) });
+            if (b.other) m.kpis.push({ l: b.fromLedger ? 'ปรับยอดด้วยมือ (รายการสนามยิงปืน)' : 'ไม่ระบุช่องทาง', v: m2(b.other) });
             return m;
         };
     }));
@@ -7614,12 +7730,16 @@
        ========================================================================== */
     const V4 = window.V4, V5 = window.V5, esc = v => escapeHtml(v), m2 = V5.m2;
     const pct = (a, t) => t > 0 ? Math.max(0, Math.min(100, a / t * 100)) : 0;
+    const R2x = n => Math.round((Number(n) || 0) * 100) / 100;
 
     function filteredEnd(type) {
         const active = (filterState[type].years.length + filterState[type].months.length) > 0;
         if (!active) return null;
         if (type === 'general') { const r = getFilteredGeneralData(); const l = r[r.length - 1]; return l ? { acc: l.runAcc, cash: l.runCash, other: 0, total: l.totalNet } : { acc: 0, cash: 0, other: 0, total: 0 }; }
-        const r = getFilteredShootingData(); const l = r[r.length - 1]; return l ? { acc: l.runAcc, cash: l.runCash, other: l.runOther, total: l.runBal } : { acc: 0, cash: 0, other: 0, total: 0 };
+        const r = getFilteredShootingData(); const l = r[r.length - 1];
+        const rc = V5.shootingRecon(V5.shootAsOf(l) || '0000-00-00');
+        if (rc) return { acc: rc.end.acc, cash: rc.end.cash, other: rc.end.adj, total: rc.end.total, summaryTotal: l ? l.runBal : 0, asOf: rc.asOf };
+        return l ? { acc: l.runAcc, cash: l.runCash, other: l.runOther, total: l.runBal } : { acc: 0, cash: 0, other: 0, total: 0 };
     }
 
     V5.openBalance = function (type) {
@@ -7634,6 +7754,7 @@
         const paint = () => {
             const b = isG ? V5.generalBalance() : V5.shootingBalance();
             const fe = filteredEnd(type);
+            if (!isG && b.fromLedger) return paintLedger(b.recon, fe);
             const big = (cls, ic, label, val, sub) => `<div class="v5-bal-card ${cls}"><div class="ic"><i class="fas ${ic}"></i></div><div class="min-w-0"><div class="l">${label}</div><div class="v">${m2(val)}</div>${sub ? `<div class="s">${sub}</div>` : ''}</div></div>`;
             const totalAbs = Math.abs(b.acc) + Math.abs(b.cash) + Math.abs(b.other);
             let comp;
@@ -7683,6 +7804,85 @@
             sh._text = [`💰 ยอดเงินคงเหลือ — ${isG ? 'บัญชีกองกลาง' : 'สรุปสนามยิงปืน'}`, `รวมทั้งหมด : ${m2(b.total)} บาท`, `• เงินในบัญชี : ${m2(b.acc)} บาท`, `• เงินสด : ${m2(b.cash)} บาท`]
                 .concat(b.other ? [`• ไม่ระบุช่องทาง : ${m2(b.other)} บาท`] : [], [`ข้อมูล ณ ${getThaiFormattedNow()}`]).join('\n');
         };
+        // ---------- สรุปสนามยิงปืน: อ้างอิง "รายการสนามยิงปืน" และอธิบายที่มาของทุกตัวเลข ----------
+        function paintLedger(rc, fe) {
+            const q0 = V5.q0, sg = n => (n > 0 ? '+' : n < 0 ? '−' : '') + q0(Math.abs(n)), ok = d => Math.abs(d) < 0.005;
+            const cls = n => n > 0 ? 'in' : n < 0 ? 'out' : '';
+            const dt = d => d ? thDateCompact(d) : 'ไม่ระบุวันที่';
+            const prevBE = String(rc.startBE - 1).slice(-2), adjAll = rc.openAdj.concat(rc.adj), adjSum = rc.open.adj + rc.adjT;
+            const P = V5.shootingSummaryParts();
+            const inT = rc.inn.acc + rc.inn.cash, outT = rc.out.acc + rc.out.cash;
+            const tot = rc.end.total, totalAbs = Math.abs(rc.end.acc) + Math.abs(rc.end.cash) + Math.abs(rc.end.adj);
+            const big = (c, ic, label, val, sub) => `<div class="v5-bal-card ${c}"><div class="ic"><i class="fas ${ic}"></i></div><div class="min-w-0"><div class="l">${label}</div><div class="v">${m2(val)}</div>${sub ? `<div class="s">${sub}</div>` : ''}</div></div>`;
+            const row = (label, sub, a, c, t, opt) => `<tr${opt && opt.cls ? ` class="${opt.cls}"` : ''}><td><div>${label}</div>${sub ? `<small>${sub}</small>` : ''}</td>${[a, c, t].map(x => x === null ? '<td class="na">—</td>' : opt && opt.plain ? `<td>${q0(x)}</td>` : `<td class="${cls(x)}">${sg(x)}</td>`).join('')}</tr>`;
+            const salesTxt = (tr, ca, unit, price) => `โอน ${q0(tr)} · สด ${q0(ca)} ${unit} × ${q0(price)}`;
+
+            // ตาราง "ที่มาของยอด" — ทุกคอลัมน์บวกลงมาได้ยอดคงเหลือพอดี
+            let body = row(`ยอดยกมา ณ 31 ธ.ค. ${prevBE}`, `สะสมจาก ${rc.openN.toLocaleString()} แถวก่อนปี ${rc.startBE}`, rc.open.acc, rc.open.cash, rc.open.acc + rc.open.cash, { cls: 'open', plain: 1 });
+            if (!ok(adjSum)) body += row('ปรับยอดรวมด้วยมือ', `ยอด "รวม" ที่กำหนดเอง ${adjAll.length} แถว`, null, null, adjSum);
+            body += row('ขายกระสุน', salesTxt(rc.S.bTr, rc.S.bCash, 'กล่อง', 1000), rc.ammo.acc, rc.ammo.cash, rc.ammo.acc + rc.ammo.cash);
+            body += row('ขายเป้า', salesTxt(rc.S.tTr, rc.S.tCash, 'ใบ', 15), rc.tgt.acc, rc.tgt.cash, rc.tgt.acc + rc.tgt.cash);
+            if (rc.spIn.length) body += row('รายรับพิเศษ', `${rc.spIn.length} รายการ`, rc.inn.acc, rc.inn.cash, inT);
+            if (rc.spOut.length) body += row('รายจ่าย', `${rc.spOut.length} รายการ`, rc.out.acc, rc.out.cash, outT);
+            if (rc.tr.length) body += row('ย้ายเงิน สด ⇄ บัญชี', `${rc.tr.length} ครั้ง · ยอดรวมไม่เปลี่ยน`, rc.trA, -rc.trA, 0);
+            const comp = `<table class="v5-bal-tbl v5-rc-tbl"><thead><tr><th></th><th>บัญชี</th><th>เงินสด</th><th>รวม</th></tr></thead><tbody>${body}</tbody>
+                <tfoot><tr><td>คงเหลือ</td><td>${q0(rc.end.acc)}</td><td>${q0(rc.end.cash)}</td><td>${q0(tot)}</td></tr></tfoot></table>
+                ${!ok(rc.end.adj) ? `<p class="v5-bal-note"><i class="fas fa-circle-info"></i> บัญชี ${q0(rc.end.acc)} + เงินสด ${q0(rc.end.cash)} = ${q0(rc.end.acc + rc.end.cash)} · บวกปรับยอดด้วยมือ ${sg(rc.end.adj)} = ${q0(tot)}</p>` : ''}`;
+
+            // รายละเอียดของแต่ละบรรทัด
+            const chTag = ch => `<span class="v5-rc-ch ${ch}">${ch === 'acc' ? 'โอน' : 'สด'}</span>`;
+            const list = (items, withCh) => `<div class="v5-rc-list">${items.map(it => `<div class="it"><div class="min-w-0"><div class="d">${esc(it.desc)}</div><div class="m">${esc(dt(it.date))} · แถวที่ ${it.no}${withCh ? ' · ' + chTag(it.ch) : ''}</div></div><b class="${cls(it.amt)}">${sg(it.amt)}</b></div>`).join('')}</div>`;
+            const det = (ic, title, sum, inner) => `<details class="v5-rc-det"><summary><i class="fas ${ic}"></i><span>${title}</span><b>${sum}</b></summary><div class="bd">${inner}</div></details>`;
+            let details = det('fa-flag-checkered', `ยอดยกมา ณ 31 ธ.ค. ${prevBE}`, q0(rc.open.total),
+                `<p>รวมทุกแถวในรายการสนามยิงปืนก่อนวันที่ 1 ม.ค. ${rc.startBE} (${rc.openN.toLocaleString()} แถว)</p>
+                <div class="v5-rc-kv"><span>เงินในบัญชีสะสม</span><b>${q0(rc.open.acc)}</b><span>เงินสดสะสม</span><b>${q0(rc.open.cash)}</b>${!ok(rc.open.adj) ? `<span>ปรับยอดรวมด้วยมือ</span><b>${sg(rc.open.adj)}</b>` : ''}<span>รวม</span><b>${q0(rc.open.total)}</b></div>
+                ${rc.openAdj.length ? `<p class="mt-2">แถวที่กำหนดยอดรวมเอง (ยอดรวมต่างจากที่คำนวณได้):</p>${list(rc.openAdj)}` : ''}`);
+            if (rc.adj.length) details += det('fa-pen-ruler', `ปรับยอดรวมด้วยมือ ปี ${rc.startBE}+`, sg(rc.adjT), list(rc.adj));
+            details += det('fa-calendar-days', 'ยอดขายรายเดือน', q0(rc.ammo.acc + rc.ammo.cash + rc.tgt.acc + rc.tgt.cash),
+                rc.months.length ? `<table class="v5-rc-mini"><thead><tr><th>เดือน</th><th>กระสุน<br><small>โอน / สด</small></th><th>เป้า<br><small>โอน / สด</small></th><th>เข้าบัญชี</th><th>เงินสด</th></tr></thead><tbody>${rc.months.map(m => `<tr><td>${esc(m.label)}</td><td>${q0(m.bTr)} / ${q0(m.bCash)}</td><td>${q0(m.tTr)} / ${q0(m.tCash)}</td><td>${q0(m.bTr * 1000 + m.tTr * 15)}</td><td>${q0(m.bCash * 1000 + m.tCash * 15)}</td></tr>`).join('')}</tbody>
+                <tfoot><tr><td>รวม</td><td>${q0(rc.S.bTr)} / ${q0(rc.S.bCash)}</td><td>${q0(rc.S.tTr)} / ${q0(rc.S.tCash)}</td><td>${q0(rc.ammo.acc + rc.tgt.acc)}</td><td>${q0(rc.ammo.cash + rc.tgt.cash)}</td></tr></tfoot></table>
+                <p class="mt-2">ยอดขาย = จำนวนที่ขาย × ราคามาตรฐาน (กระสุน 1,000 บาท/กล่อง · เป้า 15 บาท/ใบ) เหมือนตารางสรุป — "โอน" เข้าบัญชี · "สด" เป็นเงินสด</p>` : '<p>ยังไม่มียอดขาย</p>');
+            if (rc.spIn.length) details += det('fa-circle-plus', 'รายรับพิเศษ', sg(inT), list(rc.spIn, true));
+            if (rc.spOut.length) details += det('fa-circle-minus', 'รายจ่าย', sg(outT), list(rc.spOut, true));
+            if (rc.tr.length) details += det('fa-right-left', 'ย้ายเงิน สด ⇄ บัญชี', `${rc.tr.length} ครั้ง`, `<p>บวก = นำเงินสดเข้าบัญชี · ลบ = ถอนจากบัญชีเป็นเงินสด (ยอดรวมไม่เปลี่ยน)</p>` + list(rc.tr));
+            details += `<p class="v5-bal-note"><i class="fas fa-circle-info"></i> แต่ละแถวในรายการสนามยิงปืนถูกแยกเป็น ยอดขาย (จำนวน × ราคา) · ย้ายเงิน (บัญชี +x / สด −x) · ส่วนที่เหลือเป็นรายรับ/รายจ่ายพิเศษ ตามช่อง "เงินในบัญชี" / "เงินสด" ที่ลงไว้</p>`;
+
+            // เทียบกับตารางสรุปสนามยิงปืน
+            const cmpRows = [
+                ['ยอดยกมา', P.carry, rc.open.total], ['ขายกระสุน', P.ammo, rc.ammo.acc + rc.ammo.cash], ['ขายเป้า', P.tgt, rc.tgt.acc + rc.tgt.cash],
+                ['รายรับพิเศษ', P.spIn, inT], ['รายจ่าย', P.spOut, -outT], ['คงเหลือ', P.total, tot]
+            ];
+            const allOk = cmpRows.every(r => ok(r[1] - r[2])) && ok(rc.ledgerTotal - tot);
+            const isAdmin = typeof session !== 'undefined' && session && session.role === 'admin';
+            const cmp = `<table class="v5-bal-tbl v5-rc-cmp"><thead><tr><th></th><th>ตารางสรุปฯ</th><th>รายการสนามฯ</th><th>ผลต่าง</th></tr></thead><tbody>${cmpRows.map(([l, a, b2], i) => {
+                const d = R2x(a - b2); return `<tr${i === cmpRows.length - 1 ? ' class="last"' : ''}><td>${l}</td><td>${q0(a)}</td><td>${q0(b2)}</td><td class="${ok(d) ? 'ok' : 'bad'}">${ok(d) ? '✓' : sg(d)}</td></tr>`; }).join('')}</tbody></table>
+                ${allOk ? '' : `<div class="v5-rc-warn"><i class="fas fa-triangle-exclamation"></i><div>ตารางสรุปสนามยิงปืนยังไม่ตรงกับรายการสนามยิงปืน — มักเกิดจากมีรายการใหม่ที่ยังไม่ได้ดึงไปสรุป หรือมีการแก้ไขตารางสรุปเอง ยอดในหน้านี้ใช้ตัวเลขจากรายการสนามยิงปืนเป็นหลัก${isAdmin && V4.openLedgerSync ? `<div class="mt-2"><button type="button" class="v4-btn ok" data-ldsync><i class="fas fa-link"></i> ดึงสรุปจากรายการสนามยิงปืน</button></div>` : ''}</div></div>`}`;
+
+            sh.q('#balBody').innerHTML = `
+                <div class="v5-bal-total"><div class="l">ยอดเงินคงเหลือรวม <span>อ้างอิงรายการสนามยิงปืน (${rc.rowsAll.toLocaleString()} แถว)</span></div><div class="v">${m2(tot)} <small>บาท</small></div>
+                    <div class="v5-bal-bar"><i class="acc" style="width:${pct(Math.abs(rc.end.acc), totalAbs)}%"></i><i class="cash" style="width:${pct(Math.abs(rc.end.cash), totalAbs)}%"></i>${!ok(rc.end.adj) ? `<i class="oth" style="width:${pct(Math.abs(rc.end.adj), totalAbs)}%"></i>` : ''}</div></div>
+                <div class="v5-rc-status ${allOk ? 'ok' : 'warn'}"><i class="fas ${allOk ? 'fa-circle-check' : 'fa-triangle-exclamation'}"></i> ${allOk ? `ตรงกับรายการสนามยิงปืน (ยอดรวมแถวสุดท้าย ${q0(rc.ledgerTotal)}) และตารางสรุปสนามยิงปืนทุกรายการ` : `ตารางสรุปสนามยิงปืน ${q0(P.total)} ต่างจากรายการสนามยิงปืน ${q0(tot)} อยู่ ${sg(R2x(P.total - tot))}`}</div>
+                <div class="v5-bal-grid">
+                    ${big('acc', 'fa-building-columns', 'เงินในบัญชี (โอน)', rc.end.acc, totalAbs ? pct(Math.abs(rc.end.acc), totalAbs).toFixed(0) + '% ของยอดรวม' : '')}
+                    ${big('cash', 'fa-money-bill-wave', 'เงินสด', rc.end.cash, totalAbs ? pct(Math.abs(rc.end.cash), totalAbs).toFixed(0) + '% ของยอดรวม' : '')}
+                    ${!ok(rc.end.adj) ? big('oth', 'fa-pen-ruler', 'ปรับยอดรวมด้วยมือ', rc.end.adj, `${adjAll.length} แถวที่กำหนดยอดรวมเอง`) : ''}
+                </div>
+                ${fe ? `<div class="v5-bal-scope"><i class="fas fa-filter"></i> ณ สิ้นช่วงที่กรอง (${esc(getScopeParts(type).full)}${fe.asOf ? ' — ถึง ' + esc(thDateLong(fe.asOf)) : ''}): รวม <b>${m2(fe.total)}</b> · บัญชี <b>${m2(fe.acc)}</b> · สด <b>${m2(fe.cash)}</b>${fe.other ? ` · ปรับยอด <b>${m2(fe.other)}</b>` : ''}</div>` : ''}
+                <div class="v5-bal-sec">ที่มาของยอด</div>${comp}
+                <div class="v5-bal-sec">แต่ละบรรทัดมาจากไหน <span class="v5-rc-hint">แตะเพื่อดูรายการ</span></div>${details}
+                <div class="v5-bal-sec">เทียบกับตารางสรุปสนามยิงปืน</div>${cmp}`;
+            const ls = sh.q('[data-ldsync]'); if (ls) ls.onclick = () => { sh.close(); V4.openLedgerSync(); };
+            const L = [`💰 ยอดเงินคงเหลือ — สรุปสนามยิงปืน (อ้างอิงรายการสนามยิงปืน)`, `รวมทั้งหมด : ${m2(tot)} บาท`, `• เงินในบัญชี : ${m2(rc.end.acc)} บาท`, `• เงินสด : ${m2(rc.end.cash)} บาท`];
+            if (!ok(rc.end.adj)) L.push(`• ปรับยอดรวมด้วยมือ : ${m2(rc.end.adj)} บาท`);
+            L.push('', 'ที่มาของยอด (บัญชี / สด)', `ยอดยกมา 31 ธ.ค. ${prevBE} : ${q0(rc.open.acc)} / ${q0(rc.open.cash)}`);
+            if (!ok(adjSum)) L.push(`ปรับยอดรวมด้วยมือ : ${sg(adjSum)}`);
+            L.push(`ขายกระสุน (${salesTxt(rc.S.bTr, rc.S.bCash, 'กล่อง', 1000)}) : ${sg(rc.ammo.acc)} / ${sg(rc.ammo.cash)}`, `ขายเป้า (${salesTxt(rc.S.tTr, rc.S.tCash, 'ใบ', 15)}) : ${sg(rc.tgt.acc)} / ${sg(rc.tgt.cash)}`);
+            rc.spIn.forEach(it => L.push(`รายรับ ${dt(it.date)} ${it.desc} (${it.ch === 'acc' ? 'โอน' : 'สด'}) : ${sg(it.amt)}`));
+            rc.spOut.forEach(it => L.push(`รายจ่าย ${dt(it.date)} ${it.desc} (${it.ch === 'acc' ? 'โอน' : 'สด'}) : ${sg(it.amt)}`));
+            rc.tr.forEach(it => L.push(`ย้ายเงิน ${dt(it.date)} ${it.desc} : บัญชี ${sg(it.amt)} / สด ${sg(-it.amt)}`));
+            L.push(`คงเหลือ : ${q0(rc.end.acc)} / ${q0(rc.end.cash)} = ${q0(tot)}`, allOk ? '✓ ตรงกับตารางสรุปสนามยิงปืน' : `⚠ ตารางสรุปสนามยิงปืน ${q0(P.total)} (ต่าง ${sg(R2x(P.total - tot))})`, `ข้อมูล ณ ${getThaiFormattedNow()}`);
+            sh._text = L.join('\n');
+        }
         paint();
         sh.q('[data-x2]').onclick = () => sh.close();
         sh.q('[data-copy]').onclick = async () => {
@@ -8334,7 +8534,7 @@
                 Prog.mark(1, 'ok'); Prog.mark(2, 'run');
                 const stamp = Date.now().toString(36);
                 recs.forEach((r, i) => { r.id = (st.t === 'general' ? 'gi' : st.t === 'shooting' ? 'si' : 'Li') + stamp + '-' + i; r.src = 'import'; });
-                const before = st.t === 'general' ? V5.generalBalance() : st.t === 'shooting' ? V5.shootingBalance() : V5.ledgerBalance() || { total: 0 };
+                const before = st.t === 'general' ? V5.generalBalance() : st.t === 'shooting' ? V5.shootingBalance(appData.shootingRecords) : V5.ledgerBalance() || { total: 0 };
                 let ok = false;
                 if (st.t === 'general') { appData.generalRecords = (st.mode === 'replace' ? [] : appData.generalRecords).concat(recs); sanitizeData(); Prog.mark(2, 'ok'); Prog.mark(3, 'run'); ok = await saveToCloud('กำลังนำเข้าข้อมูลบัญชีกองกลาง...'); }
                 else if (st.t === 'shooting') { appData.shootingRecords = (st.mode === 'replace' ? [] : appData.shootingRecords).concat(recs); sanitizeData(); Prog.mark(2, 'ok'); Prog.mark(3, 'run'); ok = await saveToCloud('กำลังนำเข้าข้อมูลสนามยิงปืน...'); }
@@ -8345,7 +8545,7 @@
                     await saveRange(); ok = !ledgerState.error;
                 }
                 Prog.mark(3, ok ? 'ok' : 'warn');
-                const after = st.t === 'general' ? V5.generalBalance() : st.t === 'shooting' ? V5.shootingBalance() : V5.ledgerBalance() || { total: 0, acc: 0, cash: 0 };
+                const after = st.t === 'general' ? V5.generalBalance() : st.t === 'shooting' ? V5.shootingBalance(appData.shootingRecords) : V5.ledgerBalance() || { total: 0, acc: 0, cash: 0 };
                 refreshCurrentView(); updateHomeSummaryCards(); if (st.t === 'ledger') { renderLedger(); updateRangeMenuInfo(); }
                 sh.close();
                 Prog.result(ok ? 'ok' : 'wait', ok ? 'นำเข้าข้อมูลสำเร็จ' : 'นำเข้าแล้ว แต่ยืนยันกับคลาวด์ไม่ได้',
