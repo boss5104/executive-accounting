@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>ระบบบริหารจัดการบัญชีกองกลางและสนามยิงปืน | Executive Pro</title>
-    <meta name="app-version" content="5.2.0">
+    <meta name="app-version" content="5.2.1">
     <meta name="theme-color" content="#0b1222">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -3158,44 +3158,124 @@
         };
 
         // --- Cloud Sync & Refresh ---
+        // ความเร็ว: (1) เปิดแอปแล้วแสดงข้อมูลชุดล่าสุดที่เก็บในเครื่องทันที แล้วค่อยซิงก์จากคลาวด์เบื้องหลัง
+        //           (2) คำขอซิงก์ที่ซ้อนกันใช้การดาวน์โหลดเดียวกัน (3) ข้อมูลไม่เปลี่ยน = ไม่วาดหน้าจอใหม่
+        let cloudWriteSeq = 0;        // เพิ่มทุกครั้งที่ส่งข้อมูลขึ้นคลาวด์ — ผลดาวน์โหลดที่เริ่มก่อนการบันทึกจะถูกทิ้ง
+        let syncInFlight = null;      // { seq, promise }
+        let lastCloudText = null;     // ข้อความ JSON ชุดล่าสุดที่แสดงอยู่ (ใช้ตรวจว่าข้อมูลเปลี่ยนหรือไม่)
+        let lastSyncOkAt = 0;
+        let lastSyncChanged = false;
+        const CLOUD_CACHE_DB = 'execpro_cloud_cache', CLOUD_CACHE_ST = 'kv', CLOUD_CACHE_KEY = 'cloud';
+        function cloudCacheDb() {
+            return new Promise((res, rej) => {
+                if (!window.indexedDB) return rej(new Error('NO_IDB'));
+                const r = indexedDB.open(CLOUD_CACHE_DB, 1);
+                r.onupgradeneeded = () => { if (!r.result.objectStoreNames.contains(CLOUD_CACHE_ST)) r.result.createObjectStore(CLOUD_CACHE_ST); };
+                r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error);
+            });
+        }
+        async function cloudCacheGet() {
+            try {
+                const db = await cloudCacheDb();
+                return await new Promise(res => {
+                    const t = db.transaction(CLOUD_CACHE_ST, 'readonly'), g = t.objectStore(CLOUD_CACHE_ST).get(CLOUD_CACHE_KEY);
+                    g.onsuccess = () => { db.close(); res(g.result || null); }; g.onerror = () => { db.close(); res(null); };
+                });
+            } catch (e) { return null; }
+        }
+        async function cloudCachePut(text) {
+            try {
+                const db = await cloudCacheDb();
+                const t = db.transaction(CLOUD_CACHE_ST, 'readwrite');
+                t.objectStore(CLOUD_CACHE_ST).put({ text, at: Date.now() }, CLOUD_CACHE_KEY);
+                t.oncomplete = t.onerror = t.onabort = () => db.close();
+            } catch (e) { }
+        }
+        function isCloudPayload(json) {
+            return !!(json && typeof json === 'object' && (Array.isArray(json.generalRecords) || Array.isArray(json.shootingRecords) || json.scriptVersion));
+        }
+        function applyCloudPayload(json, fromCache) {
+            appData.generalRecords = Array.isArray(json.generalRecords) ? json.generalRecords : [];
+            appData.shootingRecords = Array.isArray(json.shootingRecords) ? json.shootingRecords : [];
+            applyCloudExtras(json);
+            if (!fromCache) cloudLoaded = true;
+            sanitizeData();
+            refreshCurrentView();
+            onCloudDataLoaded(fromCache);
+        }
+        // แสดงข้อมูลที่เก็บไว้ในเครื่องทันทีตอนเปิดแอป (ยังไม่อนุญาตให้บันทึกจนกว่าจะโหลดจากคลาวด์สำเร็จ)
+        async function loadCachedCloud() {
+            const c = await cloudCacheGet();
+            if (!c || !c.text || cloudLoaded || lastCloudText !== null || isSaving) return false;
+            let json; try { json = JSON.parse(c.text); } catch (e) { return false; }
+            if (!isCloudPayload(json)) return false;
+            lastCloudText = c.text;
+            applyCloudPayload(json, true);
+            const s = document.getElementById('syncStatusUI');
+            if (s && syncInFlight) s.innerHTML = `<i class="fas fa-spinner fa-spin text-amber-400"></i> แสดงข้อมูลในเครื่อง · กำลังซิงก์ล่าสุด...`;
+            else if (s) s.innerHTML = `<i class="fas fa-triangle-exclamation text-amber-400"></i> โหมดออฟไลน์ — แสดงข้อมูลที่เก็บในเครื่อง`;
+            return true;
+        }
+        // ดาวน์โหลดจากคลาวด์ครั้งเดียว แล้วใช้ผลร่วมกันทุกคำขอที่เข้ามาระหว่างนั้น
+        function fetchCloudShared() {
+            if (syncInFlight && syncInFlight.seq === cloudWriteSeq) return syncInFlight.promise;
+            const seq = cloudWriteSeq;
+            const entry = { seq };
+            entry.promise = (async () => {
+                const res = await fetch(SHEETS_API_URL + '?t=' + Date.now(), { cache: 'no-store' });
+                if (!res.ok) throw new Error('HTTP ' + res.status);
+                const text = await res.text();
+                return { text, seq };
+            })().finally(() => { if (syncInFlight === entry) syncInFlight = null; });
+            syncInFlight = entry;
+            return entry.promise;
+        }
         async function syncWithCloud(isUIAction = false) {
+            lastSyncChanged = false;
             if (isSaving) return;
             const refreshIcon = document.getElementById('refreshNavIcon');
             const syncStatusUI = document.getElementById('syncStatusUI');
+            const readyHtml = `<span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> ระบบคลาวด์พร้อมใช้งาน`;
             if (isUIAction && refreshIcon) {
                 refreshIcon.classList.add('fa-spin');
                 syncStatusUI.innerHTML = `<i class="fas fa-spinner fa-spin text-amber-400"></i> กำลังซิงก์ข้อมูลล่าสุด...`;
             }
             try {
-                const res = await fetch(SHEETS_API_URL + '?t=' + Date.now());
-                if (!res.ok) throw new Error('HTTP ' + res.status);
-                const json = await res.json();
-                if (isSaving) { // มีการบันทึกระหว่างดึงข้อมูล — ไม่เขียนทับข้อมูลล่าสุดในหน้า
+                const r = await fetchCloudShared();
+                // มีการบันทึกขึ้นคลาวด์ระหว่างดาวน์โหลด — ข้อมูลชุดนี้เก่าแล้ว ไม่เขียนทับข้อมูลล่าสุดในหน้า
+                if (isSaving || r.seq !== cloudWriteSeq) {
                     if (refreshIcon) refreshIcon.classList.remove('fa-spin');
-                    if (isUIAction) syncStatusUI.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> ระบบคลาวด์พร้อมใช้งาน`;
+                    if (isUIAction) syncStatusUI.innerHTML = readyHtml;
                     return;
                 }
-                // ต้องเป็นข้อมูลจากระบบจริงเท่านั้น จึงจะถือว่าโหลดสำเร็จ (กันการบันทึกข้อมูลว่างทับข้อมูลบนคลาวด์)
-                if (!(json && typeof json === 'object' && (Array.isArray(json.generalRecords) || Array.isArray(json.shootingRecords) || json.scriptVersion))) throw new Error('BAD_DATA');
-                appData.generalRecords = Array.isArray(json.generalRecords) ? json.generalRecords : [];
-                appData.shootingRecords = Array.isArray(json.shootingRecords) ? json.shootingRecords : [];
-                applyCloudExtras(json);
-                cloudLoaded = true;
-                sanitizeData();
-                refreshCurrentView();
-                onCloudDataLoaded();
+                const changed = !cloudLoaded || r.text !== lastCloudText;
+                if (changed) {
+                    const json = JSON.parse(r.text);
+                    // ต้องเป็นข้อมูลจากระบบจริงเท่านั้น จึงจะถือว่าโหลดสำเร็จ (กันการบันทึกข้อมูลว่างทับข้อมูลบนคลาวด์)
+                    if (!isCloudPayload(json)) throw new Error('BAD_DATA');
+                    const sameAsShown = r.text === lastCloudText;
+                    lastCloudText = r.text;
+                    applyCloudPayload(json, false);
+                    if (!sameAsShown) cloudCachePut(r.text);
+                    lastSyncChanged = true;
+                } else {
+                    cloudSessionTasks(); // ข้อมูลไม่เปลี่ยน: ไม่ต้องวาดหน้าจอใหม่ แต่ยังส่งรายการค้าง/งานหลังเข้าสู่ระบบตามปกติ
+                }
+                lastSyncOkAt = Date.now();
                 if (refreshIcon) refreshIcon.classList.remove('fa-spin');
                 if (isUIAction) {
                     syncStatusUI.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-400"></span> ซิงก์ข้อมูลล่าสุดสำเร็จ`;
                     showToast('success', 'รีเฟรชข้อมูลสำเร็จ', 'ดึงข้อมูลล่าสุดจากระบบคลาวด์เรียบร้อยแล้ว');
-                    setTimeout(() => { syncStatusUI.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> ระบบคลาวด์พร้อมใช้งาน`; }, 3000);
+                    setTimeout(() => { syncStatusUI.innerHTML = readyHtml; }, 3000);
                 } else {
-                    syncStatusUI.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> ระบบคลาวด์พร้อมใช้งาน`;
+                    syncStatusUI.innerHTML = readyHtml;
                 }
                 updateLastSyncTime();
             } catch (e) {
                 if (refreshIcon) refreshIcon.classList.remove('fa-spin');
-                syncStatusUI.innerHTML = `<i class="fas fa-triangle-exclamation text-amber-400"></i> โหมดออฟไลน์ — ยังเชื่อมต่อคลาวด์ไม่ได้`;
+                syncStatusUI.innerHTML = lastCloudText !== null && !cloudLoaded
+                    ? `<i class="fas fa-triangle-exclamation text-amber-400"></i> โหมดออฟไลน์ — แสดงข้อมูลที่เก็บในเครื่อง`
+                    : `<i class="fas fa-triangle-exclamation text-amber-400"></i> โหมดออฟไลน์ — ยังเชื่อมต่อคลาวด์ไม่ได้`;
                 if (isUIAction) showToast('warning', 'เชื่อมต่อคลาวด์ไม่สำเร็จ', 'กรุณาตรวจสอบอินเทอร์เน็ต แล้วกดรีเฟรชอีกครั้ง');
             }
         }
@@ -4756,6 +4836,7 @@
 
         // --- App Boot ---
         window.onload = () => {
+            loadCachedCloud();
             bootV3();
             initThaiCalendarDropdowns();
             setThaiDateValue(null);
@@ -4767,7 +4848,8 @@
             updateLastSyncTime();
         };
         document.addEventListener('visibilitychange', () => {
-            if (document.visibilityState === 'visible') { syncWithCloud(false); updateLastSyncTime(); }
+            // กลับเข้าแอป: ซิงก์ใหม่เฉพาะเมื่อข้อมูลเก่ากว่า 30 วินาที (สลับแอปไปมาไม่ต้องดาวน์โหลดซ้ำ)
+            if (document.visibilityState === 'visible' && Date.now() - lastSyncOkAt > 30000) { syncWithCloud(false); updateLastSyncTime(); }
         });
         setInterval(updateLastSyncTime, 60000);
     </script>
@@ -4917,6 +4999,7 @@
         return true;
     }
     async function api(action, payload = {}, authOverride) {
+        if (action !== 'login') { cloudWriteSeq++; lastCloudText = null; }
         await ensureBackend();
         const auth = authOverride || (session ? { role: session.role, pin: session.pin } : null);
         let res;
@@ -5092,7 +5175,7 @@
             appData.rangeMeta = (json.rangeMeta && typeof json.rangeMeta === 'object') ? json.rangeMeta : {};
         }
     }
-    function onCloudDataLoaded() {
+    function onCloudDataLoaded(fromCache) {
         const ban = $('backendBanner');
         if (ban) {
             ban.classList.toggle('hidden', backendVersion >= 3);
@@ -5102,6 +5185,9 @@
         const cur = navigationHistory[navigationHistory.length - 1];
         renderV3View(cur);
         updateRangeMenuInfo();
+        if (!fromCache) cloudSessionTasks();
+    }
+    function cloudSessionTasks() {
         if (session && backendVersion >= 3) {
             if (session.role === 'admin' && appData.rangeLedger === null && !ledgerState.seeding) seedRange();
             if (pendingOrders.length) flushPending(false);
@@ -5855,7 +5941,7 @@
     /* ==========================================================================
        Executive Pro v4 — ชั้นเสริมใหม่ (ส่วน A: แกนหลัก / ป๊อปอัพ / แถบสถานะ / ตรวจอัปเดต)
        ========================================================================== */
-    const V4 = window.V4 = { version: "5.2.0", sec: null };
+    const V4 = window.V4 = { version: "5.2.1", sec: null };
     const q = (sel, root) => (root || document).querySelector(sel);
     const esc = v => escapeHtml(v);
     const money = n => (Number(n) || 0).toLocaleString('th-TH', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -6034,7 +6120,7 @@
             st.syncError = !!(el && /ออฟไลน์/.test(el.textContent));
             st.sync = 'idle'; if (!st.syncError) st.lastSync = stamp();
             topProgress(false); paintBar();
-            if (V4.afterSync) V4.afterSync();
+            if (V4.afterSync && lastSyncChanged) V4.afterSync();
         }
     };
     window.addEventListener('online', () => { st.net = true; paintBar(); showToast('info', 'กลับมาออนไลน์แล้ว', 'กำลังซิงก์ข้อมูลล่าสุด', { noPopup: true }); syncWithCloud(false); });
@@ -8856,14 +8942,17 @@
 
     // สำรองประจำเดือนอัตโนมัติ (ครั้งแรกของเดือนเมื่อผู้ดูแลเปิดแอปและโหลดข้อมูลสำเร็จ)
     let checking = false;
+    const MONTHLY_DONE_KEY = 'execpro_v5_monthlyDone';
     V5.monthlyBackupCheck = async function () {
         if (checking || !session || session.role !== 'admin' || !cloudLoaded) return;
         if (!(appData.generalRecords.length || appData.shootingRecords.length)) return;
+        if (V4.lsJ(MONTHLY_DONE_KEY, '') === ymNow()) return;
         checking = true;
         try {
-            const all = await listAll();
-            if (all.some(x => x.kind === 'monthly' && x.ym === ymNow())) return;
+            const has = await tx('readonly', (s, set) => { const r = s.getKey('m-' + ymNow()); r.onsuccess = () => set(r.result !== undefined); });
+            if (has) { V4.lsS(MONTHLY_DONE_KEY, ymNow()); return; }
             const rec = await V5.snapshot('สำรองอัตโนมัติประจำเดือน ' + ymLabel(ymNow()), 'monthly');
+            V4.lsS(MONTHLY_DONE_KEY, ymNow());
             showToast('info', 'สำรองข้อมูลประจำเดือนเรียบร้อย', `${ymLabel(ymNow())} · เก็บไว้ในคลังสำรองของเครื่องนี้`, {
                 duration: 9000, action: { label: 'ดาวน์โหลดไฟล์เก็บไว้', fn: () => { V5.download(fileOf(rec), fileOf(rec).name); V4.popup({ type: 'ok', title: 'ดาวน์โหลดไฟล์สำรองแล้ว', msg: fileOf(rec).name }); } }
             });
